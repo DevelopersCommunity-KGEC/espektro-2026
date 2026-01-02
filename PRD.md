@@ -28,39 +28,43 @@ The system features three distinct interfaces:
 
 The application will use a **Monolithic architecture** leveraging the latest React features.
 
-- **Framework:** **Next.js 14/15 (App Router)**.
+- **Framework:** **Next.js 16 (App Router)**.
 - **Language:** TypeScript (Strict mode).
 - **Backend Logic:** **Next.js Server Actions** (No separate backend server; direct database communication from server components/actions).
 - **Database:** **MongoDB** (Atlas).
-- **ORM/ODM:** **Mongoose** (for schema definition) or **Prisma** (optional, but Mongoose is preferred for rapid JSON flexibility).
+- **ORM/ODM:** **Mongoose** (v9+).
 - **Authentication:** **BetterAuth** (Provider: Google OAuth).
-- **Payment Gateway:** Razorpay or Stripe (Standard for Indian Fests: Razorpay).
+- **Payment Gateway:** Razorpay.
 - **Validation:** **Zod** (for form and API validation).
 - **Styling:** Tailwind CSS + Shadcn/UI (for rapid UI development).
-- **QR Generation:** `qrcode` or `next-qrcode` library.
+- **QR Generation:** `qrcode` library.
+- **QR Scanning:** `html5-qrcode` library.
 
 ---
 
 ## 3. User Roles & Permissions Matrix
 
-The system relies on Role-Based Access Control (RBAC).
+The system relies on Role-Based Access Control (RBAC) and Per-Event Permissions.
 
-| Feature                 | Guest (Unauthenticated) | Student (User) | Security | Editor | Super Admin |
-| ----------------------- | ----------------------- | -------------- | -------- | ------ | ----------- |
-| View Events             | ✅                      | ✅             | ✅       | ✅     | ✅          |
-| **Book Tickets**        | ❌ (Redirects to Login) | ✅             | ✅       | ✅     | ✅          |
-| **Access "My Tickets"** | ❌                      | ✅             | ✅       | ✅     | ✅          |
-| **Scan QR Codes**       | ❌                      | ❌             | ✅       | ❌     | ✅          |
-| **Dashboard Access**    | ❌                      | ❌             | ❌       | ✅     | ✅          |
-| **Create/Edit Events**  | ❌                      | ❌             | ❌       | ✅     | ✅          |
-| **Manual Ticket Issue** | ❌                      | ❌             | ❌       | ❌     | ✅          |
-| **Manage User Roles**   | ❌                      | ❌             | ❌       | ❌     | ✅          |
+| Feature                 | Guest (Unauthenticated) | Student (User) | Security | Ticket Issuer | Admin | Event Editor (Per Event) |
+| ----------------------- | ----------------------- | -------------- | -------- | ------------- | ----- | ------------------------ |
+| View Events             | ✅                      | ✅             | ✅       | ✅            | ✅    | ✅                       |
+| **Book Tickets**        | ❌ (Redirects to Login) | ✅             | ✅       | ✅            | ✅    | ✅                       |
+| **Access "My Tickets"** | ❌                      | ✅             | ✅       | ✅            | ✅    | ✅                       |
+| **Scan QR Codes**       | ❌                      | ❌             | ✅       | ❌            | ✅    | ❌                       |
+| **Dashboard Access**    | ❌                      | ❌             | ❌       | ✅            | ✅    | ❌                       |
+| **Create Events**       | ❌                      | ❌             | ❌       | ❌            | ✅    | ❌                       |
+| **Edit Events**         | ❌                      | ❌             | ❌       | ❌            | ✅    | ✅ (Specific Event Only) |
+| **Manual Ticket Issue** | ❌                      | ❌             | ❌       | ✅ (Quota)    | ✅    | ❌                       |
+| **Manage User Roles**   | ❌                      | ❌             | ❌       | ❌            | ✅    | ❌                       |
+
+> **Note:** "Event Editor" is not a global user role. It is a permission granted to specific users (via email) for specific events.
 
 ---
 
 ## 4. Database Schema Design (MongoDB)
 
-This is a proposed schema structure to ensure data integrity.
+This is the implemented schema structure.
 
 ### A. Users Collection
 
@@ -70,10 +74,10 @@ This is a proposed schema structure to ensure data integrity.
   name: String,
   email: String, // Unique, from Google
   image: String, // from Google
-  role: String, // Enum: ['user', 'security', 'admin', 'editor'] - Default: 'user'
+  role: String, // Enum: ['user', 'security', 'admin', 'ticket-issuer'] - Default: 'user'
+  ticketQuota: Number, // For ticket-issuer role
   createdAt: Date
 }
-
 ```
 
 ### B. Events Collection
@@ -91,8 +95,8 @@ This is a proposed schema structure to ensure data integrity.
   ticketsSold: Number, // Increment on sale
   isVisible: Boolean, // To hide events if needed
   editors: [String], // Array of User Emails permitted to edit this event
+  type: String, // Enum: ['fest-day', 'event']
 }
-
 ```
 
 ### C. Tickets Collection
@@ -160,7 +164,11 @@ This is a proposed schema structure to ensure data integrity.
 ### 5.5. Security Scanning Module
 
 - Route: `/scan` (Protected: Only `security` and `admin` roles).
-- **UI:** Mobile-optimized full-screen camera view using a library like `react-qr-reader` or `html5-qrcode`.
+- **UI:**
+  - "Start Scanning" button to initiate camera.
+  - Full-screen camera view using `html5-qrcode`.
+  - Instant feedback (Green/Red) with sound/visual cues.
+  - "Scan Next" button to reset for the next attendee.
 - **Logic (Server Action: `verifyTicket(token)`):**
 
 1. Search `Tickets` collection for `qrCodeToken`.
@@ -179,12 +187,14 @@ This is a proposed schema structure to ensure data integrity.
   - **CRUD Operations:** Add/Edit/Delete events (Forms with Zod validation).
   - **Event Editors:** Admins can assign specific users as **Editors** to a particular event by adding their email addresses. These users gain permission to edit that specific event's details.
 - **User Role Management:**
-  - **Search & Edit:** Super Admin can search for any user by their **Email Address**.
-  - **Role Assignment:** Admin can add or edit roles for any user (e.g., assigning `security`, `editor`, or `admin` roles) directly via their email.
+  - **Search & Edit:** Admin can search for any user by their **Email Address**.
+  - **Role Assignment:** Admin can assign roles: `user`, `security`, `admin`, or `ticket-issuer`.
+  - **Quota Management:** For `ticket-issuer` role, Admin can assign a specific `ticketQuota` (number of tickets they can issue).
 - **Manual Ticket Assignment:**
-  - **Input:** `Event ID`, `User Email`.
-  - **Action:** Creates a ticket with `status: booked`, `paymentId: MANUAL_ADMIN`.
-  - **Result:** When the student with that email logs in (or if they are already logged in), the ticket appears in their "My Tickets" automatically.
+  - **Single Issue:** Issue a ticket for a specific event to a specific email.
+  - **Season Pass:** Issue tickets for all "Fest Day" events at once.
+  - **Bulk Issue:** Support for comma-separated emails to issue tickets/passes to multiple users in one go.
+  - **Quota Deduction:** For `ticket-issuer`, the cost (1 per ticket) is deducted from their quota. Admin has unlimited quota.
 
 ---
 
