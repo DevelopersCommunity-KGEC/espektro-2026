@@ -34,7 +34,7 @@ export async function verifyTicket(token: string) {
   const session = await getSession();
   if (
     !session ||
-    (session.user.role !== "admin" && session.user.role !== "security")
+    (session.user.role !== "super-admin" && session.user.role !== "security")
   ) {
     throw new Error("Unauthorized");
   }
@@ -53,7 +53,7 @@ export async function verifyTicket(token: string) {
     return {
       success: false,
       message: `Already Scanned at ${new Date(
-        ticket.checkInTime
+        ticket.checkInTime,
       ).toLocaleTimeString()}`,
       ticket: JSON.parse(JSON.stringify(ticket)),
     };
@@ -108,13 +108,17 @@ export async function getTicketById(ticketId: string) {
   await dbConnect();
   const ticket = await Ticket.findById(ticketId).populate({
     path: "eventId",
-    model: Event
+    model: Event,
   });
 
   if (!ticket) return null;
 
   // Ensure user owns this ticket
-  if (ticket.userId.toString() !== session.user.id && ticket.userEmail !== session.user.email && session.user.role !== 'admin') {
+  if (
+    ticket.userId.toString() !== session.user.id &&
+    ticket.userEmail !== session.user.email &&
+    session.user.role !== "super-admin"
+  ) {
     throw new Error("Unauthorized access to ticket");
   }
 
@@ -129,14 +133,18 @@ export async function confirmPayment(ticketId: string) {
   const ticket = await Ticket.findById(ticketId);
 
   if (!ticket) throw new Error("Ticket not found");
-  if (ticket.status !== 'pending') throw new Error("Ticket is not in pending state");
+  if (ticket.status !== "pending")
+    throw new Error("Ticket is not in pending state");
 
   // Verify ownership
-  if (ticket.userId.toString() !== session.user.id && ticket.userEmail !== session.user.email) {
+  if (
+    ticket.userId.toString() !== session.user.id &&
+    ticket.userEmail !== session.user.email
+  ) {
     throw new Error("Unauthorized");
   }
 
-  const { v4: uuidv4 } = require('uuid');
+  const { v4: uuidv4 } = require("uuid");
   const newToken = uuidv4();
 
   ticket.status = "booked";
