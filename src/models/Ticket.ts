@@ -7,6 +7,9 @@ export interface ITicket extends Document {
   paymentId: string;
   qrCodeToken: string;
   status: "booked" | "checked-in" | "cancelled" | "pending";
+  issueType: "payment" | "manual" | "pass";
+  origin?: string;
+  revoked: boolean;
   purchaseDate: Date;
   checkInTime?: Date;
   issuedBy?: string;
@@ -23,9 +26,16 @@ const TicketSchema: Schema = new Schema({
     enum: ["booked", "checked-in", "cancelled", "pending"],
     default: "booked",
   },
+  issueType: {
+    type: String,
+    enum: ["payment", "manual", "pass"],
+    default: "payment",
+  },
+  origin: { type: String },
+  revoked: { type: Boolean, default: false },
   purchaseDate: { type: Date, default: Date.now },
   checkInTime: { type: Date },
-  issuedBy: { type: String }, // Email of the issuer (admin or ticket-issuer)
+  issuedBy: { type: String }, // Email of the issuer (admin)
 });
 
 export default mongoose.models.Ticket ||

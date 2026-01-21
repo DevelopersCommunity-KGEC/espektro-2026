@@ -10,8 +10,14 @@ export interface IEvent extends Document {
   capacity: number;
   ticketsSold: number;
   isVisible: boolean;
+  clubId: string; // Reference to Club.clubId
   editors: string[]; // Array of User Emails
   type: "fest-day" | "event";
+  winners?: {
+    position: number;
+    teamName?: string;
+    members?: string[];
+  }[];
 }
 
 const EventSchema: Schema = new Schema({
@@ -24,12 +30,20 @@ const EventSchema: Schema = new Schema({
   capacity: { type: Number, required: true },
   ticketsSold: { type: Number, default: 0 },
   isVisible: { type: Boolean, default: true },
+  clubId: { type: String, required: true, ref: "Club" },
   editors: [{ type: String }],
   type: {
     type: String,
     enum: ["fest-day", "event"],
     default: "event",
   },
+  winners: [
+    {
+      position: { type: Number, required: true },
+      teamName: { type: String },
+      members: [{ type: String }],
+    },
+  ],
 });
 
 export default mongoose.models.Event ||
