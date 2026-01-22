@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getEvents, issueManualTicket, issueBulkManualTickets, getMyQuota } from "@/actions/admin-actions";
+import { getEvents, issueManualTicket } from "@/actions/admin-actions";
 import { ensureFestDays } from "@/actions/seed-actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,25 +15,58 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, CheckCircle2, AlertCircle, Ticket } from "lucide-react";
 import { useAuthorization } from "@/hooks/use-authorization";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
+
+const singleTicketSchema = z.object({
+  eventId: z.string().min(1, "Select an event"),
+  email: z.string().email("Invalid email"),
+});
+
+const seasonPassSchema = z.object({
+  isBulk: z.boolean(),
+  email: z.string().optional(),
+  bulkEmails: z.string().optional(),
+}).refine(data => {
+  if (data.isBulk) {
+    return !!data.bulkEmails && data.bulkEmails.trim().length > 0;
+  }
+  return !!data.email && z.string().email().safeParse(data.email).success;
+}, {
+  message: "Valid email(s) required",
+  path: ["email"], // simplified error path
+});
+
 export default function ManualTicketsPage() {
   const [events, setEvents] = useState<any[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState("");
-  const [email, setEmail] = useState("");
-  const [bulkEmails, setBulkEmails] = useState("");
-  const [isBulk, setIsBulk] = useState(false);
-  const [quota, setQuota] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  const { isAuthorized, isLoading, session } = useAuthorization(['admin', 'ticket-issuer']);
+  const { isAuthorized, isLoading, session } = useAuthorization(['super-admin']);
   const userRole = (session?.user as any)?.role;
+
+  const singleForm = useForm<z.infer<typeof singleTicketSchema>>({
+    resolver: zodResolver(singleTicketSchema),
+    defaultValues: {
+      eventId: "",
+      email: "",
+    },
+  });
+
+  const seasonForm = useForm({
+    resolver: zodResolver(seasonPassSchema),
+    defaultValues: {
+      isBulk: false,
+      email: "",
+      bulkEmails: "",
+    },
+  });
 
   useEffect(() => {
     if (isAuthorized) {
       fetchEvents();
-      if (userRole === "ticket-issuer") {
-        fetchQuota();
-      }
     }
   }, [isAuthorized, userRole]);
 
@@ -44,11 +77,6 @@ export default function ManualTicketsPage() {
       </div>
     );
   }
-
-  const fetchQuota = async () => {
-    const q = await getMyQuota();
-    setQuota(q);
-  };
 
   const fetchEvents = async () => {
     const data = await getEvents();
@@ -71,53 +99,51 @@ export default function ManualTicketsPage() {
     }
   };
 
-  const handleIssue = async (isSeasonPass: boolean) => {
-    if (isSeasonPass && isBulk) {
-      if (!bulkEmails) {
-        setMessage({ type: 'error', text: "Please enter emails" });
-        return;
-      }
-      const emails = bulkEmails.split(',').map(e => e.trim()).filter(e => e);
-      if (emails.length === 0) {
-        setMessage({ type: 'error', text: "Please enter valid emails" });
-        return;
-      }
-
-      setLoading(true);
-      setMessage(null);
-      try {
-        const res = await issueBulkManualTickets("", emails, true);
-        setMessage({ type: 'success', text: res.message || "Tickets issued successfully!" });
-        setBulkEmails("");
-        if (userRole === "ticket-issuer") fetchQuota();
-      } catch (error: any) {
-        setMessage({ type: 'error', text: error.message || "Failed to issue tickets" });
-      } finally {
-        setLoading(false);
-      }
-      return;
-    }
-
-    if (!email) {
-      setMessage({ type: 'error', text: "Please enter an email" });
-      return;
-    }
-    if (!isSeasonPass && !selectedEvent) {
-      setMessage({ type: 'error', text: "Please select an event for single ticket" });
-      return;
-    }
-
+  const onSingleSubmit = async (values: z.infer<typeof singleTicketSchema>) => {
     setLoading(true);
     setMessage(null);
-
     try {
-      const res = await issueManualTicket(selectedEvent, email, isSeasonPass);
+      const res = await issueManualTicket(values.eventId, values.email, false);
       setMessage({ type: 'success', text: res.message || "Ticket issued successfully!" });
-      setEmail("");
-      if (!isSeasonPass) fetchEvents(); // Refresh stats
-      if (userRole === "ticket-issuer") fetchQuota(); // Refresh quota
+      singleForm.reset({ eventId: values.eventId, email: "" });
+      fetchEvents();
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message || "Failed to issue ticket" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSeasonSubmit = async (values: z.infer<typeof seasonPassSchema>) => {
+    setLoading(true);
+    setMessage(null);
+    try {
+      if (values.isBulk && values.bulkEmails) {
+        const emails = values.bulkEmails.split(',').map(e => e.trim()).filter(e => e);
+        let successCount = 0;
+        let errors: string[] = [];
+
+        for (const email of emails) {
+          try {
+            await issueManualTicket("", email, true);
+            successCount++;
+          } catch (err: any) {
+            errors.push(`${email}: ${err.message}`);
+          }
+        }
+
+        if (errors.length > 0) {
+          setMessage({ type: 'error', text: `Issued ${successCount} tickets. Errors: ${errors.join('; ')}` });
+        } else {
+          setMessage({ type: 'success', text: `Successfully issued ${successCount} season passes.` });
+        }
+      } else if (values.email) {
+        const res = await issueManualTicket("", values.email, true);
+        setMessage({ type: 'success', text: res.message || "Season pass issued successfully!" });
+      }
+      seasonForm.reset({ isBulk: values.isBulk, email: "", bulkEmails: "" });
+    } catch (error: any) {
+      setMessage({ type: 'error', text: error.message || "Failed to issue season pass" });
     } finally {
       setLoading(false);
     }
@@ -128,12 +154,6 @@ export default function ManualTicketsPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Manual Ticket Assignment</h1>
-          {quota !== null && userRole === 'ticket-issuer' && (
-            <div className="mt-2 inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-              <Ticket className="h-4 w-4" />
-              <span>Your Quota: {quota}</span>
-            </div>
-          )}
         </div>
         <Button variant="outline" size="sm" onClick={handleSeedFestDays} disabled={loading}>
           Seed Fest Days
@@ -152,39 +172,52 @@ export default function ManualTicketsPage() {
               <CardTitle>Issue Single Ticket</CardTitle>
               <CardDescription>Issue a ticket for a specific event or individual fest day.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Select Event</Label>
-                <Select value={selectedEvent} onValueChange={setSelectedEvent}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select an event" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {events.map((event) => (
-                      <SelectItem key={event._id} value={event._id}>
-                        {event.title} ({event.ticketsSold}/{event.capacity})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>User Email</Label>
-                <Input
-                  type="email"
-                  placeholder="student@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <Button
-                onClick={() => handleIssue(false)}
-                disabled={loading}
-                className="w-full"
-              >
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Issue Ticket
-              </Button>
+            <CardContent>
+              <Form {...singleForm}>
+                <form onSubmit={singleForm.handleSubmit(onSingleSubmit)} className="space-y-4">
+                  <FormField
+                    control={singleForm.control}
+                    name="eventId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select Event</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select an event" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {events.map((event) => (
+                              <SelectItem key={event._id} value={event._id}>
+                                {event.title} ({event.ticketsSold}/{event.capacity})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={singleForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>User Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="student@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Issue Ticket
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </TabsContent>
@@ -195,49 +228,76 @@ export default function ManualTicketsPage() {
               <CardTitle>Issue Season Pass</CardTitle>
               <CardDescription>Generates 4 separate tickets (D1, D2, D3, D4) for the user.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 bg-muted rounded-md text-sm text-muted-foreground">
+            <CardContent>
+              <div className="p-4 bg-muted rounded-md text-sm text-muted-foreground mb-4">
                 This will automatically check for "Day 1 Pass", "Day 2 Pass", etc. events and issue a ticket for each one found.
               </div>
 
-              <div className="flex items-center space-x-2">
-                <Checkbox id="bulk-mode" checked={isBulk} onCheckedChange={(checked) => setIsBulk(checked as boolean)} />
-                <Label htmlFor="bulk-mode">Bulk Issue Mode</Label>
-              </div>
-
-              {isBulk ? (
-                <div className="space-y-2">
-                  <Label>User Emails (comma separated)</Label>
-                  <Textarea
-                    placeholder="student1@example.com, student2@example.com, ..."
-                    value={bulkEmails}
-                    onChange={(e) => setBulkEmails(e.target.value)}
-                    rows={5}
+              <Form {...seasonForm}>
+                <form onSubmit={seasonForm.handleSubmit(onSeasonSubmit)} className="space-y-4">
+                  <FormField
+                    control={seasonForm.control}
+                    name="isBulk"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Bulk Issue Mode
+                          </FormLabel>
+                        </div>
+                      </FormItem>
+                    )}
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Enter multiple emails separated by commas.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <Label>User Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="student@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              )}
 
-              <Button
-                onClick={() => handleIssue(true)}
-                disabled={loading}
-                className="w-full"
-              >
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isBulk ? "Issue Bulk Season Passes" : "Issue Season Pass"}
-              </Button>
+                  {seasonForm.watch('isBulk') ? (
+                    <FormField
+                      control={seasonForm.control}
+                      name="bulkEmails"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>User Emails (comma separated)</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="student1@example.com, student2@example.com, ..."
+                              rows={5}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Enter multiple emails separated by commas.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    <FormField
+                      control={seasonForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>User Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="student@example.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {seasonForm.watch('isBulk') ? "Issue Bulk Season Passes" : "Issue Season Pass"}
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </TabsContent>

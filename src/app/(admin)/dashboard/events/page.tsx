@@ -11,7 +11,7 @@ export default async function EventsPage() {
     });
 
     const userRole = session?.user?.role;
-    if (userRole !== "admin") {
+    if (userRole !== "super-admin") {
         redirect("/dashboard");
     }
 
@@ -23,7 +23,7 @@ export default async function EventsPage() {
                 <h1 className="text-3xl font-bold">Manage Events</h1>
                 <Link
                     href="/dashboard/events/new"
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
                 >
                     Add New Event
                 </Link>
@@ -35,6 +35,9 @@ export default async function EventsPage() {
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Event
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Club
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Date
@@ -65,6 +68,9 @@ export default async function EventsPage() {
                                             <div className="text-sm font-medium text-gray-900">{event.title}</div>
                                         </div>
                                     </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {event.clubId?.name || "Unknown"}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {new Date(event.date).toLocaleDateString()}
