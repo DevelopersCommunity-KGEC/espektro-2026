@@ -19,9 +19,10 @@ import { Menu, Ticket, User, LogOut, LayoutDashboard } from "lucide-react";
 interface NavbarProps {
     isAdmin?: boolean;
     userRole?: string;
+    clubRoles?: { clubId: string; role: string }[];
 }
 
-export function Navbar({ isAdmin, userRole }: NavbarProps) {
+export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     const { data: session } = authClient.useSession();
     const pathname = usePathname();
 
@@ -38,13 +39,19 @@ export function Navbar({ isAdmin, userRole }: NavbarProps) {
     };
 
     const getAdminLink = () => {
-        if (userRole === "security") return { name: "Scan", href: "/scan" };
-        if (userRole === "ticket-issuer") return { name: "Manual Tickets", href: "/dashboard/manual-tickets" };
-        if (isAdmin || userRole === "admin") return { name: "Admin", href: "/dashboard" };
+        if (isAdmin || userRole === "super-admin") return { name: "Admin Dashboard", href: "/dashboard" };
         return null;
     };
 
+    // Determine the active club dashboard link if authorized
+    // Use Dropdown for multiple clubs
+    const hasClubs = clubRoles && clubRoles.length > 0;
+
     const adminLink = getAdminLink();
+
+    const activeClubRole = hasClubs
+        ? clubRoles!.find((cr) => pathname.startsWith(`/club/${cr.clubId}`))
+        : null;
 
     const navItems = [
         { name: "Events", href: "/events" },
@@ -53,7 +60,7 @@ export function Navbar({ isAdmin, userRole }: NavbarProps) {
     ];
 
     return (
-        <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
             <div className="container flex h-16 items-center justify-between px-4 md:px-6 mx-auto">
                 <div className="flex items-center gap-6">
                     <Link href="/" className="flex items-center space-x-2">
@@ -78,6 +85,40 @@ export function Navbar({ isAdmin, userRole }: NavbarProps) {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    {hasClubs && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm" className="hidden md:flex gap-2 items-center h-auto py-2">
+                                    {activeClubRole ? (
+                                        <div className="flex flex-col items-start leading-none gap-1">
+                                            <span className="font-semibold capitalize text-sm">{activeClubRole.clubId}</span>
+                                            <span className="text-[10px] text-muted-foreground capitalize">{activeClubRole.role.replace('-', ' ')}</span>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <LayoutDashboard className="h-4 w-4" />
+                                            <span>Manage Clubs</span>
+                                        </>
+                                    )}
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Switch Club</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {clubRoles?.map((cr) => (
+                                    <DropdownMenuItem key={cr.clubId} asChild>
+                                        <Link href={`/club/${cr.clubId}/dashboard`} className="flex justify-between items-center w-full">
+                                            <span className="capitalize">{cr.clubId}</span>
+                                            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
+                                                {cr.role.replace("-", " ")}
+                                            </span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+
                     {session ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -134,7 +175,7 @@ export function Navbar({ isAdmin, userRole }: NavbarProps) {
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="w-[80%] max-w-[300px] pt-10">
+                        <SheetContent side="right" className="w-[80%] max-w-75 pt-10">
                             <div className="flex flex-col gap-6">
                                 <Link href="/" className="text-lg font-bold px-2">
                                     ESPEKTRO 2026

@@ -8,26 +8,16 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, LayoutDashboard, Calendar, Users, Ticket, ScanLine } from "lucide-react";
 import { useState } from "react";
 
-interface AdminSidebarProps {
-    userRole: string;
-}
-
-export function AdminSidebar({ userRole }: AdminSidebarProps) {
+export function AdminSidebar() {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
 
     const links = [
-        ...(userRole === 'admin' ? [
-            { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-            { name: "Manage Events", href: "/dashboard/events", icon: Calendar },
-            { name: "User Roles", href: "/dashboard/users", icon: Users },
-        ] : []),
-        ...(userRole === 'admin' || userRole === 'ticket-issuer' ? [
-            { name: "Manual Tickets", href: "/dashboard/manual-tickets", icon: Ticket },
-        ] : []),
-        ...(userRole === 'admin' || userRole === 'security' ? [
-            { name: "QR Scanner", href: "/scan", icon: ScanLine },
-        ] : []),
+        { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
+        { name: "Manage Events", href: "/dashboard/events", icon: Calendar },
+        { name: "User Roles", href: "/dashboard/users", icon: Users },
+        { name: "Manual Tickets", href: "/dashboard/manual-tickets", icon: Ticket },
+        { name: "QR Scanner", href: "/scan", icon: ScanLine },
     ];
 
     const NavContent = () => (
@@ -57,7 +47,7 @@ export function AdminSidebar({ userRole }: AdminSidebarProps) {
         <>
             {/* Desktop Sidebar */}
             <aside className="hidden border-r bg-muted/40 md:block w-64 min-h-screen sticky top-0">
-                <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+                <div className="flex h-14 items-center border-b px-4 lg:h-15 lg:px-6">
                     <Link href="/" className="flex items-center gap-2 font-semibold">
                         <span className="">Admin Panel</span>
                     </Link>
@@ -69,7 +59,7 @@ export function AdminSidebar({ userRole }: AdminSidebarProps) {
 
             {/* Mobile Sidebar Trigger */}
             <div className="flex flex-col md:hidden">
-                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-15 lg:px-6">
                     <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <Button
@@ -81,7 +71,7 @@ export function AdminSidebar({ userRole }: AdminSidebarProps) {
                                 <span className="sr-only">Toggle navigation menu</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className="flex flex-col w-[80%] max-w-[300px] pt-10">
+                        <SheetContent side="left" className="flex flex-col w-[80%] max-w-75 pt-10">
                             <nav className="grid gap-2 text-lg font-medium">
                                 <Link
                                     href="#"
