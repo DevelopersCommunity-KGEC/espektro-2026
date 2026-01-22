@@ -1,6 +1,6 @@
 import React from "react";
 import { getMyTickets } from "@/actions/ticket-actions";
-import TicketCard from "@/components/TicketCard";
+import TicketCard from "@/components/tickets/ticket-card";
 
 export default async function MyTicketsPage() {
     const tickets = await getMyTickets();

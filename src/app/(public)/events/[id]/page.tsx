@@ -2,10 +2,10 @@ import React from "react";
 import { getPublicEventById } from "@/actions/event-actions";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { BookButton } from "@/components/book-button";
+import { BookButton } from "@/components/events/book-button";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { EditEventModal } from "@/components/edit-event-modal";
+import { EditEventModal } from "@/components/events/edit-event-modal";
 
 export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -20,7 +20,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
     });
 
     const userEmail = session?.user?.email;
-    const isAdmin = session?.user?.role === 'admin';
+    const isAdmin = session?.user?.role === 'super-admin';
     const isEditor = userEmail && event.editors && event.editors.includes(userEmail);
     const canEdit = isAdmin || isEditor;
 
