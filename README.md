@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Espektro 2026 | Event & Ticketing Platform
 
-## Getting Started
+Official ticketing and event management platform for **Espektro 2026**, the annual cultural fest of **Kalyani Government Engineering College (KGEC)**.
 
-First, run the development server:
+## 🚀 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This platform enables multiple college clubs to independently manage their events, issue tickets, and handle payments under a unified system. It features a robust Role-Based Access Control (RBAC) system, secure QR code ticketing, and real-time check-in capabilities.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Database:** MongoDB Atlas (via Mongoose)
+- **Authentication:** BetterAuth (Google OAuth)
+- **Styling:** Tailwind CSS + [Shadcn/UI](https://ui.shadcn.com/)
+- **Payments:** Razorpay
+- **Validation:** Zod
+- **QR Operations:** `qrcode` (generation) & `html5-qrcode` (scanning)
+
+## ✨ Key Features
+
+- **Club-Centric Architecture:** Each club (Music, Dance, Coding, etc.) manages its own events.
+- **Role-Based Access Control (RBAC):**
+  - **Super Admin:** Global control.
+  - **Club Admin:** Full control over club events.
+  - **Volunteer:** Restricted to scanning and check-in.
+- **Ticketing System:**
+  - Secure QR code generation (signed tokens).
+  - Online payments via Razorpay.
+  - Unlimited manual issuance for admins.
+- **Fast Check-in:** Optimized mobile-first scanner responding in <500ms.
+
+## 🏗️ Architecture
+
+The project follows a **Feature-First Architecture** to ensure scalability and maintainability.
+
+```text
+src/
+├── actions/            # Server Actions for mutations (db logic)
+├── app/                # Next.js App Router (pages & routing)
+├── components/         # Feature-based component organization
+│   ├── admin/          # Admin dashboard components
+│   ├── clubs/          # Club management & user lists
+│   ├── events/         # Event forms, cards, and modals
+│   ├── layout/         # Navbar, Sidebar, and shell wrappers
+│   ├── tickets/        # Ticket rendering and interaction
+│   └── ui/             # Reusable UI primitives (buttons, inputs)
+├── lib/                # Utilities, auth config, db connection
+├── models/             # Mongoose schemas (User, Event, Ticket)
+└── types/              # Strict TypeScript definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏁 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Clone the repository:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ```bash
+    git clone https://github.com/your-org/espektro-2026.git
+    cd espektro-2026
+    ```
 
-## Learn More
+2.  **Install dependencies:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Environment Setup:**
+    Create a `.env` file in the root directory with the following variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```env
+    MONGODB_URI=...
+    NEXT_PUBLIC_APP_URL=http://localhost:3000
+    BETTER_AUTH_SECRET=...
+    GOOGLE_CLIENT_ID=...
+    GOOGLE_CLIENT_SECRET=...
+    RAZORPAY_KEY_ID=...
+    RAZORPAY_KEY_SECRET=...
+    ADMIN_EMAILS=your.email@example.com
+    ```
 
-## Deploy on Vercel
+4.  **Run the development server:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5.  **Build for production:**
+    ```bash
+    npm run build
+    npm start
+    ```
+
+## 🤝 Contribution Guidelines
+
+- **Strict Typing:** Avoid `any` types. Define interfaces in `src/types/`.
+- **Kebab-Case:** Use kebab-case for all filenames (e.g., `event-form.tsx`).
+- **Server Actions:** Use Server Actions for all database mutations.
+- **Icons:** Use `lucide-react` for icons.
+
+## 📄 License
+
+This project is proprietary to Kalyani Government Engineering College.

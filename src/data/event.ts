@@ -8,6 +8,7 @@ export const FEST_DAYS = [
     price: 10000,
     capacity: 5000,
     type: "fest-day" as const,
+    clubId: "espektro",
     isVisible: true,
   },
   {
@@ -19,6 +20,7 @@ export const FEST_DAYS = [
     price: 20000,
     capacity: 5000,
     type: "fest-day" as const,
+    clubId: "espektro",
     isVisible: true,
   },
   {
@@ -30,6 +32,7 @@ export const FEST_DAYS = [
     price: 30000,
     capacity: 5000,
     type: "fest-day" as const,
+    clubId: "espektro",
     isVisible: true,
   },
   {
@@ -41,6 +44,7 @@ export const FEST_DAYS = [
     price: 40000,
     capacity: 5000,
     type: "fest-day" as const,
+    clubId: "espektro",
     isVisible: true,
   },
 ];

@@ -10,9 +10,10 @@ import { Badge } from "@/components/ui/badge"; // Note: Badge might need to be i
 // Wait, I should install badge.
 // Actually, I'll stick to minimal components to be fast. I'll use div for badge.
 import { Eye, EyeOff } from "lucide-react";
+import { TicketData } from "@/types/tickets";
 
 interface TicketCardProps {
-    ticket: any;
+    ticket: TicketData;
 }
 
 export default function TicketCard({ ticket }: TicketCardProps) {

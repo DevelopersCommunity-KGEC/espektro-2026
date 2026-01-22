@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { createOrder, verifyPayment } from "@/actions/booking-actions";
 import { getPublicEventById } from "@/actions/event-actions";
+import { toast } from "sonner";
 
 declare global {
   interface Window {
@@ -69,7 +70,7 @@ export default function BookingPage() {
               router.push("/my-tickets");
             }
           } catch (err: any) {
-            alert(err.message);
+            toast.error(err.message || "Payment verification failed");
           }
         },
         prefill: {

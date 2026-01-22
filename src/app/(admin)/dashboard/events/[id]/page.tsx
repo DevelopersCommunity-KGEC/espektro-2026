@@ -1,5 +1,5 @@
 import React from "react";
-import EventForm from "@/components/EventForm";
+import EventForm from "@/components/events/event-form";
 import { getEventById } from "@/actions/admin-actions";
 import { notFound } from "next/navigation";
 

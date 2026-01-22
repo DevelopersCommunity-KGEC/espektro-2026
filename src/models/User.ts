@@ -4,8 +4,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   image?: string;
-  role: "user" | "security" | "admin" | "ticket-issuer";
-  ticketQuota: number;
+  role: "user" | "super-admin";
   createdAt: Date;
 }
 
@@ -16,13 +15,12 @@ const UserSchema: Schema = new Schema(
     image: { type: String },
     role: {
       type: String,
-      enum: ["user", "security", "admin", "ticket-issuer"],
+      enum: ["user", "super-admin"],
       default: "user",
     },
-    ticketQuota: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
   },
-  { collection: "user" }
+  { collection: "user" },
 );
 
 export default mongoose.models.User ||
