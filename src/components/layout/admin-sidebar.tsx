@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Menu, LayoutDashboard, Calendar, Users, Ticket, ScanLine } from "lucide-react";
 import { useState } from "react";
 
@@ -72,6 +72,8 @@ export function AdminSidebar() {
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="left" className="flex flex-col w-[80%] max-w-75 pt-10">
+                            <SheetTitle className="sr-only">Admin Navigation</SheetTitle>
+                            <SheetDescription className="sr-only">Mobile navigation for admin panel</SheetDescription>
                             <nav className="grid gap-2 text-lg font-medium">
                                 <Link
                                     href="#"

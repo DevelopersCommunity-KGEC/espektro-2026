@@ -97,7 +97,7 @@ export function ClubUserList({ initialUsers, clubId }: ClubUserListProps) {
             toast.success("User assigned successfully");
             setIsDialogOpen(false);
             form.reset();
-            refreshUsers();
+            await refreshUsers();
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "Failed to assign role");
         } finally {
@@ -194,74 +194,76 @@ export function ClubUserList({ initialUsers, clubId }: ClubUserListProps) {
                 </div>
             </div>
 
-            <div className="border rounded-md">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>User</TableHead>
-                            <TableHead>Role</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {users.map((role) => (
-                            <TableRow key={role._id}>
-                                <TableCell className="font-medium">
-                                    <div className="flex items-center gap-3">
-                                        <Avatar className="h-8 w-8">
-                                            <AvatarImage src={role.userId?.image} />
-                                            <AvatarFallback>{role.userId?.name?.[0] || role.userId?.email?.[0] || "?"}</AvatarFallback>
-                                        </Avatar>
-                                        <div className="flex flex-col">
-                                            <span>{role.userId?.name || "Pending User"}</span>
-                                            <span className="text-xs text-muted-foreground">
-                                                {role.userId?.email || "Email not linked"}
-                                                {/* If userId is null, we might be showing a pending role, but getClubTeam populated userId. 
+            <div className="border rounded-md overflow-hidden">
+                <div className="overflow-x-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="min-w-50">User</TableHead>
+                                <TableHead className="whitespace-nowrap">Role</TableHead>
+                                <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {users.map((role) => (
+                                <TableRow key={role._id}>
+                                    <TableCell className="font-medium">
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="h-8 w-8">
+                                                <AvatarImage src={role.userId?.image} />
+                                                <AvatarFallback>{role.userId?.name?.[0] || role.userId?.email?.[0] || "?"}</AvatarFallback>
+                                            </Avatar>
+                                            <div className="flex flex-col">
+                                                <span>{role.userId?.name || "Pending User"}</span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {role.userId?.email || "Email not linked"}
+                                                    {/* If userId is null, we might be showing a pending role, but getClubTeam populated userId. 
                                                     If PendingClubRole, structure is different. 
                                                     Wait, getClubTeam uses ClubRoleModel. 
                                                     It doesn't fetch PendingClubRoles. 
                                                     I should update getClubTeam to fetch pending too or handle it separate?
                                                     For now let's assume registered users.
                                                  */}
-                                            </span>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="capitalize">{role.role.replace("-", " ")}</TableCell>
-                                <TableCell className="text-right">
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button variant="ghost" size="sm">
-                                                <Trash2 className="h-4 w-4 text-red-500" />
-                                            </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>Remove member?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    Are you sure you want to remove access for <strong>{role.userId?.email}</strong>?
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => handleRemove(role.userId?.email)} className="bg-red-600 hover:bg-red-700">
-                                                    Remove
-                                                </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                        {users.length === 0 && (
-                            <TableRow>
-                                <TableCell colSpan={3} className="text-center py-6 text-muted-foreground">
-                                    No members found.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                                    </TableCell>
+                                    <TableCell className="capitalize">{role.role.replace("-", " ")}</TableCell>
+                                    <TableCell className="text-right">
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button variant="ghost" size="sm">
+                                                    <Trash2 className="h-4 w-4 text-red-500" />
+                                                </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Remove member?</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        Are you sure you want to remove access for <strong>{role.userId?.email}</strong>?
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => handleRemove(role.userId?.email)} className="bg-red-600 hover:bg-red-700">
+                                                        Remove
+                                                    </AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            {users.length === 0 && (
+                                <TableRow>
+                                    <TableCell colSpan={3} className="text-center py-6 text-muted-foreground">
+                                        No members found.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
         </div>
     );

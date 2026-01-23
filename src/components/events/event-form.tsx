@@ -248,7 +248,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                             />
                         </div>
 
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="editors"
                             render={({ field }) => (
@@ -263,7 +263,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
 
                         <FormField
                             control={form.control}

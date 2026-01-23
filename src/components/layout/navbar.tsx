@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation"; // Correct hook for app router
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,7 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Menu, Ticket, User, LogOut, LayoutDashboard } from "lucide-react";
 
 interface NavbarProps {
@@ -53,9 +54,12 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
         ? clubRoles!.find((cr) => pathname.startsWith(`/club/${cr.clubId}`))
         : null;
 
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
     const navItems = [
         { name: "Events", href: "/events" },
         { name: "My Tickets", href: "/my-tickets" },
+        ...(hasClubs ? [{ name: "Scan Ticket", href: "/scan" }] : []),
         ...(adminLink ? [adminLink] : []),
     ];
 
@@ -168,7 +172,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                     )}
 
                     {/* Mobile Menu */}
-                    <Sheet>
+                    <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon" className="md:hidden">
                                 <Menu className="h-5 w-5" />
@@ -176,8 +180,10 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-[80%] max-w-75 pt-10">
+                            <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                            <SheetDescription className="sr-only">Site navigation</SheetDescription>
                             <div className="flex flex-col gap-6">
-                                <Link href="/" className="text-lg font-bold px-2">
+                                <Link href="/" className="text-lg font-bold px-2" onClick={() => setIsMobileMenuOpen(false)}>
                                     ESPEKTRO 2026
                                 </Link>
                                 <div className="flex flex-col gap-2">
@@ -185,6 +191,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         <Link
                                             key={item.href}
                                             href={item.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
                                             className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === item.href
                                                 ? "text-foreground bg-muted"
                                                 : "text-muted-foreground"
@@ -194,11 +201,35 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         </Link>
                                     ))}
                                 </div>
+
+                                {hasClubs && (
+                                    <div className="mt-6 border-t pt-4">
+                                        <h4 className="mb-2 px-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">My Clubs</h4>
+                                        <div className="flex flex-col gap-1">
+                                            {clubRoles?.map((cr) => (
+                                                <Link
+                                                    key={cr.clubId}
+                                                    href={`/club/${cr.clubId}/dashboard`}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                    className={`flex items-center justify-between px-2 py-2 text-sm rounded-md transition-colors hover:bg-muted ${pathname.startsWith(`/club/${cr.clubId}`)
+                                                        ? "bg-muted font-medium text-primary"
+                                                        : "text-muted-foreground hover:text-primary"
+                                                        }`}
+                                                >
+                                                    <span className="capitalize">{cr.clubId}</span>
+                                                    <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded capitalize">
+                                                        {cr.role.replace("-", " ")}
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </SheetContent>
                     </Sheet>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 }
