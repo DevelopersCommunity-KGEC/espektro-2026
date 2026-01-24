@@ -118,39 +118,40 @@ export async function createOrder(eventId: string, referralCode?: string) {
 
   // Dodo Payments Session Creation
   try {
-    const response = await fetch(
-      `${process.env.DODO_PAYMENTS_ENVIRONMENT === "live_mode" ? "https://live.dodopayments.com" : "https://test.dodopayments.com"}/checkout/session`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.DODO_PAYMENTS_API_KEY}`,
-        },
-        body: JSON.stringify({
-          paymentAmount: finalPrice * 100,
-          paymentCurrency: "INR",
-          customer: {
-            email: session.user.email,
-            name: session.user.name,
-          },
-          product: {
-            name: eventTitle,
-            description: `Ticket for ${eventTitle}`,
-            quantity: 1,
-          },
-          returnUrl:
-            process.env.DODO_PAYMENTS_RETURN_URL ||
-            "http://localhost:3000/my-tickets",
-          metadata: {
-            eventId: eventId,
-            userId: session.user.id,
-            email: session.user.email,
-            referralCode: referralCode || "",
-            discountAmount: discountAmount,
-          },
-        }),
+    const headersList = await headers();
+    const host = headersList.get("host");
+    const protocol = host?.includes("localhost") ? "http" : "https";
+    const baseUrl = `${protocol}://${host}`;
+
+    const response = await fetch(`${baseUrl}/api/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        paymentAmount: finalPrice * 100,
+        paymentCurrency: "INR",
+        customer: {
+          email: session.user.email,
+          name: session.user.name,
+        },
+        product: {
+          name: eventTitle,
+          description: `Ticket for ${eventTitle}`,
+          quantity: 1,
+        },
+        returnUrl:
+          process.env.DODO_PAYMENTS_RETURN_URL ||
+          "http://localhost:3000/my-tickets",
+        metadata: {
+          eventId: eventId,
+          userId: session.user.id,
+          email: session.user.email,
+          referralCode: referralCode || "",
+          discountAmount: discountAmount,
+        },
+      }),
+    });
 
     if (!response.ok) {
       const errorText = await response.text();
