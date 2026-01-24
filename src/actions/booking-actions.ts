@@ -133,11 +133,20 @@ export async function createOrder(eventId: string, referralCode?: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        product_id: process.env.DODO_PRODUCT_ID,
-        quantity: 1,
-        amount: finalPrice * 100, // Amount in smallest currency unit
-        paymentAmount: finalPrice * 100, // Backup field often used by Dodo
-        paymentCurrency: "INR",
+        product_cart: [
+          {
+            product_id: process.env.DODO_PRODUCT_ID,
+            quantity: 1,
+            amount: finalPrice * 100,
+          },
+        ],
+        billing: {
+          street: "KGEC",
+          city: "Kalyani",
+          state: "West Bengal",
+          country: "IN",
+          zipcode: "741235",
+        },
         customer: {
           email: session.user.email,
           name: session.user.name,

@@ -6,5 +6,5 @@ export const POST = Checkout({
   environment:
     (process.env.DODO_PAYMENTS_ENVIRONMENT as "test_mode" | "live_mode") ||
     "test_mode",
-  type: "dynamic",
+  type: "session",
 });
