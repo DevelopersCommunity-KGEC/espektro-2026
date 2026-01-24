@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { getEvents, issueManualTicket } from "@/actions/admin-actions";
-import { ensureFestDays } from "@/actions/seed-actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -86,19 +85,6 @@ export default function ManualTicketsPage() {
     setEvents(data.filter((e: any) => e.type !== 'fest-day'));
   };
 
-  const handleSeedFestDays = async () => {
-    setLoading(true);
-    try {
-      await ensureFestDays();
-      setMessage({ type: 'success', text: "Fest days seeded successfully" });
-      fetchEvents();
-    } catch (error: any) {
-      setMessage({ type: 'error', text: error.message });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const onSingleSubmit = async (values: z.infer<typeof singleTicketSchema>) => {
     setLoading(true);
     setMessage(null);
@@ -155,9 +141,6 @@ export default function ManualTicketsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Manual Ticket Assignment</h1>
         </div>
-        <Button variant="outline" size="sm" onClick={handleSeedFestDays} disabled={loading}>
-          Seed Fest Days
-        </Button>
       </div>
 
       <Tabs defaultValue="single" className="w-full">

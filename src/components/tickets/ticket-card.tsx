@@ -19,6 +19,7 @@ interface TicketCardProps {
 export default function TicketCard({ ticket }: TicketCardProps) {
     const [qrUrl, setQrUrl] = useState("");
     const [showQR, setShowQR] = useState(false);
+    console.log("Ticket in TicketCard:", ticket);
 
     useEffect(() => {
         if (ticket.qrCodeToken) {
@@ -29,6 +30,17 @@ export default function TicketCard({ ticket }: TicketCardProps) {
     }, [ticket.qrCodeToken]);
 
     const event = ticket.eventId;
+
+    if (!event) {
+        return (
+            <Card className="overflow-hidden">
+                <CardHeader>
+                    <CardTitle className="text-destructive">Event Not Found</CardTitle>
+                    <CardDescription>This ticket is associated with an event that no longer exists.</CardDescription>
+                </CardHeader>
+            </Card>
+        )
+    }
 
     return (
         <Card className="overflow-hidden">
