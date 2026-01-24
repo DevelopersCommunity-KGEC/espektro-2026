@@ -1,6 +1,10 @@
 // DEAD CODE
 // USED FOR MOCK PAYMENT FLOW TESTING ONLY
 
+export default function PaymentPage() {
+    return null;
+}
+
 // "use client";
 
 // import { useEffect, useState } from "react";
