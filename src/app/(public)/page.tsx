@@ -8,7 +8,7 @@ export default function Home() {
             {/* Hero Section */}
             <section className="relative flex flex-col items-center justify-centerpx-4 pt-32 pb-16 md:pt-48 md:pb-32 text-center overflow-hidden">
                 {/* Background Gradients/Effects could go here */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 blur-[100px] rounded-full -z-10 opacity-50" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 bg-primary/20 blur-[100px] rounded-full -z-10 opacity-50" />
 
                 <div className="container px-4 md:px-6 mx-auto flex flex-col items-center space-y-8">
                     <div className="space-y-4 max-w-3xl">
@@ -16,7 +16,7 @@ export default function Home() {
                             Experience the Magic of <br className="hidden sm:inline" />
                             <span className="text-primary bg-clip-text">Espektro 2026</span>
                         </h1>
-                        <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                        <p className="mx-auto max-w-175 text-gray-500 md:text-xl dark:text-gray-400">
                             The ultimate college fest experience. Discover events, book tickets, and make memories that last a lifetime.
                         </p>
                     </div>

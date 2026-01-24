@@ -236,11 +236,44 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Capacity</FormLabel>
-                                        <FormControl>
-                                            <Input type="number" min="-1" {...field} value={field.value as number} />
-                                        </FormControl>
+                                        <div className="flex gap-3 items-center">
+                                            <FormControl>
+                                                <Input
+                                                    type="number"
+                                                    min="-1"
+                                                    {...field}
+                                                    value={field.value as number}
+                                                    disabled={field.value === -1}
+                                                    className={field.value === -1 ? "opacity-50" : ""}
+                                                />
+                                            </FormControl>
+                                            <div className="flex items-center space-x-2 whitespace-nowrap">
+                                                <Checkbox
+                                                    id="unlimited-capacity"
+                                                    checked={field.value === -1}
+                                                    onCheckedChange={(checked) => {
+                                                        if (checked) {
+                                                            field.onChange(-1);
+                                                        } else {
+                                                            field.onChange(0);
+                                                        }
+                                                    }}
+                                                />
+                                                <label
+                                                    htmlFor="unlimited-capacity"
+                                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                >
+                                                    Unlimited
+                                                </label>
+                                            </div>
+                                        </div>
                                         <FormDescription>
-                                            Set to -1 for unlimited capacity
+                                            {field.value === -1
+                                                ? <span className="text-blue-600 font-medium">Capacity is unlimited (shown as Not Defined to users)</span>
+                                                : field.value === 0
+                                                    ? <span className="text-amber-600">Capacity is 0. No tickets can be sold.</span>
+                                                    : "Number of tickets available for sale."
+                                            }
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -248,7 +281,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                             />
                         </div>
 
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="editors"
                             render={({ field }) => (
@@ -263,7 +296,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
 
                         <FormField
                             control={form.control}

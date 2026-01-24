@@ -7,12 +7,16 @@ export interface ITicket extends Document {
   paymentId: string;
   qrCodeToken: string;
   status: "booked" | "checked-in" | "cancelled" | "pending";
-  issueType: "payment" | "manual" | "pass";
+  issueType: "payment" | "manual" | "pass" | "referral";
   origin?: string;
   revoked: boolean;
   purchaseDate: Date;
   checkInTime?: Date;
   issuedBy?: string;
+  guestName?: string;
+  guestPhone?: string;
+  referralCode?: string;
+  discountAmount?: number;
 }
 
 const TicketSchema: Schema = new Schema({
@@ -28,7 +32,7 @@ const TicketSchema: Schema = new Schema({
   },
   issueType: {
     type: String,
-    enum: ["payment", "manual", "pass"],
+    enum: ["payment", "manual", "pass", "referral"],
     default: "payment",
   },
   origin: { type: String },
@@ -36,6 +40,10 @@ const TicketSchema: Schema = new Schema({
   purchaseDate: { type: Date, default: Date.now },
   checkInTime: { type: Date },
   issuedBy: { type: String }, // Email of the issuer (admin)
+  guestName: { type: String },
+  guestPhone: { type: String },
+  referralCode: { type: String },
+  discountAmount: { type: Number },
 });
 
 export default mongoose.models.Ticket ||

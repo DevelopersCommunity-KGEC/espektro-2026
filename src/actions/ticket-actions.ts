@@ -5,6 +5,7 @@ import Ticket from "@/models/Ticket";
 import Event from "@/models/Event";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { hasClubPermission } from "@/lib/rbac";
 
 async function getSession() {
   return await auth.api.getSession({
@@ -32,11 +33,8 @@ export async function getMyTickets() {
 
 export async function verifyTicket(token: string) {
   const session = await getSession();
-  if (
-    !session ||
-    (session.user.role !== "super-admin" && session.user.role !== "security")
-  ) {
-    throw new Error("Unauthorized");
+  if (!session?.user) {
+    return { success: false, message: "Unauthorized: Please login to scan" };
   }
 
   await dbConnect();
@@ -47,6 +45,21 @@ export async function verifyTicket(token: string) {
 
   if (!ticket) {
     return { success: false, message: "Invalid Ticket / Fake QR" };
+  }
+
+  // RBAC Check
+  const event = ticket.eventId as any;
+  if (event && event.clubId) {
+    const canScan = await hasClubPermission(session.user.id, event.clubId, [
+      "club-admin",
+      "volunteer",
+    ]);
+    if (!canScan)
+      return {
+        success: false,
+        message: `Unauthorized: This ticket belongs to ${event.clubId}`,
+        ticket: JSON.parse(JSON.stringify(ticket)),
+      };
   }
 
   if (ticket.status === "checked-in") {

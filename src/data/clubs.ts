@@ -1,7 +1,7 @@
 export const clubs = [
   {
-    id: "espectro",
-    name: "Espectro",
+    id: "espektro",
+    name: "Espektro",
     description: "Main Fest Events and Activities",
   },
   {

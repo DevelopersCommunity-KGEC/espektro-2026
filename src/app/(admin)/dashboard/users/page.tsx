@@ -3,26 +3,16 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAllUsersWithRoles } from "@/actions/admin-actions";
 import { UserDashboard } from "@/components/admin/user-dashboard";
+import { AddUserButton } from "@/components/admin/add-user-button";
+import { Suspense } from "react";
+import { DashboardTableSkeleton } from "@/components/skeletons";
 
-export default async function UserRolesPage({
-    searchParams,
-}: {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
-
-    if (!session || session.user.role !== "super-admin") {
-        redirect("/dashboard");
-    }
-
-    const resolvedParams = await searchParams;
-    const page = Number(resolvedParams.page) || 1;
+async function UserList({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+    const page = Number(searchParams.page) || 1;
     const limit = 10;
-    const search = (resolvedParams.search as string) || "";
-    const clubId = (resolvedParams.clubId as string) || "all";
-    const role = (resolvedParams.role as string) || "all";
+    const search = (searchParams.search as string) || "";
+    const clubId = (searchParams.clubId as string) || "all";
+    const role = (searchParams.role as string) || "all";
 
     const { users, totalPages, total } = await getAllUsersWithRoles({
         page,
@@ -39,6 +29,39 @@ export default async function UserRolesPage({
             totalUsers={total}
             currentPage={page}
         />
+    );
+}
+
+export default async function UserRolesPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session || session.user.role !== "super-admin") {
+        redirect("/dashboard");
+    }
+
+    const resolvedParams = await searchParams;
+
+    return (
+        <div className="space-y-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
+                    <p className="text-muted-foreground">
+                        Manage authorized users, global roles, and club assignments.
+                    </p>
+                </div>
+                <AddUserButton />
+            </div>
+            <Suspense fallback={<DashboardTableSkeleton />}>
+                <UserList searchParams={resolvedParams} />
+            </Suspense>
+        </div >
     );
 }
 

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
+import { OnboardingCheck } from "@/components/layout/onboarding-check";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,6 +64,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
         <AdminSync />
+        <OnboardingCheck />
         <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
         {children}
         <Toaster />

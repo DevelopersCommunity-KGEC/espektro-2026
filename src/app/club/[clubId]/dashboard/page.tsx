@@ -45,12 +45,36 @@ export default async function ClubDashboardPage({ params }: { params: Promise<{ 
 
                 <Card>
                     <CardHeader>
+                        <CardTitle>Referrals</CardTitle>
+                        <CardDescription>Manage discount codes</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Button asChild variant="outline">
+                            <Link href={`/club/${clubId}/referrals`}>Manage Codes</Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Participants</CardTitle>
+                        <CardDescription>View all ticket holders and attendees</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Button asChild variant="outline">
+                            <Link href={`/club/${clubId}/participants`}>View Participants</Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>Scanner</CardTitle>
                         <CardDescription>Scan tickets for your events</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Button asChild variant="outline">
-                            <Link href={`/scan?clubId=${clubId}`}>Open Scanner</Link>
+                            <Link href="/scan">Open Scanner</Link>
                         </Button>
                     </CardContent>
                 </Card>
