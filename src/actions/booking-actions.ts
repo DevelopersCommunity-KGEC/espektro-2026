@@ -123,6 +123,10 @@ export async function createOrder(eventId: string, referralCode?: string) {
     const protocol = host?.includes("localhost") ? "http" : "https";
     const baseUrl = `${protocol}://${host}`;
 
+    if (!process.env.DODO_PRODUCT_ID) {
+      throw new Error("DODO_PRODUCT_ID is not set in environment variables");
+    }
+
     const response = await fetch(`${baseUrl}/api/checkout`, {
       method: "POST",
       headers: {
@@ -137,7 +141,7 @@ export async function createOrder(eventId: string, referralCode?: string) {
         },
         product_cart: [
           {
-            name: eventTitle,
+            product_id: process.env.DODO_PRODUCT_ID,
             quantity: 1,
             amount: finalPrice * 100,
           },
@@ -151,6 +155,13 @@ export async function createOrder(eventId: string, referralCode?: string) {
           email: session.user.email,
           referralCode: referralCode || "",
           discountAmount: String(discountAmount),
+          eventTitle: eventTitle,
+          ticketType: eventId === "season-pass" ? "BUNDLE" : "SINGLE",
+          originalPrice: String(
+            eventId === "season-pass"
+              ? finalPrice + discountAmount
+              : finalPrice + discountAmount,
+          ),
         },
       }),
     });
