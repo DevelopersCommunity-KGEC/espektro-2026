@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
 import { getPublicEvents } from "@/actions/event-actions";
-import { Loader2 } from "lucide-react";
+import { EventsGridSkeleton } from "@/components/skeletons";
 
 async function EventsGrid() {
     const events = await getPublicEvents();
@@ -35,11 +35,7 @@ export default function PublicEventsPage() {
         <div className="max-w-7xl mx-auto px-4 py-12">
             <h1 className="text-4xl font-bold mb-8 text-center">Upcoming Events</h1>
 
-            <Suspense fallback={
-                <div className="flex justify-center p-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-                </div>
-            }>
+            <Suspense fallback={<EventsGridSkeleton />}>
                 <EventsGrid />
             </Suspense>
         </div>

@@ -6,7 +6,6 @@ import { UserData } from "@/types/user-management";
 import { UserFilters } from "./user-filters";
 import { UserList } from "./user-list";
 import { UserManagementSheet } from "./user-management-sheet";
-import { AddUserDialog } from "./add-user-dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
@@ -25,7 +24,28 @@ export function UserDashboard({ users, totalUsers, totalPages, currentPage }: Us
     // State for interactive elements
     const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
     const [isSheetOpen, setIsSheetOpen] = useState(false);
-    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
+    // Sync URL param 'manage' with selected user
+    useEffect(() => {
+        const manageEmail = searchParams.get("manage");
+        if (manageEmail) {
+            const existingUser = users.find(u => u.email === manageEmail);
+            if (existingUser) {
+                setSelectedUser(existingUser);
+                setIsSheetOpen(true);
+            } else {
+                // Assuming it's a pending user if not in list
+                setSelectedUser({
+                    _id: "", // Will be assigned by backend
+                    name: "Pending User",
+                    email: manageEmail,
+                    role: "user",
+                    clubRoles: []
+                });
+                setIsSheetOpen(true);
+            }
+        }
+    }, [searchParams, users]);
 
     // Update selected user when the list refreshes (e.g. after edit)
     useEffect(() => {
@@ -35,17 +55,25 @@ export function UserDashboard({ users, totalUsers, totalPages, currentPage }: Us
                 setSelectedUser(updated);
             }
         }
-    }, [users, isSheetOpen, selectedUser]); // Check if this causes loop. updating selectedUser shouldn't trigger if it just sets same object, but `users` changes reference. 
+    }, [users, isSheetOpen, selectedUser]);
 
     const handleManage = (user: UserData) => {
-        setSelectedUser(user);
-        setIsSheetOpen(true);
+        // Update URL to match selection
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("manage", user.email);
+        router.push(`${pathname}?${params.toString()}`);
     };
 
-    const handleAddUserSelected = (user: UserData) => {
-        setSelectedUser(user);
-        setIsSheetOpen(true);
-    };
+    const handleSheetOpenChange = (open: boolean) => {
+        setIsSheetOpen(open);
+        if (!open) {
+            // Remove manage param
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete("manage");
+            router.replace(`${pathname}?${params.toString()}`);
+            setSelectedUser(null);
+        }
+    }
 
     // Pagination helper
     const goToPage = (page: number) => {
@@ -56,11 +84,6 @@ export function UserDashboard({ users, totalUsers, totalPages, currentPage }: Us
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-end">
-                <Button onClick={() => setIsAddDialogOpen(true)}>
-                    <Plus className="mr-2 h-4 w-4" /> Add User
-                </Button>
-            </div>
 
             <UserFilters />
 
@@ -96,13 +119,7 @@ export function UserDashboard({ users, totalUsers, totalPages, currentPage }: Us
             <UserManagementSheet
                 user={selectedUser}
                 open={isSheetOpen}
-                onOpenChange={setIsSheetOpen}
-            />
-
-            <AddUserDialog
-                open={isAddDialogOpen}
-                onOpenChange={setIsAddDialogOpen}
-                onUserSelected={handleAddUserSelected}
+                onOpenChange={handleSheetOpenChange}
             />
         </div>
     );

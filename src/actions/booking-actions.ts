@@ -368,7 +368,7 @@ export async function verifyPayment(
     });
 
     revalidatePath("/my-tickets");
-    return { success: true, ticketId: ticket._id };
+    return { success: true, ticketId: ticket._id.toString() };
   } catch (error: any) {
     // Rollback referral if it was consumed but ticket creation failed
     if (referralCode) {

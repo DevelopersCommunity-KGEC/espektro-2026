@@ -3,10 +3,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { verifyTicket } from "@/actions/ticket-actions";
-// import { Button } from "@/components/ui/button"; // Not used in snippet
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react"; // Import Loader2
+import { ScannerSkeleton } from "@/components/skeletons";
+import { Loader2 } from "lucide-react";
 
 export default function ScanPage() {
     const [scanResult, setScanResult] = useState<any>(null);
@@ -111,7 +111,7 @@ export default function ScanPage() {
         isProcessingRef.current = false;
     };
 
-    if (isPending || !session) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
+    if (isPending || !session) return <ScannerSkeleton />;
 
     return (
         <div className="container mx-auto max-w-md p-4 min-h-screen flex flex-col">

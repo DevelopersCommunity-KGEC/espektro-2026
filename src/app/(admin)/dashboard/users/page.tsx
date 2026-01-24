@@ -3,8 +3,9 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAllUsersWithRoles } from "@/actions/admin-actions";
 import { UserDashboard } from "@/components/admin/user-dashboard";
+import { AddUserButton } from "@/components/admin/add-user-button";
 import { Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import { DashboardTableSkeleton } from "@/components/skeletons";
 
 async function UserList({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const page = Number(searchParams.page) || 1;
@@ -55,12 +56,9 @@ export default async function UserRolesPage({
                         Manage authorized users, global roles, and club assignments.
                     </p>
                 </div>
+                <AddUserButton />
             </div>
-            <Suspense fallback={
-                <div className="flex justify-center p-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-                </div>
-            }>
+            <Suspense fallback={<DashboardTableSkeleton />}>
                 <UserList searchParams={resolvedParams} />
             </Suspense>
         </div >

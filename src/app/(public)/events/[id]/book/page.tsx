@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { createOrder, verifyPayment } from "@/actions/booking-actions";
 import { getPublicEventById } from "@/actions/event-actions";
+import { validateReferralCode } from "@/actions/referral-actions";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, TicketPercent } from "lucide-react";
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
 
 export default function BookingPage() {
   const { id } = useParams();
@@ -18,6 +18,12 @@ export default function BookingPage() {
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Referral State
+  const [referralCode, setReferralCode] = useState("");
+  const [appliedCode, setAppliedCode] = useState<string | null>(null);
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [validatingCode, setValidatingCode] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -32,93 +38,137 @@ export default function BookingPage() {
     fetchEvent();
   }, [id]);
 
+  const handleApplyCode = async () => {
+    if (!referralCode.trim()) return;
+    setValidatingCode(true);
+    try {
+      const res = await validateReferralCode(referralCode);
+      if (!res.valid) {
+        toast.error(res.message || "Invalid code");
+        setAppliedCode(null);
+        setDiscountPercent(0);
+      } else {
+        // Check club ID match if event has clubId
+        if (event.clubId && res.clubId !== event.clubId) {
+          toast.error("This code is not valid for this event");
+          setAppliedCode(null);
+          setDiscountPercent(0);
+        } else {
+          setAppliedCode(referralCode);
+          setDiscountPercent(res.discountPercentage!);
+          toast.success(`Code applied! ${res.discountPercentage}% off`);
+        }
+      }
+    } catch (e) {
+      toast.error("Failed to validate code");
+    } finally {
+      setValidatingCode(false);
+    }
+  };
+
   const handlePayment = async () => {
+    if (loading) return;
     setLoading(true);
     try {
-      const order = await createOrder(id as string);
+      // Create Order / Payment Session
+      const order = await createOrder(id as string, appliedCode || undefined);
 
-      // BYPASS: If we get the bypass key, skip Razorpay modal
-      if (order.key === "rzp_test_bypass") {
+      // Handle Free Ticket Bypass
+      if (order.key === "FREE_TICKET" || order.key === "PAYMENT_BYPASS") {
         const result = await verifyPayment(
           id as string,
           order.orderId,
           "PAYMENT_BYPASS_" + Math.random().toString(36).substring(7),
-          "SIGNATURE_BYPASS"
+          "SIGNATURE_BYPASS",
+          appliedCode || undefined
         );
         if (result.success) {
+          toast.success("Ticket booked successfully!");
           router.push("/my-tickets");
         }
         return;
       }
 
-      const options = {
-        key: order.key,
-        amount: order.amount,
-        currency: order.currency,
-        name: "Espektro 2026",
-        description: `Ticket for ${event.title}`,
-        order_id: order.orderId,
-        handler: async function (response: any) {
-          try {
-            const result = await verifyPayment(
-              id as string,
-              response.razorpay_order_id,
-              response.razorpay_payment_id,
-              response.razorpay_signature
-            );
-            if (result.success) {
-              router.push("/my-tickets");
-            }
-          } catch (err: any) {
-            toast.error(err.message || "Payment verification failed");
-          }
-        },
-        prefill: {
-          name: "", // Will be filled by Razorpay if user is logged in
-          email: "",
-        },
-        theme: {
-          color: "#2563eb",
-        },
-      };
+      // Redirect to Dodo Checkout
+      if (order.checkoutUrl) {
+        window.location.href = order.checkoutUrl;
+      } else {
+        throw new Error("Failed to generate checkout URL");
+      }
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
     } catch (err: any) {
-      setError(err.message);
-    } finally {
+      toast.error(err.message || "Something went wrong");
       setLoading(false);
     }
   };
 
-  if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (error) return <div className="text-center py-20 text-red-600">{error}</div>;
+  if (loading && !event) {
+    return <div className="flex justify-center items-center py-20"><Loader2 className="animate-spin" /></div>;
+  }
+
+  if (error || !event) {
+    return <div className="text-center py-20 text-red-500">{error || "Event not found"}</div>;
+  }
+
+  const price = event.price;
+  const discountAmount = appliedCode ? Math.ceil((price * discountPercent) / 100) : 0;
+  const finalPrice = Math.max(0, price - discountAmount);
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
-      <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
-      <div className="bg-white p-8 rounded-2xl shadow-xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Confirm Booking</h1>
-        <div className="border-b pb-4 mb-4">
-          <p className="text-gray-600">Event</p>
-          <p className="text-xl font-semibold">{event.title}</p>
-        </div>
-        <div className="border-b pb-4 mb-4">
-          <p className="text-gray-600">Venue</p>
-          <p className="text-lg">{event.venue}</p>
-        </div>
-        <div className="border-b pb-4 mb-6">
-          <p className="text-gray-600">Total Amount</p>
-          <p className="text-2xl font-bold text-blue-600">₹{event.price}</p>
-        </div>
-        <button
-          onClick={handlePayment}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 disabled:bg-blue-300"
-        >
-          {loading ? "Processing..." : "Pay & Book Now"}
-        </button>
-      </div>
+    <div className="container max-w-lg mx-auto py-10 px-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Book Ticket: {event.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="flex justify-between items-center text-lg">
+            <span>Price</span>
+            <span>₹{price}</span>
+          </div>
+
+          {/* Referral Section */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Referral Code</label>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Enter code (e.g. ABC-1234)"
+                value={referralCode}
+                onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                disabled={!!appliedCode}
+              />
+              {appliedCode ? (
+                <Button variant="destructive" onClick={() => {
+                  setAppliedCode(null);
+                  setDiscountPercent(0);
+                  setReferralCode("");
+                }}>Remove</Button>
+              ) : (
+                <Button onClick={handleApplyCode} disabled={validatingCode || !referralCode}>
+                  {validatingCode ? <Loader2 className="animate-spin w-4 h-4" /> : "Apply"}
+                </Button>
+              )}
+            </div>
+            {appliedCode && (
+              <div className="text-green-600 text-sm flex items-center gap-1">
+                <TicketPercent className="w-4 h-4" />
+                Code applied: -₹{discountAmount} ({discountPercent}%)
+              </div>
+            )}
+          </div>
+
+          <div className="border-t pt-4 flex justify-between items-center font-bold text-xl">
+            <span>Total</span>
+            <span>₹{finalPrice}</span>
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full" size="lg" onClick={handlePayment} disabled={loading}>
+            {loading ? <Loader2 className="animate-spin mr-2" /> : null}
+            Pay ₹{finalPrice}
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
+

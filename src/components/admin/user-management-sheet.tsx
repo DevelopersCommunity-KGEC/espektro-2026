@@ -89,18 +89,18 @@ export function UserManagementSheet({ user, open, onOpenChange }: UserManagement
         router.refresh(); // Refreshes Server Components
     };
 
-    const handleGlobalRoleUpdate = async (newRole: "user" | "super-admin") => {
-        setActionLoading(true);
-        try {
-            await updateUserRole(user.email, newRole);
-            toast.success(`Global role updated to ${newRole}`);
-            refreshData();
-        } catch (error: any) {
-            toast.error(error.message);
-        } finally {
-            setActionLoading(false);
-        }
-    };
+    // const handleGlobalRoleUpdate = async (newRole: "user" | "super-admin") => {
+    //     setActionLoading(true);
+    //     try {
+    //         await updateUserRole(user.email, newRole);
+    //         toast.success(`Global role updated to ${newRole}`);
+    //         refreshData();
+    //     } catch (error: any) {
+    //         toast.error(error.message);
+    //     } finally {
+    //         setActionLoading(false);
+    //     }
+    // };
 
     const onAssignmentSubmit = async (values: z.infer<typeof assignmentSchema>) => {
         setActionLoading(true);
@@ -163,22 +163,6 @@ export function UserManagementSheet({ user, open, onOpenChange }: UserManagement
                                 </Badge>
                             </div>
                         </div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Global Role</DropdownMenuLabel>
-                                <DropdownMenuItem onClick={() => handleGlobalRoleUpdate('user')} disabled={user.role === 'user' || actionLoading}>
-                                    Set as Regular User
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleGlobalRoleUpdate('super-admin')} disabled={user.role === 'super-admin' || actionLoading} className="text-red-600">
-                                    Set as Super Admin
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
                     </div>
 
                     {/* Pending User Warning */}

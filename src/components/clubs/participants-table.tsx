@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { ManualTicketDialog } from "./manual-ticket-dialog";
 import {
     Select,
@@ -43,17 +45,20 @@ interface Participant {
     guestName?: string;
     guestPhone?: string;
     issueType: string;
+    issuedBy?: string;
 }
 
 interface ParticipantsTableProps {
     participants: Participant[];
     events: { _id: string; title: string }[];
     clubId: string;
+    currentUserEmail: string;
 }
 
-export function ParticipantsTable({ participants, events, clubId }: ParticipantsTableProps) {
+export function ParticipantsTable({ participants, events, clubId, currentUserEmail }: ParticipantsTableProps) {
     const [search, setSearch] = useState("");
     const [eventFilter, setEventFilter] = useState("all");
+    const [issuedByMe, setIssuedByMe] = useState(false);
     const router = useRouter();
 
     const handleStatusChange = async (ticketId: string, newStatus: string) => {
@@ -80,31 +85,43 @@ export function ParticipantsTable({ participants, events, clubId }: Participants
 
         const matchesEvent = eventFilter === "all" || p.eventId._id === eventFilter;
 
-        return matchesSearch && matchesEvent;
+        const matchesIssuer = !issuedByMe || p.issuedBy === currentUserEmail;
+
+        return matchesSearch && matchesEvent && matchesIssuer;
     });
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                <div className="flex gap-2 w-full sm:w-auto">
-                    <Input
-                        placeholder="Search by email, name, phone..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="max-w-sm"
-                    />
-                    <select
-                        className="h-10 w-50 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                        value={eventFilter}
-                        onChange={(e) => setEventFilter(e.target.value)}
-                    >
-                        <option value="all">All Events</option>
-                        {events.map(e => (
-                            <option key={e._id} value={e._id}>{e.title}</option>
-                        ))}
-                    </select>
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                        <Input
+                            placeholder="Search by email, name, phone..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="max-w-sm"
+                        />
+                        <select
+                            className="h-10 w-full sm:w-[200px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                            value={eventFilter}
+                            onChange={(e) => setEventFilter(e.target.value)}
+                        >
+                            <option value="all">All Events</option>
+                            {events.map(e => (
+                                <option key={e._id} value={e._id}>{e.title}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Checkbox
+                            id="issued-by-me"
+                            checked={issuedByMe}
+                            onCheckedChange={(checked) => setIssuedByMe(checked as boolean)}
+                        />
+                        <Label htmlFor="issued-by-me">Issued by me</Label>
+                    </div>
+                    <ManualTicketDialog clubId={clubId} events={events} />
                 </div>
-                <ManualTicketDialog clubId={clubId} events={events} />
             </div>
 
             <div className="rounded-md border">
@@ -116,13 +133,14 @@ export function ParticipantsTable({ participants, events, clubId }: Participants
                             <TableHead>Status</TableHead>
                             <TableHead>Details</TableHead>
                             <TableHead>Ticket Type</TableHead>
+                            <TableHead>Issued By</TableHead>
                             <TableHead>Check-In Time</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {filteredParticipants.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={6} className="text-center py-4">
+                                <TableCell colSpan={7} className="text-center py-4">
                                     No participants found
                                 </TableCell>
                             </TableRow>
@@ -172,6 +190,13 @@ export function ParticipantsTable({ participants, events, clubId }: Participants
                                     </TableCell>
                                     <TableCell>
                                         <Badge variant="outline">{participant.issueType}</Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                        <span className="text-xs text-muted-foreground">
+                                            {participant.issuedBy ?
+                                                (participant.issuedBy === currentUserEmail ? "Me" : participant.issuedBy)
+                                                : "System"}
+                                        </span>
                                     </TableCell>
                                     <TableCell>
                                         {participant.checkInTime ? new Date(participant.checkInTime).toLocaleString() : "-"}

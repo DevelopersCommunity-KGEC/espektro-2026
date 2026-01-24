@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Menu, LayoutDashboard, Calendar, Users, Ticket, ScanLine } from "lucide-react";
+import { Menu, LayoutDashboard, Calendar, Users, Ticket, ScanLine, Tag } from "lucide-react";
 import { useState } from "react";
 
 export function AdminSidebar() {
@@ -16,6 +16,7 @@ export function AdminSidebar() {
         { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
         { name: "Manage Events", href: "/dashboard/events", icon: Calendar },
         { name: "User Roles", href: "/dashboard/users", icon: Users },
+        { name: "Referrals", href: "/dashboard/referrals", icon: Tag },
         { name: "Manual Tickets", href: "/dashboard/manual-tickets", icon: Ticket },
         { name: "QR Scanner", href: "/scan", icon: ScanLine },
     ];

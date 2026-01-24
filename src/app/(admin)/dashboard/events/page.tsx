@@ -4,7 +4,7 @@ import { getEvents } from "@/actions/admin-actions";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { DashboardTableSkeleton } from "@/components/skeletons";
 
 async function EventsTable() {
     const events = await getEvents();
@@ -63,7 +63,7 @@ async function EventsTable() {
                                 ₹{event.price}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {event.ticketsSold} / {event.capacity}
+                                {event.ticketsSold} / {event.capacity === -1 ? "Unlimited" : event.capacity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <Link href={`/dashboard/events/${event._id}`} className="text-blue-600 hover:text-blue-900 mr-4">
@@ -100,11 +100,7 @@ export default async function EventsPage() {
                 </Link>
             </div>
 
-            <Suspense fallback={
-                <div className="flex justify-center p-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-                </div>
-            }>
+            <Suspense fallback={<DashboardTableSkeleton />}>
                 <EventsTable />
             </Suspense>
         </div>

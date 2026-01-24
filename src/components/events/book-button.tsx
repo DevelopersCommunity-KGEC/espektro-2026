@@ -3,26 +3,15 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { bookTicket } from "@/actions/ticket-actions";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 export function BookButton({ eventId }: { eventId: string }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleBook = async () => {
+    const handleBook = () => {
         setLoading(true);
-        try {
-            const res = await bookTicket(eventId);
-            if (res.success) {
-                router.push(`/payment/${res.ticketId}`);
-            }
-        } catch (error: any) {
-            toast.error(error.message || "Something went wrong");
-        } finally {
-            setLoading(false);
-        }
+        router.push(`/events/${eventId}/book`);
     };
 
     return (
@@ -36,3 +25,4 @@ export function BookButton({ eventId }: { eventId: string }) {
         </Button>
     );
 }
+
