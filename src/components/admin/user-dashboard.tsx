@@ -56,11 +56,7 @@ export function UserDashboard({ users, totalUsers, totalPages, currentPage }: Us
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
-                    <p className="text-muted-foreground">Manage authorized users, global roles, and club assignments.</p>
-                </div>
+            <div className="flex justify-end">
                 <Button onClick={() => setIsAddDialogOpen(true)}>
                     <Plus className="mr-2 h-4 w-4" /> Add User
                 </Button>

@@ -5,6 +5,10 @@ export interface IUser extends Document {
   email: string;
   image?: string;
   role: "user" | "super-admin";
+  phone?: string;
+  course?: string;
+  graduationYear?: string;
+  collegeName?: string;
   createdAt: Date;
 }
 
@@ -18,6 +22,10 @@ const UserSchema: Schema = new Schema(
       enum: ["user", "super-admin"],
       default: "user",
     },
+    phone: { type: String },
+    course: { type: String },
+    graduationYear: { type: String },
+    collegeName: { type: String },
     createdAt: { type: Date, default: Date.now },
   },
   { collection: "user" },

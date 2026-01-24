@@ -7,16 +7,12 @@ import { verifyTicket } from "@/actions/ticket-actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react"; // Import Loader2
-import { useSearchParams } from "next/navigation"; // To support ?clubId=...
 
 export default function ScanPage() {
     const [scanResult, setScanResult] = useState<any>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
-
-    const searchParams = useSearchParams();
-    const preSelectedClubId = searchParams.get("clubId");
 
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
@@ -119,7 +115,7 @@ export default function ScanPage() {
 
     return (
         <div className="container mx-auto max-w-md p-4 min-h-screen flex flex-col">
-            <h1 className="text-2xl font-bold mb-4 text-center">Ticket Scanner {preSelectedClubId && `(${preSelectedClubId})`}</h1>
+            <h1 className="text-2xl font-bold mb-4 text-center">Ticket Scanner</h1>
 
             <div id="reader" className="w-full bg-black rounded-lg overflow-hidden mb-6 min-h-75 relative">
                 {!isScanning && !loading && !scanResult && (
