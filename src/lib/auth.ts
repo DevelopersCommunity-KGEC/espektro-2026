@@ -25,6 +25,10 @@ export const auth = betterAuth({
         type: "string",
         defaultValue: "user",
       },
+      phone: { type: "string", required: false },
+      course: { type: "string", required: false },
+      graduationYear: { type: "string", required: false },
+      collegeName: { type: "string", required: false },
     },
   },
   databaseHooks: {
