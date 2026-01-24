@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardTableSkeleton } from "@/components/skeletons";
+import { SeedButton } from "@/components/admin/seed-button";
 
 async function EventsTable() {
     const events = await getEvents();
@@ -92,12 +93,15 @@ export default async function EventsPage() {
         <div>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold">Manage Events</h1>
-                <Link
-                    href="/dashboard/events/new"
-                    className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
-                >
-                    Add New Event
-                </Link>
+                <div className="flex items-center gap-2">
+                    <SeedButton />
+                    <Link
+                        href="/dashboard/events/new"
+                        className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
+                    >
+                        Add New Event
+                    </Link>
+                </div>
             </div>
 
             <Suspense fallback={<DashboardTableSkeleton />}>

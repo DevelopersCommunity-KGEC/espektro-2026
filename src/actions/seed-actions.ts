@@ -37,12 +37,9 @@ export async function ensureFestDays() {
       await Event.create(day);
       results.push(`Created ${day.title}`);
     } else {
-      if (!existing.clubId) {
-        existing.clubId = "espektro"; // based on seeding
-        await existing.save();
-        results.push(`Migrated ${day.title}`);
-      }
-      results.push(`Skipped ${day.title} (Already exists)`);
+      existing.set(day);
+      await existing.save();
+      results.push(`Updated ${day.title}`);
     }
   }
 
