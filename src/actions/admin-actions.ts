@@ -53,6 +53,7 @@ export async function assignClubRole(
   }
 
   revalidatePath("/dashboard/users");
+  revalidatePath(`/club/${clubId}/users`);
   return { success: true };
 }
 
@@ -329,9 +330,9 @@ export async function issueManualTicket(
   let singleEvent: any = null;
 
   if (isSeasonPass) {
-    // Assume season pass is strictly "espectro" club or handled by super admin?
-    // Or fest-days belong to espectro club.
-    eventClubId = "espectro"; // based on seeding
+    // Assume season pass is strictly "espektro" club or handled by super admin?
+    // Or fest-days belong to espektro club.
+    eventClubId = "espektro"; // based on seeding
     festDays = await EventModel.find({ type: "fest-day" });
     if (!festDays.length) throw new Error("No Fest Days found");
   } else {
@@ -453,8 +454,28 @@ export async function deleteEvent(id: string) {
 
 export async function getEvents() {
   await dbConnect();
-  const events = await EventModel.find().populate("clubId").sort({ date: 1 });
-  return JSON.parse(JSON.stringify(events));
+
+  // Manual population for stability
+  const events = await EventModel.find().sort({ date: 1 }).lean();
+
+  // Get unique clubIds
+  const clubIds = [
+    ...new Set(events.map((e: any) => e.clubId).filter(Boolean)),
+  ];
+
+  // Fetch matching clubs
+  const clubs = await ClubModel.find({ clubId: { $in: clubIds } }).lean();
+
+  // Map clubs by clubId for O(1) lookup
+  const clubMap = new Map(clubs.map((c: any) => [c.clubId, c]));
+
+  // Merge
+  const populatedEvents = events.map((event: any) => ({
+    ...event,
+    club: clubMap.get(event.clubId) || null,
+  }));
+
+  return JSON.parse(JSON.stringify(populatedEvents));
 }
 
 export async function getClubEvents(clubId: string) {
@@ -466,7 +487,24 @@ export async function getClubEvents(clubId: string) {
 export async function getClubTeam(clubId: string) {
   await dbConnect();
   const roles = await ClubRoleModel.find({ clubId }).populate("userId");
-  return JSON.parse(JSON.stringify(roles));
+  const pendingRoles = await PendingClubRoleModel.find({ clubId });
+
+  const formattedPending = pendingRoles.map((role: any) => ({
+    _id: role._id,
+    clubId: role.clubId,
+    role: role.role,
+    userId: {
+      name: "Pending User",
+      email: role.email,
+      image: null,
+    },
+  }));
+
+  const allRoles = [
+    ...JSON.parse(JSON.stringify(roles)),
+    ...JSON.parse(JSON.stringify(formattedPending)),
+  ];
+  return allRoles;
 }
 
 export async function getEventById(id: string) {

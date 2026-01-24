@@ -38,7 +38,7 @@ export async function ensureFestDays() {
       results.push(`Created ${day.title}`);
     } else {
       if (!existing.clubId) {
-        existing.clubId = "espectro"; // based on seeding
+        existing.clubId = "espektro"; // based on seeding
         await existing.save();
         results.push(`Migrated ${day.title}`);
       }
