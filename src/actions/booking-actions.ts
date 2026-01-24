@@ -135,11 +135,13 @@ export async function createOrder(eventId: string, referralCode?: string) {
           email: session.user.email,
           name: session.user.name,
         },
-        product: {
-          name: eventTitle,
-          description: `Ticket for ${eventTitle}`,
-          quantity: 1,
-        },
+        product_cart: [
+          {
+            name: eventTitle,
+            quantity: 1,
+            amount: finalPrice * 100,
+          },
+        ],
         returnUrl:
           process.env.DODO_PAYMENTS_RETURN_URL ||
           "http://localhost:3000/my-tickets",
@@ -148,7 +150,7 @@ export async function createOrder(eventId: string, referralCode?: string) {
           userId: session.user.id,
           email: session.user.email,
           referralCode: referralCode || "",
-          discountAmount: discountAmount,
+          discountAmount: String(discountAmount),
         },
       }),
     });
