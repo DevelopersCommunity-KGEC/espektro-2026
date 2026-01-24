@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IClub extends Document {
-  clubId: string; // The static ID from data/clubs.ts (e.g., 'music', 'espectro')
+  clubId: string; // The static ID from data/clubs.ts (e.g., 'music', 'espektro')
   name: string;
   description?: string;
   image?: string;

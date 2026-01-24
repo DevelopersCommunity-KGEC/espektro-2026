@@ -13,6 +13,8 @@ export interface ITicket extends Document {
   purchaseDate: Date;
   checkInTime?: Date;
   issuedBy?: string;
+  guestName?: string;
+  guestPhone?: string;
 }
 
 const TicketSchema: Schema = new Schema({
@@ -36,6 +38,8 @@ const TicketSchema: Schema = new Schema({
   purchaseDate: { type: Date, default: Date.now },
   checkInTime: { type: Date },
   issuedBy: { type: String }, // Email of the issuer (admin)
+  guestName: { type: String },
+  guestPhone: { type: String },
 });
 
 export default mongoose.models.Ticket ||

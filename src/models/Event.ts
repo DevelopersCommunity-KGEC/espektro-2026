@@ -30,7 +30,7 @@ const EventSchema: Schema = new Schema({
   capacity: { type: Number, required: true },
   ticketsSold: { type: Number, default: 0 },
   isVisible: { type: Boolean, default: true },
-  clubId: { type: String, required: true, ref: "Club" },
+  clubId: { type: String, required: true },
   editors: [{ type: String }],
   type: {
     type: String,
