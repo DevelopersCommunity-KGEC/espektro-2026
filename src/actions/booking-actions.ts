@@ -133,19 +133,15 @@ export async function createOrder(eventId: string, referralCode?: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        paymentAmount: finalPrice * 100,
+        product_id: process.env.DODO_PRODUCT_ID,
+        quantity: 1,
+        amount: finalPrice * 100, // Amount in smallest currency unit
+        paymentAmount: finalPrice * 100, // Backup field often used by Dodo
         paymentCurrency: "INR",
         customer: {
           email: session.user.email,
           name: session.user.name,
         },
-        product_cart: [
-          {
-            product_id: process.env.DODO_PRODUCT_ID,
-            quantity: 1,
-            amount: finalPrice * 100,
-          },
-        ],
         returnUrl:
           process.env.DODO_PAYMENTS_RETURN_URL ||
           "http://localhost:3000/my-tickets",

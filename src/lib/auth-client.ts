@@ -1,7 +1,8 @@
 import { createAuthClient } from "better-auth/react";
-import { auth } from "@/lib/auth";
+import { dodopaymentsClient } from "@dodopayments/better-auth";
+// import { auth } from "@/lib/auth"; // Avoid importing server auth in client
 
-// @ts-expect-error - specific better-auth type mismatch workaround
-export const authClient = createAuthClient<typeof auth>({
+export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL || "http://localhost:3000",
+  plugins: [dodopaymentsClient()],
 });
