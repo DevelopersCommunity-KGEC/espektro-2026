@@ -1,7 +1,7 @@
 # Espektro 2026 | Event & Ticketing Platform
 
 Official ticketing and event management platform for **Espektro 2026**, the annual cultural fest of **Kalyani Government Engineering College (KGEC)**.
-
+//espektro
 ## 🚀 Overview
 
 This platform enables multiple college clubs to independently manage their events, issue tickets, and handle payments under a unified system. It features a robust Role-Based Access Control (RBAC) system, secure QR code ticketing, and real-time check-in capabilities.
