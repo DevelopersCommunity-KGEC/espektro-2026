@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { Navbar } from "@/components/layout/navbar";
-import { OnboardingCheck } from "@/components/layout/onboarding-check";
+// import { Navbar } from "@/components/layout/navbar";
+// import { OnboardingCheck } from "@/components/layout/onboarding-check";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,11 +37,15 @@ export const metadata: Metadata = {
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { Toaster } from "@/components/ui/sonner";
-import { AdminSync } from "@/components/admin/admin-sync";
+// import { Toaster } from "@/components/ui/sonner";
+// import { AdminSync } from "@/components/admin/admin-sync";
 import { getUserClubRoles } from "@/lib/rbac";
+import Navigation from "@/components/layout/navbar/navbar";
+import HomeScreen from "@/components/layout";
+// import { Navbar } from "@/components/layout/navbar";
 
-export default async function RootLayout({
+export default async function RootLayout(
+  {
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -63,12 +67,72 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
-        <AdminSync />
-        <OnboardingCheck />
-        <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
-        {children}
-        <Toaster />
+        <Navigation />
+        <HomeScreen />
+        {/* <AdminSync /> */}
+        {/* <OnboardingCheck /> */}
+        {/* <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} /> */}
+        {/* {children} */}
+        {/* <Toaster /> */}
       </body>
     </html>
   );
 }
+
+
+
+
+
+// "use client"
+
+// import "./Hero.css";
+// // import "./styles/cloudBackground.css";
+// import React, { useEffect, useState } from "react";
+// // import { Route, Routes } from "react-router-dom";
+// // import Navbar from "./components-global/navbar/navbar";
+// import HomeScreen from "@/components/layout";
+// import { Navbar } from "@/components/layout/navbar";
+// // import ErrorPage from "./pages/landing/Error404";
+// // import {EventsV2} from './pages/eventsV2/index';
+// // import HomeScreen from './pages/landing';
+// // import ArtistsPage from './pages/landing/components/artist-v5';
+// // import AccomodationScreen from "./pages/accomodation";
+// // Import correctly using the named export
+// // import  AudioProvider from './services/AudioService';
+// // import AudioControl from './components/AudioControl/AudioControl';
+
+// const App: React.FC = () => {
+//   const [_loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     // Apply old paper effect to the document body
+//     document.body.classList.add('old-paper-theme');
+    
+//     // Simulate loading complete after resources are loaded
+//     const timer = setTimeout(() => {
+//       setLoading(false);
+//     }, 1000);
+    
+//     return () => {
+//       clearTimeout(timer);
+//       document.body.classList.remove('old-paper-theme');
+//     };
+//   }, []);
+
+//   return (
+//     <><div className="font-medieval">
+//       <Navbar />
+//       <HomeScreen />
+//       {/* <AudioControl showDelay={1000} /> */}
+//       {/* <Routes>
+//         <Route path="/" element={<HomeScreen />} />
+//         <Route path="/events" element={<EventsV2 />} />
+//         <Route path="/artists" element={<ArtistsPage />} />
+//         <Route path="/accomodation" element={<AccomodationScreen/>} /> 
+//         {/* <Route path="/espektro-merchandise" element={<MerchandiseScreen />} /> */}
+//         {/* <Route path="*" element={<ErrorPage />} />
+//       </Routes> */} 
+//       </div></>
+    
+//   );
+// };

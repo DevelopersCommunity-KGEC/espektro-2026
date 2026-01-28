@@ -1,0 +1,2075 @@
+[
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "http"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63e546f16c6d3e8550cb626e",
+    "title": "Cicada 3301- Test3",
+    "description": "lorem ipsum kdsndjfjs ds;jfsd osf sodfiosd",
+    "tagLine": "Checkmate",
+    "startTime": "2022-03-01T04:30:00.000Z",
+    "endTime": "2022-03-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventType": "group",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Anurag Chakraborty",
+        "phone": "9876543210",
+        "_id": "63e546f16c6d3e8550cb626f"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/68fb4493a9aae5149ef5882f25f4a284",
+        "_id": "63e75a8a94a5d24c81961536"
+      }
+    ],
+    "createdAt": "2023-02-09T19:18:09.982Z",
+    "updatedAt": "2023-03-21T19:12:59.093Z",
+    "__v": 0,
+    "eventWinList": [
+      {
+        "userId": "641478d778307797a0f474fd",
+        "userName": "Saptarshi Test",
+        "userCollege": "Sample College",
+        "position": 1,
+        "prize": "Rs. 2000",
+        "_id": "6419afa74ee24c7d7a3cb74d"
+      },
+      {
+        "userId": "641478d778307797a0f474fd",
+        "userName": "Saptarshi Test",
+        "userCollege": "Sample College",
+        "position": 2,
+        "prize": "Rs. 5000",
+        "_id": "6419d6d34ee24c7d7a3cc822"
+      },
+      {
+        "userId": "640e04e1349502790a4cdf44",
+        "userName": "Sudip",
+        "userCollege": "KGEC",
+        "position": 3000,
+        "prize": "Rs. 3",
+        "_id": "6419d6eb4ee24c7d7a3cc830"
+      },
+      {
+        "userId": "641469a378307797a0f451cc",
+        "userName": "Sudip Maiti",
+        "userCollege": "Kalyani Government Engineering College",
+        "position": 5,
+        "prize": "Rs. 200",
+        "_id": "641a01bb4ee24c7d7a3cd157"
+      }
+    ],
+    "sponsors": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "http"
+    },
+    "_id": "63d6eae9b08c41494e0f4ef6",
+    "title": "Cicada 3301- Test",
+    "description": "Vvv<div><br></div>",
+    "tagLine": "Checkmate",
+    "startTime": "2022-03-01T04:30:00.000Z",
+    "endTime": "2023-03-24T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [],
+    "eventType": "solo",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Anurag Chakraborty",
+        "phone": "9876543210",
+        "_id": "6412f28426324530be430683"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "createdAt": "2023-01-29T21:53:45.523Z",
+    "updatedAt": "2023-03-16T10:42:12.061Z",
+    "__v": 0,
+    "eventWinList": [
+      {
+        "userId": "63d28c33ee361b0883b41364",
+        "position": 1,
+        "prize": "Rs. 3000",
+        "_id": "640d6b6239cb95d0fe7bf268"
+      },
+      {
+        "userId": "63d28c33ee361b0883b41364",
+        "position": 1,
+        "prize": "Rs. 3000",
+        "_id": "640d6bd1b0ee4ca2259c4991"
+      },
+      {
+        "userId": "63d28c33ee361b0883b41364",
+        "position": 2,
+        "prize": "Rs. 3000",
+        "_id": "640d6c1d18c28de324912488"
+      },
+      {
+        "userId": "63d28c33ee361b0883b41364",
+        "userName": "Soumyajit Datta",
+        "userCollege": "kgec",
+        "position": 2,
+        "prize": "Rs. 3000",
+        "_id": "640d6c48cb9ad9bdbc606485"
+      }
+    ],
+    "eventPriceForKGEC": 0,
+    "otherPlatformUrl": "",
+    "prizes": "Hhh",
+    "rules": "Bbb",
+    "sponsors": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "http"
+    },
+    "_id": "6411661a091365182837dbf1",
+    "title": "Cicada 3301- Test6666",
+    "description": "lorem ipsum kdsndjfjs ds;jfsd osf sodfiosd",
+    "rules": "dfdf",
+    "prizes": "sdhs",
+    "tagLine": "Checkmate",
+    "startTime": "2022-03-01T10:00:00.000Z",
+    "endTime": "2022-03-01T11:00:00.000Z",
+    "eventVenue": "Administrative Building",
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Anurag Chakraborty",
+        "phone": "9876543210",
+        "_id": "6411661a091365182837dbf2"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "sponsor name",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "6411661a091365182837dbf3"
+      }
+    ],
+    "eventImages": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-15T06:30:50.842Z",
+    "updatedAt": "2023-03-15T06:30:50.842Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/db0ce162aa53305ba20b5e39058fa3ee"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63ed33fcde8b9c82f79d0fa9",
+    "title": "Test Event Sudip",
+    "description": "<p>Hhsb</p><p><br></p>",
+    "rules": "<p>Hhdbs</p>",
+    "prizes": "<p>Bbs</p>",
+    "tagLine": "hello world",
+    "startTime": "2023-02-15T00:59:00.000Z",
+    "endTime": "2023-02-17T00:59:00.000Z",
+    "eventVenue": "kgec",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/8228964e97734dd7c76b9517cdbd8373",
+        "_id": "63ed33fcde8b9c82f79d0faa"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 5,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "64654",
+        "_id": "63ed33fcde8b9c82f79d0fab"
+      },
+      {
+        "name": "Sudip Maiti",
+        "phone": "9994",
+        "_id": "63ed33fcde8b9c82f79d0fac"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-15T19:35:24.482Z",
+    "updatedAt": "2023-02-15T19:35:24.482Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "bh",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/600cd86f69de9f85eda04ca2b968d0ab"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63eddc96715dafc5b9e80a74",
+    "title": "u",
+    "description": "<p>Gdhh</p>",
+    "rules": "<p>Uh Bbd</p>",
+    "prizes": "<p>Nnnd</p>",
+    "tagLine": "jje",
+    "startTime": "2023-02-15T01:03:00.000Z",
+    "endTime": "2023-02-17T01:03:00.000Z",
+    "eventVenue": "hhd",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 5,
+    "eventPrice": 100,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi ",
+        "phone": "949941",
+        "_id": "63eddc96715dafc5b9e80a75"
+      },
+      {
+        "name": "hbb",
+        "phone": "994",
+        "_id": "63eddc96715dafc5b9e80a76"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T07:34:46.039Z",
+    "updatedAt": "2023-02-16T07:34:46.039Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/f8448cab5a3792d9662918950107831d"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63eddd7f715dafc5b9e80b27",
+    "title": "dd",
+    "description": "<p>Bbd</p>",
+    "rules": "<p>Hhs</p>",
+    "prizes": "<p>Hhs</p>",
+    "tagLine": "ggs",
+    "startTime": "2023-02-15T01:06:00.000Z",
+    "endTime": "2023-02-17T01:06:00.000Z",
+    "eventVenue": "ghe",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 120,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi ",
+        "phone": "949941",
+        "_id": "63eddd7f715dafc5b9e80b28"
+      },
+      {
+        "name": "hbb",
+        "phone": "994",
+        "_id": "63eddd7f715dafc5b9e80b29"
+      },
+      {
+        "name": "abc",
+        "phone": "158949494",
+        "_id": "63eddd7f715dafc5b9e80b2a"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T07:38:39.766Z",
+    "updatedAt": "2023-02-16T07:38:39.766Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/245d8870d4dec2136933673a474e9f27"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63edc2024ded669dd53d9ff7",
+    "title": "test event 42",
+    "description": "Hhhh",
+    "rules": "<p>Ccd</p>",
+    "prizes": "<p>1000</p>",
+    "tagLine": "testing",
+    "startTime": "2023-02-15T01:08:00.000Z",
+    "endTime": "2023-02-16T08:00:00.000Z",
+    "eventVenue": "anywhere",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/fa1d767a226845c94894cb242a3a552a",
+        "_id": "63edc2024ded669dd53d9ff8"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "9949",
+        "_id": "63edc2024ded669dd53d9ff9"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T05:41:22.258Z",
+    "updatedAt": "2023-02-16T05:41:22.258Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d01166cfe5d5dedf4f026be0ef2c3fba"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63ee19e3715dafc5b9e81aed",
+    "title": "Test Event 1",
+    "description": "<p>Ghhs</p>",
+    "rules": "<p>Hhs</p>",
+    "prizes": "<p>Hjhs</p>",
+    "tagLine": "jello",
+    "startTime": "2023-02-15T01:24:00.000Z",
+    "endTime": "2023-02-17T08:00:00.000Z",
+    "eventVenue": "ghh",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 2,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "5554545",
+        "_id": "63ee19e3715dafc5b9e81aee"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T11:56:19.790Z",
+    "updatedAt": "2023-02-16T11:56:19.790Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/e8cd3a294c93ac3a235b83cb7e5c00e7"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63edd908715dafc5b9e80926",
+    "title": "ghe",
+    "description": "<p>Yhhs</p>",
+    "rules": "<p>Hhdh</p>",
+    "prizes": "<p>Bnd</p>",
+    "tagLine": "gge",
+    "startTime": "2023-02-15T01:46:00.000Z",
+    "endTime": "2023-02-17T01:46:00.000Z",
+    "eventVenue": "gge",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/703b8614bea883ffdd7dc5675055ecf7",
+        "_id": "6409552ca02e5177943d831a"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 2,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi ",
+        "phone": "949941",
+        "_id": "6409552ca02e5177943d831b"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T07:19:36.612Z",
+    "updatedAt": "2023-03-09T03:40:28.309Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/7f57e878e2d0a47bc9432919692f86ee"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63ef2b218333ce5be23e8195",
+    "title": "Solo Event 1",
+    "description": "A Solo Event for students.",
+    "rules": "<ol><li>Must participate solo</li><li>Must abide by the guidelines</li><li>Decision of <b>authority</b>&nbsp;regarding awards is final</li></ol>",
+    "prizes": "<ul><li><b>2 lakh Dollar First Prize</b></li><li><b>1 lakh Dollar Second Prize</b></li></ul>",
+    "tagLine": "Ek Akela",
+    "startTime": "2023-02-16T01:51:00.000Z",
+    "endTime": "2023-02-18T01:51:00.000Z",
+    "eventVenue": "KGEC Fest Ground",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/6a81b95f76669a1ffa0ebe491ebea94f",
+        "_id": "63ef2b218333ce5be23e8196"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e2dfc87e61aa57370b0ca790cc29e93e",
+        "_id": "63ef2b218333ce5be23e8197"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/739c634a3429b1d21dd386c05ce4d828",
+        "_id": "63ef2b218333ce5be23e8198"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 2,
+    "eventPrice": 5000,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "55544",
+        "_id": "63ef2b218333ce5be23e8199"
+      },
+      {
+        "name": "Soumyajit Dutta",
+        "phone": "664646",
+        "_id": "63ef2b218333ce5be23e819a"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-17T07:22:09.593Z",
+    "updatedAt": "2023-02-17T07:22:09.593Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/3bbe101369b426f20cb688011d7fd7bd"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63edd3dd715dafc5b9e8067a",
+    "title": "testing event 12",
+    "description": "<p>Ddd</p>",
+    "rules": "<p>Fff</p>",
+    "prizes": "<p>Fff</p>",
+    "tagLine": "ghs",
+    "startTime": "2023-02-16T08:00:00.000Z",
+    "endTime": "2023-02-16T18:00:00.000Z",
+    "eventVenue": "ghs",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 5,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "saptarshi ",
+        "phone": "994",
+        "_id": "63edd3dd715dafc5b9e8067b"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-16T06:57:33.387Z",
+    "updatedAt": "2023-02-16T06:57:33.387Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/4848a89eac1ac9005d79487fa5ef3303"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63f24e573b2a83b3fae22c00",
+    "title": "ongoing event 1",
+    "description": "Just a description<div><ol><li><br></li></ol></div>",
+    "rules": "Gghh",
+    "prizes": "<ol><li>First prize</li></ol>",
+    "tagLine": "any upcoming event",
+    "startTime": "2023-02-17T00:56:00.000Z",
+    "endTime": "2023-02-22T00:56:00.000Z",
+    "eventVenue": "any",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/3305c88054faacdbc637e33766a2ffe8",
+        "_id": "6408e7a3a02e5177943d7a05"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/3305c88054faacdbc637e33766a2ffe8",
+        "_id": "6408e7a3a02e5177943d7a06"
+      }
+    ],
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "6664",
+        "_id": "6408e7a3a02e5177943d7a07"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-19T16:29:11.276Z",
+    "updatedAt": "2023-03-08T19:53:07.293Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/5cb26ebee681a6575a679e4adf16996d"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63ef2f308333ce5be23e82d8",
+    "title": "Solo Event 2",
+    "description": "<p>Just a test event</p>",
+    "rules": "<p><ul><li>Decision of judges is final</li></ul></p>",
+    "prizes": "<p><ol><li>1 lakh&nbsp;</li><li>50 k</li></ol></p>",
+    "tagLine": "ek akela",
+    "startTime": "2023-02-17T01:08:00.000Z",
+    "endTime": "2023-02-17T18:00:00.000Z",
+    "eventVenue": "kgec fest",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/6af12b40d99d0b1a1a36c8f6d8523e2a",
+        "_id": "63ef2f308333ce5be23e82d9"
+      }
+    ],
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 5000,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi Mandal",
+        "phone": "664664",
+        "_id": "63ef2f308333ce5be23e82da"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-17T07:39:28.903Z",
+    "updatedAt": "2023-03-21T16:11:23.367Z",
+    "__v": 0,
+    "eventWinList": [
+      {
+        "userId": "641469a378307797a0f451cc",
+        "userName": "Sudip Maiti",
+        "userCollege": "Kalyani Government Engineering College",
+        "position": 5000,
+        "prize": "Rs. 1",
+        "_id": "6419d7114ee24c7d7a3cc83f"
+      },
+      {
+        "userId": "640e04e1349502790a4cdf44",
+        "userName": "Sudip",
+        "userCollege": "KGEC",
+        "position": 3000,
+        "prize": "Rs. 2",
+        "_id": "6419d71c4ee24c7d7a3cc84c"
+      },
+      {
+        "userId": "640df202349502790a4cdac5",
+        "userName": "Saptarshi Mandal",
+        "userCollege": "KGEC",
+        "position": 1000,
+        "prize": "Rs. 3",
+        "_id": "6419d72b4ee24c7d7a3cc85a"
+      }
+    ],
+    "sponsors": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "_id": "6410e3ba1a3302388084bb91",
+    "title": "TimeHiest",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate",
+    "startTime": "2023-02-19T04:30:00.000Z",
+    "endTime": "2023-03-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "otherPlatformUrl": "https://gdsckgec.in/timeheist",
+    "eventType": "solo",
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "9876543210",
+        "_id": "6410e3ba1a3302388084bb92"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mindwebstest",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "6410e3ba1a3302388084bb93"
+      }
+    ],
+    "eventImages": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-14T21:14:35.075Z",
+    "updatedAt": "2023-03-14T21:14:35.075Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63ff1e4173acc456efcef707",
+    "title": "Robo War Test2",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate",
+    "startTime": "2023-02-19T04:30:00.000Z",
+    "endTime": "2023-03-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventType": "solo",
+    "eventPrice": 0,
+    "eventCoordinators": [
+      {
+        "name": "Anindya Kanti Mitra",
+        "phone": "9876543210",
+        "_id": "63ff1e4173acc456efcef708"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mindwebstest",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "63ff1e4173acc456efcef709"
+      }
+    ],
+    "eventImages": [],
+    "createdAt": "2023-03-01T09:43:29.571Z",
+    "updatedAt": "2023-03-01T09:43:29.571Z",
+    "__v": 0,
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63f1b1db201cb637c405d482",
+    "title": "Robo War",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate",
+    "startTime": "2023-02-19T04:30:00.000Z",
+    "endTime": "2023-03-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventType": "solo",
+    "eventPrice": 0,
+    "eventCoordinators": [
+      {
+        "name": "Anindya Kanti Mitra",
+        "phone": "9876543210",
+        "_id": "63f1b1db201cb637c405d483"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "eventImages": [],
+    "createdAt": "2023-02-19T05:21:31.548Z",
+    "updatedAt": "2023-02-19T05:21:31.548Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/0552d97e0ff0cdf47bb7d38b237f668f"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63f796be91f11324dc3d5b1f",
+    "title": "Ongoing Event 5",
+    "description": "Any",
+    "rules": "Any",
+    "prizes": "Any",
+    "tagLine": "any",
+    "startTime": "2023-02-22T02:08:00.000Z",
+    "endTime": "2023-02-24T02:08:00.000Z",
+    "eventVenue": "kgec ",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 3,
+    "eventPrice": 50,
+    "eventCoordinators": [
+      {
+        "name": "saptarshi",
+        "phone": "995",
+        "_id": "63f796be91f11324dc3d5b20"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-23T16:39:26.101Z",
+    "updatedAt": "2023-02-23T16:39:26.101Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "club name sample",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/6f95b2508668d8e97a4d6ba3d20b79e3"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "640afe6da82bac563edeea21",
+    "title": "hello world",
+    "description": "Any Description&nbsp;",
+    "rules": "<ol><li>Abide by authority&nbsp;</li></ol>",
+    "prizes": "<ol><li>5 lakh rupees</li></ol>",
+    "tagLine": "Any TagLine",
+    "startTime": "2023-03-10T00:16:00.000Z",
+    "endTime": "2023-03-12T01:00:00.000Z",
+    "eventVenue": "kgec",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/12d3f0d4c1b05f40b5c5bfdb1ae02195",
+        "_id": "640afe6da82bac563edeea22"
+      }
+    ],
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 200,
+    "eventCoordinators": [
+      {
+        "name": "sudip",
+        "phone": "999997",
+        "_id": "640afe6da82bac563edeea23"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "sponsor 1",
+        "type": "Title",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/2df9f41d7e9c02a83da9faa50d64bf25",
+        "_id": "640afe6da82bac563edeea24"
+      },
+      {
+        "name": "techtix sponsor",
+        "type": "Main Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/225cec5780d0ae58ae47c5453d21bc45",
+        "_id": "640afe6da82bac563edeea25"
+      }
+    ],
+    "createdAt": "2023-03-10T09:54:53.656Z",
+    "updatedAt": "2023-03-10T09:54:53.656Z",
+    "__v": 0,
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/5689277b4c8cdf61e481a570b4f4bc6a"
+    },
+    "_id": "640ca93ca82bac563edf3cfa",
+    "title": "Min 1 Max 2",
+    "description": "Just any Description for the event just to be sure.",
+    "rules": "Rules book<div><br></div><div><br></div><div><br></div><div><ol><li>Hhhhh</li><li>Hello everyone</li><li><br></li></ol></div>",
+    "prizes": "Hjhd",
+    "tagLine": "ghh",
+    "startTime": "2023-03-11T02:44:00.000Z",
+    "endTime": "2023-03-24T02:44:00.000Z",
+    "eventVenue": "gg",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 2,
+    "eventPrice": 20,
+    "eventCoordinators": [
+      {
+        "name": "anyone",
+        "phone": "9994",
+        "_id": "6414794f78307797a0f47817"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "createdAt": "2023-03-11T16:15:56.246Z",
+    "updatedAt": "2023-03-17T14:29:35.550Z",
+    "__v": 0,
+    "eventPriceForKGEC": 0,
+    "otherPlatformUrl": "",
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/33217c7bc1b28ddb208682c26b49317a"
+    },
+    "_id": "6415e0f00daa55a98ca8cb6e",
+    "title": "Time Heist Test",
+    "description": "Attention all coders and tech enthusiasts! Join our upcoming hackathon and gain practical experience in cutting-edge technologies like Web Dev, App Dev, Web3, AI-ML, and IoT. Whether you are a beginner or a seasoned pro, there's a project for you. Collaborate with like-minded individuals, get mentorship from industry experts, and showcase your skills.",
+    "rules": "<ul><li>Theme: The theme of the hackathon is \"Time Travel\". The problems given will be related to the Future (e.g. Climate Change, Hunger issues) as well as the Past (e.g. reviving our old culture) to secure our future and know our roots.</li><li>Eligibility: The hackathon is open to all students currently enrolled in a recognized college or university.</li><li>Team Size: Each team must have a minimum of 1 member and a maximum of 4.</li><li>Duration: The hackathon will go on for 36 hours.</li><li>Registration: Registration will be done through Devfolio.</li><li>Idea Judging: Each team must submit their idea in the first judging session. The idea must be related to the theme of the hackathon and should be demonstrated in the form of a presentation.</li><li>Functionality Judging: During this round, the teams will have to present their project and demonstrate its functionality.</li><li>Business Model Judging: During this round, teams will have to present their business model and explain how their project can be monetized.</li><li>Offline Round: The final result declaration will take place offline at KGEC campus.</li><li>Rules and Regulations: Each team must adhere to the rules and regulations of the hackathon. Any violation of the rules may lead to disqualification.</li><li>Prize: The winning team will be awarded a cash prize (amount to be announced later) and a certificate.</li><li>Timings: Timings for each round and the dates for the hackathon will be announced later.</li></ul>",
+    "prizes": "Monetary (20K Prize Pool) + Swags",
+    "tagLine": "Akiramenaide",
+    "startTime": "2023-03-11T10:00:00.000Z",
+    "endTime": "2023-03-25T14:00:00.000Z",
+    "eventVenue": "Pre - event is online and Finals in HU Lab",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/2784a6c3a4caa7b4b41a99408be3d7ed",
+        "_id": "6415e0f00daa55a98ca8cb6f"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "6290376589",
+        "_id": "6415e0f00daa55a98ca8cb70"
+      },
+      {
+        "name": "Saptarshi Bhattacharya",
+        "phone": "7439753613",
+        "_id": "6415e0f00daa55a98ca8cb71"
+      },
+      {
+        "name": "Arya Chakraborty",
+        "phone": "9883845692",
+        "_id": "6415e0f00daa55a98ca8cb72"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "Unstop",
+        "type": "Co Sponsor",
+        "image": "no image",
+        "_id": "6415e0f00daa55a98ca8cb73"
+      },
+      {
+        "name": "Newton School",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d6ecb7fb1b8ebd81f3858c3e9c96a497",
+        "_id": "6415e0f00daa55a98ca8cb74"
+      },
+      {
+        "name": "Creonimus ",
+        "type": "Co Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/fbb80131966960d8bed55725ca41cfdb",
+        "_id": "6415e0f00daa55a98ca8cb75"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:04:00.185Z",
+    "updatedAt": "2023-03-18T16:04:00.185Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/8335f9d379c7d3f082ff14ad3e5c70c3"
+    },
+    "_id": "640f5cfff51a57169a6fb205",
+    "title": "Test Event 52",
+    "description": "Description&nbsp;",
+    "rules": "Hellow world",
+    "prizes": "Prizes",
+    "tagLine": "test",
+    "startTime": "2023-03-13T00:55:00.000Z",
+    "endTime": "2023-03-23T00:55:00.000Z",
+    "eventVenue": "location ",
+    "eventImages": [],
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 2000,
+    "eventPriceForKGEC": 100,
+    "eventCoordinators": [
+      {
+        "name": "sap",
+        "phone": "12224",
+        "_id": "640f8b197732b36a870785e0"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-13T17:27:27.160Z",
+    "updatedAt": "2023-03-13T20:44:09.360Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/65cebd9f86d8db479127d2b2d8080708"
+    },
+    "_id": "640f8c347732b36a8707875a",
+    "title": "ongoing Event test",
+    "description": "<p>Description</p>",
+    "rules": "Rule",
+    "prizes": "Prizes&nbsp;",
+    "tagLine": "test",
+    "startTime": "2023-03-14T00:16:00.000Z",
+    "endTime": "2023-03-16T00:16:00.000Z",
+    "eventVenue": "location kgec",
+    "eventImages": [],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 2000,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "sudip",
+        "phone": "999",
+        "_id": "640f8c347732b36a8707875b"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "mind webs",
+        "type": "title sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d930f1456a0cf219b06d996e163e401a",
+        "_id": "640f8c347732b36a8707875c"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-13T20:48:52.325Z",
+    "updatedAt": "2023-03-13T20:48:52.325Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "gdsc KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/8f5d20564b71a66f55f57599846c6618"
+    },
+    "_id": "6411448da24ac9435f084a8f",
+    "title": "Min 1 Max 4",
+    "description": "Any",
+    "rules": "Any",
+    "prizes": "Any",
+    "tagLine": "any",
+    "startTime": "2023-03-15T00:36:00.000Z",
+    "endTime": "2023-03-24T00:36:00.000Z",
+    "eventVenue": "any",
+    "eventImages": [],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 200,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "any",
+        "phone": "46",
+        "_id": "64148d8e78307797a0f4a50c"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-15T04:07:41.830Z",
+    "updatedAt": "2023-03-17T15:55:58.974Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "http"
+    },
+    "_id": "63f3b59791f11324dc3d29a3",
+    "title": "Cicada 3301- Test2",
+    "description": "lorem ipsum kdsndjfjs ds;jfsd osf sodfiosd",
+    "rules": "<p>Always observe fairness.</p>",
+    "prizes": "<ol><li>1st prize 1 lakh</li></ol>",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-16T04:30:00.000Z",
+    "endTime": "2023-03-18T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/608a2c3bd06b18d64ef6ba03edd2e861",
+        "_id": "6412ede826324530be42f525"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/775a24208ef04c230be64ceba8611452",
+        "_id": "6412ede826324530be42f526"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/0f0f83e16c4a2fc168d8a6eee812a9c8",
+        "_id": "6412ede826324530be42f527"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/d68cdd113db031d85c17aa780aef113f",
+        "_id": "6412ede826324530be42f528"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/0556c3bb4bb516284844fdf87d5cb080",
+        "_id": "6412ede826324530be42f529"
+      }
+    ],
+    "eventType": "solo",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 500,
+    "eventCoordinators": [
+      {
+        "name": "Anurag Chakraborty",
+        "phone": "9876543210",
+        "_id": "6412ede826324530be42f52a"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "createdAt": "2023-02-20T18:01:59.257Z",
+    "updatedAt": "2023-03-16T10:22:32.951Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventPriceForKGEC": 200,
+    "otherPlatformUrl": "",
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/5e50de5c245f20fb7a68183752c70607"
+    },
+    "_id": "6412ee9526324530be42f84b",
+    "title": "Test Developer anyvvv",
+    "description": "Jjdj<div><br></div>",
+    "rules": "<ol><li>Behave well</li><li>Act responsibly</li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Hello world&nbsp;</p>",
+    "prizes": "<ul><li>1 crore</li></ul>",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-16T06:00:00.000Z",
+    "endTime": "2023-03-22T12:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/f21699a7a7830aecbfd2c586e44b4da8",
+        "_id": "64135a07c09a54df2c1edd49"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/2e9cc483d6bd0c5be12fe4895db24e6a",
+        "_id": "64135a07c09a54df2c1edd4a"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/290737c556dd0cac7a57812e6709c85c",
+        "_id": "64135a07c09a54df2c1edd4b"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/ff45df7e1e83a26657b3457ede3057e7",
+        "_id": "64135a07c09a54df2c1edd4c"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e3188fd123406e00b41ee0ffe0c5ea2e",
+        "_id": "64135a07c09a54df2c1edd4d"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 3,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 100,
+    "eventCoordinators": [
+      {
+        "name": "sap2",
+        "phone": "9994",
+        "_id": "64135a07c09a54df2c1edd4e"
+      },
+      {
+        "name": "sas",
+        "phone": "555",
+        "_id": "64135a07c09a54df2c1edd4f"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "First Sponsor",
+        "type": "Title",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d365bb2cedd5fd192841a6e97615ed61",
+        "_id": "64135a07c09a54df2c1edd50"
+      },
+      {
+        "name": "Second Sponsor",
+        "type": "Title 2",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/45e31acbb4f6ea728251541037151f00",
+        "_id": "64135a07c09a54df2c1edd51"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-16T10:25:25.051Z",
+    "updatedAt": "2023-03-16T18:03:51.525Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/5e50de5c245f20fb7a68183752c70607"
+    },
+    "_id": "6412ee5526324530be42f62a",
+    "title": "Group Event Testing",
+    "description": "Jjdj<div><br></div>",
+    "rules": "<ol><li>Behave well</li><li>Act responsibly</li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Hello world&nbsp;</p>",
+    "prizes": "<ul><li>1 crore</li></ul>",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-16T06:00:00.000Z",
+    "endTime": "2023-03-22T12:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/f21699a7a7830aecbfd2c586e44b4da8",
+        "_id": "64135736c09a54df2c1edbc1"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/2e9cc483d6bd0c5be12fe4895db24e6a",
+        "_id": "64135736c09a54df2c1edbc2"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/290737c556dd0cac7a57812e6709c85c",
+        "_id": "64135736c09a54df2c1edbc3"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/ff45df7e1e83a26657b3457ede3057e7",
+        "_id": "64135736c09a54df2c1edbc4"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e3188fd123406e00b41ee0ffe0c5ea2e",
+        "_id": "64135736c09a54df2c1edbc5"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 100,
+    "eventCoordinators": [
+      {
+        "name": "sap2",
+        "phone": "9994",
+        "_id": "64135736c09a54df2c1edbc6"
+      },
+      {
+        "name": "sas",
+        "phone": "555",
+        "_id": "64135736c09a54df2c1edbc7"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "First Sponsor",
+        "type": "Title",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d365bb2cedd5fd192841a6e97615ed61",
+        "_id": "64135736c09a54df2c1edbc8"
+      },
+      {
+        "name": "Second Sponsor",
+        "type": "Title 2",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/45e31acbb4f6ea728251541037151f00",
+        "_id": "64135736c09a54df2c1edbc9"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-16T10:24:21.970Z",
+    "updatedAt": "2023-03-16T17:51:50.766Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/5e50de5c245f20fb7a68183752c70607"
+    },
+    "_id": "6411620f091365182837d6ee",
+    "title": "Test Developer 3333",
+    "description": "Jjdj<div><br></div>",
+    "rules": "<ol><li>Behave well</li><li>Act responsibly</li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Hello world&nbsp;</p>",
+    "prizes": "<ul><li>1 crore</li></ul>",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-16T08:30:00.000Z",
+    "endTime": "2023-03-22T12:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/f21699a7a7830aecbfd2c586e44b4da8",
+        "_id": "64122a140913651828382636"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/2e9cc483d6bd0c5be12fe4895db24e6a",
+        "_id": "64122a140913651828382637"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/290737c556dd0cac7a57812e6709c85c",
+        "_id": "64122a140913651828382638"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/ff45df7e1e83a26657b3457ede3057e7",
+        "_id": "64122a140913651828382639"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e3188fd123406e00b41ee0ffe0c5ea2e",
+        "_id": "64122a14091365182838263a"
+      }
+    ],
+    "otherPlatformUrl": "Google.com",
+    "eventType": "group",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 100,
+    "eventCoordinators": [
+      {
+        "name": "sap2",
+        "phone": "9994",
+        "_id": "64122a14091365182838263b"
+      },
+      {
+        "name": "sas",
+        "phone": "555",
+        "_id": "64122a14091365182838263c"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "First Sponsor",
+        "type": "Title",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d365bb2cedd5fd192841a6e97615ed61",
+        "_id": "64122a14091365182838263d"
+      },
+      {
+        "name": "Second Sponsor",
+        "type": "Title 2",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/45e31acbb4f6ea728251541037151f00",
+        "_id": "64122a14091365182838263e"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-15T06:13:35.631Z",
+    "updatedAt": "2023-03-15T20:27:00.086Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/cc7e23f5a2a9b1d6a2c64de9611cefc6"
+    },
+    "_id": "6406045f27d471ad8cd3fdd3",
+    "title": "Test Developer",
+    "description": "Jjdj<div><br></div>",
+    "rules": "<ol><li>Behave well</li><li>Act responsibly</li></ol><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p>Hello world&nbsp;</p>",
+    "prizes": "<ul><li>1 crore</li></ul>",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-16T08:30:00.000Z",
+    "endTime": "2023-03-22T00:00:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/2e9cc483d6bd0c5be12fe4895db24e6a",
+        "_id": "64115f64a24ac9435f086511"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/290737c556dd0cac7a57812e6709c85c",
+        "_id": "64115f64a24ac9435f086512"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/ff45df7e1e83a26657b3457ede3057e7",
+        "_id": "64115f64a24ac9435f086513"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e3188fd123406e00b41ee0ffe0c5ea2e",
+        "_id": "64115f64a24ac9435f086514"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 2,
+    "eventMaxParticipants": 4,
+    "eventPrice": 500,
+    "eventCoordinators": [
+      {
+        "name": "sap",
+        "phone": "9999",
+        "_id": "64115f64a24ac9435f086515"
+      },
+      {
+        "name": "sap",
+        "phone": "9999",
+        "_id": "64115f64a24ac9435f086516"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "First Sponsor",
+        "type": "Title",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d365bb2cedd5fd192841a6e97615ed61",
+        "_id": "64115f64a24ac9435f086517"
+      },
+      {
+        "name": "Second Sponsor",
+        "type": "Title 2",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/45e31acbb4f6ea728251541037151f00",
+        "_id": "64115f64a24ac9435f086518"
+      }
+    ],
+    "createdAt": "2023-03-06T15:18:55.637Z",
+    "updatedAt": "2023-03-15T06:02:12.430Z",
+    "__v": 0,
+    "eventPriceForKGEC": 0,
+    "otherPlatformUrl": "No Url Added",
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "any",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/c164b0f1731fb8289f728369fe4ae425"
+    },
+    "_id": "6412efc826324530be42ff64",
+    "title": "any Event",
+    "description": "Gg Gg<div><br></div>",
+    "rules": "Bbb<div><br></div>",
+    "prizes": "Bb<div><br></div>",
+    "tagLine": "gg",
+    "startTime": "2023-03-16T15:56:00.000Z",
+    "endTime": "2023-03-16T20:00:00.000Z",
+    "eventVenue": "ggg",
+    "eventImages": [],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 3,
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "gg vv",
+        "phone": "699",
+        "_id": "64134710c60125e98d0b19a6"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-16T10:30:32.908Z",
+    "updatedAt": "2023-03-16T16:42:56.836Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "any",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/c164b0f1731fb8289f728369fe4ae425"
+    },
+    "_id": "6412ef2926324530be42fb24",
+    "title": "dss",
+    "description": "Gg Gg<div><br></div>",
+    "rules": "Bbb<div><br></div>",
+    "prizes": "Bb<div><br></div>",
+    "tagLine": "gg",
+    "startTime": "2023-03-16T15:56:00.000Z",
+    "endTime": "2023-03-16T20:00:00.000Z",
+    "eventVenue": "ggg",
+    "eventImages": [],
+    "otherPlatformUrl": "",
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "gg vv",
+        "phone": "699",
+        "_id": "6412ef2926324530be42fb25"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-16T10:27:53.186Z",
+    "updatedAt": "2023-03-16T10:27:53.186Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "_id": "6411612c60c4d1ce0bfef85c",
+    "title": "TimeHiest 3",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate",
+    "startTime": "2023-03-19T04:30:00.000Z",
+    "endTime": "2023-04-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "otherPlatformUrl": "",
+    "eventType": "solo",
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "9876543210",
+        "_id": "6414684f78307797a0f44f76"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mindwebstest",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "6414684f78307797a0f44f77"
+      }
+    ],
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/6185d7cabee5e043a9561d7b89104505",
+        "_id": "6414684f78307797a0f44f74"
+      },
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/08cbf29ef4cae37797705ea7d0bd80e6",
+        "_id": "6414684f78307797a0f44f75"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-15T06:09:48.622Z",
+    "updatedAt": "2023-03-17T13:17:03.576Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "_id": "6410e4fbb93c01a92c9375af",
+    "title": "TimeHiest 2",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate below bbdbbhnn hhhdjjj jjhjjnd jjjjjnjduhr hrjjjjrr jjjrjrjjrr hhhhhr jjrnnrr.",
+    "startTime": "2023-03-19T04:30:00.000Z",
+    "endTime": "2023-04-01T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "otherPlatformUrl": "https://gdsckgec.in/timeheist",
+    "eventType": "solo",
+    "eventPrice": 20000,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "9876543210",
+        "_id": "641540afc85cfbc672317667"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mindwebstest",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "641540afc85cfbc672317668"
+      }
+    ],
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e9d2d4e7d7c5f079901796afe814bd54",
+        "_id": "641540afc85cfbc672317666"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-14T21:19:55.886Z",
+    "updatedAt": "2023-03-18T04:40:15.948Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/bf0363e8565e0c30c2e1efbec6ab9051"
+    },
+    "_id": "640c6ba0a82bac563edf2655",
+    "title": "Cicada 3301 Test",
+    "description": "Cicada info...",
+    "rules": "Rules and all<div>.</div>",
+    "prizes": "<ol><li>1st prize 1 lakh</li><li>Fuchka 10rs</li><li>Rosogolla 5rs</li></ol>",
+    "tagLine": "we want the best, not others",
+    "startTime": "2023-03-22T00:16:00.000Z",
+    "endTime": "2023-03-25T00:16:00.000Z",
+    "eventVenue": "Seminar Hall, Admin Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/0556c3bb4bb516284844fdf87d5cb080",
+        "_id": "641c88d2512b4799636a356c"
+      }
+    ],
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 3,
+    "eventPrice": 5000,
+    "eventCoordinators": [
+      {
+        "name": "Saptarshi",
+        "phone": "9994",
+        "_id": "641c88d2512b4799636a356d"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mind Webs",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/7bd597dd9e7f8f1f631b4ad805f3b099",
+        "_id": "641c88d2512b4799636a356e"
+      },
+      {
+        "name": "Newton School",
+        "type": "Co Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/e6d12de074bf22c29bbf3912a1ef8498",
+        "_id": "641c88d2512b4799636a356f"
+      }
+    ],
+    "createdAt": "2023-03-11T11:53:04.496Z",
+    "updatedAt": "2023-03-23T17:13:54.136Z",
+    "__v": 0,
+    "eventPriceForKGEC": 0,
+    "otherPlatformUrl": "",
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "GDSC KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/0b0a93469d62dbb26f96845863a5a5f2"
+    },
+    "_id": "6415e1890daa55a98ca8ce06",
+    "title": "Blitzkrieg CTF Test Staging",
+    "description": "To all hackers and cybersec enthusiasts out there! Capture the flag is the right opportunity for you to put your skills to test by tackling problems in a series of real-world scenarios modelling all sorts of computer security problem, Understanding of the roles and ramifications of cyber security in those situations.<div><br></div><div>Since the challenges are designed to teach, CTF requires contestants to integrate concepts, develop skills and learn to hack as they go.</div><div><br></div><div>New to CTF? No worries. Here are some resources prepared by our team.</div><div><br></div><div>https://gdsckgec.in/ctf-resources</div><div></div>",
+    "rules": "<ul><li>Teams : A team, defined as a collaborative group of individuals, is only allowed to compete under one team name. A team is not allowed to give themselves or another team an unfair advantage. A member of one team is not allowed to share answers with another team. More than one uniquely-named team working together to secure multiple final-round spots will not be tolerated.</li><li>Guidelines: Participants must bring their own laptops and any necessary tools or software. Participants&nbsp;must not engage in any activity that could harm the competition infrastructure or other teams. Participants must adhere to the CTF code of conduct. Play fair.</li></ul><p></p>",
+    "prizes": "Monetary (5K Prize Pool) + Swags(for Top 3)",
+    "tagLine": "Capture all you can",
+    "startTime": "2023-03-23T10:00:00.000Z",
+    "endTime": "2023-03-23T12:30:00.000Z",
+    "eventVenue": "Seminar Hall and 1 Computer Lab",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/b4690761f8a392455b64dd4ed0afccce",
+        "_id": "6415e1890daa55a98ca8ce07"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 4,
+    "eventPrice": 5000,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "6290376589",
+        "_id": "6415e1890daa55a98ca8ce08"
+      },
+      {
+        "name": "Sarnavo Saha Sardar",
+        "phone": "8017927482",
+        "_id": "6415e1890daa55a98ca8ce09"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [
+      {
+        "name": "Newton School",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/88d634101718ef8ee19535ed24e636ce",
+        "_id": "6415e1890daa55a98ca8ce0a"
+      }
+    ],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:06:33.311Z",
+    "updatedAt": "2023-03-18T16:06:33.311Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "SAC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/273b00f3f52a41d1354c7847808c45e5"
+    },
+    "_id": "6415e27a0daa55a98ca8ce1d",
+    "title": "Water Rocket Test",
+    "description": "All that you need to know about Water Rocket Competition\r<div>Water Rocket is a mechanical event that involves the fabrication of a rocket whose fuel/thrust for \r</div><div>flight is obtained by the use of water that is expelled at a large air pressure. It is an example of \r</div><div>Newton's third law of motion. The prerequisites for such an event would be a basic knowledge of \r</div><div>fabrication, materials and physical calculations involving thrust, air pressure, etc. \r</div><div>Problem Statement:\r</div><div>You are required a rocket which is made up of plastic bottle of 1 -1.2 litre and by a pumper create a \r</div><div>pressure in it and by measuring the distance covered by the bottle we will choose the winner.</div>",
+    "rules": "Guidelines: -\r<div>1. Only plastic soft drink bottles and cardboard are to be used for the rocket body.\r</div><div>2. You have to bring your own bottle rocket \r</div><div>3. All energy given to the rocket must only come from the water/air pressure combination. No\r</div><div>other source of energy is allowed. You can only compress air manually, with a foot or bicycle\r</div><div>pump.\r</div><div>4. Only tap water shall be used in the rocket, and the water shall be provided by the organizers.\r</div><div>Water brought by the team shall not be allowed in the rockets.\r</div><div>5. No chemical or aerated water will be added for launching.\r</div><div>6. A launcher will be provided by the organiser and if the participants want to bring their own \r</div><div>launcher they can bring it but the launcher will be checked by the organiser.\r</div><div>General Rules &amp; Judging Criteria:\r</div><div>1. The team size should not exceed 3 members.</div><div></div><div>2. The amount of water to be filled in the rocket body and the pressure inside the rocket will be told \r</div><div>by the organiser on that day only.\r</div><div>3. The points earned by the team will depend on the horizontal distance covered by the rocket,\r</div><div>successful design.\r</div><div>4. Only one attempt is allowed.\r</div><div>5. Decision of judges will be final and abiding.</div><div></div>",
+    "prizes": "Prizes worth 5000",
+    "tagLine": "Make a rocket whose fuel is water.",
+    "startTime": "2023-03-23T10:00:00.000Z",
+    "endTime": "2023-03-23T12:00:00.000Z",
+    "eventVenue": "KGEC",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/bc420c5c05a9772e15f4ffe2034a1c13",
+        "_id": "6415e27a0daa55a98ca8ce1e"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 3,
+    "eventPrice": 10000,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Rahul Pramanik",
+        "phone": "9732467783",
+        "_id": "6415e27a0daa55a98ca8ce1f"
+      },
+      {
+        "name": "Soumyajit Bhunia",
+        "phone": "7679397002",
+        "_id": "6415e27a0daa55a98ca8ce20"
+      },
+      {
+        "name": "Afzal Hossain Mallick",
+        "phone": "9832766191",
+        "_id": "6415e27a0daa55a98ca8ce21"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:10:34.061Z",
+    "updatedAt": "2023-03-18T16:10:34.061Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC Robotics Society",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/8979c0bdafd5a98cb798ebcc55b2ac8c"
+    },
+    "_id": "6415ec000daa55a98ca8d0f8",
+    "title": "1 v 1 Test",
+    "description": "<p><b>Objective: </b></p><p>Team Deathmatch! Smash the ball into the opponent's area!</p><p><b>Bot Specifications: </b></p><p>Bots will be provided, no need to build one!</p>",
+    "rules": "<div><ul><li>&nbsp;You will be provided bot with manual control (DPDT) by which you have to take, tackle and throw or drag a ball into opponents' area. Time duration of each round: 3 mins (subject to change)</li><li>If there is a tie, additional rounds can be played until a winner is determined.(max. 2; if tie continues judges will decide winner based on strategies and playstyle implemented by each team)</li><li>The battle will be of two players at a time, and both the players will be provided bots. All you have to do is just score!&nbsp;</li><li>Any intentional damage to the opponent's bot will result in disqualification.</li><li>The use of any external devices or equipment that can interfere with the opponent's bot or the game is strictly prohibited.</li><li>Damaging the arena will cost disqualification and the opponent will win the match. The game will be a fun activity with only two players at a time, not a knockout tournament!</li><li>The winner will get a prize instantly after winning &amp; there is no prize for the defeated team.&nbsp;</li></ul></div><div><br></div>",
+    "prizes": "<b>Prize:</b> Token prize",
+    "tagLine": "Score it win it",
+    "startTime": "2023-03-23T10:00:00.000Z",
+    "endTime": "2023-03-23T13:00:00.000Z",
+    "eventVenue": "Administrative Building - North Block",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/d1f4b2d708f8d46e64cfafc8394e1c81",
+        "_id": "6415ec000daa55a98ca8d0f9"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Arnab Das",
+        "phone": "9330375193",
+        "_id": "6415ec000daa55a98ca8d0fa"
+      },
+      {
+        "name": "Partha Singha Roy ",
+        "phone": "9749166798",
+        "_id": "6415ec000daa55a98ca8d0fb"
+      },
+      {
+        "name": "Angsuman Patra",
+        "phone": "7478374176",
+        "_id": "6415ec000daa55a98ca8d0fc"
+      },
+      {
+        "name": "Sayantan Chakraborty ",
+        "phone": "6294554846",
+        "_id": "6415ec000daa55a98ca8d0fd"
+      },
+      {
+        "name": "Arijit Nandi",
+        "phone": "9903734596",
+        "_id": "6415ec000daa55a98ca8d0fe"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:51:12.668Z",
+    "updatedAt": "2023-03-18T16:51:12.668Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "Club Sample Test",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/fcc340d4ca5f274dea64eca0a803d1ef"
+    },
+    "_id": "641479ef78307797a0f47f66",
+    "title": "Solo Event",
+    "description": "Any<div><br></div>",
+    "rules": "Rules",
+    "prizes": "Prize",
+    "tagLine": "just testing",
+    "startTime": "2023-03-23T12:00:00.000Z",
+    "endTime": "2023-03-24T16:00:00.000Z",
+    "eventVenue": "kgec",
+    "eventImages": [],
+    "otherPlatformUrl": "",
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Sample Coordinator ",
+        "phone": "6694",
+        "_id": "641479ef78307797a0f47f67"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-17T14:32:15.314Z",
+    "updatedAt": "2023-03-17T14:32:15.314Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "Club Sample Test",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/fcc340d4ca5f274dea64eca0a803d1ef"
+    },
+    "_id": "641479c878307797a0f47d3f",
+    "title": "Min 4 Max 5",
+    "description": "Any<div><br></div>",
+    "rules": "Rules",
+    "prizes": "Prize",
+    "tagLine": "just testing",
+    "startTime": "2023-03-23T12:00:00.000Z",
+    "endTime": "2023-03-24T16:00:00.000Z",
+    "eventVenue": "kgec",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/3efb96afca13ab34bf6be2272a3295a3",
+        "_id": "641748f87b63be414f2353d6"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 4,
+    "eventMaxParticipants": 5,
+    "eventPrice": 500,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Sample Coordinator ",
+        "phone": "6694",
+        "_id": "641748f87b63be414f2353d7"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-17T14:31:36.914Z",
+    "updatedAt": "2023-03-19T17:40:08.639Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "SAC-KGEC",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/44b839339dd8b93c3fa1ff59f0d13d82"
+    },
+    "_id": "6415e37a0daa55a98ca8cf55",
+    "title": "Popsicle Bridge Challenge Test",
+    "description": "1. Bridges must be constructed using Popsicle sticks and glue gun or fevicol only (Glue is the only\r<div>material allowed for joining the Popsicle sticks). The maximum amount of Popsicle sticks can be \r</div><div>used is 100. The bridge's length and width should not be longer than 18 inches and 10 cm\r</div><div>respectively, it's height should be 10 cm.\r</div><div>2. The bridge will be allowed to deform and bend but must not break or separate into pieces.\r</div><div>3. The bridge should be in a single layer and this should be a truss bridge model.\r</div><div>4. Every participant has to make this bridge at home.\r</div><div>5. Participants are responsible for any damage or injury caused by them to themselves or others,\r</div><div>theorganizers of the competition are not liable for that.</div>",
+    "rules": "1. No claim will be entertained against the announced results.\r<div>2. Rules are subject to change. The decision of the event organizers will be final and binding.</div>",
+    "prizes": "Prizes worth 3000",
+    "tagLine": "Bridge made up of popsicle to withstand loads.",
+    "startTime": "2023-03-23T12:30:00.000Z",
+    "endTime": "2023-03-23T15:00:00.000Z",
+    "eventVenue": "KGEC",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/a372d421747ee5096d1a80faf6e2c1d7",
+        "_id": "6415e37a0daa55a98ca8cf56"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 2,
+    "eventPrice": 3000,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Rahul Pramanik",
+        "phone": "9732467783",
+        "_id": "6415e37a0daa55a98ca8cf57"
+      },
+      {
+        "name": "Shubham Sau",
+        "phone": "7595823368",
+        "_id": "6415e37a0daa55a98ca8cf58"
+      },
+      {
+        "name": "Priyanshu Roy",
+        "phone": "8340468818",
+        "_id": "6415e37a0daa55a98ca8cf59"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:14:50.795Z",
+    "updatedAt": "2023-03-18T16:14:50.795Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC Robotics Society",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/95e0de7f8121e51a435dd1c339df2878"
+    },
+    "_id": "6415ec9b0daa55a98ca8d103",
+    "title": "Radio Racing Test",
+    "description": "<div style=\"text-align: justify; \"><b>Objective :</b></div><div style=\"text-align: justify; \"><b><br></b> The main objective of the challenge is to build a robot that can complete the track and beat the other robot to win the challenge. The robot must be designed according to the guidelines provided.&nbsp;</div><div style=\"text-align: justify; \"><br></div><div><b>Robot Specification :</b></div><div>•<span style=\"white-space:pre\">\t</span>The robot must be strictly of the dimension 300mm X 300mm X 300mm (l x b x h) at every given point of the race. Any extension attached to the robot must be included within the specified dimension. (At most a tolerance of 5% is accepted)</div><div>•<span style=\"white-space:pre\">\t</span>Control mechanism is not included in the dimension constraint of the bot.</div><div>•<span style=\"white-space:pre\">\t</span>Total weight of the robot should not be more than 5kg.</div><div>•<span style=\"white-space:pre\">\t</span>It must purely be a remote-controlled robot.</div><div>•<span style=\"white-space:pre\">\t</span>The robot must have the ability to move in all directions.</div><div><br></div>",
+    "rules": "<div><b>Rules and Regulations :</b></div><div>•<span style=\"white-space:pre\">\t</span>Each team must contain a maximum of 5 members. Members from different colleges can form a team.</div><div>•<span style=\"white-space:pre\">\t</span>All participants must carry valid identification documents with them.</div><div>•<span style=\"white-space:pre\">\t</span>The decision of the judges is final.</div><div>•<span style=\"white-space:pre\">\t</span>The bot will be discarded if found unsafe before the race.</div><div>•<span style=\"white-space:pre\">\t</span>The contest will be held in the college campus where the track will have curves. Every team must keep in mind the bot should have the ability to move in all directions.</div><div>•<span style=\"white-space:pre\">\t</span>The total length of the track will be approximately 50 mts.&nbsp;</div><div>•<span style=\"white-space:pre\">\t</span>The teams are not allowed to touch the robot during the race.</div><div>•<span style=\"white-space:pre\">\t</span>The teams are not allowed to change the batteries during the race.</div><div>•<span style=\"white-space:pre\">\t</span>The team will be disqualified if the robot malfunctions during the race.</div><div>•<span style=\"white-space:pre\">\t</span>The team will be disqualified if the robot moves out of the track during the race.</div><div>•<span style=\"white-space:pre\">\t</span>The team must carry their own batteries.</div><div>•<span style=\"white-space:pre\">\t</span>The participating team will have to take care of their stocks of batteries.</div><div>•<span style=\"white-space:pre\">\t</span>The team must not damage the bot of the opponent team before, during or after the race.</div><div>•<span style=\"white-space:pre\">\t</span>Collision between two bots during the race will result in negative marking</div><div>•<span style=\"white-space:pre\">\t</span>Any team should not step into the arena/track during the race.</div><div>•<span style=\"white-space:pre\">\t</span>The bot which takes minimum time in completing the track wins.</div><div>•<span style=\"white-space:pre\">\t</span>The robot must not be made from any readymade kit, if found so, the team will be disqualified.</div><div>•<span style=\"white-space:pre\">\t</span>Two robots will be participating at a time. The winner proceeds to the next round. The last two surviving teams will compete for the final.</div><div><br></div>",
+    "prizes": "<div><b>Prize: </b>worth ₹5000</div><div><br></div>",
+    "tagLine": "Say no to brakes",
+    "startTime": "2023-03-23T12:30:00.000Z",
+    "endTime": "2023-03-23T15:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/4c43d238e319b6589ccbde838b3d8c86",
+        "_id": "6415ec9b0daa55a98ca8d104"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 5,
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Anindya Kanti Mitra ",
+        "phone": "9903068420",
+        "_id": "6415ec9b0daa55a98ca8d105"
+      },
+      {
+        "name": "Sunirban Ranjit ",
+        "phone": "6290853393",
+        "_id": "6415ec9b0daa55a98ca8d106"
+      },
+      {
+        "name": "Trishita Mukhopadhyay",
+        "phone": "9163064801",
+        "_id": "6415ec9b0daa55a98ca8d107"
+      },
+      {
+        "name": "Subhadeep Das",
+        "phone": "8617538720",
+        "_id": "6415ec9b0daa55a98ca8d108"
+      },
+      {
+        "name": "Sk Iftikar Uddin",
+        "phone": "8250780480",
+        "_id": "6415ec9b0daa55a98ca8d109"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:53:47.450Z",
+    "updatedAt": "2023-03-18T16:53:47.450Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC Robotics Society",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/264cc482162cc91d65c7e4b45f0dc7ff"
+    },
+    "_id": "6415ed360daa55a98ca8d10e",
+    "title": "Wrestlemania Test",
+    "description": "<div style=\"text-align: justify;\"><div><br></div><div><div style=\"\"><div><b>Objective:</b></div><div>Wrestlemania is another manually controlled robotics event involving a fight between two bots till they are at the brink of their health.</div><div><br></div></div><div style=\"\"><br></div></div><div><b>Arena Specifications:</b></div><div>1. The arena is closed on all sides for safety purpose. Inner dimension of the arena</div><div>will be 6 ft x 6 ft.</div><div>2. In the final combat, there’ll be open pits of dimension 1 ft x 1 ft each at the opposite</div><div>corners of the arena.&nbsp;</div><div>3. The arena is made of plywood on the surface. The arena will be updated, if there are</div><div>any changes and will be informed to the registered teams earlier.&nbsp;</div><div>4. Dimension of the main platform can change during the event.</div><div><br></div><div><b>Bot's Specifications:</b></div><div><div style=\"\"><br></div><div style=\"\"><div>1. The bot should fit in the dimension box of 1.5 ft x1.5 ft x 2 ft (l x b x h). (10% error in dimensions can be considered)&nbsp;</div><div>2. This includes the weapon installed but, excludes external tanks or devices to control it.&nbsp;</div><div>3. Both wired and wireless bots are allowed. The bot must be manually controlled.&nbsp;</div><div>4.The weight of the bot should not strictly exceed 15 kg. Wired bots should ensure that the length of the wire is greater than the twice of the diagonal length of playable arena.&nbsp;</div><div>5. Standard AC VOLTAGE will be supplied at the venue.&nbsp;</div><div>6. There are no restrictions on number of motors used in making the bot. Any bot of</div><div>the team, if found violating the rules and the decorum of the event, will be immediately disqualified.</div><div></div><div><br></div><div><div>Following weapons are exceptions and cannot be used:&nbsp;</div><div>1. Liquid projectiles (Foam, liquefied gases)&nbsp;</div><div>2. Any kind of inflammable liquid.&nbsp;</div><div>3. Flame-based weapons.&nbsp;</div><div>4. Weapons causing invisible damage(Electrical weapons, RF jamming weapons and others)&nbsp;</div><div>5. Sharp edged weapons can be used but arena should not be damaged.</div><div><br></div></div><div><b>Match Duration:&nbsp;</b></div><div><b><br></b></div><div><div style=\"\">1. Matches shall be 3 minutes of active fight time exclusive of any time-outs. Hence, it is not binding but advisable to keep battery capacity, power usage and machine defenses such that it can sustain a 3 minute fight.&nbsp;</div><div style=\"\">2. Matches would be played on knockout basis where the combat is a regular one on one combat between 2 bots.</div><div style=\"font-weight: bold;\"><br></div><div style=\"font-weight: bold;\"><br></div></div></div></div></div>",
+    "rules": "<div style=\"text-align: justify;\"><div>Methods of mobility include:</div><div>I. Rolling (wheels, tracks or the whole robot).</div><div>II. Legged mechanism</div><div>III. Novel drive mechanisms</div><div><br></div><div><b>Mobility methods that are not allowed:</b></div><div><div style=\"\">1. Flying is not allowed.</div><div style=\"\">&nbsp;2. Jumping and hopping is not allowed.&nbsp;</div><div style=\"\">3. The case of any interference in the wireless systems will not be considered for rematch or results.</div><div style=\"\">4. There should be binding capability between transmitters and receivers.</div><div style=\"\">5. Team should pair up the wireless remote with the machine before putting it into the arena. No extra time will be provided for this.&nbsp;</div><div style=\"\">6. Once the machines are put inside the arena, and not connecting it prior to that may attract a penalty on the team.&nbsp;</div><div style=\"\">7. For wired robots every connections should be properly checked before putting the robots into the arena.</div><div style=\"font-weight: bold;\"><br></div><div style=\"font-weight: bold;\">Battery and Power:</div><div style=\"\"><div style=\"\">1. The machine can be powered electrically only.&nbsp;</div><div style=\"\">2. Use of an IC engine in any form is not allowed.&nbsp;</div><div style=\"\">3. On board batteries must be sealed, immobilized electrolyte types (such as gel cells, lithium, NiCad, NiMH, or dry cells).&nbsp;</div><div style=\"\">4.The electric voltage between 2 points anywhere in the machine should not be more than 24V</div><div style=\"\">DC at any point of time.&nbsp;</div><div style=\"\">5. All efforts must be made to protect battery terminals from a direct short and causing a battery fire, failure to do so will cause direct disqualification.&nbsp;</div><div style=\"\">6.Use of damaged, non-leak proof batteries may lead to disqualification.&nbsp;</div><div style=\"\">7. Special care should be taken to protect the onboard batteries. If judges find that the battery is not properly protected, then team will be disqualified immediately.&nbsp;</div><div style=\"\">8. Change of battery will not be allowed during the match<b>.</b></div><div style=\"\"><b><br></b></div><div style=\"\"><b>Competition Rules:</b></div><div style=\"\"><br></div><div style=\"\"><div style=\"\">1. Any team can participate in, Wrestlemania. A team may consist of a</div><div style=\"\">maximum of 5 participants. These participants can be from same or different institutes.&nbsp;</div><div style=\"\">2. Team Name: Every team must have a name which must be unique. Wrestlemania co-ordinators reserves the right to reject entries from any Team whose name it deems inappropriate, offensive or conflicting. Organizers must be</div><div style=\"\">notified during the event if a Team's name has been changed.&nbsp;</div><div style=\"\">3. Team Representative: Each team must specify their Team Representative (Leader) at the time of registration on the website.&nbsp;</div><div style=\"\">4. All important communications between coordinators and the registered teams will be done through their Team Representative.&nbsp;</div><div style=\"\">5. The Team representatives must submit valid contact details (phone no., email ID etc.) at the time of registration<b>.</b></div><div style=\"font-weight: bold;\"><br></div></div><div style=\"font-weight: bold;\">Criteria for Victory:</div><div style=\"\"><div style=\"\">1. A robot is declared victorious if its opponent is immobilized.&nbsp;</div><div style=\"\">2. A robot will be declared immobile if it cannot display linear motion of at least one inch in a timed period of 30 seconds.&nbsp;</div><div style=\"\">3. A bot with one side of its drivetrain disabled will not be counted out if it can demonstrate some degree of controlled movement. 4. In case both the robots remain mobile after the end of the round then the winner will be decided subjectively.&nbsp;</div><div style=\"\">5. A robot that is deemed unsafe by the judges after the match has begun will be disqualified and therefore declared the loser. The match will be immediately halted and the opponent will be awarded a win.</div><div style=\"\">6. If a robot is thrown out of the arena the match will stop immediately, and</div><div style=\"\">the robot still inside the arena will automatically be declared as the winner.&nbsp;</div><div style=\"\">7. A Robots cannot win by pinning or lifting their opponents.&nbsp;</div><div style=\"\">8. Organizers will allow pinning or lifting for a maximum of 10 seconds per pin/lift then the attacker robot will be instructed to release the opponent. If, after being instructed to do</div><div style=\"\">so, the attacker is able to release but does not, their robot may be disqualified.&nbsp;</div><div style=\"\">9. If two or more robots become entangled or a crushing or gripping weapon is employed and becomes trapped within another robot, then the competitors should make the timekeeper aware, the fight should be stopped and the robots separated by the safest means.&nbsp;</div><div style=\"\">10. All the decisions taken by the judge will be final and binding to all.&nbsp;</div><div style=\"\">11. The distribution of points lies solely in the hands of judges and their decision shall be final. Any queries afterwards will not be entertained.</div><div style=\"\"><br></div><div style=\"font-weight: bold;\">Entry Fees:</div><div style=\"\"><div style=\"\">Each tem member has to make an entry fee of ₹25, with a minimum entry fee of&nbsp; ₹40 coming from each team. Participation for students of KGEC is free of cost.</div><div style=\"font-weight: bold;\"><br></div></div></div></div></div></div>",
+    "prizes": "<div><b>Prize</b>: worth ₹7000</div><div><br></div>",
+    "tagLine": "Aa dekhe jara kisme kitna hai dam",
+    "startTime": "2023-03-24T10:00:00.000Z",
+    "endTime": "2023-03-24T13:00:00.000Z",
+    "eventVenue": "Academic building - north block",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/1ddadd183a253397f09ca55476749c96",
+        "_id": "6415ed360daa55a98ca8d10f"
+      }
+    ],
+    "otherPlatformUrl": "",
+    "eventType": "group",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 5,
+    "eventPrice": 2500,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Pritam Mukherjee ",
+        "phone": "9775545624",
+        "_id": "6415ed360daa55a98ca8d110"
+      },
+      {
+        "name": "Kanchan Kumar Kaity",
+        "phone": "9382932034",
+        "_id": "6415ed360daa55a98ca8d111"
+      },
+      {
+        "name": "Ahana Biswas",
+        "phone": "8336029471",
+        "_id": "6415ed360daa55a98ca8d112"
+      },
+      {
+        "name": "Sourav Das",
+        "phone": "9641635684",
+        "_id": "6415ed360daa55a98ca8d113"
+      },
+      {
+        "name": "Sayak jana",
+        "phone": "8145069918",
+        "_id": "6415ed360daa55a98ca8d114"
+      }
+    ],
+    "createdBy": "63da9b1ef3437e48fcc88ae7",
+    "sponsors": [],
+    "eventWinList": [],
+    "createdAt": "2023-03-18T16:56:22.051Z",
+    "updatedAt": "2023-03-18T16:56:22.051Z",
+    "__v": 0
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "kgec rs",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/836eacced83824a91423b8a71cee85dd"
+    },
+    "eventPriceForKGEC": 0,
+    "_id": "63f8746791f11324dc3d66f4",
+    "title": "rs event 1",
+    "description": "Rs event 1 description",
+    "rules": "Rs event 1 rules",
+    "prizes": "Rs event 1 prizes",
+    "tagLine": "rs event 1",
+    "startTime": "2023-03-24T12:00:00.000Z",
+    "endTime": "2023-03-24T13:00:00.000Z",
+    "eventVenue": "aab",
+    "eventImages": [
+      {
+        "url": "https://tessarus.s3.ap-south-1.amazonaws.com/e9debe559a58ed54c599f20527a1c0ff",
+        "_id": "63f8746791f11324dc3d66f5"
+      }
+    ],
+    "eventType": "solo",
+    "eventMinParticipants": 1,
+    "eventMaxParticipants": 1,
+    "eventPrice": 100,
+    "eventCoordinators": [
+      {
+        "name": "pm",
+        "phone": "1234567890",
+        "_id": "63f8746791f11324dc3d66f6"
+      },
+      {
+        "name": "akm",
+        "phone": "1234567890",
+        "_id": "63f8746791f11324dc3d66f7"
+      }
+    ],
+    "createdBy": "63f0f9538333ce5be23e9073",
+    "createdAt": "2023-02-24T08:25:11.817Z",
+    "updatedAt": "2023-02-24T08:25:11.817Z",
+    "__v": 0,
+    "sponsors": [],
+    "eventWinList": []
+  },
+  {
+    "eventOrganiserClub": {
+      "name": "KGEC RS",
+      "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5"
+    },
+    "_id": "64705f8fbadeaef356783a37",
+    "title": "TimeHiest 4",
+    "description": "Lorem ipsum",
+    "rules": "Rules",
+    "prizes": "Prizes",
+    "tagLine": "Checkmate",
+    "startTime": "2023-05-27T04:30:00.000Z",
+    "endTime": "2023-05-28T05:30:00.000Z",
+    "eventVenue": "Administrative Building",
+    "otherPlatformUrl": "",
+    "eventType": "solo",
+    "eventPrice": 0,
+    "eventPriceForKGEC": 0,
+    "eventCoordinators": [
+      {
+        "name": "Soumyajit Datta",
+        "phone": "9876543210",
+        "_id": "64705f8fbadeaef356783a38"
+      }
+    ],
+    "createdBy": "63d6750da1856c1ead71b70b",
+    "sponsors": [
+      {
+        "name": "Mindwebstest",
+        "type": "Title Sponsor",
+        "image": "https://tessarus.s3.ap-south-1.amazonaws.com/d4cf800a7e6d55b5d75afc42ba1270d5",
+        "_id": "64705f8fbadeaef356783a39"
+      }
+    ],
+    "eventImages": [],
+    "eventWinList": [],
+    "createdAt": "2023-05-26T07:28:15.389Z",
+    "updatedAt": "2023-05-26T07:28:15.389Z",
+    "__v": 0
+  }
+]

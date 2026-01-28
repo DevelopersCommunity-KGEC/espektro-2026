@@ -1,0 +1,169 @@
+@import '../../../../../styles/colors';
+@import '../../../../../styles/breakpoints';
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Nova+Square&family=Poppins:wght@300;400;500;600&family=Saira+Extra+Condensed:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=UnifrakturCook:wght@700&display=swap');
+
+$roboto-slab: 'Roboto Slab', serif;
+$open-sans: 'Open Sans', sans-serif;
+$poppins-sans: 'Poppins', sans-serif;
+$saira-sans: 'Saira', sans-serif;
+$medieval-sharp: 'MedievalSharp', cursive;
+
+.about_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  color: $light;
+  padding: 0 0.8rem;
+  padding-top: 7rem;
+  & > .about_main_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: min-content;
+    & > .about_content_section {
+      // border: 2px solid red;
+      width: 100%;
+      word-wrap: break-word;
+      text-align: left;
+      padding: 1rem 1rem;
+      font-family: $medieval-sharp;
+      overflow: hidden;
+    }
+
+    & > .about_img_grid_container {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      overflow: hidden;
+      z-index: 10;
+      // border: 2px solid red;
+
+      & > .imgone {
+        grid-column: 1/3;
+        grid-row: 1/2;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translate(20%, 10%);
+
+        // border: 2px solid red
+        & > img {
+          border: 1px solid white;
+          border-radius: 0.5rem;
+          width: 10%;
+        }
+      }
+
+      & > .imgtwo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.3rem;
+        grid-column: 2/5;
+        grid-row: 1/3;
+        object-fit: fill;
+        height: 100%;
+
+        // border: 2px solid green;
+
+        & > img {
+          object-fit: fill;
+          align-self: center;
+          border-radius: 0.5rem;
+          border: 2px solid white;
+          // width: 100vh;
+          height: fit-content; // Smaller width for image2
+        }
+      }
+
+      & > .imgthree {
+        grid-column: 4/6;
+        grid-row: 2/3;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // align-self: flex-end;
+        // transform: translate(-15%, -20%);
+        // border: 2px solid red;
+
+        & > img {
+          border-radius: 0.5rem;
+          border: 1px solid white;
+          width: 10%; // Smaller width for image3
+        }
+      }
+    }
+
+    @include mobile {
+      flex-direction: row;
+
+      & > .about_content_section {
+        flex: 1;
+      }
+
+      & > .about_img_grid_container {
+        flex: 2;
+        
+        .imgone img.about_img {
+          width: 100%;
+          max-width: none;
+        }
+        
+        .imgtwo img.about_img, 
+        .imgthree img.about_img {
+          width: 100%; // Keep images 2 and 3 smaller on mobile too
+          max-width: none;
+        }
+      }
+    }
+  }
+}
+
+.button {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.3em 3em;
+  font-size: 12px;
+  font-family: $medieval-sharp;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--divider-color);
+  
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    // background-color: navajowhite;
+    // box-shadow: 0px 15px 20px $medium-brown;
+    color: wheat;
+    transform: translateY(-7px);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.brochureText {
+  font-family: $medieval-sharp;
+  font-size: 1.2rem;
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}

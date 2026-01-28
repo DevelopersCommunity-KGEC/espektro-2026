@@ -1,0 +1,251 @@
+.landing {
+  position: relative;
+  min-height: 100vh;
+}
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin-top: 0;
+  z-index: 1;
+}
+
+.hero-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+/* Simplified animation */
+.hero-title {
+  color: white;
+  animation: titleFadeIn 1.5s ease-out;
+}
+
+.hero-dates {
+  color: #fff;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.5s;
+  letter-spacing: 0.2em;
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
+  margin: 0.5rem auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Added text shadow */
+}
+
+.button-group {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.8s;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Simplified keyframes */
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-page {
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  padding-top: 0;
+  background-color: #161816;
+  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.6); /* Enhanced shadow for depth */
+}
+
+/* Optimize floating button animation */
+.floating-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); /* Added drop shadow */
+}
+
+.floating-button:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6)); /* Enhanced drop shadow on hover */
+}
+
+.event-button-img {
+  height: auto;
+  width: auto;
+  max-width: 180px;
+  transition: filter 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); /* Added shadow to image */
+}
+
+.floating-button:hover .event-button-img {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)); /* Enhanced shadow on hover */
+}
+
+/* Optimize hero logo */
+.hero-logo-container {
+  width: 100%;
+  max-width: 85%;
+  margin: 0 auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+.hero-logo {
+  max-width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Fixed navbar styles */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.navbar-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Loading placeholders */
+.video-loading-fallback {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1001;
+}
+
+.section-loading {
+  height: 300px;
+  background-color: #161816;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Content visibility optimization */
+.landing-page > div:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+/* Responsive media queries - simplified */
+@media (max-width: 768px) {
+  .hero-logo-container {
+    max-width: 90%;
+  }
+  
+  .event-button-img {
+    max-width: 150px;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero-logo-container {
+    max-width: 65%;
+  }
+  
+  .event-button-img {
+    max-width: 180px;
+  }
+}
+
+/* iOS Safari fix */
+@supports (-webkit-touch-callout: none) {
+  .hero-section, .hero-content {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Add shadow to section wrappers */
+.section-wrapper {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Shadow class for enhanced text elements */
+.shadow-text {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Enhanced shadow for text elements */
+.tagline {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}

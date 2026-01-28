@@ -1,0 +1,360 @@
+.galleryContainer {
+    position: relative;
+    /* 
+     Constraint: 80% screen height as requested.
+     Aspect Ratio 1.33 (24/18) helps maintain structure.
+  */
+    height: 95vh;
+    width: 70vw;
+    aspect-ratio: 1.33;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(18, 1fr);
+    gap: 8px;
+    /* Restored "good" gap */
+
+    padding: 10px;
+    margin-top: 3vh;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .galleryContainer {
+        /* Scale down to fit tablet screens without overflowing */
+        width: 95vw;
+        height: 70vh;
+        aspect-ratio: 1.33;
+        margin: 3vh auto 0;
+    }
+}
+
+.galleryItem {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+/* === STRICT 24x18 GRID MAPPING (35 Items - No Overlaps) === */
+
+/* --- CENTER CORE --- */
+/* Item 1: Center Anchor */
+.item1 {
+    grid-column: 10 / span 6;
+    grid-row: 8 / span 4;
+    z-index: 10;
+}
+
+/* --- INNER RING --- */
+.item2 {
+    grid-column: 11 / span 4;
+    grid-row: 5 / span 3;
+}
+
+.item3 {
+    grid-column: 11 / span 4;
+    grid-row: 12 / span 3;
+}
+
+.item4 {
+    grid-column: 7 / span 3;
+    grid-row: 8 / span 4;
+}
+
+.item5 {
+    grid-column: 16 / span 3;
+    grid-row: 8 / span 4;
+}
+
+/* --- CORNERS --- */
+.item6 {
+    grid-column: 8 / span 3;
+    grid-row: 6 / span 2;
+}
+
+.item7 {
+    grid-column: 15 / span 3;
+    grid-row: 6 / span 2;
+}
+
+.item8 {
+    grid-column: 8 / span 3;
+    grid-row: 12 / span 2;
+}
+
+.item9 {
+    grid-column: 15 / span 3;
+    grid-row: 12 / span 2;
+}
+
+/* --- Outer Cluster --- */
+.item10 {
+    grid-column: 12 / span 2;
+    grid-row: 3 / span 2;
+}
+
+.item11 {
+    grid-column: 12 / span 2;
+    grid-row: 15 / span 2;
+}
+
+.item12 {
+    grid-column: 4 / span 3;
+    grid-row: 8 / span 3;
+}
+
+.item13 {
+    grid-column: 19 / span 3;
+    grid-row: 9 / span 3;
+}
+
+/* --- Scattered Debris --- */
+.item14 {
+    grid-column: 6 / span 2;
+    grid-row: 5 / span 2;
+}
+
+.item15 {
+    grid-column: 9 / span 2;
+    grid-row: 4 / span 2;
+}
+
+.item16 {
+    grid-column: 5 / span 2;
+    grid-row: 11 / span 2;
+}
+
+.item17 {
+    grid-column: 18 / span 2;
+    grid-row: 7 / span 2;
+}
+
+.item18 {
+    grid-column: 15 / span 2;
+    grid-row: 4 / span 2;
+}
+
+.item19 {
+    grid-column: 20 / span 2;
+    grid-row: 6 / span 2;
+}
+
+.item20 {
+    grid-column: 5 / span 2;
+    grid-row: 14 / span 2;
+}
+
+.item21 {
+    grid-column: 8 / span 2;
+    grid-row: 14 / span 2;
+}
+
+.item22 {
+    grid-column: 3 / span 2;
+    grid-row: 7 / span 2;
+}
+
+.item23 {
+    grid-column: 19 / span 2;
+    grid-row: 12 / span 2;
+}
+
+.item24 {
+    grid-column: 16 / span 2;
+    grid-row: 14 / span 2;
+}
+
+.item25 {
+    grid-column: 22 / span 2;
+    grid-row: 9 / span 2;
+}
+
+/* --- Edges --- */
+.item26 {
+    grid-column: 14 / span 2;
+    grid-row: 2 / span 2;
+}
+
+.item27 {
+    grid-column: 10 / span 2;
+    grid-row: 16 / span 2;
+}
+
+.item28 {
+    grid-column: 2 / span 2;
+    grid-row: 9 / span 2;
+}
+
+.item29 {
+    grid-column: 21 / span 2;
+    grid-row: 14 / span 2;
+}
+
+.item30 {
+    grid-column: 8 / span 2;
+    grid-row: 2 / span 2;
+}
+
+/* --- NEW ITEMS (Horizontal Extension) --- */
+/* Placing these on the far left/right to widen the spread */
+
+.item31 {
+    grid-column: 1 / span 2;
+    grid-row: 7 / span 2;
+}
+
+/* Far Left Top */
+.item32 {
+    grid-column: 23 / span 2;
+    grid-row: 7 / span 2;
+}
+
+/* Far Right Top */
+
+.item33 {
+    grid-column: 1 / span 2;
+    grid-row: 11 / span 2;
+}
+
+/* Far Left Bottom */
+.item34 {
+    grid-column: 23 / span 2;
+    grid-row: 11 / span 2;
+}
+
+/* Far Right Bottom */
+
+.item35 {
+    grid-column: 19 / span 2;
+    grid-row: 4 / span 2;
+}
+
+/* Far Top Right filler */
+
+
+/* RESPONSIVE */
+@media (max-width: 670px) {
+    .galleryContainer {
+        height: auto;
+        aspect-ratio: auto;
+        display: block;
+        columns: 3 200px;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .galleryItem {
+        width: 100%;
+        margin-bottom: 15px;
+        aspect-ratio: 1/1;
+        display: inline-block;
+
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+
+    .item1 {
+        aspect-ratio: 16/9;
+    }
+}
+
+.initialCenter {
+    grid-column: 10 / span 6;
+    grid-row: 8 / span 4;
+    z-index: 0;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+@media (max-width: 600px) {
+    .galleryContainer {
+        columns: 2 150px;
+    }
+}
+
+/* === MOBILE VIEW (Infinite Scroll) === */
+.mobileGallery {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    /* Hide Desktop/Tablet View */
+    .galleryContainer {
+        display: none !important;
+    }
+
+    /* Show Mobile View */
+    .mobileGallery {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 50vh;
+        /* Max 50% screen height constraint */
+        width: 100%;
+        overflow: hidden;
+        margin-top: 5vh;
+        position: relative;
+    }
+
+    .mobileRow {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 5px;
+    }
+
+    .scrollTrack {
+        display: flex;
+        /* Width will be determined by content. 
+           We animate translateX from 0 to -33.33% (since we have 3 sets of items)
+           for a seamless loop. */
+        animation: scroll 30s linear infinite;
+        width: max-content;
+    }
+
+    .mobileItem {
+        height: 15vh;
+        /* Fits within the row */
+        aspect-ratio: 16/9;
+        /* Or 4/3, keeps items consistent */
+        padding: 0 5px;
+        box-sizing: border-box;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-33.333%);
+        }
+    }
+}
