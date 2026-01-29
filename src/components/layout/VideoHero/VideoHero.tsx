@@ -17,11 +17,11 @@ const VideoElement = memo(({
   videoSrc,
   onLoaded
 }: {
-  videoRef: React.RefObject<HTMLVideoElement>;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
   videoSrc: string;
   onLoaded: () => void;
 }) => (
-  <video 
+  <video
     ref={videoRef}
     className="video-element"
     autoPlay
@@ -34,8 +34,8 @@ const VideoElement = memo(({
   </video>
 ));
 
-const VideoHero: React.FC<VideoHeroProps> = memo(({ 
-  onVideoEnd, 
+const VideoHero: React.FC<VideoHeroProps> = memo(({
+  onVideoEnd,
   onFadeStart,
   playbackRate = 4, // Changed from 1.8 to 4 for faster playback
   videoSrc = "https://res.cloudinary.com/dlrlet9fg/video/upload/v1742353617/04_Final_Render_1_1_fyrxbv_prpfjo.mp4", // Added quality parameters
@@ -48,29 +48,29 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
   const isEndingRef = useRef(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // Check if device is mobile on component mount
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth <= 768 || 
-                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const mobile = window.innerWidth <= 768 ||
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       setIsMobile(mobile);
     };
-    
+
     // Check initially
     checkMobile();
-    
+
     // Add resize listener to check when window size changes
     window.addEventListener('resize', checkMobile);
-    
+
     return () => {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
-  
+
   // Use the appropriate video source based on device type
   const activeVideoSrc = isMobile ? mobileVideoSrc : videoSrc;
-  
+
   // Simplified playback rate change - no animations
   const changePlaybackRate = useCallback((newRate: number) => {
     if (videoRef.current && currentRateRef.current !== newRate) {
@@ -82,11 +82,11 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
   // Reactivated skip handler
   const handleSkip = useCallback(() => {
     if (isEndingRef.current) return;
-    
+
     isEndingRef.current = true;
     setIsEnding(true);
     onFadeStart();
-    
+
     setTimeout(() => {
       document.body.classList.remove('no-scroll');
       onVideoEnd();
@@ -105,12 +105,12 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
   // Initial setup
   useEffect(() => {
     document.body.classList.add('no-scroll');
-    
+
     // Show skip button after delay
     const skipButtonTimer = setTimeout(() => {
       setShowSkipButton(true);
     }, 1000);
-    
+
     return () => {
       document.body.classList.remove('no-scroll');
       clearTimeout(skipButtonTimer);
@@ -121,20 +121,20 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement || !videoLoaded) return;
-    
+
     // Use fewer updates - higher throttle interval
     let lastUpdateTime = 0;
     const throttleInterval = 250; // Less frequent updates for better performance
-    
+
     const handleTimeUpdate = () => {
       const now = performance.now();
       if (now - lastUpdateTime < throttleInterval) return;
       lastUpdateTime = now;
-      
+
       // Simpler playback rate switching - just once near the end
       if (videoElement.duration - videoElement.currentTime < 2) {
         changePlaybackRate(3);
-        
+
         // Check for ending only once we're close to the end
         if (videoElement.duration - videoElement.currentTime < 2 && !isEndingRef.current) {
           isEndingRef.current = true;
@@ -151,7 +151,7 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
 
     videoElement.addEventListener('timeupdate', handleTimeUpdate);
     videoElement.addEventListener('ended', handleEnded);
-    
+
     return () => {
       videoElement.removeEventListener('timeupdate', handleTimeUpdate);
       videoElement.removeEventListener('ended', handleEnded);
@@ -160,25 +160,25 @@ const VideoHero: React.FC<VideoHeroProps> = memo(({
 
   return (
     <div className={`video-hero-container ${isEnding ? 'fade-out' : ''}`}>
-      <VideoElement 
+      <VideoElement
         videoRef={videoRef}
         videoSrc={activeVideoSrc} // Use the device-appropriate video source
         onLoaded={handleVideoLoaded}
       />
-      
+
       {showSkipButton && (
-        <button 
+        <button
           className="skip-button"
           onClick={handleSkip}
           aria-label="Skip intro video"
         >
-          <svg 
-            className="skip-icon" 
-            viewBox="0 0 24 24" 
-            width="20" 
-            height="20" 
+          <svg
+            className="skip-icon"
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
             fill="none"
-            stroke="currentColor" 
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

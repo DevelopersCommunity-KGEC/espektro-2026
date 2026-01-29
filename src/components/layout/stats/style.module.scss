@@ -1,9 +1,11 @@
 // @import '../../../../styles/colors';
-@use "@/styles/mixins" as *;
-@import '../../../styles/colors';
-@import '../../../styles/breakpoints';
-@import '../../../styles/fonts';
-@import '../../../styles/brown-theme';
+// @use "@/styles/mixins" as *;
+// @import '../../../styles/colors';
+// @import '../../../styles/breakpoints';
+// @import '../../../styles/fonts';
+// @import '../../../styles/brown-theme';
+
+@use '../../../styles' as *;  
 
 .content_list_container {
   gap: 4rem; // one extra rem bcz of title (The Origin) is

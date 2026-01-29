@@ -1,3 +1,5 @@
+"use client"
+
 // import Espektrologo from '@/components-global/espektro-animated-logo/Espektrologo';
 import Espektrologo from '../espektro-animated-logo/Espektrologo';
 import { AiFillFacebook, AiFillInstagram, AiFillYoutube } from 'react-icons/ai';

@@ -1,6 +1,9 @@
-@import "../../../styles/colors";
-@import "../../../styles/_breakpoints";
-@import "../../../styles/fonts";
+// @import "../../../styles/colors";
+// @import "../../../styles/_breakpoints";
+// @import "../../../styles/fonts";
+
+@use '../../../styles' as *;
+
 $outline-font-sizes: (
   xs: 2.75rem,
   sm: 3rem,

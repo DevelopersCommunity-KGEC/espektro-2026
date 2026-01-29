@@ -1,5 +1,8 @@
-@import '../../../../../styles/colors';
-@import '../../../../../styles/breakpoints';
+// @import '../../../../../styles/colors';
+// @import '../../../../../styles/breakpoints';
+
+@use '../../../../../styles/colors' as *;
+@use '../../../../../styles/breakpoints' as *;
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Open+Sans&family=Poppins:wght@300;400;500;600&family=Saira:wght@400;500&display=swap');
 

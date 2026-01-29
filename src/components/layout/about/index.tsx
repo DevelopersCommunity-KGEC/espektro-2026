@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import EspektroAbout from './components/Espektro';
 import Exotica from './components/Exotica';

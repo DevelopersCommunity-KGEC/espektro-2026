@@ -1,4 +1,6 @@
-@import '../../../../../styles/breakpoints';
+// @import '../../../../../styles/breakpoints';
+
+@use '../../../../../styles' as *;
 
 .wrapper_container {
     // border: 1px solid red;

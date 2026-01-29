@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Observer } from "gsap/Observer";
+import { Observer } from "gsap/all";
+//import { Observer } from "gsap/Observer";
 import { useGSAP } from "@gsap/react";
 import { GiHamburgerMenu } from "react-icons/gi"; // Import hamburger icon
-import { IoMdClose } from "react-icons/io"; // Import close icon
+//import { IoMdClose } from "react-icons/io";
+import { IoClose } from "react-icons/io5"; // Import close icon
 import styles from "./styles.module.scss";
 
 gsap.registerPlugin(Observer);
@@ -70,10 +72,10 @@ function Navigation() {
       mobileNavContainerRef.current?.removeEventListener("touchmove", handler);
     };
   }, []);
-  const HeroSection = document.querySelector(
-    '[data-id="espektro-hero-section"]'
-  );
   useEffect(() => {
+    const HeroSection = document.querySelector(
+      '[data-id="espektro-hero-section"]'
+    );
     if (!HeroSection) return;
     const navObserver = new IntersectionObserver(
       (entries) => {
@@ -131,7 +133,7 @@ function Navigation() {
     );
     navObserver.observe(HeroSection);
     //! re-run for state change -> toggleMobileNav
-  }, [HeroSection, toggleMobileNav]);
+  }, [toggleMobileNav]);
 
   // Observer.create({
   //   type: "wheel,touch,scroll", // comma-delimited list of what to listen for ("wheel,touch,scroll,pointer")
@@ -328,7 +330,7 @@ function HamburgerButton({
   return (
     <button className={styles.HamburgerButton__button} onClick={onClick}>
       {isClicked ? (
-        <IoMdClose size={24} color="#e8dcc9" />
+        <IoClose size={24} color="#e8dcc9" />
       ) : (
         <GiHamburgerMenu size={24} color="#e8dcc9" />
       )}

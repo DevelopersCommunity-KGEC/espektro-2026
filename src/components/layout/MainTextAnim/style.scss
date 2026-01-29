@@ -1,4 +1,4 @@
-@import "../../../styles/fonts";
+@use '../../../styles' as *;
 
 .mainText {
   font-family: $medieval-sharp;

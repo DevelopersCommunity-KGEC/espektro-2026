@@ -5,15 +5,24 @@
 @tailwind utilities;
 
 :root {
-  --paper-color: #d2b48c; /* Light brown paper color */
-  --paper-dark: #c19a6b; /* Darker brown paper color */
-  --paper-shadow: #a67c52; /* Shadow color for depth */
-  --text-color: #4e2c12; /* Dark brown text */
-  --accent-color-1: #8b4513; /* Saddle brown */
-  --accent-color-2: #654321; /* Dark brown */
-  --accent-color-3: #a0522d; /* Sienna */
-  --accent-color-4: #cd853f; /* Peru */
-  --background: #e8d4b2; /* Slightly lighter than paper-color for background */
+  --paper-color: #d2b48c;
+  /* Light brown paper color */
+  --paper-dark: #c19a6b;
+  /* Darker brown paper color */
+  --paper-shadow: #a67c52;
+  /* Shadow color for depth */
+  --text-color: #4e2c12;
+  /* Dark brown text */
+  --accent-color-1: #8b4513;
+  /* Saddle brown */
+  --accent-color-2: #654321;
+  /* Dark brown */
+  --accent-color-3: #a0522d;
+  /* Sienna */
+  --accent-color-4: #cd853f;
+  /* Peru */
+  --background: #e8d4b2;
+  /* Slightly lighter than paper-color for background */
   --foreground: var(--text-color);
 
   --card: var(--paper-color);
@@ -34,7 +43,8 @@
   --accent: var(--paper-dark);
   --accent-foreground: var(--accent-color-1);
 
-  --destructive: #8b2500; /* Dark reddish brown */
+  --destructive: #8b2500;
+  /* Dark reddish brown */
   --destructive-foreground: var(--paper-color);
 
   --border: var(--paper-shadow);
@@ -63,14 +73,21 @@
 }
 
 .dark {
-  --paper-color: #b8a484; /* Darker brown paper for dark mode */
-  --paper-dark: #9a8569; /* Even darker brown */
-  --paper-shadow: #7a6548; /* Shadow for dark mode */
-  --text-color: #f0e6d2; /* Light tan text color for contrast */
-  --accent-color-1: #cd853f; /* Peru */
-  --accent-color-2: #deb887; /* Burlywood */
-  
-  --background: #8a7055; /* Dark brown background */
+  --paper-color: #b8a484;
+  /* Darker brown paper for dark mode */
+  --paper-dark: #9a8569;
+  /* Even darker brown */
+  --paper-shadow: #7a6548;
+  /* Shadow for dark mode */
+  --text-color: #f0e6d2;
+  /* Light tan text color for contrast */
+  --accent-color-1: #cd853f;
+  /* Peru */
+  --accent-color-2: #deb887;
+  /* Burlywood */
+
+  --background: #8a7055;
+  /* Dark brown background */
   --foreground: var(--text-color);
 
   --card: var(--paper-color);
@@ -101,22 +118,24 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
     box-sizing: border-box;
     padding: 0;
     margin: 0;
   }
+
   body {
-    @apply bg-background text-foreground;
     background-color: var(--background);
+    color: var(--foreground);
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a67c52' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
     color: var(--text-color);
     position: relative;
-    overflow-x: hidden; /* Prevent horizontal scrolling from cloud animations */
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling from cloud animations */
     font-family: var(--font-primary);
     line-height: 1.5;
   }
-  
+
   body::before {
     content: '';
     position: fixed;
@@ -127,16 +146,18 @@
     background-color: var(--background);
     background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a67c52' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: -2; /* Below the cloud background */
+    z-index: -2;
+    /* Below the cloud background */
   }
-  
+
   #root {
     position: relative;
     z-index: 1;
   }
 }
 
-html, body {
+html,
+body {
   max-width: 100vw;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -147,7 +168,9 @@ html, body {
   width: 100%;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -156,11 +179,17 @@ a {
   color: #a98459;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #e8dcc9;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #e8dcc9;
 }
 
@@ -175,9 +204,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #a98459;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -241,19 +272,32 @@ img {
   background-color: #000000;
   color: white;
   font-size: 1.5rem;
-  z-index: 99990;  /* Below audio button */
+  z-index: 99990;
+  /* Below audio button */
 }
 
 /* Navigation z-index adjustments if needed */
 .navbar-container {
-  z-index: 99980;  /* Below audio button */
+  z-index: 99980;
+  /* Below audio button */
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Special class for when audio is enabled */

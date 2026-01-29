@@ -1,5 +1,9 @@
-@import '../../../styles/colors';
-@import '../../../styles/breakpoints';
+// @import '../../../styles/colors';
+// @import '../../../styles/breakpoints';
+
+@use '../../../styles/colors' as *;
+@use '../../../styles/breakpoints' as *;
+
 .about__article {
   display: flex;
   flex-direction: column;

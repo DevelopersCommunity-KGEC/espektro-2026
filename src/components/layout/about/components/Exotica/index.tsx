@@ -1,3 +1,5 @@
+'use client'
+
 // import HorizontalImg from '@/assets/images/horizontalimg.jpg';
 // import VerticalImg from '@/assets/images/verticalimg.jpeg';
 import React from 'react';

@@ -1,5 +1,8 @@
-@import "../../../styles/colors";
-@import "../../../styles/breakpoints";
+// @import "../../../styles/colors";
+// @import "../../../styles/breakpoints";
+
+@use '../../../styles' as *;
+
 $padding-breakpoint: (
   sm: 2.5rem,
   mobile: 2.75rem,

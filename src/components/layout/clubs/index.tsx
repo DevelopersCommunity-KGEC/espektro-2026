@@ -1,3 +1,5 @@
+'use client'
+
 // import OutlinedHeading from '@/components-global/outlined-heading';
 import OutlinedHeading from '../outlined-heading';
 import styles from './style.module.scss';
