@@ -1,0 +1,82 @@
+// @import "../../../styles/colors";
+// @import "../../../styles/breakpoints";
+
+@use '../../../styles' as *;
+
+$padding-breakpoint: (
+  sm: 2.5rem,
+  mobile: 2.75rem,
+  tablet: 3.5rem,
+  desktop: 4.5rem,
+  large: 5.5rem,
+  xlarge: 6.5rem,
+  xxlarge: 7.5rem,
+);
+
+:root {
+  --section-divider-wrapper-padding-value: 2.25rem;
+  overflow-x: hidden;
+}
+
+@include sm {
+  :root {
+    --section-divider-wrapper-padding-value: 2.5rem;
+  }
+}
+
+@include mobile {
+  :root {
+    --section-divider-wrapper-padding-value: 2.75rem;
+  }
+}
+
+@include tablet {
+  :root {
+    --section-divider-wrapper-padding-value: 3.5rem;
+  }
+}
+
+@include desktop {
+  :root {
+    --section-divider-wrapper-padding-value: 4.5rem;
+  }
+}
+
+@include large {
+  :root {
+    --section-divider-wrapper-padding-value: 5.5rem;
+  }
+}
+
+@include xlarge {
+  :root {
+    --section-divider-wrapper-padding-value: 6.5rem;
+  }
+}
+
+@include xxlarge {
+  :root {
+    --section-divider-wrapper-padding-value: 7.5rem;
+    // overflow-x: hidden;
+  }
+}
+
+.section__divider__center {
+  padding: var(--section-divider-wrapper-padding-value) 0;
+}
+
+.section__divider__top {
+  padding-bottom: var(--section-divider-wrapper-padding-value);
+}
+
+.section__divider__bottom {
+  padding-top: var(--section-divider-wrapper-padding-value);
+}
+
+.section__divider__light {
+  background: $light;
+}
+
+.section__divider__dark {
+  background: $primary;
+}

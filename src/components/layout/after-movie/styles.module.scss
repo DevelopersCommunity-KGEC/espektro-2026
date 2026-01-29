@@ -1,0 +1,122 @@
+// @import "../../../styles/colors";
+// @import "../../../styles/breakpoints";
+
+@use "../../../styles/colors" as *;
+@use "../../../styles/breakpoints" as *;
+
+.after__movie__section__container {
+  // background: #191825;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  padding: 2rem 1rem;
+
+  padding-bottom: 3rem;
+  // border: 1px solid greenyellow;
+  .after__movie__section__heading__container {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    background: -webkit-linear-gradient(120deg, #e25e3e 0%, #ffbb5c 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @include max-media(680px) {
+      font-size: 2rem;
+    }
+    @include max-media(480px) {
+      font-size: 1.5rem;
+    }
+  }
+  .after__movie__section__video__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > iframe {
+      width: min(100%, 1000px);
+      aspect-ratio: 16 / 9;
+      outline: none;
+    }
+  }
+
+  .video__wrapper {
+    position: relative;
+    z-index: 10; // Increase z-index to ensure video is above other elements
+    width: 90%; // Slightly less than 100% for padding on larger screens
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    
+    @include max-media(768px) {
+      width: 95%;
+    }
+    
+    @include max-media(480px) {
+      width: 100%;
+    }
+    
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 20; // Add z-index directly to the iframe element
+    }
+  }
+
+  .player__container {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    
+    & > div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  @include max-media(480px) {
+    // padding: 0 30px 0px 30px;
+  }
+  @include max-media(375px) {
+    // padding: 0 20px 0px 20px;
+  }
+  video {
+    width: 100%;
+  }
+}
+
+.player__wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  width: 100%;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+.react__player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .player__wrapper {
+    max-width: 100%;
+    padding-top: 75%; /* Slightly taller ratio for mobile */
+  }
+}

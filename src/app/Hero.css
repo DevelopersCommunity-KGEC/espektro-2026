@@ -1,0 +1,130 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+  color: #e8dcc9; /* Light text color for dark background */
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.preload-screen {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000; /* Changed to black */
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e8dcc9; /* Light text on dark background */
+}
+
+body {
+  background-color: #000000; /* Changed to black */
+  color: #e8dcc9; /* Light text on dark background */
+}
+
+.text1 {
+  font-family: caveat-medium;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a38767 #111111; /* Brown scrollbar on dark background */
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111111; /* Dark background */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #a38767; /* Brown scrollbar */
+  border-radius: 20px;
+  border: 3px solid #111111; /* Dark background border */
+}
+
+/* Performance optimizations */
+img {
+  content-visibility: auto;
+}
+
+.hero-background-video {
+  will-change: transform;
+}
+
+/* About image responsive styles */
+.about_img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Reduce animation complexity on mobile */
+  .animate-fade-in {
+    animation-duration: 0.5s;
+  }
+  
+  /* Optimize scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .about_img {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about_img {
+    width: 100%;
+    border-radius: 4px;
+  }
+}

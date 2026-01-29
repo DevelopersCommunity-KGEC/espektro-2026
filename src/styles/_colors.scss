@@ -1,0 +1,43 @@
+// $primary: #120d31;
+// $primary: #191825;
+$primary: #070707;
+$secondary: #7d6b56;
+// $action: #7e08ec;
+// $light: #f5f5f5;
+// $action-dark: #650492;
+// $text-light: #ccc;
+// $text-medium: #999999;
+// $text-dark: #ea65cb;
+
+// $primary: #000000; // Light oldpaper background
+// $secondary: #000000; // Darker oldpaper shade
+$action: #8b6e4e; // Medium brown
+$light: #fff9f0; // Very light cream
+$action-dark: #5e4a33; // Dark brown
+$text-light: #e8dcc9; // Light text on dark backgrounds
+$text-medium: #a98459; // Medium brown text
+$text-dark: #a38767; // Dark brown text
+
+// Main color palette
+$black: #000000;
+$dark-bg: #111111;
+$medium-brown: #8b6e4e;
+$light-cream: #fff9f0;
+$action-dark: #5e4a33;
+$text-light: #e8dcc9;
+$text-medium: #a98459;
+$text-dark: #a38767;
+
+// Background colors
+$background-primary: $black;
+$background-secondary: $dark-bg;
+
+// Text colors
+$text-on-dark: $text-light;
+$text-accent: $text-medium;
+$text-muted: $text-dark;
+
+// Button colors
+$button-primary: $medium-brown;
+$button-hover: $action-dark;
+$button-text: $text-light;
