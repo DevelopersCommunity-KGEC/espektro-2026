@@ -3,15 +3,14 @@
 import "./Hero.css";
 import "./AudioControls.css";
 import React, { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 import SectionWrapper from "@/components/layout/section-divider";
 
 import ClubsSection from "@/components/layout/clubs";
-// import EventSection from "./components/events";
 import SponsorSection from "@/components/layout/sponsorship-v.2.0.0";
 import Stats from "@/components/layout/stats";
 import styles from "./style.module.scss";
-// import MainTextAnimation from "@/components/layout/MainTextAnim";
 import VideoHero from '@/components/layout/VideoHero';
 import AboutSection from "@/components/layout/about";
 import FooterSection from "@/components/layout/footer";
@@ -20,21 +19,28 @@ import MainTextAnimation from "@/components/layout/MainTextAnim/MainTextAnim";
 
 
 const HomeScreen: React.FC = () => {
+  const router = useRouter();
   const [showNavbar, setShowNavbar] = useState(false);
   const [videoActive, setVideoActive] = useState(true);
+  const [startCloudAnimation, setStartCloudAnimation] = useState(false);
   const [_isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [_imageError, setImageError] = useState(false);
-  
+
   const handleNavigateToEvents = () => {
-    window.location.href = '/events';
+    router.push('/events');
   };
 
   const handleVideoFadeStart = () => {
-    setShowNavbar(true);
+    // Navbar will be shown after clouds open
   };
 
   const handleVideoEnd = () => {
     setVideoActive(false);
+    setStartCloudAnimation(true);
+  };
+
+  const handleCloudComplete = () => {
+    setShowNavbar(true);
   };
 
   const LANDING_PAGE_SECTIONS: Array<{
@@ -43,32 +49,32 @@ const HomeScreen: React.FC = () => {
     variant?: "light" | "dark";
     component: React.JSX.Element;
   }> = [
-    {
-      id: "about",
-      component: <AboutSection/>,
-    },
-    {
-      id: "stats",
-      component: <Stats />,
-    },
-    {
-      id: "sponsors",
-      component: <SponsorSection />,
-    },
-    {
-      id: "clubs",
-      component: <ClubsSection />,
-    },
-  ];
+      {
+        id: "about",
+        component: <AboutSection />,
+      },
+      {
+        id: "stats",
+        component: <Stats />,
+      },
+      {
+        id: "sponsors",
+        component: <SponsorSection />,
+      },
+      {
+        id: "clubs",
+        component: <ClubsSection />,
+      },
+    ];
 
   const handleScroll = useCallback(() => {
     const hero = document.getElementById("hero");
     const scrollPosition = window.scrollY;
-    
+
     if (scrollPosition > 50 && videoActive) {
       setShowNavbar(true);
     }
-    
+
     if (hero) {
       const heroHeight = hero.clientHeight;
       const blur = Math.min((scrollPosition / heroHeight) * 5, 5);
@@ -93,34 +99,38 @@ const HomeScreen: React.FC = () => {
 
   return (
     <div className="home-screen">
+      {/* <CloudEffect
+        startAnimation={startCloudAnimation}
+        onComplete={handleCloudComplete}
+      /> */}
       <div className="video-overlay">
-        <VideoHero 
-          onVideoEnd={handleVideoEnd} 
+        <VideoHero
+          onVideoEnd={handleVideoEnd}
           onFadeStart={handleVideoFadeStart}
           playbackRate={4}
           videoSrc="https://res.cloudinary.com/dlrlet9fg/video/upload/v1742353617/04_Final_Render_1_1_fyrxbv_prpfjo.mp4"
           mobileVideoSrc="https://res.cloudinary.com/dlrlet9fg/video/upload/v1742354431/04_Final_Render_1_1_fyrxbv_prpfjo_t1ejqx.mp4"
-        /> 
+        />
       </div>
-      
+
       <div className={`navbar-container ${showNavbar ? 'navbar-visible' : 'navbar-hidden'}`}>
       </div>
-      
+
       <div className="landing">
         <div className="hero-section" id="hero">
-          <video 
-            className="hero-background-video" 
-            autoPlay 
-            loop 
-            muted 
+          <video
+            className="hero-background-video"
+            autoPlay
+            loop
+            muted
             playsInline
             preload="metadata"
             onLoadedData={handleVideoLoad}
             poster="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742230891/video-poster.jpg"
           >
-            <source 
-              src="https://res.cloudinary.com/dlrlet9fg/video/upload/q_auto:low,f_auto/v1742230891/Nested_Sequence_11_1_1_1_q0o0b6.mp4" 
-              type="video/mp4" 
+            <source
+              src="https://res.cloudinary.com/dlrlet9fg/video/upload/q_auto:low,f_auto/v1742230891/Nested_Sequence_11_1_1_1_q0o0b6.mp4"
+              type="video/mp4"
             />
             Your browser does not support the video tag.
           </video>
@@ -129,8 +139,8 @@ const HomeScreen: React.FC = () => {
             <div className="flex flex-col items-center justify-center min-h-screen">
               <div className="text-center z-10 space-y-6 absolute-center shadow-text">
                 <div className="hero-logo-container w-full max-w-3xl mx-auto flex justify-center">
-                  <img 
-                    src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742209222/especktro_25_sz9geh.png" 
+                  <img
+                    src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742209222/especktro_25_sz9geh.png"
                     alt="ESPEKTRO"
                     className="hero-logo animate-fade-in enhanced-logo"
                     loading="eager"
@@ -150,13 +160,13 @@ const HomeScreen: React.FC = () => {
                   />
                 </div>
                 <div className="button-group flex justify-center mt-12">
-                  <button 
+                  <button
                     className="floating-button"
                     onClick={handleNavigateToEvents}
                   >
-                    <img 
-                      src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742209982/ESPEKTRO_cloth_e9tg6q" 
-                      alt="Events" 
+                    <img
+                      src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742209982/ESPEKTRO_cloth_e9tg6q"
+                      alt="Events"
                       className="event-button-img"
                       loading="lazy"
                       onError={() => console.log("Event button image failed to load")}
@@ -200,6 +210,8 @@ const HomeScreen: React.FC = () => {
 };
 
 export default HomeScreen;
+
+
 
 
 
