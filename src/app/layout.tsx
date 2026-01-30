@@ -71,7 +71,7 @@ export default async function RootLayout(
           isAdmin={!!isAdmin}
           userRole={session?.user?.role}
           clubRoles={clubRoles} />
-        <HomeScreen />
+        {/* <HomeScreen /> */}
 
         {/* 👇 THIS is what makes it Next.js */}
         {children}
