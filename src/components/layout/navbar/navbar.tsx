@@ -44,7 +44,20 @@ const links = [
   // },
 ];
 
-function Navigation() {
+interface NavigationProps {
+  isAdmin?: boolean;
+  userRole?: string | undefined;
+  clubRoles?: any[];
+}
+
+function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
+  const allLinks = [
+    ...links,
+    ...(userRole ? [{ id: 99, label: "My Tickets", href: "/my-tickets" }] : []),
+    ...(isAdmin ? [{ id: 100, label: "Dashboard", href: "/dashboard" }] : []),
+    ...(clubRoles && clubRoles.length > 0 ? [{ id: 101, label: "Scan", href: "/scan" }] : []),
+  ];
+
   // const scrollToSection = (sectionId: string) => {
   //   const targetSection = document.getElementById(sectionId);
   //   if (targetSection) {
@@ -257,7 +270,7 @@ function Navigation() {
           </a>
           <div className={styles.navigation__links__wrapper}>
             <ul className={styles.navigation__links}>
-              {links.map((link) => {
+              {allLinks.map((link) => {
                 return (
                   <li key={link.id}>
                     <a href={link.href}>{link.label}</a>
@@ -297,7 +310,7 @@ function Navigation() {
                 <h1 className="mobile-navigation-heading ">espektro</h1>
               </div>
               <ul>
-                {links.map((link) => (
+                {allLinks.map((link) => (
                   <li
                     key={link.id}
                     className="link font-medieval"
