@@ -239,10 +239,7 @@
 
 .stats_main_container {
   width: 100%;
-  background-image: url("/bg.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;

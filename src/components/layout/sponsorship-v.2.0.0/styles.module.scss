@@ -2,7 +2,7 @@
 // @import "../../../styles/breakpoints";
 // @import "../../../styles/fonts";
 
-@use '../../../styles' as *;  
+@use '../../../styles' as *;
 
 :root {
   --gap: 1rem;
@@ -10,7 +10,8 @@
 
 .sponsors__section {
   // height: calc(100vh + 5px);
-  background-color: $primary;
+  background: transparent;
+  padding-bottom: 4rem;
   // border: 1px solid red;
   // padding: 50px 0;
 }
@@ -24,7 +25,7 @@
 }
 
 .sponsor__header {
-  & > h1 {
+  &>h1 {
     font-size: 2rem;
     font-family: $open-sans;
     font-weight: bolder;
@@ -35,7 +36,7 @@
     }
   }
 
-  & > p {
+  &>p {
     color: $text-medium;
     padding: 0 2rem;
     margin: 0.75rem 0;
@@ -53,13 +54,11 @@
   flex-direction: column;
   gap: var(--gap);
 
-  mask-image: linear-gradient(
-    to right,
-    hsl(0 0% 0% / 0),
-    hsl(0 0% 0% / 1) 20%,
-    hsl(0 0% 0% / 1) 80%,
-    hsl(0 0% 0% / 0)
-  );
+  mask-image: linear-gradient(to right,
+      hsl(0 0% 0% / 0),
+      hsl(0 0% 0% / 1) 20%,
+      hsl(0 0% 0% / 1) 80%,
+      hsl(0 0% 0% / 0));
 
   .li__wrapper {
     // border: 2px solid red;
@@ -129,7 +128,7 @@
       display: flex;
       justify-content: center;
 
-      & > img {
+      &>img {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
@@ -144,7 +143,7 @@
       align-items: center;
       justify-content: center;
 
-      & > p {
+      &>p {
         white-space: pre-wrap;
 
         @include max-media(768px) {

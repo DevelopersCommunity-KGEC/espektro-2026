@@ -14,10 +14,8 @@
   width: 100%;
   min-height: 300px;
 
-  /* Parchment background */
-  background: url("/parchment.png") center/cover no-repeat;
-  background-size: cover;
-  background-position: center;
+  /* Background transparent - uses parent bg.jpeg */
+  background: transparent;
 
   color: #4b2f1a;
   font-family: $medieval-sharp;
