@@ -1,0 +1,123 @@
+/* full page parchment background */
+.page {
+  min-height: 100vh;
+  background: url("/parchment.png") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* main poster container */
+.poster {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* big decorative border */
+.outerFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* actual usable content area */
+.content {
+  position: relative;
+  padding: 3rem;
+}
+
+/* top plaque */
+.plaque {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.plaque img {
+  width: 260px;
+  max-width: 80%;
+}
+
+/* two column layout */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+/* left framed area */
+.leftShowcase {
+  position: relative;
+  width: 100%;
+}
+
+/* inner decorative frame */
+.innerFrame {
+  width: 100%;
+  display: block;
+}
+
+/* wrapper to position event image inside frame */
+.eventImageWrapper {
+  position: absolute;
+  /* these insets control how far inside the frame the image sits */
+  top: 10%;
+  left: 8%;
+  right: 8%;
+  bottom: 12%;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+/* actual event image */
+.eventImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* gentle hover zoom */
+.eventImage:hover {
+  transform: scale(1.05);
+}
+
+/* right text panel */
+.rightText {
+  color: #4b2f1a;
+  font-family: serif;
+  line-height: 1.8;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 1.5rem;
+  border-left: 2px dotted #a67c52;
+  backdrop-filter: blur(1px);
+}
+
+.rightText h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.rightText p {
+  margin-bottom: 1rem;
+}
+
+/* responsive: stack on small screens */
+@media (max-width: 768px) {
+  .content {
+    padding: 2rem 1.5rem;
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .plaque img {
+    width: 200px;
+  }
+}
