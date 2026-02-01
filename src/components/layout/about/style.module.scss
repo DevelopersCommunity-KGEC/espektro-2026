@@ -10,11 +10,13 @@
   justify-content: center;
   align-items: center;
   gap: 7.5rem;
-  background-color: $primary;
+  background-color: transparent;
   overflow-x: hidden;
+
   @include max-media(680px) {
     gap: 5rem;
   }
+
   //   width: 100%;
   //   flex-direction: column;
   //   background-color: $primary;
