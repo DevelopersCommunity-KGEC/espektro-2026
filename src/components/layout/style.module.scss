@@ -13,13 +13,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 0; // Remove any top margin
-  padding-top: 0; // Remove any top padding
+  margin-top: 0;
+  padding-top: 0;
   gap: 1.3rem;
+<<<<<<< HEAD
   background-image: url('/bg.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+=======
+  background-image: url("/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+>>>>>>> 25eba3a110abca1937423671f618deaaee9982be
 }
 
 .banner__text__container {
@@ -30,7 +38,7 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background-color: #000;
+  background-color: transparent;
   // background: linear-gradient(to top, rgba(0, 0, 0, 0), $primary);
   text-overflow: clip;
   overflow: hidden;

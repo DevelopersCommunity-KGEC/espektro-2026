@@ -60,7 +60,8 @@
   width: 100%;
   text-align: center;
   margin: 0.5rem auto;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Added text shadow */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* Added text shadow */
 }
 
 .button-group {
@@ -79,6 +80,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -90,6 +92,7 @@
     opacity: 0;
     transform: translateY(15px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -101,8 +104,13 @@
   z-index: 2;
   margin-top: 0;
   padding-top: 0;
-  background-color: #161816;
-  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.6); /* Enhanced shadow for depth */
+  background-image: url("/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.6);
+  /* Enhanced shadow for depth */
 }
 
 /* Optimize floating button animation */
@@ -116,12 +124,14 @@
   width: auto;
   display: flex;
   justify-content: center;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); /* Added drop shadow */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  /* Added drop shadow */
 }
 
 .floating-button:hover {
   transform: scale(1.05);
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6)); /* Enhanced drop shadow on hover */
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
+  /* Enhanced drop shadow on hover */
 }
 
 .event-button-img {
@@ -129,11 +139,13 @@
   width: auto;
   max-width: 180px;
   transition: filter 0.3s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); /* Added shadow to image */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  /* Added shadow to image */
 }
 
 .floating-button:hover .event-button-img {
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)); /* Enhanced shadow on hover */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  /* Enhanced shadow on hover */
 }
 
 /* Optimize hero logo */
@@ -195,14 +207,14 @@
 
 .section-loading {
   height: 300px;
-  background-color: #161816;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 /* Content visibility optimization */
-.landing-page > div:not(:first-child) {
+.landing-page>div:not(:first-child) {
   content-visibility: auto;
   contain-intrinsic-size: 1px 500px;
 }
@@ -212,7 +224,7 @@
   .hero-logo-container {
     max-width: 90%;
   }
-  
+
   .event-button-img {
     max-width: 150px;
   }
@@ -222,7 +234,7 @@
   .hero-logo-container {
     max-width: 65%;
   }
-  
+
   .event-button-img {
     max-width: 180px;
   }
@@ -230,7 +242,9 @@
 
 /* iOS Safari fix */
 @supports (-webkit-touch-callout: none) {
-  .hero-section, .hero-content {
+
+  .hero-section,
+  .hero-content {
     height: -webkit-fill-available;
   }
 }

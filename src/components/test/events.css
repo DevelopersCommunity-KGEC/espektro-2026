@@ -2,7 +2,7 @@
 .page {
   width: 100%;
   min-height: 100vh;
-  background: url("/parchment.png") center/cover no-repeat;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
