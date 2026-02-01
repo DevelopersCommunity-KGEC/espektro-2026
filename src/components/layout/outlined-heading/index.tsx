@@ -106,8 +106,8 @@ const OutlinedHeading: React.FC<OutlinedHeadingProps> = ({ label, theme = "defau
           className={`${styles.outline} outline-text`}
           x="50%"
           y="50%"
-          text-anchor="middle"
-          alignment-baseline="middle"
+          textAnchor="middle"
+          alignmentBaseline="middle"
         >
           {label}
         </text>
@@ -115,8 +115,8 @@ const OutlinedHeading: React.FC<OutlinedHeadingProps> = ({ label, theme = "defau
           className={styles.solid}
           x="50%"
           y="50%"
-          text-anchor="middle"
-          alignment-baseline="middle"
+          textAnchor="middle"
+          alignmentBaseline="middle"
         >
           {label}
         </text>

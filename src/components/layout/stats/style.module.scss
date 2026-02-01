@@ -5,7 +5,7 @@
 // @import '../../../styles/fonts';
 // @import '../../../styles/brown-theme';
 
-@use '../../../styles' as *;  
+@use '../../../styles' as *;
 
 .content_list_container {
   gap: 4rem; // one extra rem bcz of title (The Origin) is
@@ -14,6 +14,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
   @include desktop {
     gap: 6rem;
   }
@@ -27,6 +28,7 @@
     -webkit-text-fill-color: transparent;
   }
 }
+
 .year__list__wrapper {
   --central-line-left: 80px;
   --central-line-color: #{$brown-medium1};
@@ -35,12 +37,15 @@
   @include xs {
     --central-line-left: 100px;
   }
+
   @include sm {
     --central-line-left: 120px;
   }
+
   @include tablet {
     --central-line-left: 180px;
   }
+
   @include desktop {
     --central-line-left: 220px;
   }
@@ -57,6 +62,7 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
+
     & .year__list {
       //   border: 1px solid yellow;
       position: relative;
@@ -64,6 +70,7 @@
       display: flex;
       flex-direction: column;
       padding: 0 1rem;
+
       .year__list__year__label {
         // border: 1px solid blue;
         position: absolute;
@@ -102,6 +109,7 @@
           font-size: 1.8rem;
         }
       }
+
       .year__list__description {
         // border: 1px solid green;
         padding: 1rem 0 1rem 1rem;
@@ -116,6 +124,7 @@
         color: $brown-light;
         font-size: 0.9rem;
         font-family: $poppins-sans;
+
         @include sm {
           font-size: 1rem;
         }
@@ -130,11 +139,8 @@
       width: 1rem;
       aspect-ratio: 1/1;
       background: var(--central-line-color);
-      transform: translate(
-          calc(-50% + calc(var(--central-line-width) / 2)),
-          -50%
-        )
-        rotateZ(45deg);
+      transform: translate(calc(-50% + calc(var(--central-line-width) / 2)),
+          -50%) rotateZ(45deg);
     }
 
     @include xs {
@@ -163,13 +169,13 @@
   padding: 0 1.5rem;
   flex-wrap: wrap;
 
-  & > .statistics__container {
+  &>.statistics__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    & > h2 {
+    &>h2 {
       font-size: 2.5rem;
       font-family: $poppins-sans;
       font-weight: bolder;
@@ -180,7 +186,7 @@
       -webkit-text-fill-color: transparent;
     }
 
-    & > p {
+    &>p {
       font-size: 1.25rem;
       font-family: $poppins-sans;
       font-weight: 500;
@@ -192,37 +198,39 @@
     column-gap: 4rem;
 
     & .statistics__container {
-      & > h2 {
+      &>h2 {
         font-size: 3rem;
       }
 
-      & > p {
+      &>p {
         font-size: 1.5rem;
       }
     }
   }
+
   @include desktop {
     column-gap: 6rem;
 
     & .statistics__container {
-      & > h2 {
+      &>h2 {
         font-size: 3.5rem;
       }
 
-      & > p {
+      &>p {
         font-size: 1.75rem;
       }
     }
   }
+
   @include xxlarge {
     column-gap: 8rem;
 
     & .statistics__container {
-      & > h2 {
+      &>h2 {
         font-size: 4rem;
       }
 
-      & > p {
+      &>p {
         font-size: 2rem;
       }
     }
@@ -231,7 +239,10 @@
 
 .stats_main_container {
   width: 100%;
-  background: #000000; // Changed from $brown-dark to black
+  background-image: url("/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -239,6 +250,7 @@
   flex-direction: column;
   gap: 6rem;
   overflow-x: hidden;
+
   // border: 1px solid pink;
   @include tablet {
     gap: 10rem;
@@ -253,6 +265,7 @@
       gap: 5rem;
     }
   }
+
   // & > .stats_subheading {
   //   // border: 2px solid red;
   //   width: 80%; //60%
@@ -338,7 +351,7 @@
   //   }
   // }
 
-  & > .stats_top_container {
+  &>.stats_top_container {
     // border: 2px solid red;
     width: 100%;
     display: flex;
@@ -348,7 +361,7 @@
     padding: 2rem 1rem;
     gap: 2.5rem;
 
-    & > li:nth-child(n) {
+    &>li:nth-child(n) {
       // transform: translateX(5%);
       font-size: 1rem; //1.2rem
       color: $brown-light;
@@ -360,32 +373,32 @@
       text-align: left;
       gap: 1.25rem;
 
-      & > h2 {
+      &>h2 {
         color: $brown-medium3;
         font-weight: 700;
         font-size: 1.5rem;
       }
 
-      & > p {
+      &>p {
         color: $brown-light;
       }
     }
 
     @include mobile {
-      & > li:nth-child(n) {
+      &>li:nth-child(n) {
         font-size: 1.2rem;
 
-        & > span:first-child {
+        &>span:first-child {
           font-size: 1.2rem;
         }
       }
     }
 
     @include tablet {
-      & > li:nth-child(n) {
+      &>li:nth-child(n) {
         font-size: 1.3rem;
 
-        & > span:first-child {
+        &>span:first-child {
           font-size: 1.5rem;
         }
       }
