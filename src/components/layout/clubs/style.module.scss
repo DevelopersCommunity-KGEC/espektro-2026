@@ -1,15 +1,4 @@
-// @import '../../../styles/colors';
-// @import '../../../styles/breakpoints';
-// @import '../../../styles/fonts';
-
 @use '../../../styles' as *;
-// *,
-// *::before,
-// *::after {
-//   box-sizing: border-box;
-//   margin: 0;
-//   padding: 0;
-// }
 
 .clubs {
 
@@ -22,247 +11,562 @@
   }
 }
 
-@mixin media($bp: 0) {
-  @media (max-width: $bp) {
-    @content;
-  }
-}
-
 .ClubComponent__section {
-  // overflow: hidden;
-  // padding-top: 2rem;
-  // padding-bottom: 2rem;
-  // width: 100vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background-color: transparent;
-  // border: 1px solid pink;
-  // padding: 5rem 0;
-  gap: 4rem;
+  background-color: transparent; // 🎯 NO BACKGROUND - Transparent
+
+  gap: 1.5rem;
+
+  padding: 3rem 1rem;
+  position: relative;
+  overflow: hidden;
 
   @include desktop {
-    gap: 6rem;
+    gap: 2rem;
+    padding: 8rem 2rem;
   }
 
-  @include media(680px) {
-    // padding: 5rem 0;
+  @include tablet {
+    padding: 6rem 1.5rem;
+    gap: 1.5rem;
   }
 
-  @include media(480px) {
-    padding: 0;
+  @include mobile {
+    padding: 4rem 1rem;
+    gap: 1rem;
   }
 
   &__club__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
     overflow: hidden;
-    width: clamp(60%, 100%, min(60rem, 100% - 20px));
-    max-width: 60rem;
 
-    &>ul {
-      --gap: 0.8rem;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(7, 1fr);
-      list-style: none;
-      justify-items: center;
-      align-items: center;
-      gap: var(--gap);
+    min-height: 1200px;
 
-      @include media(680px) {
-        --gap: 0.7rem;
-        row-gap: 0.6rem;
-      }
+    @include desktop {
+      min-height: 1200px;
+    }
 
-      @include media(480px) {
-        row-gap: 0.5rem;
-        --gap: 0.5rem;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(8, 1fr);
-      }
+    @include tablet {
+      min-height: 1000px;
+    }
 
-      &>li {
-        width: 90%;
-        aspect-ratio: 1/0.9;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: all 0.3s ease-in-out;
-        background-color: rgba(139, 110, 78, 0.6);
-        clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    @include mobile {
+      min-height: 850px;
+    }
 
-        @include media(680px) {
-          width: 100%;
-        }
+    @media (min-width: 240px) and (max-width: 519px) {
+      min-height: auto;
+      height: auto;
+      overflow: visible;
+    }
 
-        // hexagon link
-        &>a {
-          height: 95%;
-          aspect-ratio: 1/0.9;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-          position: relative;
-          cursor: pointer;
-          transition: transform 0.4s cubic-bezier(0.02, 0.45, 0.84, 0.56);
+    @media (max-width: 400px) {
+      min-height: 800px;
+    }
 
-          // image container
-          &>div {
-            width: 100%;
-            height: 100%;
-
-            &>img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              object-position: center;
-              filter: grayscale(100%) blur(0.2rem) brightness(0.65);
-              transition: filter 0.4s ease-in-out;
-            }
-          }
-
-          // content container
-          &>div {
-            position: absolute;
-            inset: 0;
-            color: #ffffff; // Changed from $action to white
-            width: 100%;
-            z-index: 1001;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            &>p {
-              font-family: $medieval-sharp;
-              font-weight: bold;
-              font-size: medium;
-              color: #ffffff; // Explicitly set to white
-              text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); // Added shadow for better visibility
-              transition: color 0.3s ease-in-out;
-            }
-          }
-        }
-
-        &>a:hover {
-          transform: scale(1.05);
-
-          &>div>img {
-            filter: grayscale(0%) blur(0);
-          }
-
-          &>div>p {
-            color: transparent;
-          }
-        }
-      }
-
-      &>li:nth-child(2n + 1) {
-        grid-column: 2 / 3;
-      }
-
-      &>li:nth-child(2),
-      &>li:nth-child(4),
-      &>li:nth-child(10),
-      &>li:nth-child(12) {
-        grid-column: 1 / 2;
-        transform: translate(calc(35% + calc(var(--gap) / 2)),
-            calc(-50% - calc(var(--gap) / 2)));
-
-        @include media(680px) {
-          transform: translate(calc(25% + calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-      }
-
-      &>li:nth-child(6) {
-        grid-row: 2 / 3;
-        grid-column: 3 / 4;
-        transform: translate(calc(-35% - calc(var(--gap) / 2)),
-            calc(-50% - calc(var(--gap) / 2)));
-
-        @include media(680px) {
-          transform: translate(calc(-25% - calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-
-        @include media(480px) {
-          grid-row: 4 / 5;
-          grid-column: 1/ 2;
-          transform: translate(calc(25% + calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-      }
-
-      &>li:nth-child(8) {
-        grid-column: 3 / 4;
-        grid-row: 3 / 4;
-        transform: translate(calc(-35% - calc(var(--gap) / 2)),
-            calc(-50% - calc(var(--gap) / 2)));
-
-        @include media(680px) {
-          transform: translate(calc(-25% - calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-
-        @include media(480px) {
-          grid-row: 5 / 6;
-          grid-column: 1/ 2;
-          transform: translate(calc(25% + calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-      }
-
-      &>li:nth-child(14) {
-        grid-row: 6 / 7;
-        grid-column: 3 / 4;
-        transform: translate(calc(-35% - calc(var(--gap) / 2)),
-            calc(-50% - calc(var(--gap) / 2)));
-
-        @include media(680px) {
-          transform: translate(calc(-25% - calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-
-        @include media(480px) {
-          grid-row: 8 / 9;
-          grid-column: 1/ 2;
-          transform: translate(calc(25% + calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-      }
-
-      &>li:nth-child(15) {
-        grid-row: 7 / 8;
-        grid-column: 3 / 4;
-        transform: translate(calc(-35% - calc(var(--gap) / 2)),
-            calc(-50% - calc(var(--gap) / 2)));
-
-        @include media(680px) {
-          transform: translate(calc(-25% - calc(var(--gap) / 2)),
-              calc(-50% - calc(var(--gap) / 2)));
-        }
-
-        @include media(480px) {
-          grid-row: 8 / 9;
-          grid-column: 2 / 3;
-          transform: translate(calc(calc(var(--gap) / 2)),
-              calc(-calc(var(--gap) / 2)));
-        }
-      }
+    @media (max-width: 350px) {
+      min-height: 750px;
     }
   }
 }
 
-@media screen and (max-width: 480px) {
-  .ClubComponent__section>div>ul {
-    &>li:nth-child(2n) {
-      transform: translate(12.5%, calc(-50% - 0.2rem));
+.centralLotusWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 900px;
+  height: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include tablet {
+    width: 650px;
+    height: 650px;
+  }
+
+  @include mobile {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.concentricCircles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 2;
+  opacity: 0.7;
+
+  @include mobile {
+    stroke-width: 1.5;
+  }
+}
+
+.centralLotus {
+  position: relative;
+  z-index: 2;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include tablet {
+    width: 150px;
+    height: 150px;
+  }
+
+  @include mobile {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.centralLotusImage {
+  width: 100%;
+  height: 100%;
+  animation: centralLotusFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(232, 155, 181, 0.4));
+}
+
+@keyframes centralLotusFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(8deg) scale(1.05);
+  }
+}
+
+.clubsGrid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+
+  @media (min-width: 240px) and (max-width: 519px) {
+    height: auto;
+    min-height: auto;
+  }
+}
+
+.padContainer {
+  position: absolute;
+  width: clamp(200px, 18vw, 280px);
+  height: clamp(170px, 15vw, 235px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: fadeInPad 0.8s ease-out forwards;
+
+  @include desktop {
+    width: clamp(220px, 16vw, 300px);
+    height: clamp(185px, 14vw, 250px);
+  }
+
+  @include tablet {
+    width: clamp(160px, 20vw, 220px);
+    height: clamp(135px, 17vw, 185px);
+  }
+
+  @include mobile {
+    width: clamp(110px, 32vw, 170px);
+    height: clamp(92px, 27vw, 142px);
+  }
+
+  @media (min-width: 520px) and (max-width: 767px) {
+    width: 145px;
+    height: 120px;
+    opacity: 0;
+
+    &.visible {
+      animation:
+        bloomEnter 1s ease-out var(--bloom-delay, 0s) forwards,
+        orbitalSway 40s ease-in-out var(--bloom-delay, 0s) infinite;
+    }
+  }
+
+  @media (min-width: 768px) {
+    width: 240px;
+    height: 200px;
+    opacity: 0;
+
+    &.visible {
+      animation:
+        bloomEnter 1s ease-out var(--bloom-delay, 0s) forwards,
+        orbitalSway 40s ease-in-out var(--bloom-delay, 0s) infinite;
+    }
+  }
+
+  @media (min-width: 240px) and (max-width: 519px) {
+    width: clamp(120px, 35vw, 150px);
+    height: clamp(100px, 30vw, 125px);
+
+    &:nth-child(odd) {
+      animation: slideInFromLeft 0.8s ease-out forwards;
+      animation-play-state: paused;
+      opacity: 0;
+      transform: translateX(-100px) scale(0.8);
+
+      &.visible {
+        animation-play-state: running;
+      }
     }
 
-    &>li:nth-child(2n + 1) {
-      transform: translate(-12.5%, 0%);
+    &:nth-child(even) {
+      animation: slideInFromRight 0.8s ease-out forwards;
+      animation-play-state: paused;
+      opacity: 0;
+      transform: translateX(100px) scale(0.8);
+
+      &.visible {
+        animation-play-state: running;
+      }
+    }
+  }
+
+  @media (max-width: 400px) {
+    width: clamp(95px, 28vw, 140px);
+    height: clamp(80px, 23vw, 117px);
+  }
+
+  @media (max-width: 350px) {
+    width: clamp(85px, 26vw, 120px);
+    height: clamp(71px, 22vw, 100px);
+  }
+}
+
+@keyframes fadeInPad {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bloomEnter {
+  from {
+    opacity: 0;
+    scale: 0.3;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes orbitalSway {
+  0% {
+    rotate: 0deg;
+  }
+
+  30% {
+    rotate: 8deg;
+  }
+
+  50% {
+    rotate: 0deg;
+  }
+
+  70% {
+    rotate: -8deg;
+  }
+
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.lotusContainer {
+  position: absolute;
+  width: clamp(150px, 15vw, 220px);
+  height: clamp(150px, 15vw, 220px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: fadeInLotus 1s ease-out forwards;
+
+  @include desktop {
+    width: clamp(170px, 13vw, 240px);
+    height: clamp(170px, 13vw, 240px);
+  }
+
+  @include tablet {
+    width: clamp(125px, 16vw, 180px);
+    height: clamp(125px, 16vw, 180px);
+  }
+
+  @include mobile {
+    width: clamp(90px, 25vw, 140px);
+    height: clamp(90px, 25vw, 140px);
+  }
+
+  @media (min-width: 520px) {
+    opacity: 0;
+
+    &.visible {
+      animation:
+        bloomEnter 1s ease-out var(--bloom-delay, 0s) forwards,
+        orbitalSway 20s ease-in-out var(--bloom-delay, 0s) infinite;
+    }
+  }
+
+  @media (min-width: 240px) and (max-width: 519px) {
+    width: clamp(100px, 28vw, 130px);
+    height: clamp(100px, 28vw, 130px);
+    opacity: 0;
+
+    &.visible {
+      animation: fadeInLotus 1s ease-out forwards;
+    }
+  }
+
+  @media (max-width: 400px) {
+    width: clamp(80px, 22vw, 120px);
+    height: clamp(80px, 22vw, 120px);
+  }
+
+  @media (max-width: 350px) {
+    width: clamp(70px, 20vw, 100px);
+    height: clamp(70px, 20vw, 100px);
+  }
+}
+
+@keyframes fadeInLotus {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-20deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.lotus {
+  width: 80%;
+  height: 80%;
+  animation: lotusFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(232, 155, 181, 0.3));
+
+  @include mobile {
+    width: 75%;
+    height: 75%;
+  }
+}
+
+@keyframes lotusFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.padLink {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:hover {
+    transform: scale(1.15);
+
+    .lilyPad {
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+    }
+
+    .logoContainer img {
+      transform: scale(1.05);
+    }
+
+    .nameOverlay p {
+      opacity: 0;
+    }
+  }
+
+  @include tablet {
+    &:hover {
+      transform: scale(1.12);
+    }
+  }
+
+  @include mobile {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.lilyPad {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  animation: lilypadSway 10s ease-in-out infinite;
+}
+
+@keyframes lilypadSway {
+
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.logoContainer {
+  position: relative;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: all 0.4s ease-in-out;
+  }
+
+  @include tablet {
+    width: 58%;
+    height: 58%;
+  }
+
+  @include mobile {
+    width: 56%;
+    height: 56%;
+  }
+
+  @media (max-width: 400px) {
+    width: 55%;
+    height: 55%;
+  }
+
+  @media (max-width: 350px) {
+    width: 54%;
+    height: 54%;
+  }
+}
+
+.nameOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+
+  p {
+    font-family: $medieval-sharp;
+    font-weight: bold;
+    font-size: clamp(0.55rem, 1.2vw, 0.85rem);
+    color: #ffffff;
+    text-align: center;
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.8),
+      0 0 8px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease-in-out;
+    padding: 0 0.5rem;
+    max-width: 80%;
+    line-height: 1.1;
+
+    @include desktop {
+      font-size: clamp(0.65rem, 1vw, 0.95rem);
+    }
+
+    @include tablet {
+      font-size: clamp(0.48rem, 1.6vw, 0.75rem);
+    }
+
+    @include mobile {
+      font-size: clamp(0.42rem, 2.2vw, 0.65rem);
+      line-height: 1;
+    }
+
+    @media (max-width: 400px) {
+      font-size: clamp(0.38rem, 2vw, 0.58rem);
+      padding: 0 0.3rem;
+    }
+
+    @media (max-width: 350px) {
+      font-size: clamp(0.35rem, 1.8vw, 0.52rem);
+      padding: 0 0.25rem;
+      line-height: 0.95;
     }
   }
 }
