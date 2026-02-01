@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-// import { Navbar } from "@/components/layout/navbar";
-// import { OnboardingCheck } from "@/components/layout/onboarding-check";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { getUserClubRoles } from "@/lib/rbac";
+import Navigation from "@/components/layout/navbar/navbar";
+import { Toaster } from "@/components/ui/sonner";
+import { AdminSync } from "@/components/admin/admin-sync";
+import { OnboardingCheck } from "@/components/layout/onboarding-check";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,21 +39,11 @@ export const metadata: Metadata = {
   },
 };
 
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-// import { Toaster } from "@/components/ui/sonner";
-// import { AdminSync } from "@/components/admin/admin-sync";
-import { getUserClubRoles } from "@/lib/rbac";
-import Navigation from "@/components/layout/navbar/navbar";
-import HomeScreen from "@/components/layout";
-// import { Navbar } from "@/components/layout/navbar";
-
-export default async function RootLayout(
-  {
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) {
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const session = await auth.api.getSession({
     headers: await headers()
   });
@@ -67,56 +61,16 @@ export default async function RootLayout(
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
+        <AdminSync />
+        <OnboardingCheck />
         <Navigation
           isAdmin={!!isAdmin}
           userRole={session?.user?.role}
-          clubRoles={clubRoles} />
-        {/* <HomeScreen /> */}
-
-        {/* 👇 THIS is what makes it Next.js */}
+          clubRoles={clubRoles}
+        />
         {children}
-        {/* <AdminSync /> */}
-        {/* <OnboardingCheck /> */}
-        {/* <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} /> */}
-        {/* {children} */}
-        {/* <Toaster /> */}
+        <Toaster />
       </body>
     </html>
   );
 }
-
-// import "./globals.css";
-// import type { Metadata } from "next";
-
-// export const metadata: Metadata = {
-//   title: "QuiXine",
-//   description: "Cultural culinary showcase",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return (
-//     <html lang="en">
-//       <body
-//         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
-//       >
-//         <Navigation
-//           isAdmin={!!isAdmin}
-//           userRole={session?.user?.role}
-//           clubRoles={clubRoles} />
-//         {/* <HomeScreen /> */}
-
-//         {/* 👇 THIS is what makes it Next.js */}
-//         {children}
-//         {/* <AdminSync /> */}
-//         {/* <OnboardingCheck /> */}
-//         {/* <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} /> */}
-//         {/* {children} */}
-//         {/* <Toaster /> */}
-//       </body>
-//     </html>
-//   );
-// }

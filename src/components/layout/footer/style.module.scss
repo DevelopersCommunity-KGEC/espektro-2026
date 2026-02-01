@@ -11,199 +11,319 @@
 }
 
 .footer_section {
-  --footer-section-padding: 2rem 1rem 0.5rem 1rem;
-  --vertical-grid-gap: 2rem;
-  --social-link-gap: 18px;
-  --contact-base-font-size: 1rem;
-  --divider-width: 0.5px;
-  --divider-color: rgba(255, 255, 255, 0.696);
   width: 100%;
-  background-color: $primary;
-  // background-color: #14131f;
-  color: $light;
+  min-height: 300px;
+
+  /* Parchment background */
+  background: url("/parchment.png") center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  color: #4b2f1a;
   font-family: $medieval-sharp;
-  font-weight: 500;
-  // padding: 0.6rem;
-  // border: 3px solid red;
-  padding: var(--footer-section-padding);
-  gap: var(--vertical-grid-gap);
-  border-top: 0.75px solid $text-light;
+  padding: 2rem 3rem;
+  box-sizing: border-box;
+  position: relative;
+}
 
-  display: grid;
-  grid-template-areas:
-    "contact"
-    "espektro_logo"
-    "social"
-    "address"
-    "kgec_espektro"
-    "copyright";
+/* Top decorative border */
+.top_border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
 
-  & > .contact_container {
-    grid-area: contact;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    // border: 2px solid red;
-    // gap: 0.5rem;
-    font-family: $medieval-sharp;
-    font-size: 1.1rem;
-    flex-wrap: wrap;
+.border_dots_left,
+.border_dots_right {
+  display: flex;
+  gap: 8px;
 
-    & > p {
-      font-size: 1rem;
-    }
-
-    & > .contact {
-      width: max-content;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      //   border: 1px solid red;
-      padding: 1rem;
-      gap: 4px;
-
-      & > :first-child {
-        font-size: calc(var(--contact-base-font-size) * 1.1);
-        color: rgba(255, 255, 255, 0.696);
-        margin-bottom: 5px;
-      }
-      & > :nth-child(2) {
-        font-size: calc(var(--contact-base-font-size) * 0.8);
-        color: $text-light;
-      }
-      & > :nth-child(3) {
-        font-size: calc(var(--contact-base-font-size) * 0.9);
-        color: $text-light;
-      }
-    }
-  }
-
-  & > .espektrologo {
-    grid-area: espektro_logo;
-    @include center-center();
-    & > div {
-      width: min(8rem, 100%);
-    }
-  }
-
-  & .social_wrapper {
-    grid-area: social;
-    @include center-center();
-    flex-direction: column;
-    & .social_container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      align-self: center;
-      gap: var(--social-link-gap);
-
-      & > a {
-        font-size: 2rem;
-        text-decoration: none;
-        color: rgba(255, 255, 255, 0.696);
-        transition: all 0.4s ease-in-out;
-      }
-
-      & > a:hover {
-        cursor: pointer;
-        transform: translate(0, -5px) scale(1.1);
-        color: white;
-      }
-    }
-  }
-
-  & .address__wrapper {
-    grid-area: address;
-    @include center-center();
-    flex-direction: column;
-
-    & > p {
-      color: var(--divider-color);
-      font-size: 0.9rem;
-      padding: 0 10px;
-    }
-  }
-
-  & > .kgecespektro {
-    grid-area: kgec_espektro;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: $medieval-sharp;
-    font-weight: 500;
-    color: $text-light;
-    background: $text-light;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 2rem 0;
-    & > p:first-child {
-      font-size: 2rem;
-    }
-
-    & > p:last-child {
-      font-size: 3rem;
-    }
-  }
-
-  & > .footer_bottom_container {
-    grid-area: copyright;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 10px 2rem;
-    width: 100%;
-    font-size: 0.8rem;
-    color: var(--divider-color);
-    // border-top: var(--divider-width) solid var(--divider-color);
-
-    & > .copywrite {
-      font-family: $poppins-sans;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    & a {
-      transition: all 0.4s ease-in-out;
-    }
-    & a:hover {
-      cursor: pointer;
-      transform: translate(0, -5px) scale(1.1);
-      color: white;
-    }
-  }
-
-  .sub__section__heading {
-    border-bottom: var(--divider-width) solid var(--divider-color);
-    padding: 0 1rem 10px 1rem;
-    margin-bottom: 1rem;
-    width: fit-content;
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #8b6745;
   }
 }
 
-@include tablet {
+.border_line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, #8b6745, #a67c52, #8b6745);
+  max-width: 90%;
+}
+
+/* Main content layout */
+.footer_content {
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Left section - Logo */
+.logo_section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.logo_circle {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #8b6745;
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+
+  div {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.logo_image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(45%) sepia(15%) saturate(1000%) hue-rotate(350deg) brightness(90%) contrast(85%);
+  transform: scale(1.6);
+}
+
+/* Center section - Contacts and Social */
+.center_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.contacts_row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.contact_person {
+  text-align: center;
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #3d2415;
+    margin: 0 0 0.5rem 0;
+    font-family: $medieval-sharp;
+  }
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    color: #5a3a1f;
+
+    &:first-of-type {
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.decorative_dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding-top: 0.5rem;
+
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #8b6745;
+  }
+}
+
+.social_section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3d2415;
+    white-space: nowrap;
+  }
+}
+
+.social_divider_left,
+.social_divider_right {
+  width: 30px;
+  height: 1px;
+  background-color: #8b6745;
+}
+
+.social_icons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+
+  a {
+    font-size: 2rem;
+    color: #5a3a1f;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #8b6745;
+      transform: translateY(-3px) scale(1.1);
+    }
+  }
+}
+
+/* Right section - Address and Branding */
+.right_section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.address_block {
+  text-align: center;
+
+  h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3d2415;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #5a3a1f;
+    margin: 0.5rem 0 0 0;
+  }
+}
+
+.address_underline {
+  width: 80px;
+  height: 1px;
+  background-color: #8b6745;
+  margin: 0 auto 0.5rem auto;
+}
+
+.branding {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  .branding_top {
+    font-size: 1.2rem;
+    color: #5a3a1f;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .branding_main {
+    font-size: 2rem;
+    color: #3d2415;
+    margin: 0;
+    font-weight: 700;
+    font-family: $medieval-sharp;
+  }
+}
+
+.branding_dots {
+  display: flex;
+  gap: 8px;
+
+  span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #8b6745;
+  }
+}
+
+.branding_underline {
+  width: 120px;
+  height: 2px;
+  background-color: #8b6745;
+  margin: 0.25rem 0;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #8b6745;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &::before {
+    left: -8px;
+  }
+
+  &::after {
+    right: -8px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footer_content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .logo_section {
+    justify-content: center;
+  }
+
+  .contacts_row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .decorative_dots {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 768px) {
   .footer_section {
-    column-gap: 1.5rem;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    grid-template-areas:
-      "espektro_logo contact address"
-      "espektro_logo contact address"
-      "espektro_logo contact kgec_espektro"
-      "espektro_logo social kgec_espektro"
-      "copyright copyright copyright";
+    padding: 1.5rem 1rem;
+  }
 
-    & > .kgecespektro {
-      margin: 0;
-    }
+  .logo_circle {
+    width: 120px;
+    height: 120px;
+  }
 
-    & > .espektrologo {
-      & > div {
-        width: min(10rem, 15vw);
-      }
-    }
+  .contact_person h3 {
+    font-size: 1.1rem;
+  }
+
+  .branding_main {
+    font-size: 1.5rem;
+  }
+
+  .social_icons a {
+    font-size: 1.5rem;
   }
 }
