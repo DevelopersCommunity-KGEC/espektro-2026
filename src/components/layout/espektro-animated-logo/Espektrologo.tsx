@@ -3,7 +3,8 @@ import React from 'react';
 
 const Espektrologo: React.FC<{
   repeatDelay?: number;
-}> = ({ repeatDelay = 3 }) => {
+  color?: string;
+}> = ({ repeatDelay = 3, color = 'white' }) => {
   return (
     <svg
       version="1.1"
@@ -17,7 +18,7 @@ const Espektrologo: React.FC<{
         width: '100%',
         height: '100%',
       }}
-      stroke="white"
+      stroke={color}
     >
       <style type="text/css"></style>
       <motion.path

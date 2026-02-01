@@ -1,64 +1,197 @@
 /* full page parchment background */
 .page {
+  width: 100%;
   min-height: 100vh;
   background: url("/parchment.png") center/cover no-repeat;
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  align-items: center;
+  padding: 0 0 4rem 0;
+  margin: 0;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
 /* main poster container */
 .poster {
   position: relative;
   width: 100%;
-  max-width: 1100px;
+  height: 100%;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* big decorative border */
 .outerFrame {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 10;
+  object-fit: contain;
+  animation: fadeIn 1s ease-in;
 }
 
 /* actual usable content area */
 .content {
   position: relative;
-  padding: 3rem;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 3rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-/* top plaque */
+/* top plaque - positioned above outer frame */
 .plaque {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  z-index: 11;
+  animation: slideDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.plaque img {
-  width: 260px;
-  max-width: 80%;
+.plaqueImage {
+  width: auto;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: all 0.4s ease;
 }
 
-/* two column layout */
+.plaqueImage:hover {
+  filter: drop-shadow(0 6px 12px rgba(166, 124, 82, 0.4));
+  transform: translateY(-2px);
+}
+
+.plaqueContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4.5rem;
+}
+
+.eventTitle {
+  margin: 0;
+  font-family: "Cormorant Garamond", "Garamond", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: titleFade 0.6s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* horizontal scroll container */
+.scrollContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 280px);
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  margin-top: 180px;
+}
+
+/* carousel wrapper for horizontal sliding */
+.carousel {
+  display: flex;
+  height: 100%;
+  gap: 0;
+  will-change: transform;
+}
+
+/* individual carousel slide */
+.carouselSlide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.carouselSlide:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.carouselSlide:nth-child(2) {
+  animation-delay: 0s;
+}
+
+.carouselSlide:nth-child(3) {
+  animation-delay: 0s;
+}
+
+.carouselSlide:nth-child(4) {
+  animation-delay: 0s;
+}
+
+/* two column layout within slide */
 .mainGrid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
 }
 
 /* left framed area */
 .leftShowcase {
   position: relative;
   width: 100%;
+  height: 100%;
+  max-height: 400px;
+  animation: floatIn 1s ease-out;
+  display: flex;
+  align-items: center;
 }
 
 /* inner decorative frame */
 .innerFrame {
   width: 100%;
   display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.leftShowcase:hover .innerFrame {
+  filter: drop-shadow(0 12px 24px rgba(166, 124, 82, 0.25));
+  transform: translateY(-4px);
 }
 
 /* wrapper to position event image inside frame */
@@ -71,6 +204,7 @@
   bottom: 12%;
   overflow: hidden;
   border-radius: 6px;
+  z-index: 1;
 }
 
 /* actual event image */
@@ -78,33 +212,351 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(0.95);
 }
 
 /* gentle hover zoom */
 .eventImage:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  filter: brightness(1);
 }
 
 /* right text panel */
 .rightText {
-  color: #4b2f1a;
-  font-family: serif;
-  line-height: 1.8;
-  background: rgba(255, 255, 255, 0.25);
-  padding: 1.5rem;
-  border-left: 2px dotted #a67c52;
-  backdrop-filter: blur(1px);
+  position: relative;
+  color: #3d2817;
+  font-family: "Cormorant Garamond", "Garamond", serif;
+  font-size: 0.85rem;
+  /* Reduced from 1rem */
+  line-height: 1.7;
+  /* Reduced from 1.8 */
+  padding: 0;
+  margin-top: 0;
+  margin-left: -2rem;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+  transition: all 0.4s ease;
+  width: 100%;
+  min-height: 350px;
+  /* Reduced from 480px */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Text frame image */
+.textFrame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  /* Reduced from 120% */
+  height: auto;
+  min-height: 350px;
+  /* Reduced from 480px */
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Text content wrapper */
+.textContent {
+  position: relative;
+  z-index: 2;
+  padding: 3.5rem 5rem 3.5rem 4rem;
+  /* Reduced padding */
+  max-width: 85%;
+  margin: 0 auto;
+}
+
+.rightText:hover .textFrame {
+  filter: drop-shadow(0 6px 12px rgba(166, 124, 82, 0.3));
+  transform: translate(-50%, -50%) scale(1.02);
 }
 
 .rightText h2 {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 1.8rem;
+  /* Reduced from 1.5rem */
+  font-size: 1.6rem;
+  /* Reduced from 2.2rem */
+  font-weight: 700;
+  color: #2d1810;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  font-style: italic;
+}
+
+.rightText:hover h2 {
+  color: #8b4513;
 }
 
 .rightText p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
+  /* Reduced from 1.2rem */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  font-size: 0.85rem;
+  /* Reduced from 1rem */
+  line-height: 1.7;
+  /* Reduced from 1.9 */
+  text-align: justify;
+  text-indent: 1.5rem;
+  opacity: 0.95;
+}
+
+.rightText p:first-of-type {
+  text-indent: 0;
+}
+
+.rightText p:last-child {
+  margin-bottom: 0;
+}
+
+.rightText:hover p {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.textContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(255, 248, 220, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Navigation buttons */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 12;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  width: 80px;
+  height: 80px;
+  opacity: 0.7;
+}
+
+.navButton:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.15);
+  filter: drop-shadow(0 0 15px rgba(166, 124, 82, 0.7));
+  opacity: 1;
+}
+
+.navButton:active:not(:disabled) {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.navButton:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.navButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.navButton:hover:not(:disabled) img {
+  animation: pulse 1s infinite;
+}
+
+.navPrev {
+  left: 2rem;
+  animation: slideInLeft 0.6s ease-out 0.5s both;
+}
+
+.navNext {
+  right: 2rem;
+  animation: slideInRight 0.6s ease-out 0.5s both;
+}
+
+/* Navigation dots */
+.navDots {
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 12;
+  animation: fadeInUp 0.6s ease-out 0.6s both;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(139, 103, 69, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0;
+  position: relative;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(166, 124, 82, 0.3);
+  transition: all 0.4s ease;
+}
+
+.dot:hover::after {
+  width: 24px;
+  height: 24px;
+}
+
+.dot.active {
+  background: #8b6745;
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 8px rgba(139, 103, 69, 0.6);
+  animation: dotPulse 2s infinite;
+}
+
+.dot:hover {
+  background: rgba(139, 103, 69, 0.6);
+  transform: scale(1.2);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes titleFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translate(-30px, -50%);
+  }
+
+  to {
+    opacity: 0.7;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate(30px, -50%);
+  }
+
+  to {
+    opacity: 0.7;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes dotPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(139, 103, 69, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 16px rgba(139, 103, 69, 0.8);
+  }
 }
 
 /* responsive: stack on small screens */
@@ -113,11 +565,47 @@
     padding: 2rem 1.5rem;
   }
 
-  .mainGrid {
-    grid-template-columns: 1fr;
+  .carouselSlide {
+    padding: 5rem 1.5rem 2rem 1.5rem;
   }
 
-  .plaque img {
-    width: 200px;
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .plaqueImage {
+    height: 180px;
+  }
+
+  .eventTitle {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+
+  .plaqueContent {
+    padding: 0 3rem;
+  }
+
+  .rightText {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .rightText h2 {
+    font-size: 1.6rem;
+  }
+
+  .navPrev {
+    left: 0.5rem;
+  }
+
+  .navNext {
+    right: 0.5rem;
+  }
+
+  .navButton {
+    width: 60px;
+    height: 60px;
   }
 }
