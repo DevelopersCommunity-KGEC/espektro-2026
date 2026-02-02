@@ -79,22 +79,49 @@
   border-radius: 20px;
   padding-bottom: 2rem;
 
-  &>h3 {
-    line-height: 30px;
-    position: absolute;
-    top: -20px;
-    left: 20px;
-    background-color: $primary;
+  // Removed absolute positioning and background color as per request
+  .day_header {
+    // line-height: 30px; // Removed fixed line-height
+    // position: absolute; // Removed absolute
+    // top: -20px;
+    // left: 20px;
+    background-color: transparent; // Transparent background
     padding: 0 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; // Ensure spacing
+    cursor: pointer;
+    user-select: none;
+    z-index: 5;
+    width: 100%; // Full width to allow justify-between to work
 
-    color: $text-dark;
+    // Color: Blackish tone for better visibility
+    color: #1a1a1a; // Dark Charcoal / Almost Black
+    // Alternative: #704214 (Sepia) or #654321 (Dark Brown)
+
     font-family: $medieval-sharp;
+    // border: 0.5px solid $secondary; // Removed border
+    // border-radius: 5px; 
 
     @include mobile {
       font-size: 1.8rem;
+    }
+
+    h3 {
+      // Ensure inner h3 text styling if needed
+      margin: 0;
+      font-size: 2rem;
+      color: #1a1a1a; // Force color on h3
+
+      span {
+        color: #1a1a1a;
+      }
+
+      // Target icons explicitly
+      .staff-icon,
+      svg {
+        color: #1a1a1a;
+      }
     }
   }
 }
