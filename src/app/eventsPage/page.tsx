@@ -11,6 +11,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import { GiWizardStaff } from 'react-icons/gi';
+import { FaChevronDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import OutlinedHeading from '@/components/layout/outlined-heading';
 
@@ -164,7 +166,7 @@ function EventsSection({
             <article>
                 {days.map((day, idx: number) => {
                     return (
-                        <EventDayContainer key={idx} day={day.day} events={day.event} />
+                        <EventDayContainer key={idx} day={day.day} events={day.event} defaultOpen={idx === 0} />
                     );
                 })}
             </article>
@@ -175,25 +177,56 @@ function EventsSection({
 function EventDayContainer({
     day,
     events,
+    defaultOpen = false,
 }: {
     day: string;
     events: EventData[];
+    defaultOpen?: boolean;
 }) {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+
     return (
         <div className={`${styles.event_day_container} magic-parchment`}>
-            <h3 className="day-header">
-                <GiWizardStaff className="staff-icon" />
-                {moment(day, 'DD-MM-YYYY').format('Do MMMM')}
-                <GiWizardStaff className="staff-icon" />
-            </h3>
+            <div
+                className={`${styles.day_header} cursor-pointer select-none flex items-center justify-between w-full px-4 pt-4`}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {/* Spacer to center the date text visually if needed, or just justify-between */}
+                <div className="w-6"></div>
 
-            <div className={styles.events_grid_container}>
-                {events.map((event, idx) => (
-                    <div key={idx} className={styles.event_grid_item}>
-                        <EventCard {...event} />
-                    </div>
-                ))}
+                <h3 className="flex items-center text-xl font-bold">
+                    <GiWizardStaff className="staff-icon mr-2" />
+                    <span>{moment(day, 'DD-MM-YYYY').format('Do MMMM')}</span>
+                    <GiWizardStaff className="staff-icon ml-2" />
+                </h3>
+
+                <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <FaChevronDown />
+                </motion.div>
             </div>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                    >
+                        <div className={styles.events_grid_container}>
+                            {events.map((event, idx) => (
+                                <div key={idx} className={styles.event_grid_item}>
+                                    <EventCard {...event} />
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
