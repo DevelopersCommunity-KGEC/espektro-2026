@@ -1,0 +1,29 @@
+@import '../../../../../styles/breakpoints';
+
+.wrapper_container {
+    // border: 1px solid red;
+    width: 50%;
+    height: 50%;
+}
+
+@include sm {
+    .wrapper_container {
+        width: 55%;
+        height: 55%;
+    }
+}
+
+@include mobile {
+    .wrapper_container {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@include tablet {
+    .wrapper_container {
+        width: 80%;
+        height: 80%;
+        padding: 2rem;
+    }
+}

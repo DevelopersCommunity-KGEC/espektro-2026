@@ -1,0 +1,94 @@
+// @import '../../styles/fonts';
+// @import '../../styles/colors';
+
+@use '../../styles/fonts' as *;
+@use '../../styles/colors' as *;
+
+.accommodation__page {
+    padding-top: 5rem;
+    background-image: url("/bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #1a1a1a;
+    min-height: 100vh;
+}
+
+.logo__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 10rem;
+    margin: 4rem 0;
+}
+
+
+// * {
+//     box-sizing: border-box;
+//   }
+
+body {
+    margin: 0;
+    font-family: 'MedievalSharp', $medieval-sharp, serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.appContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary;
+    // padding: 32px 24px;
+    // width: 100%;
+    min-height: 100vh;
+
+    .faqsCardContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: $primary;
+        border-radius: 16px;
+        padding: 32px 12px;
+
+        @media screen and (min-width: 768px) {
+            width: 90%;
+            padding: 32px;
+        }
+
+        @media screen and (min-width: 1200px) {
+            width: 60%;
+            padding-top: 64px;
+            padding-bottom: 64px;
+        }
+
+        .faqsListContainer {
+            width: 100%;
+            list-style-type: none;
+            padding: 0px;
+
+            @media screen and (min-width: 768px) {
+                width: 90%;
+            }
+
+            @media screen and (min-width: 1200px) {
+                width: 80%;
+            }
+        }
+
+        .heading {
+            color: #cb8805;
+            font-family: 'MedievalSharp', $medieval-sharp, serif;
+            font-size: 32px;
+            font-weight: 700;
+
+            @media screen and (min-width: 768px) {
+                font-size: 64px;
+            }
+        }
+    }
+}

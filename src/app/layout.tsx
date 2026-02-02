@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { Navbar } from "@/components/layout/navbar";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { getUserClubRoles } from "@/lib/rbac";
+import Navigation from "@/components/layout/navbar/navbar";
+import { Toaster } from "@/components/ui/sonner";
+import { AdminSync } from "@/components/admin/admin-sync";
 import { OnboardingCheck } from "@/components/layout/onboarding-check";
 
 const geistSans = Geist({
@@ -35,12 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { Toaster } from "@/components/ui/sonner";
-import { AdminSync } from "@/components/admin/admin-sync";
-import { getUserClubRoles } from "@/lib/rbac";
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -65,7 +63,11 @@ export default async function RootLayout({
       >
         <AdminSync />
         <OnboardingCheck />
-        <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
+        <Navigation
+          isAdmin={!!isAdmin}
+          userRole={session?.user?.role}
+          clubRoles={clubRoles}
+        />
         {children}
         <Toaster />
       </body>

@@ -1,0 +1,362 @@
+/* Harry Potter Theme Styling */
+.harry-potter-theme {
+  --hogwarts-red: #740001;
+  --hogwarts-gold: #d3a625;
+  --ravenclaw-blue: #0e1a40;
+  --hufflepuff-yellow: #ecb939;
+  --slytherin-green: #1a472a;
+  --parchment: #f5f0e1;
+  --x: 50;
+  --y: 50;
+  
+  background-color: var(--ravenclaw-blue);
+  background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d3a625' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--hogwarts-gold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+}
+
+.wizard-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--hogwarts-red);
+  color: var(--hogwarts-gold);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(211, 166, 37, 0.7);
+  transition: all 0.3s ease;
+  opacity: 0;
+  
+  &:hover {
+    background: var(--hogwarts-gold);
+    color: var(--hogwarts-red);
+    box-shadow: 0 0 20px var(--hogwarts-gold), 0 0 40px rgba(211, 166, 37, 0.4);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  &.visible {
+    opacity: 1;
+  }
+  
+  svg {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+  }
+  
+  &.left-arrow {
+    left: 10px;
+  }
+  
+  &.right-arrow {
+    right: 10px;
+  }
+}
+
+.magic-parchment {
+  background-color: var(--parchment);
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  position: relative;
+  margin: 30px 0;
+  padding: 20px;
+  border: 2px solid var(--hogwarts-gold);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23740001' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    border-radius: 10px;
+    opacity: 0.3;
+    z-index: -1;
+  }
+  
+  &:hover {
+    --active: 1;
+  }
+  
+  &:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at calc(var(--x) * 1px) calc(var(--y) * 1px), 
+      var(--hogwarts-gold) / 0.08, 
+      transparent 25vmin
+    );
+    background-attachment: fixed;
+    opacity: var(--active, 0);
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 12px;
+  }
+
+  .events_grid_container {
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d3a625'%3E%3Cpath d='M12 3.5L8.5 5.5L12 7.5L15.5 5.5L12 3.5ZM3 7.5L7.5 10L11 8L6.5 5.5L3 7.5ZM21 7.5L17.5 5.5L13 8L16.5 10L21 7.5ZM7.5 14L3 11.5L8.5 16L7.5 14ZM16.5 14L15.5 16L21 11.5L16.5 14ZM12 13L8.5 10.5L12 8L15.5 10.5L12 13Z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.8;
+    }
+  }
+
+  .event_grid_item:nth-child(3n+1)::before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: -10px;
+    top: 50%;
+    background: radial-gradient(circle, var(--hogwarts-gold) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(3px);
+    opacity: 0.6;
+    z-index: 10;
+    animation: float 3s infinite ease-in-out;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.day-header {
+  font-size: 1.8rem;
+  color: var(--hogwarts-red);
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .staff-icon {
+    margin: 0 15px;
+    color: var(--hogwarts-gold);
+  }
+}
+
+.event-card-wrapper {
+  transition: transform 0.3s ease;
+  background: var(--ravenclaw-blue);
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-10px);
+    --active: 1;
+  }
+  
+  &:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at calc(var(--x) * 1px) calc(var(--y) * 1px), 
+      var(--hogwarts-gold) / 0.15, 
+      transparent 15vmin
+    );
+    background-attachment: fixed;
+    opacity: var(--active, 0);
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at calc(var(--x) * 1px) calc(var(--y) * 1px), 
+      var(--hogwarts-gold) / 0.4, 
+      transparent 15vmin
+    );
+    background-attachment: fixed;
+    pointer-events: none;
+    z-index: 1;
+    mask:
+      linear-gradient(white, white) 50% 0 / 100% 2px no-repeat,
+      linear-gradient(white, white) 50% 100% / 100% 2px no-repeat,
+      linear-gradient(white, white) 0 50% / 2px 100% no-repeat,
+      linear-gradient(white, white) 100% 50% / 2px 100% no-repeat;
+  }
+}
+
+// Enhanced Harry Potter styling for the carousel
+.carousel-container-wrapper {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d3a625'%3E%3Cpath d='M12 3.5L8.5 5.5L12 7.5L15.5 5.5L12 3.5ZM3 7.5L7.5 10L11 8L6.5 5.5L3 7.5ZM21 7.5L17.5 5.5L13 8L16.5 10L21 7.5ZM7.5 14L3 11.5L8.5 16L7.5 14ZM16.5 14L15.5 16L21 11.5L16.5 14ZM12 13L8.5 10.5L12 8L15.5 10.5L12 13Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--hogwarts-gold), transparent);
+  }
+}
+
+// Magical effect for active card in Harry Potter theme
+.active-card .event-card-wrapper {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, var(--hogwarts-red) 0%, transparent 50%, var(--hogwarts-gold) 100%);
+    border-radius: 15px;
+    opacity: 0.15;
+    z-index: -1;
+  }
+}
+
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hogwarts-gold) var(--ravenclaw-blue);
+  
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--ravenclaw-blue);
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--hogwarts-gold);
+    border-radius: 10px;
+    border: 2px solid var(--ravenclaw-blue);
+  }
+}
+
+.magic-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(var(--hogwarts-gold) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.1;
+}
+
+.hogwarts-crest {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  
+  .wizard-hat-icon {
+    font-size: 3rem;
+    color: var(--hogwarts-gold);
+    filter: drop-shadow(0 0 10px rgba(211, 166, 37, 0.7));
+  }
+}
+
+.spellbook-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 20px 0;
+  color: var(--parchment);
+  
+  .scroll-icon {
+    margin: 0 10px;
+    color: var(--hogwarts-gold);
+  }
+}
+
+.wizard-cursor {
+  position: fixed;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle, 
+    var(--hogwarts-gold) 0%, 
+    transparent 70%
+  );
+  filter: blur(4px);
+  opacity: 0.7;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 20px 5px var(--hogwarts-gold);
+}
+
+.wand-sparkle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--hogwarts-gold);
+  box-shadow: 0 0 10px 2px var(--hogwarts-gold);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9998;
+}
+
+@media (max-width: 768px) {
+  .wizard-arrow {
+    width: 40px;
+    height: 40px;
+    
+    svg {
+      font-size: 1.4rem;
+    }
+  }
+  
+  .day-header {
+    font-size: 1.5rem;
+  }
+}

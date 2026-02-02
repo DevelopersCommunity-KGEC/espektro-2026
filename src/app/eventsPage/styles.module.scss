@@ -1,0 +1,261 @@
+@import "../../styles/breakpoints";
+@import "../../styles/colors";
+@import "../../styles/fonts";
+
+.events_nav {
+  display: flex;
+  justify-content: center;
+  width: clamp(180px, 100%, 600px);
+  align-items: center;
+  color: white;
+  border: 1px solid $secondary;
+  padding: 0.35rem;
+  list-style: none;
+  gap: 1rem;
+  border-radius: 10px;
+  font-family: $medieval-sharp;
+
+  &>li {
+    flex: 1;
+    border-radius: 7px;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+    color: $text-medium;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-family: $medieval-sharp;
+    padding-block: 0.25rem;
+
+    &[data-active="true"] {
+      background: $secondary;
+      color: $text-light;
+    }
+
+    &>a {
+      text-decoration: none;
+    }
+  }
+}
+
+.event__main__container {
+  // background-color: $primary;
+  background-image: url("/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #1a1a1a;
+  padding: 1rem;
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  min-height: 100dvh;
+  font-family: $medieval-sharp;
+
+  &>div.section__container {
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding-inline: 0.5rem;
+  }
+}
+
+.event__section {
+  &>article {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 80px;
+  }
+}
+
+.event_day_container {
+  border: 0.5px solid $secondary;
+  width: 100%;
+  color: white;
+  position: relative;
+  border-radius: 20px;
+  padding-bottom: 2rem;
+
+  // Removed absolute positioning and background color as per request
+  .day_header {
+    // line-height: 30px; // Removed fixed line-height
+    // position: absolute; // Removed absolute
+    // top: -20px;
+    // left: 20px;
+    background-color: transparent; // Transparent background
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // Ensure spacing
+    cursor: pointer;
+    user-select: none;
+    z-index: 5;
+    width: 100%; // Full width to allow justify-between to work
+
+    // Color: Blackish tone for better visibility
+    color: #1a1a1a; // Dark Charcoal / Almost Black
+    // Alternative: #704214 (Sepia) or #654321 (Dark Brown)
+
+    font-family: $medieval-sharp;
+    // border: 0.5px solid $secondary; // Removed border
+    // border-radius: 5px; 
+
+    @include mobile {
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      // Ensure inner h3 text styling if needed
+      margin: 0;
+      font-size: 2rem;
+      color: #1a1a1a; // Force color on h3
+
+      span {
+        color: #1a1a1a;
+      }
+
+      // Target icons explicitly
+      .staff-icon,
+      svg {
+        color: #1a1a1a;
+      }
+    }
+  }
+}
+
+// New grid container styles
+.events_grid_container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // Changed back to 3 cards per row
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+
+  // Smaller tablet view - 2 cards per row
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Mobile view - 1 card per row
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
+.event_grid_item {
+  display: flex;
+  height: 100%;
+
+  // Harry Potter theme effects
+  position: relative;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  // Add magical glow effect on hover
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    opacity: 0;
+    box-shadow: 0 0 15px rgba(211, 166, 37, 0.5);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.controls__prev {
+  left: 1rem;
+
+  &[data-hidden="true"] {
+    display: none;
+  }
+}
+
+.controls__next {
+  right: 1rem;
+}
+
+.card__container {
+  // display: flex;
+  // flex-wrap: nowrap;
+  // margin: 0 auto;
+  width: 100%;
+  // overflow-x: auto;
+  padding: 1rem;
+  padding-top: 1.75rem;
+  // gap: 1rem;
+  // scroll-behavior: smooth;
+  // scroll-snap-type: x mandatory;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 42%;
+  gap: 1rem;
+  padding-inline: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: 1rem;
+
+  // -ms-overflow-style: none;
+  /* Internet Explorer and Edge */
+  scrollbar-width: none;
+
+  @media only screen and (max-width: 1200px) {
+    grid-auto-columns: 51%;
+  }
+
+  @media only screen and (max-width: 992px) {
+    grid-auto-columns: 60%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding-block: 1rem 0.5rem;
+    padding-inline: 0.5rem;
+    gap: 0.5rem;
+    scroll-padding-inline: 0.5rem;
+    grid-auto-columns: 80%;
+  }
+
+  @media only screen and (max-width: 448px) {
+    grid-auto-columns: 95%;
+  }
+
+  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  &>li {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    height: 100%;
+  }
+}
+
+.card {
+  max-width: 300px;
+  padding: 1rem;
+
+  &__header {
+    padding: 0;
+  }
+}
+
+.coming__soon {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+}
