@@ -30,11 +30,11 @@ const links = [
   {
     id: 4,
     label: "Events",
-    href: "/events",
+    href: "/eventsPage",
   },
   {
     id: 5,
-    label: "Accomodation",
+    label: "Accommodation",
     href: "/accomodation",
   },
   // {
@@ -343,9 +343,9 @@ function HamburgerButton({
   return (
     <button className={styles.HamburgerButton__button} onClick={onClick}>
       {isClicked ? (
-        <IoClose size={24} color="#e8dcc9" />
+        <IoClose size={24} color="#1a1a1a" />
       ) : (
-        <GiHamburgerMenu size={24} color="#e8dcc9" />
+        <GiHamburgerMenu size={24} color="#1a1a1a" />
       )}
     </button>
   );
