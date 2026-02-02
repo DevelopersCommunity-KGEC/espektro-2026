@@ -507,26 +507,7 @@ function ClubComponent() {
         circlePositions.set(id, { x, y });
       });
       
-      const lotusIds = [2, 10, 15];
-      const lotusRadii = [
-        (innerCircleRadius + middleCircleRadius) / 2,  
-        (middleCircleRadius + outerCircleRadius) / 2,  
-        (middleCircleRadius + outerCircleRadius) / 2,  
-      ];
-      
-      const lotusAngles = [
-        90,   
-        210,  
-        330,  
-      ];
-      
-      lotusIds.forEach((id, index) => {
-        const angle = lotusAngles[index] * (Math.PI / 180);
-        const radius = lotusRadii[index];
-        const x = centerX + radius * Math.cos(angle);
-        const y = centerY + radius * Math.sin(angle);
-        circlePositions.set(id, { x, y });
-      });
+
       
       const getMinDistance = (width: number, height: number): number => {
         const avgSize = (width + height) / 2;
@@ -557,6 +538,12 @@ function ClubComponent() {
       elements.forEach((el, index) => {
         const rect = el.getBoundingClientRect();
         const isLotus = el.classList.contains(styles.lotusContainer);
+
+        // Skip positioning lotuses on desktop (>520px) as they are hidden via CSS
+        if (!isVerticalLayout && isLotus) {
+           return;
+        }
+
         const clubId = parseInt(el.getAttribute('data-club-id') || '0');
         
         let position: ElementPosition | null = null;
