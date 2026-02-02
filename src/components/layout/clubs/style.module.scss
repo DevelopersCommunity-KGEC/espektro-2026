@@ -355,13 +355,7 @@
   }
 
   @media (min-width: 520px) {
-    opacity: 0;
-
-    &.visible {
-      animation:
-        bloomEnter 1s ease-out var(--bloom-delay, 0s) forwards,
-        orbitalSway 20s ease-in-out var(--bloom-delay, 0s) infinite;
-    }
+    display: none;
   }
 
   @media (min-width: 240px) and (max-width: 519px) {
