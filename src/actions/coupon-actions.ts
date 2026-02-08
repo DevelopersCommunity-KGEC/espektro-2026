@@ -1,6 +1,6 @@
 "use server";
 
-import Referral from "@/models/Referral";
+import Coupon from "@/models/Coupon";
 import dbConnect from "@/lib/db";
 import { getCurrentUser, hasClubPermission } from "@/lib/rbac";
 import { nanoid } from "nanoid";
@@ -17,7 +17,7 @@ function generateCode(): string {
   return `${part1}-${part2}`;
 }
 
-export async function createReferralCodes(data: {
+export async function createCouponCodes(data: {
   clubId: string;
   count: number;
   discountPercentage: number;
@@ -36,13 +36,13 @@ export async function createReferralCodes(data: {
 
   // Validate inputs
   if (data.clubId === "all")
-    throw new Error("Cannot create global referral codes");
+    throw new Error("Cannot create global coupon codes");
   if (data.count < 1 || data.count > 50)
     throw new Error("Count must be between 1 and 50");
   if (data.discountPercentage < 0 || data.discountPercentage > 100)
     throw new Error("Invalid discount percentage");
 
-  const referrals = [];
+  const coupons = [];
 
   // Try to generate unique codes
   for (let i = 0; i < data.count; i++) {
@@ -52,13 +52,13 @@ export async function createReferralCodes(data: {
 
     while (!unique && attempts < 10) {
       code = generateCode();
-      const existing = await Referral.findOne({ code });
+      const existing = await Coupon.findOne({ code });
       if (!existing) unique = true;
       attempts++;
     }
 
     if (unique) {
-      referrals.push({
+      coupons.push({
         code,
         clubId: data.clubId,
         discountPercentage: data.discountPercentage,
@@ -68,14 +68,14 @@ export async function createReferralCodes(data: {
     }
   }
 
-  if (referrals.length > 0) {
-    await Referral.insertMany(referrals);
+  if (coupons.length > 0) {
+    await Coupon.insertMany(coupons);
   }
 
-  return { success: true, count: referrals.length };
+  return { success: true, count: coupons.length };
 }
 
-export async function getReferralCodes(clubId: string) {
+export async function getCouponCodes(clubId: string) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
@@ -91,9 +91,9 @@ export async function getReferralCodes(clubId: string) {
   await dbConnect();
 
   const query = clubId === "all" ? {} : { clubId };
-  const referrals = await Referral.find(query).sort({ createdAt: -1 }).lean();
+  const coupons = await Coupon.find(query).sort({ createdAt: -1 }).lean();
 
-  return referrals.map((r: any) => ({
+  return coupons.map((r: any) => ({
     ...r,
     _id: r._id.toString(),
     createdAt: r.createdAt.toISOString(),
@@ -101,53 +101,46 @@ export async function getReferralCodes(clubId: string) {
   }));
 }
 
-export async function deleteReferralCode(id: string) {
+export async function deleteCouponCode(id: string) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
   await dbConnect();
-  const referral = await Referral.findById(id);
-  if (!referral) throw new Error("Referral not found");
+  const coupon = await Coupon.findById(id);
+  if (!coupon) throw new Error("Coupon not found");
 
-  const canDelete = await hasClubPermission(user.id, referral.clubId, [
+  const canDelete = await hasClubPermission(user.id, coupon.clubId, [
     "club-admin",
   ]);
   if (!canDelete && user.role !== "super-admin") {
     throw new Error("Permission denied");
   }
 
-  if (referral.isUsed) {
-    throw new Error("Cannot delete a used referral code");
+  if (coupon.isUsed) {
+    throw new Error("Cannot delete a used coupon code");
   }
 
-  await Referral.findByIdAndDelete(id);
+  await Coupon.findByIdAndDelete(id);
   return { success: true };
 }
 
-export async function validateReferralCode(code: string, clubId?: string) {
+export async function validateCouponCode(code: string, clubId?: string) {
   await dbConnect();
 
   // Normalize code: uppercase and replace spaces with dashes
   const normalizedCode = code.trim().toUpperCase().replace(/\s+/g, "-");
 
-  const referral = await Referral.findOne({
+  const coupon = await Coupon.findOne({
     code: normalizedCode,
     isUsed: false,
   });
 
-  if (!referral) return { valid: false, message: "Invalid or used code" };
-
-  // Check if code belongs to the event's club (if clubId is strictly enforced)
-  // For now, assuming Global/Club codes can be tied to specific Events is complex w/o event-specific mapping.
-  // Let's assume Club codes are valid for ANY event if needed, or check if the event matches the club.
-  // The prompt implies "generate referral codes of a particular club".
-  // Ideally, we check if the event being booked belongs to referral.clubId.
-  // We will return the clubId so the frontend/action can verify.
+  if (!coupon) return { valid: false, message: "Invalid or used code" };
 
   return {
     valid: true,
-    discountPercentage: referral.discountPercentage,
-    clubId: referral.clubId,
-    id: referral._id.toString(),
+    discountPercentage: coupon.discountPercentage,
+    clubId: coupon.clubId,
+    id: coupon._id.toString(),
   };
 }
