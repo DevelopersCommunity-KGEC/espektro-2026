@@ -149,6 +149,12 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         <span>My Tickets</span>
                                     </Link>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/profile" className="cursor-pointer">
+                                        <User className="mr-2 h-4 w-4" />
+                                        <span>Profile</span>
+                                    </Link>
+                                </DropdownMenuItem>
                                 {/* Admin Link again here for convenience */}
                                 {adminLink && (
                                     <DropdownMenuItem asChild>
@@ -200,6 +206,18 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                             {item.name}
                                         </Link>
                                     ))}
+                                    {session && (
+                                        <Link
+                                            href="/profile"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === "/profile"
+                                                ? "text-foreground bg-muted"
+                                                : "text-muted-foreground"
+                                                }`}
+                                        >
+                                            Profile
+                                        </Link>
+                                    )}
                                 </div>
 
                                 {hasClubs && (
