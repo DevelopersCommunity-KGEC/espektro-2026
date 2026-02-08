@@ -102,7 +102,7 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                             className="max-w-sm"
                         />
                         <select
-                            className="h-10 w-full sm:w-[200px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                            className="h-10 w-full sm:w-50 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                             value={eventFilter}
                             onChange={(e) => setEventFilter(e.target.value)}
                         >
@@ -168,7 +168,7 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                                             defaultValue={participant.status}
                                             onValueChange={(val) => handleStatusChange(participant._id, val)}
                                         >
-                                            <SelectTrigger className="w-[130px] h-8">
+                                            <SelectTrigger className="w-32.5 h-8">
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>
