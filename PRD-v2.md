@@ -145,6 +145,7 @@ Capacity enforcement must be **atomic**.
 - Create/edit events for their club
 - Assign volunteers & event editors
 - View club analytics
+- View specific Referral Leaderboard (User Attribution)
 - Issue manual tickets (if permitted)
 
 ---
@@ -168,6 +169,32 @@ Capacity enforcement must be **atomic**.
   - Valid → Check-in + timestamp
 
 Scanner must respond in **< 500 ms**.
+
+---
+
+### 6.7 User Profile & Gamification
+
+- **Referral Code:** Every user has a unique, deterministic referral code (derived from email).
+- **Stats:** Users can view their total referrals and revenue generated.
+- **Ambassador Program:** "Referral" is strictly for attribution (tracking who brought whom). "Coupons" are separate entities for discounts.
+
+---
+
+### 6.8 Referral Leaderboards
+
+- **Global Leaderboard:** available to Super Admins (Top referrers across fest).
+- **Club Leaderboard:** available to Club Admins (Top referrers for specific club events).
+- **Metrics:** Track `Total Tickets Sold` and `Total Revenue Generated`.
+
+---
+
+### 6.9 Coupon System
+
+- **Purpose:** Provide percentage-based discounts to specific users.
+- **Scope:** Can be global (`'all'`) or scoped to a specific `clubId`.
+- **Usage:** Single-use codes (`isUsed` flag).
+- **Management:** Admins can generate and view usage status.
+- **Schema:** Tracks `code`, `discountPercentage`, `usedBy`, and `clubId`.
 
 ---
 
@@ -216,6 +243,7 @@ To ensure scalability and developer experience, the project follows a **Feature-
 - **`src/components/events/`** - Event forms, lists, and booking UI.
 - **`src/components/clubs/`** - Club dashboards, volunteer management.
 - **`src/components/tickets/`** - Ticket rendering and validation.
+- **`src/components/skeletons/`** - Reusable loading state placeholders.
 - **`src/components/admin/`** - Global admin tools.
 - **`src/components/layout/`** - Shell components (Navbar, Sidebar).
 - **`src/types/`** - Centralized strict TypeScript definitions (e.g., `events.ts`, `tickets.ts`).
