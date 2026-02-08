@@ -26,6 +26,7 @@ const UserSchema: Schema = new Schema(
     course: { type: String },
     graduationYear: { type: String },
     collegeName: { type: String },
+    referralCode: { type: String, unique: true, sparse: true },
     createdAt: { type: Date, default: Date.now },
   },
   { collection: "user" },

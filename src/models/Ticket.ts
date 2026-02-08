@@ -7,7 +7,7 @@ export interface ITicket extends Document {
   paymentId: string;
   qrCodeToken: string;
   status: "booked" | "checked-in" | "cancelled" | "pending";
-  issueType: "payment" | "manual" | "pass" | "referral";
+  issueType: "payment" | "manual" | "pass" | "coupon";
   origin?: string;
   revoked: boolean;
   purchaseDate: Date;
@@ -15,7 +15,8 @@ export interface ITicket extends Document {
   issuedBy?: string;
   guestName?: string;
   guestPhone?: string;
-  referralCode?: string;
+  couponCode?: string;
+  referrerUserId?: mongoose.Types.ObjectId;
   discountAmount?: number;
 }
 
@@ -32,7 +33,7 @@ const TicketSchema: Schema = new Schema({
   },
   issueType: {
     type: String,
-    enum: ["payment", "manual", "pass", "referral"],
+    enum: ["payment", "manual", "pass", "coupon"],
     default: "payment",
   },
   origin: { type: String },
@@ -42,7 +43,8 @@ const TicketSchema: Schema = new Schema({
   issuedBy: { type: String }, // Email of the issuer (admin)
   guestName: { type: String },
   guestPhone: { type: String },
-  referralCode: { type: String },
+  couponCode: { type: String }, // Used for discount coupons
+  referrerUserId: { type: Schema.Types.ObjectId, ref: "User" }, // Used for user attribution
   discountAmount: { type: Number },
 });
 
