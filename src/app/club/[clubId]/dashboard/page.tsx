@@ -45,12 +45,12 @@ export default async function ClubDashboardPage({ params }: { params: Promise<{ 
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Referrals</CardTitle>
-                        <CardDescription>Manage discount codes</CardDescription>
+                        <CardTitle>Referrals & Leaderboard</CardTitle>
+                        <CardDescription>Track attributing users & sales</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Button asChild variant="outline">
-                            <Link href={`/club/${clubId}/referrals`}>Manage Codes</Link>
+                            <Link href={`/club/${clubId}/referrals`}>View Leaderboard</Link>
                         </Button>
                     </CardContent>
                 </Card>
