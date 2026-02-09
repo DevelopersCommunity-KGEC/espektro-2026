@@ -14,6 +14,8 @@ export default async function ClubDashboardPage({ params }: { params: Promise<{ 
     const canView = await hasClubPermission(user.id, clubId, ["club-admin", "volunteer", "event-editor"]);
     if (!canView) return notFound();
 
+    const canManageTeam = await hasClubPermission(user.id, clubId, ["club-admin"]);
+
     return (
         <div className="container mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6 capitalize">{clubId} Club Dashboard</h1>
@@ -25,23 +27,25 @@ export default async function ClubDashboardPage({ params }: { params: Promise<{ 
                         <CardDescription>Manage your club events</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Button asChild>
+                        <Button asChild variant={"outline"}>
                             <Link href={`/club/${clubId}/events`}>View Events</Link>
                         </Button>
                     </CardContent>
                 </Card>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Volunteers</CardTitle>
-                        <CardDescription>Manage volunteers and permissions</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Button asChild variant="secondary">
-                            <Link href={`/club/${clubId}/users`}>Manage Team</Link>
-                        </Button>
-                    </CardContent>
-                </Card>
+                {canManageTeam && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Volunteers</CardTitle>
+                            <CardDescription>Manage volunteers and permissions</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Button asChild variant="outline">
+                                <Link href={`/club/${clubId}/users`}>Manage Team</Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                )}
 
                 <Card>
                     <CardHeader>

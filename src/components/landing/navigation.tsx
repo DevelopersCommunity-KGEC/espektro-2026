@@ -174,6 +174,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                                 <DropdownMenuItem
                                                     key={cr.clubId}
                                                     asChild
+                                                    className="focus:bg-primary/10 focus:text-primary focus:outline-none"
                                                 >
                                                     <Link
                                                         href={`/club/${cr.clubId}/dashboard`}
@@ -216,7 +217,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                         </button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
-                                        className="w-56 bg-gray-100"
+                                        className="w-56 bg-background"
                                         align="end"
                                         sideOffset={8}
                                     >
@@ -231,7 +232,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                             </div>
                                         </DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem asChild>
+                                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                             <Link
                                                 href="/my-tickets"
                                                 className="cursor-pointer"
@@ -240,7 +241,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                                 My Tickets
                                             </Link>
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
+                                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                             <Link
                                                 href="/profile"
                                                 className="cursor-pointer"
@@ -250,7 +251,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                             </Link>
                                         </DropdownMenuItem>
                                         {hasClubs && (
-                                            <DropdownMenuItem asChild>
+                                            <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                                 <Link
                                                     href="/scan"
                                                     className="cursor-pointer"
@@ -261,7 +262,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                             </DropdownMenuItem>
                                         )}
                                         {sessionIsAdmin && (
-                                            <DropdownMenuItem asChild>
+                                            <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                                 <Link
                                                     href="/dashboard"
                                                     className="cursor-pointer"
@@ -274,7 +275,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem
                                             onClick={handleSignOut}
-                                            className="cursor-pointer text-destructive focus:text-destructive"
+                                            className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 focus:outline-none focus:[&_svg]:text-destructive"
                                         >
                                             <LogOut className="mr-2 h-4 w-4" />
                                             Log out

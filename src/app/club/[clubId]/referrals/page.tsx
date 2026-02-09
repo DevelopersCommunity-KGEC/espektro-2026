@@ -14,7 +14,7 @@ export default async function ClubReferralPage({
     if (!user) redirect("/login");
 
     const { clubId } = await params;
-    const canView = await hasClubPermission(user.id, clubId, ["club-admin"]);
+    const canView = await hasClubPermission(user.id, clubId, ["club-admin", "volunteer", "event-editor"]);
 
     if (!canView) return notFound();
 

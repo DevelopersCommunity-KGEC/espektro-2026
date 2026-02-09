@@ -53,9 +53,10 @@ interface ParticipantsTableProps {
     events: { _id: string; title: string }[];
     clubId: string;
     currentUserEmail: string;
+    canIssueTickets: boolean;
 }
 
-export function ParticipantsTable({ participants, events, clubId, currentUserEmail }: ParticipantsTableProps) {
+export function ParticipantsTable({ participants, events, clubId, currentUserEmail, canIssueTickets }: ParticipantsTableProps) {
     const [search, setSearch] = useState("");
     const [eventFilter, setEventFilter] = useState("all");
     const [issuedByMe, setIssuedByMe] = useState(false);
@@ -101,16 +102,22 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                             onChange={(e) => setSearch(e.target.value)}
                             className="max-w-sm"
                         />
-                        <select
-                            className="h-10 w-full sm:w-50 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                        <Select
                             value={eventFilter}
-                            onChange={(e) => setEventFilter(e.target.value)}
+                            onValueChange={(val) => setEventFilter(val)}
                         >
-                            <option value="all">All Events</option>
-                            {events.map(e => (
-                                <option key={e._id} value={e._id}>{e.title}</option>
-                            ))}
-                        </select>
+                            <SelectTrigger className="w-full sm:w-[200px]">
+                                <SelectValue placeholder="All Events" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All Events</SelectItem>
+                                {events.map((e) => (
+                                    <SelectItem key={e._id} value={e._id}>
+                                        {e.title}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div className="flex items-center space-x-2">
                         <Checkbox
@@ -120,7 +127,9 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                         />
                         <Label htmlFor="issued-by-me">Issued by me</Label>
                     </div>
-                    <ManualTicketDialog clubId={clubId} events={events} />
+                    {canIssueTickets && (
+                        <ManualTicketDialog clubId={clubId} events={events} />
+                    )}
                 </div>
             </div>
 
