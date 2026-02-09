@@ -3,7 +3,7 @@ export interface EventData {
   title: string;
   description: string;
   image: string;
-  date: string | Date; // Can be string in JSON serialization
+  date: string | Date;
   venue: string;
   price: number;
   capacity: number;
@@ -19,4 +19,15 @@ export interface EventData {
   }[];
   createdAt?: string | Date;
   updatedAt?: string | Date;
+  // Added for compatibility with EventCard
+  eventPrice?: number | string;
+  eventPrize?: number | string;
+  eventImages?: { url: string }[];
+  eventOrganiserClub?: { name: string; image: string };
+  startTime: string | Date;
+  endTime: string | Date;
+  eventVenue?: string;
+  eventCoordinators?: { name: string; phone: string }[];
+  registrationLink?: string;
+  brochureLink?: string;
 }

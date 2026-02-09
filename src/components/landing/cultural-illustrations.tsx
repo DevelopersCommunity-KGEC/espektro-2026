@@ -1,100 +1,146 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { heritage } from "@/data/landing-content";
+import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { pastArtists } from "@/data/landing-content";
+import styles from "./cultural-illustrations.module.scss";
 
 export function CulturalIllustrations() {
-    const sectionRef = useRef<HTMLElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const plane1 = useRef<HTMLDivElement>(null);
+  const plane2 = useRef<HTMLDivElement>(null);
+  const plane3 = useRef<HTMLDivElement>(null);
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  
+  let requestAnimationFrameId: number | null = null;
+  let xForce = 0;
+  let yForce = 0;
+  const easing = 0.08;
+  const speed = 0.002; 
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setIsVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+  const manageMouseMove = (e: React.MouseEvent) => {
+    const { movementX, movementY } = e;
+    xForce += movementX * speed;
+    yForce += movementY * speed;
 
-    return (
-        <section
-            ref={sectionRef}
-            className="py-24 lg:py-36 bg-[#1A1A1A] text-white relative overflow-hidden"
-        >
-            <div className="container mx-auto px-6 lg:px-8 relative z-10">
-                {/* Header */}
-                <div
-                    className={`max-w-2xl mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                    <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-5 font-semibold">
-                        The Spirit of Bengal
-                    </p>
-                    <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-balance">
-                        A Culture That{" "}
-                        <span className="text-[#B7410E]">Breathes Art</span>
-                    </h2>
-                    <p className="text-white/50 leading-relaxed">
-                        From the grandeur of Durga Puja to the everyday poetry of Kolkata&apos;s
-                        streets, Bengali culture is a living, evolving tapestry.
-                    </p>
-                </div>
+    if (requestAnimationFrameId === null) {
+      requestAnimationFrameId = requestAnimationFrame(animate);
+    }
+  };
 
-                {/* Heritage cards - editorial layout */}
-                <div className="grid md:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden">
-                    {heritage.map((item, i) => (
-                        <div
-                            key={item.title}
-                            className={`relative group cursor-pointer transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                            style={{ transitionDelay: `${i * 150}ms` }}
-                            onMouseEnter={() => setHoveredIdx(i)}
-                            onMouseLeave={() => setHoveredIdx(null)}
-                        >
-                            <div className="relative aspect-[3/4] overflow-hidden">
-                                {/* B&W layer */}
-                                <img
-                                    src={item.image || "/placeholder.svg"}
-                                    alt={item.title}
-                                    className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700"
-                                    style={{
-                                        opacity: hoveredIdx === i ? 0 : 1,
-                                        transform: hoveredIdx === i ? "scale(1.08)" : "scale(1)",
-                                    }}
-                                />
-                                {/* Color layer */}
-                                <img
-                                    src={item.image || "/placeholder.svg"}
-                                    alt={item.title}
-                                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
-                                    style={{
-                                        opacity: hoveredIdx === i ? 1 : 0,
-                                        transform: hoveredIdx === i ? "scale(1.08)" : "scale(1)",
-                                    }}
-                                />
-                                {/* Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/30 to-transparent" />
+  const lerp = (start: number, target: number, amount: number) => 
+    start * (1 - amount) + target * amount;
 
-                                {/* Content */}
-                                <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                                    <p className="text-[#F4A900] text-[10px] uppercase tracking-widest mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                        {item.subtitle}
-                                    </p>
-                                    <h3 className="font-serif text-2xl font-bold mb-2 group-hover:text-[#F4A900] transition-colors duration-300">
-                                        {item.title}
-                                    </h3>
-                                    <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500">
-                                        <p className="text-sm text-white/70 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+  const animate = () => {
+    xForce = lerp(xForce, 0, easing);
+    yForce = lerp(yForce, 0, easing);
+
+    if (plane1.current) gsap.set(plane1.current, { x: `+=${xForce}`, y: `+=${yForce}` });
+    if (plane2.current) gsap.set(plane2.current, { x: `+=${xForce * 0.5}`, y: `+=${yForce * 0.5}` });
+    if (plane3.current) gsap.set(plane3.current, { x: `+=${xForce * 0.25}`, y: `+=${yForce * 0.25}` });
+
+    if (Math.abs(xForce) < 0.001) xForce = 0;
+    if (Math.abs(yForce) < 0.001) yForce = 0;
+
+    if (xForce !== 0 || yForce !== 0) {
+      requestAnimationFrameId = requestAnimationFrame(animate);
+    } else {
+      requestAnimationFrameId = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (requestAnimationFrameId) cancelAnimationFrame(requestAnimationFrameId);
+    };
+  }, [requestAnimationFrameId]);
+
+  const p1Images = pastArtists.slice(0, 6);
+  const p2Images = pastArtists.slice(6, 11);
+  const p3Images = pastArtists.slice(11, 16);
+
+  const configs = [
+    /* 0 */ { top: "10%", left: "10%", w: 220, h: 220 },   /* 1 */ { bottom: "18%", left: "18%", w: 180, h: 220 }, 
+    /* 2 */ { top: "20%", right: "18%", w: 180, h: 220 },  /* 3 */ { bottom: "18%", right: "18%", w: 180, h: 220 },
+    /* 4 */ { top: "48%", left: "10%", w: 160, h: 200 },  /* 5 */ { top: "48%", right: "22%", w: 160, h: 200 },
+
+    /* 6 */ { top: "15%", left: "34%", w: 200, h: 200 },   /* 7 */ { top: "15%", right: "42%", w: 130, h: 160 },
+    /* 8 */ { bottom: "15%", left: "42%", w: 130, h: 160 },/* 9 */ { bottom: "15%", right: "42%", w: 130, h: 160 },
+    /* 10 */ { bottom: "28%", left: "50%", w: 130, h: 160 },
+
+    /* 11 */ { top: "25%", left: "15%", w: 200, h: 200 }, /* 12 */ { top: "32%", right: "32%", w: 100, h: 130 },
+    /* 13 */ { bottom: "42%", left: "32%", w: 200, h: 200 },/* 14 */ { bottom: "32%", right: "32%", w: 100, h: 130 },
+    /* 15 */ { top: "32%", left: "50%", w: 100, h: 130 }
+  ];
+
+  return (
+    <>
+      <section 
+        onMouseMove={manageMouseMove} 
+        className={styles.gallerySection}
+      >
+
+        <div className={styles.bgContainer}>
+            <img
+                src="/images/kolkata-city.jpeg"
+                alt=""
+                className={styles.bgImage}
+            />
+        </div>
+
+        <div className={styles.titleContainer}>
+          <p>THE SPIRIT OF BENGAL</p>
+          <h2>A Culture That<br/><span>Breathes Art</span></h2>
+        </div>
+
+        <div ref={plane1} className={`${styles.plane} ${styles.plane1}`}>
+          {p1Images.map((artist, idx) => (
+            <div 
+              key={artist.id} 
+              className={styles.imgWrap} 
+              style={{ top: configs[idx].top, left: configs[idx].left, right: configs[idx].right, bottom: configs[idx].bottom }}
+              onClick={() => setSelectedImg(artist.url)}
+            >
+              <div className={styles.indexLabel}>{idx}</div>
+              <Image src={artist.url} alt="Artist" width={configs[idx].w} height={configs[idx].h} />
             </div>
-        </section>
-    );
+          ))}
+        </div>
+
+        <div ref={plane2} className={`${styles.plane} ${styles.plane2}`}>
+          {p2Images.map((artist, idx) => (
+            <div 
+              key={artist.id} 
+              className={styles.imgWrap} 
+              style={{ top: configs[idx + 6].top, left: configs[idx + 6].left, right: configs[idx + 6].right, bottom: configs[idx + 6].bottom }}
+              onClick={() => setSelectedImg(artist.url)}
+            >
+              <div className={styles.indexLabel}>{idx + 6}</div>
+              <Image src={artist.url} alt="Artist" width={configs[idx + 6].w} height={configs[idx + 6].h} />
+            </div>
+          ))}
+        </div>
+
+        <div ref={plane3} className={`${styles.plane} ${styles.plane3}`}>
+          {p3Images.map((artist, idx) => (
+            <div 
+              key={artist.id} 
+              className={styles.imgWrap} 
+              style={{ top: configs[idx + 11].top, left: configs[idx + 11].left, right: configs[idx + 11].right, bottom: configs[idx + 11].bottom }}
+              onClick={() => setSelectedImg(artist.url)}
+            >
+              <div className={styles.indexLabel}>{idx + 11}</div>
+              <Image src={artist.url} alt="Artist" width={configs[idx + 11].w} height={configs[idx + 11].h} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {selectedImg && (
+        <div className={styles.modalOverlay} onClick={() => setSelectedImg(null)}>
+          <img src={selectedImg} alt="Fullscreen artist" />
+        </div>
+      )}
+    </>
+  );
 }

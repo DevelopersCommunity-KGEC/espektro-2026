@@ -3,6 +3,11 @@
 import { useRef, useEffect, useState } from "react";
 import { stats } from "@/data/landing-content";
 
+import EspektroAbout from "./about-sections/Espektro";
+import Techtix from "./about-sections/Techtix";
+import Exotica from "./about-sections/Exotica";
+import Quizine from "./about-sections/Quizine";
+
 export function About() {
     const sectionRef = useRef<HTMLElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
@@ -39,9 +44,29 @@ export function About() {
             id="about"
             className="py-24 lg:py-36 bg-background relative"
         >
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-8 mb-24">
                 {/* Two column layout */}
                 <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                    {/* Image */}
+                    <div
+                        ref={imageRef}
+                        className={`relative aspect-[4/5] lg:aspect-square bg-muted overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+                    >
+                        <div className="absolute inset-4 border border-[#B7410E]/30 z-20 pointer-events-none" />
+
+                        {/* Dynamic grayscale filter */}
+                        <div
+                            className="absolute inset-0 z-10 mix-blend-saturation bg-background pointer-events-none transition-opacity duration-100"
+                            style={{ opacity: 1 - imageColor }}
+                        />
+
+                        <img
+                            src="/images/espektro-crowd.jpeg"
+                            alt="Espektro Crowd"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+
                     {/* Content */}
                     <div
                         className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
@@ -75,27 +100,15 @@ export function About() {
                             ))}
                         </div>
                     </div>
-
-                    {/* Image */}
-                    <div
-                        ref={imageRef}
-                        className={`relative aspect-[4/5] lg:aspect-square bg-muted overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-                    >
-                        <div className="absolute inset-4 border border-[#B7410E]/30 z-20 pointer-events-none" />
-
-                        {/* Dynamic grayscale filter */}
-                        <div
-                            className="absolute inset-0 z-10 mix-blend-saturation bg-background pointer-events-none transition-opacity duration-100"
-                            style={{ opacity: 1 - imageColor }}
-                        />
-
-                        <img
-                            src="/images/espektro-crowd.jpeg"
-                            alt="Espektro Crowd"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
                 </div>
+            </div>
+
+            {/* Detailed Facets */}
+            <div className="space-y-12">
+                <EspektroAbout />
+                <Techtix />
+                <Exotica />
+                <Quizine />
             </div>
         </section>
     );
