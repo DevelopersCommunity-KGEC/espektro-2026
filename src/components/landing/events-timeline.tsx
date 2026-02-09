@@ -61,7 +61,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
     return (
         <section
             ref={sectionRef}
-            id="events"
+            id="schedule"
             className="py-24 lg:py-36 bg-muted/40 overflow-hidden"
         >
             <div className="container mx-auto px-6 lg:px-8">

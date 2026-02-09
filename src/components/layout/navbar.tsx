@@ -110,7 +110,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     )}
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
+                            <DropdownMenuContent className="bg-gray-50" align="end">
                                 <DropdownMenuLabel>Switch Club</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 {clubRoles?.map((cr) => (
@@ -137,7 +137,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end" forceMount>
+                            <DropdownMenuContent className="w-56 bg-gray-50" align="end" forceMount>
                                 <DropdownMenuLabel className="font-normal">
                                     <div className="flex flex-col space-y-1">
                                         <p className="text-sm font-medium leading-none">{session.user.name}</p>
