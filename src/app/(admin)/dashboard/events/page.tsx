@@ -55,7 +55,7 @@ async function EventsTable() {
                                 {event.club?.name || event.clubId || "Unknown"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {new Date(event.date).toLocaleDateString()}
+                                {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {event.venue}

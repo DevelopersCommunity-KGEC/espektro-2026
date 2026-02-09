@@ -47,7 +47,82 @@
 }
 
 :root {
+  /* Espektro Bengali Culture Theme */
+  --background: 34 22% 96%; /* #FAF6F1 */
+  --foreground: 0 0% 10%; /* #1A1A1A */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 0 0% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+
+  /* Primary: Terracotta Red - Temples & Culture */
+  --primary: 14 86% 39%; /* #B7410E */
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary: Marigold Yellow - Festivity */
+  --secondary: 42 96% 48%; /* #F4A900 */
+  --secondary-foreground: 0 0% 10%;
+
+  /* Muted: Clay Beige - Canvas texture */
+  --muted: 26 21% 87%; /* #E8DDD4 */
+  --muted-foreground: 26 13% 34%; /* #5C5147 */
+
+  /* Accent: River Blue - Ganges */
+  --accent: 196 54% 39%; /* #2E7D9B */
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%; /* #DC2626 */
+  --destructive-foreground: 0 0% 100%;
+  --border: 29 23% 78%; /* #D4C5B9 */
+  --input: 26 21% 87%; /* #E8DDD4 */
+  --ring: 14 86% 39%; /* #B7410E */
+
   --radius: 0.625rem;
+
+  /* Cultural Color Palette (HSL for consistency if needed, but keeping Hex for compatibility with vars) */
+  --terracotta: #b7410e;
+  --marigold: #f4a900;
+  --ink-black: #1a1a1a;
+  --paddy-green: #4a7c59;
+  --river-blue: #2e7d9b;
+  --canvas: #faf6f1;
+  --clay: #e8ddd4;
+
+  --chart-1: 14 86% 39%;
+  --chart-2: 42 96% 48%;
+  --chart-3: 138 25% 39%;
+  --chart-4: 196 54% 39%;
+  --chart-5: 25 73% 20%;
+}
+
+.dark {
+  --background: 0 0% 10%;
+  --foreground: 34 22% 96%;
+  --card: 0 0% 10%;
+  --card-foreground: 34 22% 96%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 34 22% 96%;
+  --primary: 34 22% 96%;
+  --primary-foreground: 0 0% 10%;
+  --secondary: 42 96% 48%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 26 13% 34%;
+  --muted-foreground: 26 21% 87%;
+  --accent: 196 54% 39%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 42 96% 48%;
+
+  --chart-1: 14 86% 39%;
+  /* ... others ... */
+}
+
+@theme inline {
+  --font-serif: var(--font-playfair-display), serif;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -123,3 +198,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Marquee Animations */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 50s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 50s linear infinite;
+}
+

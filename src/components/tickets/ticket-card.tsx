@@ -47,7 +47,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
             <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="space-y-1">
                     <CardTitle>{event.title}</CardTitle>
-                    <CardDescription>{event.venue} • {new Date(event.date).toLocaleDateString()}</CardDescription>
+                    <CardDescription>{event.venue} • {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</CardDescription>
                 </div>
                 <Badge variant={ticket.status === 'checked-in' ? "secondary" : "default"} className={ticket.status === 'checked-in' ? "bg-green-100 text-green-700 hover:bg-green-100" : "bg-blue-100 text-blue-700 hover:bg-blue-100"}>
                     {ticket.status}

@@ -63,7 +63,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
             title: initialData?.title || "",
             description: initialData?.description || "",
             image: initialData?.image || "",
-            date: initialData?.date ? new Date(initialData.date).toISOString().split("T")[0] : "",
+            date: initialData?.date ? new Date(initialData.date).toISOString().slice(0, 16) : "",
             venue: initialData?.venue || "",
             price: initialData?.price || 0,
             capacity: initialData?.capacity || 0,
@@ -193,10 +193,11 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 name="date"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Date</FormLabel>
+                                        <FormLabel>Date & Time</FormLabel>
                                         <FormControl>
-                                            <Input type="date" {...field} />
+                                            <Input type="datetime-local" {...field} />
                                         </FormControl>
+                                        <FormDescription>Set the date and time for the event</FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}

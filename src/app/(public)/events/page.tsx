@@ -13,6 +13,9 @@ async function EventsGrid() {
                     <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
                     <div className="p-6">
                         <h2 className="text-2xl font-bold mb-2">{event.title}</h2>
+                        <p className="text-sm text-gray-500 mb-2">
+                            {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} &bull; {event.venue}
+                        </p>
                         <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
                         <div className="flex justify-between items-center">
                             <span className="text-blue-600 font-semibold">₹{event.price}</span>

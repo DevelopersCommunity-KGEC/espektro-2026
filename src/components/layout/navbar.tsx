@@ -26,6 +26,12 @@ interface NavbarProps {
 export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     const { data: session } = authClient.useSession();
     const pathname = usePathname();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Hide global navbar on landing page as it has its own dedicated navigation
+    if (pathname === "/") {
+        return null;
+    }
 
     const handleSignOut = async () => {
         await authClient.signOut();
@@ -53,8 +59,6 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     const activeClubRole = hasClubs
         ? clubRoles!.find((cr) => pathname.startsWith(`/club/${cr.clubId}`))
         : null;
-
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navItems = [
         { name: "Events", href: "/events" },
