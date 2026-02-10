@@ -11,4 +11,9 @@ export interface TicketData {
   purchaseDate: string | Date;
   checkInTime?: string | Date;
   issuedBy?: string;
+  teamMembers?: {
+    name: string;
+    email: string;
+    phone: string;
+  }[];
 }
