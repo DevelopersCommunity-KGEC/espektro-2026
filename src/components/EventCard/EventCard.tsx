@@ -96,7 +96,7 @@ const EventCard = (event: EventData) => {
               <span className="text">{event.eventType}</span>
             </div> */}
             <div className="text-details">
-              <span className="label">Entry Fee:</span>
+              <span className="label">Entry Fees:</span>
               <span className="text"></span>
               <b>{eventPrice}</b>
             </div>
@@ -179,9 +179,8 @@ const EventCard = (event: EventData) => {
           </div>
         </div>
         <div className="flex gap-2"> {/* Reduced gap */}
-          <Button className="cursor-pointer p-0 w-full mt-4 text-text-primary hover:bg-text-light bg-text-floral"> {/* Reduced margin-top */}
+          <Button asChild className="cursor-pointer w-full mt-4 text-text-primary hover:bg-text-light bg-text-floral"> {/* Reduced margin-top */}
             <a
-              className="p-2 w-full h-full" /* Reduced padding */
               href={event.registrationLink}
               target="_blank"
               rel="noopener noreferrer"

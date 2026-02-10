@@ -6,6 +6,9 @@ import { BookButton } from "@/components/events/book-button";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { EditEventModal } from "@/components/events/edit-event-modal";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Button } from "@/components/ui/button";
 
 export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -24,7 +27,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
     const isEditor = userEmail && event.editors && event.editors.includes(userEmail);
     const canEdit = isAdmin || isEditor;
 
-    const isSoldOut = event.ticketsSold >= event.capacity;
+    const isSoldOut = event.capacity !== -1 && event.ticketsSold >= event.capacity;
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-12">
@@ -42,8 +45,12 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
                         </div>
                         <div className="flex flex-col items-end gap-2 w-full md:w-auto">
                             <div className="text-left md:text-right">
-                                <p className="text-3xl font-bold text-blue-600">₹{event?.price}</p>
-                                <p className="text-sm text-gray-500">{event?.capacity - event?.ticketsSold} tickets left</p>
+                                <p className="text-3xl font-bold text-blue-600">
+                                    {event?.price === 0 ? "Free" : `₹${event?.price}`}
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                    {event?.capacity === -1 ? "Unlimited tickets" : `${event?.capacity - event?.ticketsSold} tickets left`}
+                                </p>
                             </div>
                             {canEdit && (
                                 <EditEventModal event={event} />
@@ -51,16 +58,20 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ i
                         </div>
                     </div>
 
-                    <div className="prose max-w-none mb-8">
+                    <div className="mb-8">
                         <h3 className="text-xl font-semibold mb-2">About this event</h3>
-                        <p className="text-gray-700 whitespace-pre-wrap">{event?.description}</p>
+                        <div className="prose max-w-none text-gray-700 dark:text-gray-300 dark:prose-invert">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {event?.description}
+                            </ReactMarkdown>
+                        </div>
                     </div>
 
                     <div className="border-t pt-8">
                         {isSoldOut ? (
-                            <button disabled className="w-full bg-gray-300 text-gray-600 py-4 rounded-xl font-bold text-xl cursor-not-allowed">
+                            <Button disabled className="w-full py-8 text-xl font-bold" variant="secondary">
                                 Sold Out
-                            </button>
+                            </Button>
                         ) : (
                             <BookButton eventId={event?._id.toString()} />
                         )}
