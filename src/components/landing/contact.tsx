@@ -111,17 +111,7 @@ export function Contact() {
 
                         {/* Map Embed Placeholder */}
                         <div className="relative aspect-video rounded-2xl overflow-hidden border border-border bg-card">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3668.0851168391!2d88.42987851496463!3d22.965785884946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8994c9a2a7e3b%3A0x9dd42b0e5c7c5eb8!2sKalyani%20Government%20Engineering%20College!5e0!3m2!1sen!2sin!4v1612345678901"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="KGEC Location"
-                                className="absolute inset-0"
-                            />
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.907823258028!2d88.44954007505136!3d22.99041681752783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895327fbf3adb%3A0xabd136dfaf4f1628!2sEspektro%20Ground!5e0!3m2!1sen!2sus!4v1770658553857!5m2!1sen!2sus" width="100%" height="100%" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                             <a
                                 href="https://maps.google.com/?q=Kalyani+Government+Engineering+College"
                                 target="_blank"

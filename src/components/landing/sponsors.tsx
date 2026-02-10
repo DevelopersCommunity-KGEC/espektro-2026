@@ -55,21 +55,11 @@ export function Sponsors() {
                 </div>
             </div>
 
-            <div className="mt-8 space-y-4">
-                <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    <div className="flex flex-nowrap whitespace-nowrap animate-marquee-left hover:[animation-play-state:paused] gap-12 py-4 w-max">
-                        {[...row1, ...row1, ...row1, ...row1].map((s, i) => (
-                            <SponsorCard key={`${s.id}-${i}`} sponsor={s} />
-                        ))}
-                    </div>
-                </div>
-
-                <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                    <div className="flex flex-nowrap whitespace-nowrap animate-marquee-right hover:[animation-play-state:paused] gap-12 py-4 w-max">
-                        {[...row2, ...row2, ...row2, ...row2].map((s, i) => (
-                            <SponsorCard key={`${s.id}-${i}`} sponsor={s} />
-                        ))}
-                    </div>
+            <div className="container mx-auto px-6 lg:px-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+                    {SPONSORS.map((s) => (
+                        <SponsorCard key={s.id} sponsor={s} />
+                    ))}
                 </div>
             </div>
 
@@ -98,7 +88,7 @@ export function Sponsors() {
 
 function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url: string } }) {
     return (
-        <div className="inline-block w-48 h-40 group/card relative p-4 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm transition-all hover:bg-white/10 shrink-0">
+        <div className="w-full h-40 group/card relative p-4 bg-white/5 rounded-2xl backdrop-blur-sm transition-all hover:bg-white/10">
             <div className="w-full h-full flex flex-col justify-between items-center text-center">
                 <div className="flex-[2] flex items-center justify-center max-h-[60%] w-full">
                     <img 

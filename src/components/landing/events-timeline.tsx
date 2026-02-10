@@ -3,8 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import { DaySchedule } from "@/types/landing";
 
-const HOUR_START = 8;
-const HOUR_END = 24; // Extended range
+const HOUR_START = 0;
+const HOUR_END = 24;
 const TOTAL_HOURS = HOUR_END - HOUR_START;
 
 const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
@@ -23,10 +23,10 @@ const categoryLabels: Record<string, string> = {
     ceremony: "Ceremony",
 };
 
-const hours = Array.from({ length: TOTAL_HOURS + 1 }, (_, i) => {
+const hours = Array.from({ length: TOTAL_HOURS }, (_, i) => {
     const h = HOUR_START + i;
+    if (h === 0 || h === 24) return "12 AM";
     if (h === 12) return "12 PM";
-    if (h === 24) return "12 AM";
     return h < 12 ? `${h} AM` : `${h - 12} PM`;
 });
 
@@ -39,6 +39,51 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
     const sectionRef = useRef<HTMLElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const [activeDay, setActiveDay] = useState(0);
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 60000); // Update every minute
+        return () => clearInterval(timer);
+    }, []);
+
+    // Helper to format 24h number to AM/PM string
+    const formatTime = (hour: number) => {
+        const h = Math.floor(hour);
+        const m = Math.round((hour - h) * 60);
+        const ampm = h >= 12 && h < 24 ? "PM" : "AM";
+        const displayH = h % 12 === 0 ? 12 : h > 12 ? h - 12 : (h === 0 ? 12 : h);
+        return `${displayH}:${m.toString().padStart(2, "0")} ${ampm}`;
+    };
+
+    // Auto-select today if it's during the fest
+    useEffect(() => {
+        const todayStr = currentTime.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+        });
+        const index = scheduleData.findIndex((d) => d.date === todayStr);
+        if (index !== -1) {
+            setActiveDay(index);
+        }
+    }, [scheduleData]);
+
+    // Close badge when clicking anywhere else
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (!target.closest(".event-bar")) {
+                setSelectedEvent(null);
+            }
+        };
+
+        if (selectedEvent) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [selectedEvent]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -137,17 +182,17 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                     </span>
                                 </div>
                                 {/* Hour columns */}
-                                <div className="flex-1 flex">
-                                    {hours.map((label, i) => (
-                                        <div
-                                            key={label}
-                                            className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
-                                            style={{ minWidth: `${100 / (TOTAL_HOURS + 1)}%` }}
-                                        >
-                                            {i % 2 === 0 ? label : ""}
+                                        <div className="flex-1 flex relative">
+                                            {hours.map((label, i) => (
+                                                <div
+                                                    key={label}
+                                                    className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
+                                                >
+                                                    {i % 2 === 0 ? label : ""}
+                                                </div>
+                                            ))}
+                                            {/* Final tick at 12 AM/midnight if needed, but last column handles it */}
                                         </div>
-                                    ))}
-                                </div>
                             </div>
 
                             {/* Event rows */}
@@ -168,8 +213,8 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                 {event.name}
                                             </span>
                                         </div>
-                                        {/* Bar area */}
-                                        <div className="flex-1 relative py-2 px-1">
+                                        {/* Bar area - removed px-1 to align perfectly with grid */}
+                                        <div className="flex-1 relative py-2">
                                             {/* Grid lines */}
                                             <div className="absolute inset-0 flex pointer-events-none">
                                                 {hours.map((h) => (
@@ -178,17 +223,57 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                         className="flex-1 border-r border-border/20 last:border-r-0"
                                                     />
                                                 ))}
+                                                {/* Current Time Indicator */}
+                                                {(() => {
+                                                    const todayStr = currentTime.toLocaleDateString("en-US", {
+                                                        month: "short",
+                                                        day: "numeric",
+                                                    });
+                                                    if (currentSchedule.date === todayStr) {
+                                                        const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
+                                                        if (nowHour >= HOUR_START && nowHour <= HOUR_END) {
+                                                            const left = ((nowHour - HOUR_START) / TOTAL_HOURS) * 100;
+                                                            return (
+                                                                <div
+                                                                    className="absolute top-0 bottom-0 w-px bg-red-500 z-20 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+                                                                    style={{ left: `${left}%` }}
+                                                                >
+                                                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full px-1.5 py-0.5 bg-red-500 text-[8px] text-white rounded-sm font-bold whitespace-nowrap">
+                                                                        NOW
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })()}
                                             </div>
                                             {/* Bar */}
                                             <div
-                                                className={`relative h-8 rounded-md ${c.bg} border ${c.border} flex items-center px-2.5 transition-all duration-500 group-hover:shadow-md`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedEvent(selectedEvent === event.name ? null : event.name);
+                                                }}
+                                                className={`event-bar relative h-10 rounded-md ${c.bg} border ${c.border} flex items-center px-3 transition-all duration-300 group-hover:shadow-md cursor-pointer active:scale-[0.98] ${(() => {
+                                                    const todayStr = currentTime.toLocaleDateString("en-US", {
+                                                        month: "short",
+                                                        day: "numeric",
+                                                    });
+                                                    if (currentSchedule.date === todayStr) {
+                                                        const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
+                                                        if (nowHour >= event.startHour && nowHour <= event.startHour + event.duration) {
+                                                            return "ring-2 ring-primary ring-offset-2 ring-offset-card shadow-lg";
+                                                        }
+                                                    }
+                                                    return "";
+                                                })()} ${selectedEvent === event.name ? "z-30 shadow-lg scale-[1.02]" : "z-10"}`}
                                                 style={{
                                                     marginLeft: `${leftPct}%`,
                                                     width: `${widthPct}%`,
                                                 }}
                                             >
                                                 <span
-                                                    className={`text-[10px] font-semibold ${c.text} truncate`}
+                                                    className={`text-[10px] sm:text-xs font-semibold ${c.text} truncate`}
                                                 >
                                                     {event.name}
                                                     {event.prize && (
@@ -197,6 +282,14 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                         </span>
                                                     )}
                                                 </span>
+
+                                                {/* Time Badge - shown above bar when clicked */}
+                                                {selectedEvent === event.name && (
+                                                    <div className="absolute bottom-[calc(100%+8px)] left-0 bg-popover text-popover-foreground border border-border px-2 py-1 rounded shadow-xl text-[9px] font-bold whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200">
+                                                        <div className="absolute -bottom-1 left-4 w-2 h-2 bg-popover border-b border-r border-border rotate-45" />
+                                                        {formatTime(event.startHour)} - {formatTime(event.startHour + event.duration)}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>

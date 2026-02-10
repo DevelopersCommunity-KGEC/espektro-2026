@@ -35,35 +35,45 @@ export function FeaturedArtists() {
             scrollTrigger: {
                 trigger: wrapperRef.current,
                 start: "top top",
-                end: "+=2000",
+                end: "+=1500",
                 pin: true,
-                scrub: 1,
+                scrub: 0.5,
                 anticipatePin: 1,
+                invalidateOnRefresh: true,
+                fastScrollEnd: true,
             }
         });
 
         tl.to(containerRef.current, {
             height: "40rem",
-            duration: 1.5,
-            ease: "power2.out"
+            duration: 1,
+            ease: "power1.out"
         })
         .to(imageListRef.current, {
             y: "-75%",
-            duration: 3,
+            duration: 2,
             ease: "none"
         })
         .to(containerRef.current, {
             height: "0rem",
-            duration: 1,
-            ease: "power2.in"
+            duration: 0.8,
+            ease: "power1.in"
         });
-    }, { scope: sectionRef });
+
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.vars.trigger === wrapperRef.current) {
+                    trigger.kill();
+                }
+            });
+        };
+    }, { scope: sectionRef, dependencies: [] });
 
     return (
         <section
             ref={sectionRef}
             id="artists"
-            className="relative bg-white text-black overflow-hidden"
+            className="relative bg-white text-black overflow-hidden scroll-mt-0"
         >
             <div className="container mx-auto px-6 lg:px-8 relative pt-24">
                 <div

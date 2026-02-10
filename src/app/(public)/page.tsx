@@ -6,6 +6,7 @@ import { FeaturedArtists } from "@/components/landing/featured-artists";
 import { CulturalIllustrations } from "@/components/landing/cultural-illustrations";
 import { Gallery } from "@/components/landing/gallery";
 import { Sponsors } from "@/components/landing/sponsors";
+import ClubsSection from "@/components/landing/about-sections/clubs";
 import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
 import { Navigation } from "@/components/landing/navigation";
@@ -36,11 +37,12 @@ export default async function LandingPage() {
             <Hero />
             <About />
             <ThemeEvolution />
-            <CulturalIllustrations />
+            {/* <CulturalIllustrations /> */}
             <EventsTimeline scheduleData={timelineData} />
             <FeaturedArtists />
             <Gallery />
             <Sponsors />
+            <ClubsSection />
             <Contact />
             <Footer />
         </main>
