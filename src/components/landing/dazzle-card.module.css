@@ -1,0 +1,109 @@
+.cardContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 500px;
+  position: relative;
+  border-radius: 1rem;
+  z-index: 1;
+  background: #111;
+  padding: 4px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardContainer::before {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 200%;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #F4A900
+  );
+  animation: rotate 4s linear infinite;
+  z-index: -2;
+}
+
+.cardContainer::after {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 200%;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #B7410E
+  );
+  animation: rotate 4s linear infinite;
+  animation-delay: -2s;
+  z-index: -2;
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  background: #0F0F0F;
+  border-radius: calc(1rem - 4px);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.imgContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.imgContent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.cardContainer:hover img {
+  transform: scale(1.1);
+}
+
+.contentOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  color: white;
+  z-index: 2;
+}
+
+.artistName {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.artistGenre {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #F4A900;
+}

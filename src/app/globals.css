@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-serif: var(--font-playfair-display), serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  /* Espektro Bengali Culture Theme */
+  --background: hsl(34 22% 96%); /* #FAF6F1 */
+  --foreground: hsl(0 0% 10%); /* #1A1A1A */
+  --card: hsl(0 0% 100%); /* #FFFFFF */
+  --card-foreground: hsl(0 0% 10%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 10%);
+
+  /* Primary: Terracotta Red - Temples & Culture */
+  --primary: hsl(14 86% 39%); /* #B7410E */
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary: Marigold Yellow - Festivity */
+  --secondary: hsl(42 96% 48%); /* #F4A900 */
+  --secondary-foreground: hsl(0 0% 10%);
+
+  /* Muted: Clay Beige - Canvas texture */
+  --muted: hsl(26 21% 87%); /* #E8DDD4 */
+  --muted-foreground: hsl(26 13% 34%); /* #5C5147 */
+
+  /* Accent: River Blue - Ganges */
+  --accent: hsl(196 54% 39%); /* #2E7D9B */
+  --accent-foreground: hsl(0 0% 100%);
+
+  --destructive: hsl(0 72% 51%); /* #DC2626 */
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(29 23% 78%); /* #D4C5B9 */
+  --input: hsl(26 21% 87%); /* #E8DDD4 */
+  --ring: hsl(14 86% 39%); /* #B7410E */
+
+  --radius: 0.625rem;
+
+  --chart-1: hsl(14 86% 39%);
+  --chart-2: hsl(42 96% 48%);
+  --chart-3: hsl(138 25% 39%);
+  --chart-4: hsl(196 54% 39%);
+  --chart-5: hsl(25 73% 20%);
+}
+
+.dark {
+  --background: hsl(0 0% 10%);
+  --foreground: hsl(34 22% 96%);
+  --card: hsl(0 0% 10%);
+  --card-foreground: hsl(34 22% 96%);
+  --popover: hsl(0 0% 10%);
+  --popover-foreground: hsl(34 22% 96%);
+  --primary: hsl(34 22% 96%);
+  --primary-foreground: hsl(0 0% 10%);
+  --secondary: hsl(42 96% 48%);
+  --secondary-foreground: hsl(0 0% 10%);
+  --muted: hsl(26 13% 34%);
+  --muted-foreground: hsl(26 21% 87%);
+  --accent: hsl(196 54% 39%);
+  --accent-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 62% 30%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(0 0% 20%);
+  --input: hsl(0 0% 20%);
+  --ring: hsl(42 96% 48%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Marquee Animations */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 30s linear infinite;
+}
+

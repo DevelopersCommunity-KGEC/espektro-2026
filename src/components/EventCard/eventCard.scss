@@ -1,0 +1,318 @@
+.event-card {
+  $dark: #000;
+  $white: #fff;
+
+  $accent-blue: #4a7fd4;
+  $accent-green: #87b3ff;
+  $accent-purple: #5d49d4;
+  $accent-pink: #ff7272;
+  $accent-purple-light: #af70ff;
+
+  $dark-blue: #091921;
+  $neon-blue: #55bdc7;
+
+  $white-transparent: rgba(255, 255, 255, 0.025);
+
+  $light-grey: #f8f8fa;
+  $grey: #f1f1f3;
+  $grey-shade-2: #eeeeee;
+  $text-grey: #c0c0c0;
+  $dark-grey: #8e8e8e;
+
+  $black-75: rgba(0, 0, 0, 0.75);
+  $black-60: rgba(0, 0, 0, 0.6);
+  $black-50: rgba(0, 0, 0, 0.5);
+  $black-shade-4: #3c4043;
+  $black-light: #1c1c1e;
+  $black-light-dark: #111111;
+  $black-light-dark-transparent: rgba(17, 17, 17, 0.5);
+
+  $blue: #007bff;
+  $green: #0f9d58;
+  $yellow: #ffc107;
+  $red: #d43544;
+
+  $google-blue: #4285f4;
+  $google-green: #34a853;
+  $google-yellow: #fbbc04;
+  $google-red: #ea4335;
+
+  $blue-gradient: linear-gradient(to right, #085078, #85d8ce);
+  $accent-gradient: linear-gradient(255.65deg, #5d49d4 0%, #4a7fd4 100%);
+  $accent-gradient-tabs: linear-gradient(180deg, #4a7fd4 0%, #5d49d4 100%);
+
+  $gen-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  $font-family: "Poppins", sans-serif;
+  $font-tagline: "Kalam", cursive;
+
+  background-color: $black-light;
+  border-radius: 10px;
+  height: 580px; // Use mobile height for all devices
+  min-height: 580px;
+  max-height: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column; // Always use column layout
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(214, 115, 16, 0.5);
+    transform: translateY(-5px);
+    &::before {
+      transform: translateX(100%);
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(151, 148, 147, 0.4),
+      transparent
+    );
+    transition: transform 0.6s ease;
+    z-index: 1;
+  }
+
+  .image,
+  .details {
+    position: relative;
+    z-index: 2; // Ensure content is above the beam effect
+  }
+
+  .text-details {
+    flex-wrap: wrap;
+  }
+
+  .image {
+    height: 220px; // Fixed height for the image
+    min-height: 220px;
+    width: 100%; // Take full width of the card
+    position: relative;
+    border-radius: 10px 10px 0 0; // Rounded corners at the top
+    overflow: hidden; // Ensure image doesn't overflow
+
+    // Enhanced image container with blur effect on sides
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.6) 0%,
+        transparent 15%,
+        transparent 85%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+      z-index: 2;
+      pointer-events: none; // Allow clicks to pass through
+     
+      
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px 10px 0 0; // Rounded corners at the top
+      object-fit: cover; // Ensure consistent image rendering
+      object-position: center; // Center the image
+    }
+
+    // Add gradient overlay for better text contrast
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 40px;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.6),
+        transparent
+      );
+      z-index: 2;
+    }
+  }
+
+  .image-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: fill;
+      border-radius: 50%;
+    }
+  }
+
+  .details {
+    height: calc(100% - 220px); // Take remaining space
+    padding: 1.2rem 1rem 0.8rem 1rem; // Reduced padding
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; // Add scrolling for overflow content
+
+    .event-title-tagline {
+      flex-grow: 0; // Don't let title expand too much
+      text-align: left;
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: 16px; // Smaller font size
+        font-weight: 600;
+        margin-bottom: 5px;
+        line-height: 1.3;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    .timeline {
+      font-size: 10px; // Smaller font
+      margin-top: 0.3rem; // Less margin
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem; // Less gap
+      flex-grow: 1; // Let the timeline section grow
+      overflow-y: auto; // Add scrolling for long content
+    }
+
+    .left-border-element {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+  }
+
+  .btn-primary {
+    margin-top: 1.5rem;
+    height: auto;
+    font-size: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .title-tagline {
+    font-family: $font-tagline;
+    font-size: 14px;
+
+    &.title-tagline-small {
+      font-size: 11px;
+      line-height: 1.25;
+      display: inline-block;
+      margin-top: 8px;
+    }
+  }
+
+  .coin-details {
+    display: flex;
+    align-items: center;
+
+    .coin-icon {
+      width: 10px;
+      margin-inline: 2px 6px;
+    }
+
+    span {
+      color: $text-grey;
+    }
+  }
+
+  .text-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    flex-wrap: wrap;
+
+    .text {
+      color: $text-grey;
+    }
+  }
+
+  .text-details-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem; // Reduced gap
+    margin-bottom: 0.2rem; // Add small margin between rows
+  }
+  
+  // Buttons container - add this new class
+  .button-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    
+    .btn {
+      flex: 1;
+    }
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media only screen and (max-width: 768px) {
+  .event-card {
+    .details {
+      padding: 1rem; // Reduce padding for smaller screens
+    }
+  }
+}
+
+// Add new media query for screens below 548px
+@media only screen and (max-width: 548px) {
+  .event-card {
+    .image {
+      height: 240px; // Increase image height for small screens
+      min-height: 240px;
+    }
+    
+    .details {
+      height: calc(100% - 240px); // Reduce content height accordingly
+      padding: 0.8rem; // Reduce padding further
+    }
+    
+    // Change button layout to column
+    .button-container {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .event-card {
+    .image {
+      height: 260px; // Even larger image height for very small screens
+      min-height: 260px;
+    }
+    
+    .details {
+      height: calc(100% - 260px); // Further reduce content height
+      padding: 0.8rem 0.6rem; // Reduce padding further for very small screens
+    }
+  }
+}
