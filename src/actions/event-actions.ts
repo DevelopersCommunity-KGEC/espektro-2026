@@ -20,10 +20,15 @@ export async function getPublicEvents() {
     // Calculate min availability
     let minAvailable = Infinity;
     festDays.forEach((e: any) => {
-      const available = e.capacity - e.ticketsSold;
+      let available;
+      if (e.capacity === -1) {
+        available = Infinity;
+      } else {
+        available = e.capacity - e.ticketsSold;
+      }
       if (available < minAvailable) minAvailable = available;
     });
-    if (minAvailable === Infinity) minAvailable = 0;
+    if (minAvailable === Infinity) minAvailable = -1;
 
     const seasonPass = {
       _id: "season-pass",
@@ -68,10 +73,15 @@ export async function getPublicEventById(id: string) {
 
     let minAvailable = Infinity;
     festDaysJson.forEach((e: any) => {
-      const available = e.capacity - e.ticketsSold;
+      let available;
+      if (e.capacity === -1) {
+        available = Infinity;
+      } else {
+        available = e.capacity - e.ticketsSold;
+      }
       if (available < minAvailable) minAvailable = available;
     });
-    if (minAvailable === Infinity) minAvailable = 0;
+    if (minAvailable === Infinity) minAvailable = -1;
 
     return {
       _id: "season-pass",
