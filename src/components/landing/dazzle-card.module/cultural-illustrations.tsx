@@ -11,12 +11,12 @@ export function CulturalIllustrations() {
   const plane2 = useRef<HTMLDivElement>(null);
   const plane3 = useRef<HTMLDivElement>(null);
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
-  
+
   let requestAnimationFrameId: number | null = null;
   let xForce = 0;
   let yForce = 0;
   const easing = 0.08;
-  const speed = 0.002; 
+  const speed = 0.002;
 
   const manageMouseMove = (e: React.MouseEvent) => {
     const { movementX, movementY } = e;
@@ -28,7 +28,7 @@ export function CulturalIllustrations() {
     }
   };
 
-  const lerp = (start: number, target: number, amount: number) => 
+  const lerp = (start: number, target: number, amount: number) =>
     start * (1 - amount) + target * amount;
 
   const animate = () => {
@@ -60,7 +60,7 @@ export function CulturalIllustrations() {
   const p3Images = pastArtists.slice(11, 16);
 
   const configs = [
-    /* 0 */ { top: "10%", left: "10%", w: 220, h: 220 },   /* 1 */ { bottom: "18%", left: "18%", w: 180, h: 220 }, 
+    /* 0 */ { top: "10%", left: "10%", w: 220, h: 220 },   /* 1 */ { bottom: "18%", left: "18%", w: 180, h: 220 },
     /* 2 */ { top: "20%", right: "18%", w: 180, h: 220 },  /* 3 */ { bottom: "18%", right: "18%", w: 180, h: 220 },
     /* 4 */ { top: "48%", left: "10%", w: 160, h: 200 },  /* 5 */ { top: "48%", right: "22%", w: 160, h: 200 },
 
@@ -75,29 +75,31 @@ export function CulturalIllustrations() {
 
   return (
     <>
-      <section 
-        onMouseMove={manageMouseMove} 
+      <section
+        onMouseMove={manageMouseMove}
         className={styles.gallerySection}
       >
 
         <div className={styles.bgContainer}>
-            <img
-                src="/images/kolkata-city.jpeg"
-                alt=""
-                className={styles.bgImage}
-            />
+          <Image
+            src="/images/kolkata-city.jpeg"
+            alt=""
+            fill
+            className={styles.bgImage}
+            sizes="100vw"
+          />
         </div>
 
         <div className={styles.titleContainer}>
           <p>THE SPIRIT OF BENGAL</p>
-          <h2>A Culture That<br/><span>Breathes Art</span></h2>
+          <h2>A Culture That<br /><span>Breathes Art</span></h2>
         </div>
 
         <div ref={plane1} className={`${styles.plane} ${styles.plane1}`}>
           {p1Images.map((artist, idx) => (
-            <div 
-              key={artist.id} 
-              className={styles.imgWrap} 
+            <div
+              key={artist.id}
+              className={styles.imgWrap}
               style={{ top: configs[idx].top, left: configs[idx].left, right: configs[idx].right, bottom: configs[idx].bottom }}
               onClick={() => setSelectedImg(artist.url)}
             >
@@ -109,9 +111,9 @@ export function CulturalIllustrations() {
 
         <div ref={plane2} className={`${styles.plane} ${styles.plane2}`}>
           {p2Images.map((artist, idx) => (
-            <div 
-              key={artist.id} 
-              className={styles.imgWrap} 
+            <div
+              key={artist.id}
+              className={styles.imgWrap}
               style={{ top: configs[idx + 6].top, left: configs[idx + 6].left, right: configs[idx + 6].right, bottom: configs[idx + 6].bottom }}
               onClick={() => setSelectedImg(artist.url)}
             >
@@ -123,9 +125,9 @@ export function CulturalIllustrations() {
 
         <div ref={plane3} className={`${styles.plane} ${styles.plane3}`}>
           {p3Images.map((artist, idx) => (
-            <div 
-              key={artist.id} 
-              className={styles.imgWrap} 
+            <div
+              key={artist.id}
+              className={styles.imgWrap}
               style={{ top: configs[idx + 11].top, left: configs[idx + 11].left, right: configs[idx + 11].right, bottom: configs[idx + 11].bottom }}
               onClick={() => setSelectedImg(artist.url)}
             >
@@ -138,7 +140,7 @@ export function CulturalIllustrations() {
 
       {selectedImg && (
         <div className={styles.modalOverlay} onClick={() => setSelectedImg(null)}>
-          <img src={selectedImg} alt="Fullscreen artist" />
+          <Image src={selectedImg} alt="Fullscreen artist" fill className="object-contain" sizes="100vw" />
         </div>
       )}
     </>

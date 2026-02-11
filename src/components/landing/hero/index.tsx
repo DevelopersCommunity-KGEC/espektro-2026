@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
@@ -41,10 +42,13 @@ export function Hero() {
                         className="absolute inset-0 transition-opacity duration-500"
                         style={{ opacity: 1 - scrollProgress }}
                     >
-                        <img
+                        <Image
                             src="/images/kolkata-monochrome.jpeg"
                             alt=""
-                            className="absolute inset-0 w-full h-full object-cover grayscale"
+                            fill
+                            priority
+                            className="object-cover grayscale"
+                            sizes="100vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-[#1A1A1A]/40 to-[#1A1A1A]/80" />
                     </div>
@@ -54,10 +58,12 @@ export function Hero() {
                         className="absolute inset-0 transition-opacity duration-500"
                         style={{ opacity: scrollProgress }}
                     >
-                        <img
+                        <Image
                             src="/images/bengali-culture.jpeg"
                             alt=""
-                            className="absolute inset-0 w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            sizes="100vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/50 via-[#1A1A1A]/30 to-[#1A1A1A]/70" />
                     </div>

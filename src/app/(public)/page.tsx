@@ -3,7 +3,7 @@ import { About } from "@/components/landing/about";
 import { ThemeEvolution } from "@/components/landing/theme-evolution";
 import { EventsTimeline } from "@/components/landing/events-timeline";
 import { FeaturedArtists } from "@/components/landing/featured-artists";
-import { CulturalIllustrations } from "@/components/landing/cultural-illustrations";
+import { CulturalIllustrations } from "@/components/landing/dazzle-card.module/cultural-illustrations";
 import { Gallery } from "@/components/landing/gallery";
 import { Sponsors } from "@/components/landing/sponsors";
 import ClubsSection from "@/components/landing/about-sections/clubs";

@@ -393,3 +393,45 @@ export const sponsors = [
     ],
   },
 ];
+
+const sponsorBaseUrl = `https://res.cloudinary.com/dgc9mpvvw/image/upload/v1704024441/espektro/2023/sponsors/`;
+
+export const sponsorLogos = [
+  { id: 2, sponsor: 'Official Food and Beverages Partner', url: `${sponsorBaseUrl}wow-momo.webp` },
+  { id: 3, sponsor: 'Powered-by sponsor', url: `${sponsorBaseUrl}techno-exponent.webp` },
+  { id: 4, sponsor: 'Audio Partner', url: `${sponsorBaseUrl}zebronics.webp` },
+  { id: 8, sponsor: 'GDSC event sponsor', url: `${sponsorBaseUrl}unstop.webp` },
+  { id: 10, sponsor: 'Official Grooming Partner', url: `${sponsorBaseUrl}breado.webp` },
+  { id: 11, sponsor: 'Exclusive Radio Partner', url: `${sponsorBaseUrl}friends-fm.webp` },
+  { id: 12, sponsor: 'Blogger Outreach Partner', url: `${sponsorBaseUrl}blogadda.webp` },
+  { id: 13, sponsor: 'Official Sports Partner', url: `${sponsorBaseUrl}decathlon.webp` },
+  { id: 14, sponsor: 'Title sponsor', url: `${sponsorBaseUrl}senco.webp` },
+  { id: 15, sponsor: 'The Illustration Partner', url: `${sponsorBaseUrl}inked-voices.webp` },
+  { id: 16, sponsor: 'Official Promotional Partner', url: `${sponsorBaseUrl}culcutta-canvas.webp` },
+  { id: 17, sponsor: 'Official Gifts Partner', url: `${sponsorBaseUrl}chowman.webp` },
+  { id: 18, sponsor: 'Official Food Partner', url: `${sponsorBaseUrl}dominos.webp` },
+  { id: 19, sponsor: 'Official RACING Partner', url: `${sponsorBaseUrl}ktm.webp` },
+  { id: 20, sponsor: 'advertising Partner', url: `${sponsorBaseUrl}oxedent.webp` },
+  { id: 21, sponsor: 'Official Gift Partner', url: `${sponsorBaseUrl}presto.webp` },
+];
+
+const clubBaseUrl = 'https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705041136/espektro/2023/clubs-logo/';
+
+export const clubLogos = [
+  { id: 1, name: 'RIYAZ', image: `${clubBaseUrl}riyaz-logo.webp`, social_link: 'https://www.facebook.com/riyazkgec' },
+  { id: 2, name: 'ELYSIUM', image: `${clubBaseUrl}elysium-logo.webp`, social_link: 'https://www.facebook.com/ElysiumKGEC' },
+  { id: 3, name: 'SHUTTERBUG', image: `${clubBaseUrl}shutterbug-logo.webp`, social_link: 'https://www.facebook.com/shutterbugkgec' },
+  { id: 4, name: 'CHITRANK', image: `${clubBaseUrl}chitrank-logo.webp`, social_link: 'https://www.facebook.com/groups/1500050480144825/' },
+  { id: 5, name: 'LITMUS', image: `${clubBaseUrl}litmus-logo.webp`, social_link: 'https://www.facebook.com/litmusKGEC' },
+  { id: 6, name: 'GDSC KGEC', image: `${clubBaseUrl}gdsc-kgec.webp`, social_link: 'https://www.facebook.com/dsckgec' },
+  { id: 7, name: 'ROBOTICS SOCIETY', image: `${clubBaseUrl}robotics-society-logo.webp`, social_link: 'https://www.facebook.com/kgecrs' },
+  { id: 8, name: 'SAC KGEC', image: `${clubBaseUrl}sac-kgec-logo.webp`, social_link: 'https://www.facebook.com/kgecSAC' },
+  { id: 9, name: 'LES QUIZERABLES', image: `${clubBaseUrl}les-quizerable-logo.webp`, social_link: 'https://www.facebook.com/LesQuizerablesKgec' },
+  { id: 10, name: 'INFINITIO', image: `${clubBaseUrl}infinitio-logo.webp`, social_link: 'https://www.facebook.com/infinitio.kgec' },
+  { id: 11, name: 'KEYGEN CODERS', image: `${clubBaseUrl}keygen-coders-logo.webp`, social_link: 'https://www.facebook.com/KeyGEnCoders' },
+  { id: 12, name: 'NOSCOPE', image: `${clubBaseUrl}noscope-logo.webp`, social_link: 'https://www.facebook.com/profile.php?id=100090429646028' },
+  { id: 13, name: 'IMPOSTER', image: `${clubBaseUrl}imposter-logo.webp`, social_link: 'https://www.facebook.com/profile.php?id=100093346495217' },
+  { id: 14, name: 'NOVA', image: `${clubBaseUrl}nova-logo.webp`, social_link: 'https://www.facebook.com/kgec.nova' },
+  { id: 15, name: 'SPORTIX', image: `${clubBaseUrl}sportix-logo.webp`, social_link: 'https://www.facebook.com/profile.php?id=61551065199815' },
+];
+
