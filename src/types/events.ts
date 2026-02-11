@@ -8,6 +8,7 @@ export interface EventData {
   price: number;
   capacity: number;
   ticketsSold: number;
+  maxTeamSize: number;
   isVisible: boolean;
   clubId: string;
   editors: string[];

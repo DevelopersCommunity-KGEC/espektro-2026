@@ -15,6 +15,11 @@ export interface ITicket extends Document {
   issuedBy?: string;
   guestName?: string;
   guestPhone?: string;
+  teamMembers?: {
+    name: string;
+    email: string;
+    phone: string;
+  }[];
   couponCode?: string;
   referrerUserId?: mongoose.Types.ObjectId;
   discountAmount?: number;
@@ -43,6 +48,13 @@ const TicketSchema: Schema = new Schema({
   issuedBy: { type: String }, // Email of the issuer (admin)
   guestName: { type: String },
   guestPhone: { type: String },
+  teamMembers: [
+    {
+      name: { type: String },
+      email: { type: String },
+      phone: { type: String },
+    },
+  ],
   couponCode: { type: String }, // Used for discount coupons
   referrerUserId: { type: Schema.Types.ObjectId, ref: "User" }, // Used for user attribution
   discountAmount: { type: Number },

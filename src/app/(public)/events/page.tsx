@@ -18,7 +18,9 @@ async function EventsGrid() {
                         </p>
                         <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
                         <div className="flex justify-between items-center">
-                            <span className="text-blue-600 font-semibold">₹{event.price}</span>
+                            <span className="text-blue-600 font-semibold">
+                                {event.price === 0 ? "Free" : `₹${event.price}`}
+                            </span>
                             <Link
                                 href={`/events/${event._id}`}
                                 className="bg-zinc-900 text-white px-4 py-2 rounded-lg hover:bg-zinc-800"

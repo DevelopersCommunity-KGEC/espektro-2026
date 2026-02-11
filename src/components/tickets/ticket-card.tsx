@@ -66,6 +66,20 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                         )}
                     </div>
                 )}
+
+                {ticket.teamMembers && ticket.teamMembers.length > 0 && (
+                    <div className="mt-4 pt-4 border-t">
+                        <h4 className="text-sm font-semibold mb-2">Team Members</h4>
+                        <ul className="text-sm space-y-1">
+                            {ticket.teamMembers.map((member, i) => (
+                                <li key={i} className="flex flex-col text-muted-foreground bg-muted/30 p-2 rounded">
+                                    <span className="font-medium text-foreground">{member.name}</span>
+                                    <span className="text-xs">{member.email}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </CardContent>
             <CardFooter>
                 <Button
