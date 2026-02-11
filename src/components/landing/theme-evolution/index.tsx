@@ -52,6 +52,54 @@ const arr = [
     }
 ]
 
+const arr = [
+    {
+        "name" : "div1",
+        "color" : "blue",
+        "position" : "top-85 left-30"
+    },
+    {
+        "name" : "div2",
+        "color" : "yellow",
+        "position" : "top-95 left-60"
+    },
+    {
+        "name" : "div3",
+        "color" : "blue",
+        "position" : "top-110 left-90"
+    },
+    {
+        "name" : "div4",
+        "color" : "yellow",
+        "position" : "top-105 left-120"
+    },
+    {
+        "name" : "div5",
+        "color" : "blue",
+        "position" : "top-95 left-150"
+    },
+    {
+        "name" : "div6",
+        "color" : "yellow",
+        "position" : "top-85 left-180"
+    },
+    {
+        "name" : "div7",
+        "color" : "blue",
+        "position" : "top-100 left-210"
+    },
+    {
+        "name" : "div8",
+        "color" : "yellow",
+        "position" : "top-105 left-240"
+    },
+    {
+        "name" : "div9",
+        "color" : "blue",
+        "position" : "top-110 left-270"
+    }
+]
+
 export function ThemeEvolution() {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -98,16 +146,26 @@ export function ThemeEvolution() {
                 </div> */}
 
                 <div className="relative z-20 h-full flex flex-col justify-between p-8 lg:p-16">
+
+                    <div className="w-full h-full">
+                        {arr.map((item, i) => (
+                            <div key={i} className={`absolute ${item.position} w-30 h-30 bg-${item.color}-500 ml-5`}>
+                                {item.name}
+                            </div>
+                        ))}
+                    </div>
                     
-                    <div className="max-w-2xl pt-4">
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground">
+                    {/* Background 1 above */}
+                    <div className="pt-4 bg-red-500 w-full h-200">
+                        {/* <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground">
                             Evolution of <span className="text-[#B7410E]">Bengali Culture</span>
                         </h2> */}
                     </div>
 
-                    <div className="w-full max-w-7xl mx-auto">
-                        <div className="w-full h-[1px] bg-border mb-8 relative">
-                            <motion.div 
+                    {/* Background 2 below */}  
+                    <div className="w-full h-200 bg-blue-500">
+                        {/* <div className="w-full h-[1px] bg-border mb-8 relative">
+                            <motion.div
                                 className="absolute h-full bg-[#B7410E] left-0 top-0"
                                 style={{ width: progressWidth }}
                             />
@@ -134,17 +192,16 @@ export function ThemeEvolution() {
 
 function EraItem({ item, index, total, scrollYProgress, isActive }: any) {
     // Each item appears sequentially across the scroll range
-    // Spread from 0.1 to 0.7 (before the color animation completes at 0.95)
-    const startBase = 0.1; // Don't start at 0 to avoid initial visibility
-    const endRange = 0.7;
-    const duration = 0.15; // Each item fades in over 15% of scroll
-    
-    const start = startBase + (index / total) * (endRange - startBase);
-    const end = start + duration;
+    const startBase = 0.1;
+    const endRange = 0.8;
 
+    // Calculate the exact trigger point for this item
+    const trigger = startBase + (index / total) * (endRange - startBase);
+
+    // "Abrupt" appearance: Opacity jumps from 0 to 1 instantly at the trigger point
     const opacity = useTransform(
-        scrollYProgress, 
-        [start, end], 
+        scrollYProgress,
+        [trigger - 0.001, trigger],
         [0, 1]
     );
 
