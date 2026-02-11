@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { navLinks } from "@/data/landing-content";
-import Magnetic from "../ui/magnetic";
+import Magnetic from "../../ui/magnetic";
 import { Instagram, Youtube, Facebook, Linkedin } from "lucide-react";
 
 const footerLinks = {
@@ -98,10 +98,10 @@ export function Footer() {
                             {footerLinks.connect.map((link) => (
                                 <li key={link.label}>
                                     <Magnetic>
-                                        <a 
-                                            href={link.href} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
+                                        <a
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             className="w-10 h-10 flex items-center justify-center rounded-full bg-background/5 text-background/70 transition-all duration-300 group"
                                             title={link.label}
                                         >

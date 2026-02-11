@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { stats } from "@/data/landing-content";
 
-import EspektroAbout from "./about-sections/Espektro";
-import Techtix from "./about-sections/Techtix";
-import Exotica from "./about-sections/Exotica";
-import Quizine from "./about-sections/Quizine";
+import EspektroAbout from "@/components/landing/about-sections/Espektro";
+import Techtix from "@/components/landing/about-sections/Techtix";
+import Exotica from "@/components/landing/about-sections/Exotica";
+import Quizine from "@/components/landing/about-sections/Quizine";
 
 export function About() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -60,10 +61,12 @@ export function About() {
                             style={{ opacity: 1 - imageColor }}
                         />
 
-                        <img
+                        <Image
                             src="/images/espektro-crowd.jpeg"
                             alt="Espektro Crowd"
+                            fill
                             className="w-full h-full object-cover"
+                            sizes="(max-width: 1024px) 100vw, 50vw"
                         />
                     </div>
 

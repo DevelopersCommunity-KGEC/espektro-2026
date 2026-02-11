@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import styles from './about-sections.module.scss';
 import clsx from 'clsx';
@@ -17,10 +18,12 @@ const Quizine: React.FC = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <img
+            <Image
               src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742327716/Quixine_web_poezry.png"
               alt="Quizine food stalls"
+              fill
               className={styles.about_img}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </motion.div>
           {/* <motion.div

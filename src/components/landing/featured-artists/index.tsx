@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { artists } from "@/data/landing-content";
-import { ArtistGallery } from "./artist-gallery";
+import { ArtistGallery } from "../artist-gallery";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import styles from "./artist-v3.module.css";
+import styles from "../artist-gallery/artist-v3.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,16 +50,16 @@ export function FeaturedArtists() {
             duration: 1,
             ease: "power1.out"
         })
-        .to(imageListRef.current, {
-            y: "-75%",
-            duration: 2,
-            ease: "none"
-        })
-        .to(containerRef.current, {
-            height: "0rem",
-            duration: 0.8,
-            ease: "power1.in"
-        });
+            .to(imageListRef.current, {
+                y: "-75%",
+                duration: 2,
+                ease: "none"
+            })
+            .to(containerRef.current, {
+                height: "0rem",
+                duration: 0.8,
+                ease: "power1.in"
+            });
 
         return () => {
             ScrollTrigger.getAll().forEach(trigger => {
@@ -93,12 +94,12 @@ export function FeaturedArtists() {
                     <div className={styles.topHeadingContainer}>
                         <h1 className={styles.heading}>Renowned <span>Artists!</span></h1>
                     </div>
-                    
+
                     <div className={styles.imageContentContainer}>
                         <ul ref={imageListRef}>
                             {artists.map((artist) => (
-                                <li key={artist.name} className="h-[40rem]">
-                                    <img src={artist.image} alt={artist.name} />
+                                <li key={artist.name} className="h-[40rem] relative">
+                                    <Image src={artist.image} alt={artist.name} fill className="object-cover" sizes="100vw" />
                                 </li>
                             ))}
                         </ul>
