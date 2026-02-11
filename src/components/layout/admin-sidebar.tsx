@@ -16,7 +16,8 @@ export function AdminSidebar() {
         { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
         { name: "Manage Events", href: "/dashboard/events", icon: Calendar },
         { name: "User Roles", href: "/dashboard/users", icon: Users },
-        { name: "Referrals", href: "/dashboard/referrals", icon: Tag },
+        { name: "Referrals", href: "/dashboard/referrals", icon: Users }, // Re-using Users icon or Trophy
+        { name: "Coupons", href: "/dashboard/coupons", icon: Tag },
         { name: "Manual Tickets", href: "/dashboard/manual-tickets", icon: Ticket },
         { name: "QR Scanner", href: "/scan", icon: ScanLine },
     ];

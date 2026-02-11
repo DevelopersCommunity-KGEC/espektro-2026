@@ -14,10 +14,10 @@ export function ParticipantsTableSkeleton() {
         <div className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <div className="flex gap-2 w-full sm:w-auto">
-                    <Skeleton className="h-10 w-[250px]" />
-                    <Skeleton className="h-10 w-[200px]" />
+                    <Skeleton className="h-10 w-62.5" />
+                    <Skeleton className="h-10 w-50" />
                 </div>
-                <Skeleton className="h-10 w-[120px]" />
+                <Skeleton className="h-10 w-30" />
             </div>
 
             <div className="rounded-md border">

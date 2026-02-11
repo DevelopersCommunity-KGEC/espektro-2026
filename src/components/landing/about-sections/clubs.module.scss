@@ -1,0 +1,132 @@
+.clubs_section {
+    padding: 6rem 0;
+    overflow: hidden;
+    background-color: hsl(26 21% 87% / 0.2);
+
+    .clubs_header {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        p {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+    }
+
+    .clubs_marquee_container {
+        padding: 1rem 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        overflow: hidden;
+        /* Mask for edge fading */
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+
+        .marquee_row {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .marquee_inner {
+            display: flex;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            gap: 3rem;
+            padding: 0.5rem 0;
+            width: max-content;
+
+            &.left {
+                animation: marquee-left 60s linear infinite;
+            }
+
+            &.right {
+                animation: marquee-right 60s linear infinite;
+            }
+
+            &:hover {
+                animation-play-state: paused;
+            }
+
+            .club_item {
+                flex-shrink: 0;
+                width: 12rem;
+                text-align: center;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-8px);
+                }
+
+                .img_container {
+                    width: 100%;
+                    aspect-ratio: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    // background: rgba(255, 255, 255, 0.05);
+                    border-radius: 1rem;
+                    padding: 1.5rem;
+                    margin-bottom: 0.75rem;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+
+                    img {
+                        max-width: 100%;
+                        max-height: 100%;
+                        object-fit: contain;
+                        filter: grayscale(1);
+                        transition: filter 0.3s ease;
+
+                        &:hover {
+                            filter: grayscale(0);
+                        }
+                    }
+                }
+
+                p {
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: var(--muted-foreground);
+                    text-transform: uppercase;
+                    letter-spacing: 0.1em;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@keyframes marquee-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-right {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

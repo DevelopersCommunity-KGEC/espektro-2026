@@ -3,13 +3,14 @@
 import dbConnect from "@/lib/db";
 import Event from "@/models/Event";
 import Ticket from "@/models/Ticket";
-import Referral from "@/models/Referral"; // Import Referral model
+import Coupon from "@/models/Coupon"; // Import Coupon model
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 // import Razorpay from "razorpay";
 import { v4 as uuidv4 } from "uuid";
-import { validateReferralCode } from "@/actions/referral-actions"; // Import validation
+import { validateCouponCode } from "@/actions/coupon-actions"; // Import validation
+import { validateUserReferral } from "@/lib/referral"; // Import user referral validation
 
 // const razorpay =
 //   process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
@@ -25,7 +26,11 @@ async function getSession() {
   });
 }
 
-export async function createOrder(eventId: string, referralCode?: string) {
+export async function createOrder(
+  eventId: string,
+  couponCode?: string,
+  teamMembers?: { name: string; email: string; phone: string }[],
+) {
   const session = await getSession();
   if (!session) throw new Error("You must be logged in to book a ticket");
 
@@ -44,7 +49,9 @@ export async function createOrder(eventId: string, referralCode?: string) {
     // Calculate total price
     const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
     // Check bundle availability (if any day is sold out, bundle is sold out)
-    const isSoldOut = festDays.some((e) => e.ticketsSold >= e.capacity);
+    const isSoldOut = festDays.some(
+      (e) => e.capacity !== -1 && e.ticketsSold >= e.capacity,
+    );
     if (isSoldOut)
       throw new Error(
         "One or more fest days are sold out. Season pass unavailable.",
@@ -53,13 +60,13 @@ export async function createOrder(eventId: string, referralCode?: string) {
     eventTitle = "Espektro Season Pass (All 4 Days)";
     finalPrice = totalPrice;
 
-    if (referralCode) {
-      const validation = await validateReferralCode(referralCode);
+    if (couponCode) {
+      const validation = await validateCouponCode(couponCode);
       if (!validation.valid)
         throw new Error(validation.message || "Invalid code");
       // Season pass belongs to main club 'espektro'
       if (validation.clubId !== "espektro")
-        throw new Error("Referral code not valid for Season Pass");
+        throw new Error("Coupon code not valid for Season Pass");
 
       discountAmount = Math.ceil(
         (totalPrice * validation.discountPercentage) / 100,
@@ -70,25 +77,47 @@ export async function createOrder(eventId: string, referralCode?: string) {
     // Standard Single Event
     const event = await Event.findById(eventId);
     if (!event) throw new Error("Event not found");
-    if (event.ticketsSold >= event.capacity)
+    if (event.capacity !== -1 && event.ticketsSold >= event.capacity)
       throw new Error("Event is sold out");
+
+    // Validate Team Size
+    if (teamMembers && teamMembers.length > 0) {
+      if (teamMembers.length + 1 > (event.maxTeamSize || 1)) {
+        throw new Error(`Team size exceeds limit of ${event.maxTeamSize}`);
+      }
+    }
 
     eventTitle = event.title;
     finalPrice = event.price;
 
-    if (referralCode) {
-      const validation = await validateReferralCode(referralCode);
+    if (couponCode) {
+      const validation = await validateCouponCode(couponCode);
       if (!validation.valid) {
-        throw new Error(validation.message || "Invalid or used referral code");
+        throw new Error(validation.message || "Invalid or used coupon code");
       }
       // Check if code matches event's club
       if (validation.clubId !== event.clubId) {
-        throw new Error("Referral code is not valid for this event");
+        throw new Error("Coupon code is not valid for this event");
       }
       discountAmount = Math.ceil(
         (event.price * validation.discountPercentage) / 100,
       );
       finalPrice = Math.max(0, event.price - discountAmount);
+    }
+  }
+
+  // Check for User Referral (Attribution)
+  const cookieStore = await cookies();
+  const attributedCode = cookieStore.get("referral_source")?.value;
+  let referrerUserId = "";
+
+  if (attributedCode) {
+    const referrer = await validateUserReferral(
+      attributedCode,
+      session.user.id,
+    );
+    if (referrer) {
+      referrerUserId = referrer._id.toString();
     }
   }
 
@@ -99,7 +128,7 @@ export async function createOrder(eventId: string, referralCode?: string) {
       amount: 0,
       currency: "INR",
       key: "FREE_TICKET",
-      referralCode,
+      couponCode,
       checkoutUrl: null, // No checkout URL for free tickets
     };
   }
@@ -111,7 +140,7 @@ export async function createOrder(eventId: string, referralCode?: string) {
       amount: finalPrice,
       currency: "INR",
       key: "PAYMENT_BYPASS",
-      referralCode,
+      couponCode,
       checkoutUrl: null,
     };
   }
@@ -158,10 +187,12 @@ export async function createOrder(eventId: string, referralCode?: string) {
           eventId: eventId,
           userId: session.user.id,
           email: session.user.email,
-          referralCode: referralCode || "",
+          couponCode: couponCode || "",
+          referrerUserId: referrerUserId || "", // Add attribution
           discountAmount: String(discountAmount),
           eventTitle: eventTitle,
           ticketType: eventId === "season-pass" ? "BUNDLE" : "SINGLE",
+          teamMembers: teamMembers ? JSON.stringify(teamMembers) : "", // Store in metadata
           originalPrice: String(
             eventId === "season-pass"
               ? finalPrice + discountAmount
@@ -193,8 +224,10 @@ export async function verifyPayment(
   payment_id: string,
   signature: string,
   signature_check_mode: string = "RAZORPAY",
-  referralCode?: string,
+  couponCode?: string,
   userContext?: { userId: string; email: string },
+  referrerUserId?: string, // New Argument
+  teamMembers?: { name: string; email: string; phone: string }[],
 ) {
   const session = await getSession();
 
@@ -211,29 +244,40 @@ export async function verifyPayment(
   if (eventId === "season-pass") {
     let appliedDiscount = 0; // Total bundle discount
 
-    // 1. Consume Referral Code if present
-    if (referralCode) {
-      const referral = await Referral.findOneAndUpdate(
-        { code: referralCode.toUpperCase(), isUsed: false },
+    // 1. Consume Coupon Code if present
+    if (couponCode) {
+      const coupon = await Coupon.findOneAndUpdate(
+        { code: couponCode.toUpperCase(), isUsed: false },
         { isUsed: true, usedBy: userEmail, usedAt: new Date() },
       );
 
-      if (!referral) {
-        throw new Error("Referral code invalid or already used.");
+      if (!coupon) {
+        if (signature_check_mode === "WEBHOOK_VERIFIED") {
+          // ...
+          const alreadyUsed = await Coupon.findOne({
+            code: couponCode.toUpperCase(),
+            usedBy: userEmail,
+          });
+          if (!alreadyUsed) {
+            // Warning
+          }
+        } else {
+          throw new Error("Coupon code invalid or already used.");
+        }
+      } else {
+        if (coupon.clubId !== "espektro") {
+          await Coupon.findByIdAndUpdate(coupon._id, {
+            isUsed: false,
+            usedBy: null,
+            usedAt: null,
+          });
+          throw new Error("Coupon code not valid for Season Pass");
+        }
       }
-
-      if (referral.clubId !== "espektro") {
-        await Referral.findByIdAndUpdate(referral._id, {
-          isUsed: false,
-          usedBy: null,
-          usedAt: null,
-        });
-        throw new Error("Referral code not valid for Season Pass");
-      }
-      // Note: We don't recalculate the exact discount amount here as we don't have the original total handy
-      // without re-fetching events, but we can if we want to store it in tickets.
-      // For now, we trust the checkout flow handled the price.
     }
+    // Note: We don't recalculate the exact discount amount here as we don't have the original total handy
+    // without re-fetching events, but we can if we want to store it in tickets.
+    // For now, we trust the checkout flow handled the price.
 
     try {
       const festDays = await Event.find({ type: "fest-day" });
@@ -246,7 +290,15 @@ export async function verifyPayment(
       // 2. Reserve spots for all events
       for (const event of festDays) {
         const updated = await Event.findOneAndUpdate(
-          { _id: event._id, $expr: { $lt: ["$ticketsSold", "$capacity"] } },
+          {
+            _id: event._id,
+            $expr: {
+              $or: [
+                { $eq: ["$capacity", -1] },
+                { $lt: ["$ticketsSold", "$capacity"] },
+              ],
+            },
+          },
           { $inc: { ticketsSold: 1 } },
           { new: true },
         );
@@ -262,14 +314,14 @@ export async function verifyPayment(
         reservedEventIds.push(event._id.toString());
       }
 
-      // Determine discount percentage if referral was used
+      // Determine discount percentage if coupon was used
       let discountPercentage = 0;
-      if (referralCode) {
-        // We can fetch the referral again or carry it over?
+      if (couponCode) {
+        // We can fetch the coupon again or carry it over?
         // We already fetched and consumed it above. But didn't keep the object variable in scope nicely.
-        // Let's refactor slightly to keep 'referral' object handy or just fetch it again by code (it's used now).
-        const ref = await Referral.findOne({
-          code: referralCode.toUpperCase(),
+        // Let's refactor slightly to keep 'coupon' object handy or just fetch it again by code (it's used now).
+        const ref = await Coupon.findOne({
+          code: couponCode.toUpperCase(),
         });
         if (ref) discountPercentage = ref.discountPercentage;
       }
@@ -285,10 +337,12 @@ export async function verifyPayment(
           eventId: event._id,
           paymentId: payment_id,
           status: "booked",
-          issueType: referralCode ? "referral" : "payment",
+          issueType: couponCode ? "coupon" : "payment",
           qrCodeToken: uuidv4(),
-          referralCode: referralCode || undefined,
+          couponCode: couponCode || undefined,
+          referrerUserId: referrerUserId || undefined, // Attributed User
           discountAmount: itemDiscount,
+          teamMembers: teamMembers || [],
         };
       });
 
@@ -297,9 +351,9 @@ export async function verifyPayment(
       revalidatePath("/my-tickets");
       return { success: true };
     } catch (error) {
-      if (referralCode) {
-        await Referral.findOneAndUpdate(
-          { code: referralCode.toUpperCase() },
+      if (couponCode) {
+        await Coupon.findOneAndUpdate(
+          { code: couponCode.toUpperCase() },
           { isUsed: false, usedBy: null, usedAt: null },
         );
       }
@@ -312,11 +366,11 @@ export async function verifyPayment(
   let issueType = "payment";
   let appliedDiscount = 0;
 
-  // If referral code is present, consume it FIRST (or check validity)
-  if (referralCode) {
+  // If coupon code is present, consume it FIRST (or check validity)
+  if (couponCode) {
     // Atomic consume
-    const referral = await Referral.findOneAndUpdate(
-      { code: referralCode.toUpperCase(), isUsed: false },
+    const coupon = await Coupon.findOneAndUpdate(
+      { code: couponCode.toUpperCase(), isUsed: false },
       {
         isUsed: true,
         usedBy: userEmail,
@@ -324,46 +378,71 @@ export async function verifyPayment(
       },
     );
 
-    if (!referral) {
-      // If provided but invalid/used, fail the booking?
-      // Yes, security measure against reusing code in parallel.
-      throw new Error(
-        "Referral code invalid or already used during processing.",
+    if (!coupon) {
+      if (signature_check_mode === "WEBHOOK_VERIFIED") {
+        // Check idempotency if webhook retry
+        const alreadyUsed = await Coupon.findOne({
+          code: couponCode.toUpperCase(),
+          usedBy: userEmail,
+        });
+        if (alreadyUsed) {
+          // proceed
+          const evt = await Event.findById(eventId);
+          if (evt)
+            appliedDiscount = Math.ceil(
+              (evt.price * alreadyUsed.discountPercentage) / 100,
+            );
+          issueType = "coupon";
+        } else {
+          console.error("Coupon failed in webhook");
+        }
+      } else {
+        throw new Error(
+          "Coupon code invalid or already used during processing.",
+        );
+      }
+    } else {
+      // Check club match
+      const eventCheck = await Event.findById(eventId);
+      if (!eventCheck) {
+        // Should not happen if eventId is valid but safety check
+        await Coupon.findByIdAndUpdate(coupon._id, {
+          isUsed: false,
+          usedBy: null,
+          usedAt: null,
+        });
+        throw new Error("Event not found");
+      }
+
+      if (coupon.clubId !== eventCheck.clubId) {
+        // Rollback
+        await Coupon.findByIdAndUpdate(coupon._id, {
+          isUsed: false,
+          usedBy: null,
+          usedAt: null,
+        });
+        throw new Error("Coupon code mismatch.");
+      }
+
+      appliedDiscount = Math.ceil(
+        (eventCheck.price * coupon.discountPercentage) / 100,
       );
+      issueType = "coupon";
     }
-
-    // Check club match
-    const eventCheck = await Event.findById(eventId);
-    if (!eventCheck) {
-      // Should not happen if eventId is valid but safety check
-      await Referral.findByIdAndUpdate(referral._id, {
-        isUsed: false,
-        usedBy: null,
-        usedAt: null,
-      });
-      throw new Error("Event not found");
-    }
-
-    if (referral.clubId !== eventCheck.clubId) {
-      // Rollback
-      await Referral.findByIdAndUpdate(referral._id, {
-        isUsed: false,
-        usedBy: null,
-        usedAt: null,
-      });
-      throw new Error("Referral code mismatch.");
-    }
-
-    appliedDiscount = Math.ceil(
-      (eventCheck.price * referral.discountPercentage) / 100,
-    );
-    issueType = "referral";
   }
 
   try {
     // Atomic check and increment
     const event = await Event.findOneAndUpdate(
-      { _id: eventId, $expr: { $lt: ["$ticketsSold", "$capacity"] } },
+      {
+        _id: eventId,
+        $expr: {
+          $or: [
+            { $eq: ["$capacity", -1] },
+            { $lt: ["$ticketsSold", "$capacity"] },
+          ],
+        },
+      },
       { $inc: { ticketsSold: 1 } },
       { new: true },
     );
@@ -374,6 +453,18 @@ export async function verifyPayment(
       );
     }
 
+    if (teamMembers && teamMembers.length > 0) {
+      if (teamMembers.length + 1 > (event.maxTeamSize || 1)) {
+        // This check usually happens before payment, but double check here.
+        // If fails, we have an issue (user paid).
+        // Ideally invalid requests shouldn't reach here.
+        // For now, proceed or throw? Throwing locks money.
+        // Let's assume validation happened in createOrder and trusted client for 'verify'.
+        // Or update schema to allow whatever is passed if paid.
+        // But let's save what we have.
+      }
+    }
+
     const ticket = await Ticket.create({
       userId: userId,
       userEmail: userEmail,
@@ -382,17 +473,19 @@ export async function verifyPayment(
       status: "booked",
       issueType,
       qrCodeToken: uuidv4(),
-      referralCode: referralCode || undefined,
+      couponCode: couponCode || undefined,
+      referrerUserId: referrerUserId || undefined, // Attributed User
       discountAmount: appliedDiscount,
+      teamMembers: teamMembers || [],
     });
 
     revalidatePath("/my-tickets");
     return { success: true, ticketId: ticket._id.toString() };
   } catch (error: any) {
-    // Rollback referral if it was consumed but ticket creation failed
-    if (referralCode) {
-      await Referral.findOneAndUpdate(
-        { code: referralCode },
+    // Rollback coupon if it was consumed but ticket creation failed
+    if (couponCode) {
+      await Coupon.findOneAndUpdate(
+        { code: couponCode },
         { isUsed: false, usedBy: null, usedAt: null },
       );
     }

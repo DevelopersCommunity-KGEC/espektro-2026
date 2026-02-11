@@ -26,6 +26,12 @@ interface NavbarProps {
 export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     const { data: session } = authClient.useSession();
     const pathname = usePathname();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Hide global navbar on landing page as it has its own dedicated navigation
+    if (pathname === "/") {
+        return null;
+    }
 
     const handleSignOut = async () => {
         await authClient.signOut();
@@ -53,8 +59,6 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     const activeClubRole = hasClubs
         ? clubRoles!.find((cr) => pathname.startsWith(`/club/${cr.clubId}`))
         : null;
-
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navItems = [
         { name: "Events", href: "/events" },
@@ -96,7 +100,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     {activeClubRole ? (
                                         <div className="flex flex-col items-start leading-none gap-1">
                                             <span className="font-semibold capitalize text-sm">{activeClubRole.clubId}</span>
-                                            <span className="text-[10px] text-muted-foreground capitalize">{activeClubRole.role.replace('-', ' ')}</span>
+                                            <span className="text-[10px] text-muted capitalize">{activeClubRole.role.replace('-', ' ')}</span>
                                         </div>
                                     ) : (
                                         <>
@@ -106,14 +110,18 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     )}
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
+                            <DropdownMenuContent className="bg-background" align="end">
                                 <DropdownMenuLabel>Switch Club</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 {clubRoles?.map((cr) => (
-                                    <DropdownMenuItem key={cr.clubId} asChild>
+                                    <DropdownMenuItem
+                                        key={cr.clubId}
+                                        asChild
+                                        className="focus:bg-primary/10 focus:text-primary focus:outline-none"
+                                    >
                                         <Link href={`/club/${cr.clubId}/dashboard`} className="flex justify-between items-center w-full">
                                             <span className="capitalize">{cr.clubId}</span>
-                                            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
+                                            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize group-hover:text-foreground">
                                                 {cr.role.replace("-", " ")}
                                             </span>
                                         </Link>
@@ -133,7 +141,7 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end" forceMount>
+                            <DropdownMenuContent className="w-56 bg-background" align="end" forceMount>
                                 <DropdownMenuLabel className="font-normal">
                                     <div className="flex flex-col space-y-1">
                                         <p className="text-sm font-medium leading-none">{session.user.name}</p>
@@ -143,15 +151,21 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     </div>
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem asChild>
+                                <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                     <Link href="/my-tickets" className="cursor-pointer">
                                         <Ticket className="mr-2 h-4 w-4" />
                                         <span>My Tickets</span>
                                     </Link>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                                    <Link href="/profile" className="cursor-pointer">
+                                        <User className="mr-2 h-4 w-4" />
+                                        <span>Profile</span>
+                                    </Link>
+                                </DropdownMenuItem>
                                 {/* Admin Link again here for convenience */}
                                 {adminLink && (
-                                    <DropdownMenuItem asChild>
+                                    <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
                                         <Link href={adminLink.href} className="cursor-pointer">
                                             <LayoutDashboard className="mr-2 h-4 w-4" />
                                             <span>{adminLink.name}</span>
@@ -159,7 +173,10 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                     </DropdownMenuItem>
                                 )}
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600 focus:text-red-600">
+                                <DropdownMenuItem
+                                    onClick={handleSignOut}
+                                    className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 focus:outline-none focus:[&_svg]:text-destructive"
+                                >
                                     <LogOut className="mr-2 h-4 w-4" />
                                     <span>Log out</span>
                                 </DropdownMenuItem>
@@ -200,6 +217,18 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                             {item.name}
                                         </Link>
                                     ))}
+                                    {session && (
+                                        <Link
+                                            href="/profile"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === "/profile"
+                                                ? "text-foreground bg-muted"
+                                                : "text-muted-foreground"
+                                                }`}
+                                        >
+                                            Profile
+                                        </Link>
+                                    )}
                                 </div>
 
                                 {hasClubs && (

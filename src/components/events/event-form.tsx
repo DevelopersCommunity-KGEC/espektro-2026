@@ -31,16 +31,21 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Loader2 } from "lucide-react";
 import { EventData } from "@/types/events";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required"),
     description: z.string().min(1, "Description is required"),
-    image: z.string().url("Must be a valid URL"),
+    image: z.url("Must be a valid URL"),
     clubId: z.string().min(1, "Please select a club"),
     date: z.string().min(1, "Date is required"),
     venue: z.string().min(1, "Venue is required"),
-    price: z.coerce.number().min(0, "Price must be 0 or greater"),
+    price: z.coerce.number().min(0, "Entry Fees must be 0 or greater"),
     capacity: z.coerce.number().min(-1, "Capacity cannot be less than -1"),
+    maxTeamSize: z.coerce.number().min(1, "Max team size must be at least 1").default(1),
     isVisible: z.boolean(),
     editors: z.string().optional(),
 });
@@ -57,21 +62,26 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
+    // console.log("Initial Data:", initialData);
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: initialData?.title || "",
             description: initialData?.description || "",
             image: initialData?.image || "",
-            date: initialData?.date ? new Date(initialData.date).toISOString().split("T")[0] : "",
+            date: initialData?.date ? new Date(initialData.date).toISOString().slice(0, 16) : "",
             venue: initialData?.venue || "",
             price: initialData?.price || 0,
-            capacity: initialData?.capacity || 0,
+            capacity: initialData?.capacity,
+            maxTeamSize: initialData?.maxTeamSize || 1,
             isVisible: initialData?.isVisible ?? true,
             editors: initialData?.editors?.join(", ") || "",
             clubId: lockedClubId || initialData?.clubId || "",
         },
     });
+
+    const clubId = form.watch("clubId");
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setLoading(true);
@@ -80,6 +90,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                 ...values,
                 price: Number(values.price),
                 capacity: Number(values.capacity),
+                maxTeamSize: Number(values.maxTeamSize),
                 editors: values.editors ? values.editors.split(",").map((e) => e.trim()).filter(Boolean) : [],
             };
 
@@ -107,7 +118,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
     };
 
     return (
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-2xl mx-auto" >
             <CardHeader>
                 <CardTitle>{isEditing ? "Edit Event" : "Create New Event"}</CardTitle>
                 <CardDescription>Fill in the details for the event.</CardDescription>
@@ -115,6 +126,58 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormField
+                                control={form.control}
+                                name="clubId"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Club <span className="text-red-500">*</span></FormLabel>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            disabled={!!lockedClubId}
+                                            value={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a club" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {clubs.map((club) => (
+                                                    <SelectItem key={club.id} value={club.id}>
+                                                        {club.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="isVisible"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3 mt-8">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                Visible to Public
+                                            </FormLabel>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
                         <FormField
                             control={form.control}
                             name="title"
@@ -129,73 +192,15 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                             )}
                         />
 
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Description</FormLabel>
-                                    <FormControl>
-                                        <Textarea placeholder="Event description..." rows={4} {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="image"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Image URL</FormLabel>
-                                    <FormControl>
-                                        <Input type="url" placeholder="https://..." {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="clubId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Club</FormLabel>
-                                    <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        disabled={!!lockedClubId}
-                                        value={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a club" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {clubs.map((club) => (
-                                                <SelectItem key={club.id} value={club.id}>
-                                                    {club.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
                                 name="date"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Date</FormLabel>
+                                        <FormLabel>Date & Time</FormLabel>
                                         <FormControl>
-                                            <Input type="date" {...field} />
+                                            <Input type="datetime-local" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -216,13 +221,13 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <FormField
                                 control={form.control}
                                 name="price"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Price (₹)</FormLabel>
+                                        <FormLabel>Entry Fees (₹)</FormLabel>
                                         <FormControl>
                                             <Input type="number" min="0" {...field} value={field.value as number} />
                                         </FormControl>
@@ -236,15 +241,16 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Capacity</FormLabel>
-                                        <div className="flex gap-3 items-center">
+                                        <div className="flex gap-2 items-center">
                                             <FormControl>
                                                 <Input
                                                     type="number"
                                                     min="-1"
                                                     {...field}
-                                                    value={field.value as number}
+                                                    value={field.value === -1 ? "" : (field.value?.toString() ?? "")}
                                                     disabled={field.value === -1}
-                                                    className={field.value === -1 ? "opacity-50" : ""}
+                                                    placeholder={field.value === -1 ? "Unlimited" : "Capacity"}
+                                                    className={field.value === -1 ? "opacity-50 flex-1" : "flex-1"}
                                                 />
                                             </FormControl>
                                             <div className="flex items-center space-x-2 whitespace-nowrap">
@@ -255,7 +261,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                                         if (checked) {
                                                             field.onChange(-1);
                                                         } else {
-                                                            field.onChange(0);
+                                                            field.onChange("");
                                                         }
                                                     }}
                                                 />
@@ -267,53 +273,82 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                                 </label>
                                             </div>
                                         </div>
-                                        <FormDescription>
-                                            {field.value === -1
-                                                ? <span className="text-blue-600 font-medium">Capacity is unlimited (shown as Not Defined to users)</span>
-                                                : field.value === 0
-                                                    ? <span className="text-amber-600">Capacity is 0. No tickets can be sold.</span>
-                                                    : "Number of tickets available for sale."
-                                            }
-                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="maxTeamSize"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Max Team Size</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" min="1" {...field} value={field.value as number} />
+                                        </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
                         </div>
 
-                        {/* <FormField
+                        <FormField
                             control={form.control}
-                            name="editors"
+                            name="description"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Editors</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="email1@example.com, email2@example.com" {...field} />
-                                    </FormControl>
+                                    <FormLabel>Description</FormLabel>
+                                    <Tabs defaultValue="write" className="w-full">
+                                        <TabsList className="mb-2">
+                                            <TabsTrigger value="write">Write</TabsTrigger>
+                                            <TabsTrigger value="preview">Preview</TabsTrigger>
+                                        </TabsList>
+                                        <TabsContent value="write" className="mt-0">
+                                            <FormControl>
+                                                <Textarea
+                                                    placeholder="Event description... (Markdown supported)"
+                                                    rows={8}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </TabsContent>
+                                        <TabsContent value="preview" className="mt-0">
+                                            <div className="prose prose-sm dark:prose-invert max-w-none border rounded-md p-4 min-h-50 bg-white dark:bg-zinc-950 overflow-y-auto">
+                                                {field.value ? (
+                                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                        {field.value}
+                                                    </ReactMarkdown>
+                                                ) : (
+                                                    <p className="text-gray-400 italic">No description content to preview</p>
+                                                )}
+                                            </div>
+                                        </TabsContent>
+                                    </Tabs>
                                     <FormDescription>
-                                        Comma separated emails of users who can edit this event.
+                                        Supports standard Markdown syntax (headers, lists, links, etc).
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        /> */}
+                        />
 
                         <FormField
                             control={form.control}
-                            name="isVisible"
+                            name="image"
                             render={({ field }) => (
-                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                <FormItem>
+                                    <FormLabel>Event Poster</FormLabel>
                                     <FormControl>
-                                        <Checkbox
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
+                                        <ImageUpload
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            onRemove={() => field.onChange("")}
+                                            folder={clubId ? `clubs/${clubId}/events` : "clubs/general/events"}
+                                            disabled={!clubId}
                                         />
                                     </FormControl>
-                                    <div className="space-y-1 leading-none">
-                                        <FormLabel>
-                                            Visible to Public
-                                        </FormLabel>
-                                    </div>
+                                    {!clubId && <FormDescription className="text-amber-600 font-medium">Please select a club above to enable image upload.</FormDescription>}
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />

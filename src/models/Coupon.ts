@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IReferral extends Document {
+export interface ICoupon extends Document {
   code: string;
   clubId: string;
   discountPercentage: number;
@@ -11,7 +11,7 @@ export interface IReferral extends Document {
   createdAt: Date;
 }
 
-const ReferralSchema: Schema = new Schema({
+const CouponSchema: Schema = new Schema({
   code: { type: String, required: true, unique: true },
   clubId: { type: String, required: true }, // 'all' or specific clubId
   discountPercentage: { type: Number, required: true, min: 0, max: 100 },
@@ -22,5 +22,5 @@ const ReferralSchema: Schema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.models.Referral ||
-  mongoose.model<IReferral>("Referral", ReferralSchema);
+export default mongoose.models.Coupon ||
+  mongoose.model<ICoupon>("Coupon", CouponSchema);

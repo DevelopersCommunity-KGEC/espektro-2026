@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { ReferralManager } from "@/components/admin/referral-manager";
+import { DetailedReferralLeaderboard } from "@/components/admin/detailed-referral-leaderboard";
 
 export default async function AdminReferralsPage() {
     const session = await auth.api.getSession({
@@ -17,11 +17,11 @@ export default async function AdminReferralsPage() {
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Referral Management</h1>
                 <p className="text-muted-foreground">
-                    Generate and manage discount codes for clubs.
+                    Monitor user performance and top referrers.
                 </p>
             </div>
 
-            <ReferralManager clubId="all" isSuperAdmin={true} />
+            <DetailedReferralLeaderboard />
         </div>
     );
 }

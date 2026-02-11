@@ -12,13 +12,27 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path),
   );
 
+  const response = NextResponse.next();
+
+  // Referral Attribution Logic
+  const refCode = request.nextUrl.searchParams.get("ref");
+  if (refCode) {
+    // Set cookie for 30 days
+    response.cookies.set("referral_source", refCode, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      httpOnly: true,
+      sameSite: "lax",
+    });
+  }
+
   if (isProtected && !sessionToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/my-tickets", "/scan"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

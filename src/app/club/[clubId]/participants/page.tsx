@@ -14,11 +14,17 @@ export default async function ClubParticipantsPage({ params }: { params: Promise
     const canView = await hasClubPermission(user.id, clubId, ["club-admin", "volunteer", "event-editor"]);
     if (!canView) return notFound();
 
+    const canIssueTickets = await hasClubPermission(user.id, clubId, ["club-admin"]);
+
     return (
         <div className="container mx-auto py-10 px-4">
             <h1 className="text-3xl font-bold mb-6 capitalize">{clubId} Participants</h1>
             <Suspense fallback={<ParticipantsTableSkeleton />}>
-                <ParticipantsDataWrapper clubId={clubId} currentUserEmail={user.email} />
+                <ParticipantsDataWrapper
+                    clubId={clubId}
+                    currentUserEmail={user.email}
+                    canIssueTickets={canIssueTickets}
+                />
             </Suspense>
         </div>
     );
@@ -26,10 +32,12 @@ export default async function ClubParticipantsPage({ params }: { params: Promise
 
 async function ParticipantsDataWrapper({
     clubId,
-    currentUserEmail
+    currentUserEmail,
+    canIssueTickets
 }: {
     clubId: string,
-    currentUserEmail: string
+    currentUserEmail: string,
+    canIssueTickets: boolean
 }) {
     const [participants, events] = await Promise.all([
         getClubParticipants(clubId),
@@ -42,6 +50,7 @@ async function ParticipantsDataWrapper({
             events={events}
             clubId={clubId}
             currentUserEmail={currentUserEmail}
+            canIssueTickets={canIssueTickets}
         />
     );
 }

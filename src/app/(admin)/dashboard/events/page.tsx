@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardTableSkeleton } from "@/components/skeletons";
 import { SeedButton } from "@/components/admin/seed-button";
+import { Button } from "@/components/ui/button";
 
 async function EventsTable() {
     const events = await getEvents();
@@ -28,7 +29,7 @@ async function EventsTable() {
                             Venue
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Price
+                            Entry Fees
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Sold
@@ -55,7 +56,7 @@ async function EventsTable() {
                                 {event.club?.name || event.clubId || "Unknown"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {new Date(event.date).toLocaleDateString()}
+                                {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {event.venue}
@@ -95,12 +96,11 @@ export default async function EventsPage() {
                 <h1 className="text-3xl font-bold">Manage Events</h1>
                 <div className="flex items-center gap-2">
                     <SeedButton />
-                    <Link
-                        href="/dashboard/events/new"
-                        className="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
-                    >
-                        Add New Event
-                    </Link>
+                    <Button asChild>
+                        <Link href="/dashboard/events/new">
+                            Add New Event
+                        </Link>
+                    </Button>
                 </div>
             </div>
 

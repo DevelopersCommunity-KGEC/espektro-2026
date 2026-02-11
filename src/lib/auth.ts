@@ -56,8 +56,9 @@ export const auth = betterAuth({
                   payment_id,
                   "WEBHOOK",
                   "WEBHOOK_VERIFIED",
-                  metadata.referralCode,
-                  { userId: metadata.userId, email: metadata.email || "" },
+                  metadata.referralCode, // Coupon Code
+                  { userId: metadata.userId, email: metadata.email },
+                  metadata.referrerUserId, // Attributed User ID
                 );
               }
             } catch (error) {
