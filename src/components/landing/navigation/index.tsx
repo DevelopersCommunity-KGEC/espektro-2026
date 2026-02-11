@@ -151,7 +151,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                 {hasClubs && (
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <button className="px-3 py-2 text-[11px] font-medium text-foreground/70 hover:text-[#B7410E] transition-colors uppercase tracking-wider focus:outline-none flex items-center gap-1">
+                                            <Button variant="ghost" className="px-3 py-2 text-[11px] font-medium text-foreground/70 hover:text-[#B7410E] transition-colors uppercase tracking-wider focus:outline-none flex items-center gap-1 h-auto hover:bg-transparent">
                                                 <LayoutDashboard className="h-3.5 w-3.5" />
                                                 {activeClubRole ? (
                                                     <span className="capitalize">
@@ -160,7 +160,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                                 ) : (
                                                     <span>Clubs</span>
                                                 )}
-                                            </button>
+                                            </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent
                                             align="end"
@@ -199,8 +199,8 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                 {/* User avatar dropdown */}
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <button className="relative h-9 w-9 rounded-full 
-                                        ring-2 ring-border/50 hover:ring-[#B7410E]/50 transition-all focus:outline-none">
+                                        <Button variant="ghost" className="relative h-9 w-9 rounded-full 
+                                        ring-2 ring-border/50 hover:ring-[#B7410E]/50 transition-all focus:outline-none p-0 hover:bg-transparent">
                                             <Avatar className="h-9 w-9">
                                                 <AvatarImage
                                                     src={
@@ -214,7 +214,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                                                     ) || "U"}
                                                 </AvatarFallback>
                                             </Avatar>
-                                        </button>
+                                        </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
                                         className="w-56 bg-background"

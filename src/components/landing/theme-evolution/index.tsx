@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { eras } from "@/data/landing-content";
 
@@ -28,28 +29,32 @@ export function ThemeEvolution() {
     return (
         <div ref={containerRef} className="relative h-[400vh]">
             <section className="sticky top-0 h-screen w-full overflow-hidden">
-                
+
                 <div className="absolute inset-0">
-                    <img 
-                        src="/images/timeline.jpg" 
-                        className="w-full h-full object-cover grayscale opacity-40" 
+                    <Image
+                        src="/images/timeline.jpg"
+                        fill
+                        className="object-cover grayscale opacity-40"
                         alt="Bengali Culture Timeline"
+                        sizes="100vw"
                     />
-                    
-                    <motion.div 
+
+                    <motion.div
                         className="absolute inset-0"
                         style={{ clipPath }}
                     >
-                        <img 
-                            src="/images/timeline.jpg" 
-                            className="w-full h-full object-cover" 
+                        <Image
+                            src="/images/timeline.jpg"
+                            fill
+                            className="object-cover"
                             alt="Bengali Culture Timeline Color"
+                            sizes="100vw"
                         />
                     </motion.div>
                 </div>
 
                 <div className="relative z-20 h-full flex flex-col justify-between p-8 lg:p-16">
-                    
+
                     <div className="max-w-2xl pt-4">
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground">
                             Evolution of <span className="text-[#B7410E]">Bengali Culture</span>
@@ -58,7 +63,7 @@ export function ThemeEvolution() {
 
                     <div className="w-full max-w-7xl mx-auto">
                         <div className="w-full h-[1px] bg-border mb-8 relative">
-                            <motion.div 
+                            <motion.div
                                 className="absolute h-full bg-[#B7410E] left-0 top-0"
                                 style={{ width: progressWidth }}
                             />
@@ -66,7 +71,7 @@ export function ThemeEvolution() {
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
                             {eras.map((era, i) => (
-                                <EraItem 
+                                <EraItem
                                     key={i}
                                     item={era}
                                     index={i}
@@ -89,13 +94,13 @@ function EraItem({ item, index, total, scrollYProgress, isActive }: any) {
     const startBase = 0.1; // Don't start at 0 to avoid initial visibility
     const endRange = 0.7;
     const duration = 0.15; // Each item fades in over 15% of scroll
-    
+
     const start = startBase + (index / total) * (endRange - startBase);
     const end = start + duration;
 
     const opacity = useTransform(
-        scrollYProgress, 
-        [start, end], 
+        scrollYProgress,
+        [start, end],
         [0, 1]
     );
 

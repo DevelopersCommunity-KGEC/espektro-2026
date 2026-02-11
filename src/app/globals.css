@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -62,7 +63,7 @@
   --muted-foreground: hsl(26 13% 34%); /* #5C5147 */
 
   /* Accent: River Blue - Ganges */
-  --accent: hsl(196 54% 39%); /* #2E7D9B */
+  --accent: hsl(40, 100%, 25%); /* #A52A2A */
   --accent-foreground: hsl(0 0% 100%);
 
   --destructive: hsl(0 72% 51%); /* #DC2626 */
@@ -93,7 +94,7 @@
   --secondary-foreground: hsl(0 0% 10%);
   --muted: hsl(26 13% 34%);
   --muted-foreground: hsl(26 21% 87%);
-  --accent: hsl(196 54% 39%);
+  --accent: hsl(40, 100%, 25%);
   --accent-foreground: hsl(0 0% 100%);
   --destructive: hsl(0 62% 30%);
   --destructive-foreground: hsl(0 0% 98%);
@@ -113,13 +114,21 @@
 
 /* Marquee Animations */
 @keyframes marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes marquee-right {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .animate-marquee-left {
@@ -129,4 +138,3 @@
 .animate-marquee-right {
   animation: marquee-right 30s linear infinite;
 }
-

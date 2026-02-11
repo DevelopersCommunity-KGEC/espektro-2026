@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { pastArtists } from "@/data/landing-content";
@@ -46,14 +47,16 @@ export function ArtistGallery() {
           A legacy of unforgettable performances that have graced our stages over the years.
         </p>
       </div>
-      
+
       <div className={styles.main_gallery} ref={containerRef}>
         {pastArtists.map((item) => (
           <div key={item.id} className="relative group cursor-pointer">
-            <img 
-              src={item.url} 
-              alt="Artist" 
-              className="w-full h-full object-cover transition-transform duration-700"
+            <Image
+              src={item.url}
+              alt="Artist"
+              fill
+              className="object-cover transition-transform duration-700"
+              sizes="(max-width: 768px) 50vw, 33vw"
             />
             {/* Subtle overlay on hover */}
             <div className="absolute inset-0 bg-[#B7410E]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

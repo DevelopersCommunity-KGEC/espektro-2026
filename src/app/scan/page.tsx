@@ -6,13 +6,18 @@ import { verifyTicket } from "@/actions/ticket-actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { ScannerSkeleton } from "@/components/skeletons";
-import { Loader2 } from "lucide-react";
+import { Loader2, SwitchCamera, Zap, ZapOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ScanPage() {
     const [scanResult, setScanResult] = useState<any>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [isScanning, setIsScanning] = useState(false);
+    const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+    const [torchOn, setTorchOn] = useState(false);
+    const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
+    const [hasTorch, setHasTorch] = useState(false);
 
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
@@ -29,6 +34,12 @@ export default function ScanPage() {
     useEffect(() => {
         if (!isScanning) return;
 
+        Html5Qrcode.getCameras().then(devices => {
+            setHasMultipleCameras(devices && devices.length > 1);
+        }).catch(err => {
+            console.warn("Error checking cameras", err);
+        });
+
         const scanner = new Html5Qrcode("reader");
         scannerRef.current = scanner;
 
@@ -44,11 +55,19 @@ export default function ScanPage() {
         };
 
         scanner.start(
-            { facingMode: "environment" },
+            { facingMode: facingMode },
             config,
             onScanSuccess,
             () => { }
-        ).catch(err => {
+        ).then(() => {
+            try {
+                const capabilities = scanner.getRunningTrackCameraCapabilities();
+                setHasTorch(!!(capabilities as any).torch);
+            } catch (e) {
+                console.warn("Could not get camera capabilities", e);
+                setHasTorch(false);
+            }
+        }).catch(err => {
             console.error("Error starting scanner", err);
             setError("Failed to start camera: " + (err?.message || err));
             setIsScanning(false);
@@ -102,13 +121,32 @@ export default function ScanPage() {
                     });
             }
         };
-    }, [isScanning]);
+    }, [isScanning, facingMode]);
 
     const startScanning = () => {
         setScanResult(null);
         setError("");
         setIsScanning(true);
+        setTorchOn(false);
         isProcessingRef.current = false;
+    };
+
+    const switchCamera = () => {
+        setFacingMode(prev => prev === "environment" ? "user" : "environment");
+        setTorchOn(false);
+    };
+
+    const toggleTorch = async () => {
+        if (!scannerRef.current) return;
+        try {
+            await scannerRef.current.applyVideoConstraints({
+                advanced: [{ torch: !torchOn }]
+            } as any);
+            setTorchOn(!torchOn);
+        } catch (err) {
+            console.error("Torch toggle failed", err);
+            // Don't set error state as it might just be unavailable
+        }
     };
 
     if (isPending || !session) return <ScannerSkeleton />;
@@ -120,9 +158,9 @@ export default function ScanPage() {
             <div id="reader" className="w-full bg-black rounded-lg overflow-hidden mb-6 min-h-75 relative">
                 {!isScanning && !loading && !scanResult && (
                     <div className="absolute inset-0 flex items-center justify-center text-white">
-                        <button onClick={startScanning} className="bg-primary px-6 py-3 rounded-lg font-bold">
+                        <Button onClick={startScanning} size="lg" className="font-bold">
                             Start Camera
-                        </button>
+                        </Button>
                     </div>
                 )}
                 {loading && (
@@ -154,19 +192,32 @@ export default function ScanPage() {
                         </div>
                     )}
 
-                    <button
+                    <Button
                         onClick={startScanning}
-                        className="mt-4 w-full bg-white/50 hover:bg-white/80 border border-current text-inherit font-bold py-2 px-4 rounded"
+                        variant="secondary"
+                        className="mt-4 w-full font-bold"
                     >
                         Scan Next
-                    </button>
+                    </Button>
                 </div>
             )}
 
             {isScanning && (
-                <button onClick={() => setIsScanning(false)} className="w-full py-3 bg-red-600 text-white rounded font-bold">
-                    Stop Scanning
-                </button>
+                <div className="flex gap-2">
+                    <Button onClick={() => setIsScanning(false)} variant="destructive" className="flex-1 py-6 font-bold">
+                        Stop Scanning
+                    </Button>
+                    {hasMultipleCameras && (
+                        <Button onClick={switchCamera} size="icon" variant="secondary" className="w-16 h-auto" title="Switch Camera">
+                            <SwitchCamera className="w-6 h-6" />
+                        </Button>
+                    )}
+                    {hasTorch && (
+                        <Button onClick={toggleTorch} size="icon" variant={torchOn ? "default" : "secondary"} className={`w-16 h-auto ${torchOn ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`} title="Toggle Flashlight">
+                            {torchOn ? <ZapOff className="w-6 h-6" /> : <Zap className="w-6 h-6" />}
+                        </Button>
+                    )}
+                </div>
             )}
         </div>
     );

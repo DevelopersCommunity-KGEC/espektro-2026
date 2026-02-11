@@ -1,29 +1,10 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-
-const baseurl = `https://res.cloudinary.com/dgc9mpvvw/image/upload/v1704024441/espektro/2023/sponsors/`;
-
-const SPONSORS = [
-    { id: 2, sponsor: 'Official Food and Beverages Partner', url: `${baseurl}wow-momo.webp` },
-    { id: 3, sponsor: 'Powered-by sponsor', url: `${baseurl}techno-exponent.webp` },
-    { id: 4, sponsor: 'Audio Partner', url: `${baseurl}zebronics.webp` },
-    { id: 8, sponsor: 'GDSC event sponsor', url: `${baseurl}unstop.webp` },
-    { id: 10, sponsor: 'Official Grooming Partner', url: `${baseurl}breado.webp` },
-    { id: 11, sponsor: 'Exclusive Radio Partner', url: `${baseurl}friends-fm.webp` },
-    { id: 12, sponsor: 'Blogger Outreach Partner', url: `${baseurl}blogadda.webp` },
-    { id: 13, sponsor: 'Official Sports Partner', url: `${baseurl}decathlon.webp` },
-    { id: 14, sponsor: 'Title sponsor', url: `${baseurl}senco.webp` },
-    { id: 15, sponsor: 'The Illustration Partner', url: `${baseurl}inked-voices.webp` },
-    { id: 16, sponsor: 'Official Promotional Partner', url: `${baseurl}culcutta-canvas.webp` },
-    { id: 17, sponsor: 'Official Gifts Partner', url: `${baseurl}chowman.webp` },
-    { id: 18, sponsor: 'Official Food Partner', url: `${baseurl}dominos.webp` },
-    { id: 19, sponsor: 'Official RACING Partner', url: `${baseurl}ktm.webp` },
-    { id: 20, sponsor: 'advertising Partner', url: `${baseurl}oxedent.webp` },
-    { id: 21, sponsor: 'Official Gift Partner', url: `${baseurl}presto.webp` },
-];
+import { sponsorLogos as SPONSORS } from "@/data/landing-content";
 
 export function Sponsors() {
     const ref = useRef<HTMLElement>(null);
@@ -90,11 +71,13 @@ function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url:
     return (
         <div className="w-full h-40 group/card relative p-4 bg-white/5 rounded-2xl backdrop-blur-sm transition-all hover:bg-white/10">
             <div className="w-full h-full flex flex-col justify-between items-center text-center">
-                <div className="flex-[2] flex items-center justify-center max-h-[60%] w-full">
-                    <img 
-                        src={sponsor.url} 
-                        alt={sponsor.sponsor} 
-                        className="max-w-full max-h-full object-contain grayscale brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
+                <div className="flex-[2] flex items-center justify-center max-h-[60%] w-full relative">
+                    <Image
+                        src={sponsor.url}
+                        alt={sponsor.sponsor}
+                        fill
+                        className="object-contain grayscale brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                 </div>
                 <div className="flex-1 flex items-center justify-center w-full px-2">
