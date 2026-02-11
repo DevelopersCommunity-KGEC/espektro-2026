@@ -1,212 +1,128 @@
-import "./eventCard.scss";
+"use client";
 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, ArrowRight, Expand } from "lucide-react";
 import moment from "moment";
-
-import EventImg from "@/assets/images/espektro_poster.jpeg";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
 import { EventData } from "@/types";
-import { useMemo } from "react";
-// import Coin from "@/components/Coin/Coin";
+import Link from "next/link";
 
-const EventCard = (event: EventData) => {
-  const eventPrice = useMemo(() => {
-    const price = event?.eventPrice ?? 0;
+interface EventCardProps {
+  event: EventData;
+}
 
-    if (!Number(price))
-      return (
-        <span className="text" style={{ fontWeight: 600 }}>
-          FREE
-        </span>
-      );
+const EventCard: React.FC<EventCardProps> = ({ event }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-    return (
-      <div className="coin-details text">
-        <span>₹ {price}</span>
-        {
-          //<Coin />
-        }
-      </div>
-    );
-  }, [event]);
-  const eventPrize = useMemo(() => {
-    const price = event?.eventPrize ?? 0;
+  // Handle data inconsistencies (API vs Legacy types)
+  const displayImage =
+    event.image ||
+    (event.eventImages && event.eventImages.length > 0
+      ? event.eventImages[0].url
+      : "/images/placeholder.jpg");
 
-    if (!Number(price))
-      return (
-        <span className="text" style={{ fontWeight: 600 }}>
-          FREE
-        </span>
-      );
+  const displayPrice =
+    event.price !== undefined ? event.price : event.eventPrice;
+  const isFree = displayPrice === 0 || displayPrice === "0" || !displayPrice;
 
-    return (
-      <div className="coin-details text">
-        <span>{price}</span>
-        {
-          //<Coin />
-        }
-      </div>
-    );
-  }, [event]);
+  const eventDate = event.date
+    ? new Date(event.date)
+    : event.startTime
+      ? new Date(event.startTime)
+      : new Date();
 
   return (
-    <div className="event-card">
-      <div
-        className="image"
-        style={{
-          backgroundImage:
-            (event.eventImages?.length ?? 0) > 0
-              ? `url(${event.eventImages?.[0].url})`
-              : `url(${EventImg})`,
-        }}
-      >
-        <img
-          src={
-            (event.eventImages?.length ?? 0) > 0
-              ? event.eventImages?.[0].url
-              : typeof EventImg === 'string' ? EventImg : EventImg.src
-          }
-          alt=""
-        />
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="group relative bg-card dark:bg-zinc-900 rounded-xl overflow-hidden border border-border/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Image Section */}
+      <div className="relative h-52 w-full overflow-hidden">
+        <div className="w-full h-full relative">
+          <img
+            src={displayImage}
+            alt={event.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        </div>
       </div>
-      <div className="details">
-        <span
-          className="left-border-element"
-          style={{
-            backgroundColor: "#ec7a46",
-          }}
-        ></span>
-        <div className="event-title-tagline">
-          <h3 className="text-16">{event.title}</h3>
-          {/* <span className="title-tagline title-tagline-small">
-            {event.tagLine}
-          </span> */}
-        </div>
-        <div className="timeline">
-          <div className="text-details">
-            <span className="label">Organiser:</span> {/* Shortened label */}
-            <div className="text image-detail">
-              <img src={event.eventOrganiserClub?.image} alt="" />
-              {event.eventOrganiserClub?.name}
-            </div>
-          </div>
-          <div className="text-details-row">
-            {/* <div className="text-details">
-              <span className="label">Type:</span>
-              <span className="text">{event.eventType}</span>
-            </div> */}
-            <div className="text-details">
-              <span className="label">Entry Fees:</span>
-              <span className="text"></span>
-              <b>{eventPrice}</b>
-            </div>
+
+      {/* Content Section */}
+      <div className="p-5 flex flex-col flex-grow">
+        <div className="flex-grow">
+          <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground mb-3">
+            {/* <span className="flex items-center gap-1 bg-secondary/10 text-secondary-foreground px-2 py-0.5 rounded-md">
+              {event.type === "fest-day" ? "Pro Show" : "Event"}
+            </span> */}
+            {event.eventOrganiserClub && (
+              <span className="flex items-center gap-1 border border-border px-2 py-0.5 rounded-md">
+                {event.eventOrganiserClub.name}
+              </span>
+            )}
           </div>
 
-          <div className="text-details-row">
-            <div className="text-details">
-              <span className="label">Start Date:</span>
-              <span className="text">
-                {moment(new Date(event.startTime))
-                  .subtract("330", "minutes")
-                  .format("ll")}
+          <h3 className="text-xl font-bold mb-2 line-clamp-1 group-hover:text-primary transition-colors">
+            {event.title}
+          </h3>
+
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center text-sm text-muted-foreground">
+              <Calendar className="w-4 h-4 mr-2 text-primary/70" />
+              <span>
+                {moment(eventDate).format("ddd, MMM D, YYYY")} •{" "}
+                {moment(eventDate).format("h:mm A")}
               </span>
             </div>
-            <div className="text-details">
-              <span className="label">Time:</span>
-              <span className="text">
-                {moment(new Date(event.startTime))
-                  .subtract("330", "minutes")
-                  .format("LT")}
-              </span>
-            </div>
-          </div>
-          <div className="text-details-row">
-            <div className="text-details">
-              <span className="label">End Date:</span>
-              <span className="text">
-                {moment(new Date(event.endTime))
-                  .subtract("330", "minutes")
-                  .format("ll")}
-              </span>
-            </div>
-            <div className="text-details">
-              <span className="label">Time:</span>
-              <span className="text">
-                {moment(new Date(event.endTime))
-                  .subtract("330", "minutes")
-                  .format("LT")}
+            <div className="flex items-center text-sm text-muted-foreground">
+              <MapPin className="w-4 h-4 mr-2 text-primary/70" />
+              <span className="line-clamp-1">
+                {event.venue || event.eventVenue || "To be announced"}
               </span>
             </div>
           </div>
 
-          {/* Prizes */}
-          <div className="text-details-row">
-            <div className="text-details">
-              <span className="label">Prize:</span>
-              <span className="text">₹</span>
-              <b>{eventPrize}</b>
-            </div>
-          </div>
-
-          {/* Venue */}
-          <div className="text-details-row">
-            <div className="text-details">
-              <span className="label">Venue :</span>
-              <span className="text">{event.eventVenue}</span>
-            </div>
-          </div>
-
-          {/* Contacts  */}
-          <div className="text-details-row">
-            <div className="text-details">
-              <span className="label">Contact :</span>
-              {(event.eventCoordinators?.length ?? 0) > 0 && (
-                <span className="text">
-                  {event.eventCoordinators?.[0]?.name} -{" "}
-                  {event.eventCoordinators?.[0]?.phone}
-                </span>
-              )}
-              {(event.eventCoordinators?.length ?? 0) > 1 && (
-                <>
-                  <span>,&nbsp;</span>
-                  <span className="text">
-                    {event.eventCoordinators?.[1]?.name} -{" "}
-                    {event.eventCoordinators?.[1]?.phone}
-                  </span>
-                </>
-              )}
-            </div>
+          <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+            {/* <span className="line-clamp-2">{event.description}</span> */}
           </div>
         </div>
-        <div className="flex gap-2"> {/* Reduced gap */}
-          <Button asChild className="cursor-pointer w-full mt-4 text-text-primary hover:bg-text-light bg-text-floral"> {/* Reduced margin-top */}
-            <a
-              href={event.registrationLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Register
-            </a>
-          </Button>
 
-          <Button
-            className="cursor-pointer p-0 w-full mt-4 text-text-primary hover:bg-text-light bg-text-floral" /* Reduced margin-top */
-            onClick={() => {
-              if (event.brochureLink) {
-                const link = document.createElement("a");
-                link.href = event.brochureLink;
-                link.download = "Event_Brochure.pdf"; // Suggested filename
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }
-            }}
-          >
-            Rules
+        {/* Actions & Price */}
+        <div className="pt-4 border-t border-border flex items-center justify-between gap-3 mt-auto">
+          <div className="flex flex-col">
+            <span className="text-xs text-muted-foreground font-medium">
+              Entry Fee
+            </span>
+            {isFree ? (
+              <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                Free
+              </span>
+            ) : (
+              <span className="text-lg font-bold text-primary">
+                ₹{displayPrice}
+              </span>
+            )}
+          </div>
+          <Button asChild variant="default" className="w-32 group/btn">
+            <Link href={`/events/${event._id}`}>
+              Details
+              <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+            </Link>
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
