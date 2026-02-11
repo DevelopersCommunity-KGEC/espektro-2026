@@ -42,7 +42,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         <div>
             <div className="mb-4 flex items-center gap-4">
                 {value && (
-                    <div className="relative w-[200px] h-[200px] rounded-md overflow-hidden border border-zinc-200 shadow-sm">
+                    <div className="relative w-[200px] h-[200px] rounded-md overflow-hidden border border-border shadow-sm">
                         <div className="z-10 absolute top-2 right-2">
                             <Button
                                 type="button"
@@ -90,19 +90,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                                 h-64 
                                 border-2 
                                 border-dashed 
-                                border-gray-300 
+                                border-border 
                                 rounded-lg 
                                 transition 
-                                bg-slate-50
-                                ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-gray-50"}
+                                bg-muted
+                                ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-muted/80"}
                             `}
                         >
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <ImagePlus className="w-10 h-10 mb-3 text-gray-400" />
-                                <p className="mb-2 text-sm text-gray-500">
+                                <ImagePlus className="w-10 h-10 mb-3 text-muted-foreground" />
+                                <p className="mb-2 text-sm text-muted-foreground">
                                     <span className="font-semibold">Click to upload</span> or drag and drop
                                 </p>
-                                <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 10MB)</p>
+                                <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (MAX. 10MB)</p>
                             </div>
                         </div>
                     )

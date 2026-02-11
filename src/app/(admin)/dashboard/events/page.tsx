@@ -12,34 +12,34 @@ async function EventsTable() {
     const events = await getEvents();
 
     return (
-        <div className="bg-white rounded shadow overflow-hidden overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+        <div className="bg-card rounded shadow overflow-hidden overflow-x-auto">
+            <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted">
                     <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Event
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Club
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Date
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Venue
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Entry Fees
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Sold
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-card divide-y divide-border">
                     {events.map((event: any) => (
                         <tr key={event._id}>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -48,27 +48,27 @@ async function EventsTable() {
                                         <img className="h-10 w-10 rounded-full object-cover" src={event.image} alt="" />
                                     </div>
                                     <div className="ml-4">
-                                        <div className="text-sm font-medium text-gray-900">{event.title}</div>
+                                        <div className="text-sm font-medium text-foreground">{event.title}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 {event.club?.name || event.clubId || "Unknown"}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 {event.venue}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 ₹{event.price}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 {event.ticketsSold} / {event.capacity === -1 ? "Unlimited" : event.capacity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <Link href={`/dashboard/events/${event._id}`} className="text-blue-600 hover:text-blue-900 mr-4">
+                                <Link href={`/dashboard/events/${event._id}`} className="text-primary hover:text-primary/80 mr-4">
                                     Edit
                                 </Link>
                             </td>

@@ -49,7 +49,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                     <CardTitle>{event.title}</CardTitle>
                     <CardDescription>{event.venue} • {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</CardDescription>
                 </div>
-                <Badge variant={ticket.status === 'checked-in' ? "secondary" : "default"} className={ticket.status === 'checked-in' ? "bg-green-100 text-green-700 hover:bg-green-100" : "bg-blue-100 text-blue-700 hover:bg-blue-100"}>
+                <Badge variant={ticket.status === 'checked-in' ? "secondary" : "default"} className={ticket.status === 'checked-in' ? "bg-green-100 text-green-700 hover:bg-green-100" : "bg-primary/10 text-primary hover:bg-primary/10"}>
                     {ticket.status}
                 </Badge>
             </CardHeader>
@@ -58,7 +58,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                     <div className="flex flex-col items-center justify-center py-4 animate-in fade-in zoom-in duration-300">
                         {qrUrl ? (
                             <>
-                                <img src={qrUrl} alt="Ticket QR Code" className="w-48 h-48 border-4 border-white shadow-sm rounded-lg" />
+                                <img src={qrUrl} alt="Ticket QR Code" className="w-48 h-48 border-4 border-card shadow-sm rounded-lg" />
                                 {/* <p className="mt-2 text-xs text-muted-foreground font-mono bg-muted px-2 py-1 rounded">{ticket.qrCodeToken}</p> */}
                             </>
                         ) : (

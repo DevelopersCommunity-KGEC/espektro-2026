@@ -10,9 +10,9 @@ async function TicketsList() {
 
     if (tickets.length === 0) {
         return (
-            <div className="text-center py-20 bg-gray-50 rounded-2xl border-2 border-dashed">
-                <p className="text-gray-500 text-lg">You haven't booked any tickets yet.</p>
-                <a href="/events" className="text-blue-600 font-semibold hover:underline mt-2 block">
+            <div className="text-center py-20 bg-muted rounded-2xl border-2 border-dashed">
+                <p className="text-muted-foreground text-lg">You haven't booked any tickets yet.</p>
+                <a href="/events" className="text-primary font-semibold hover:underline mt-2 block">
                     Browse events
                 </a>
             </div>

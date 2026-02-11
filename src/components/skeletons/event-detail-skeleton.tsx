@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function EventDetailSkeleton() {
     return (
         <div className="max-w-4xl mx-auto px-4 py-12">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-card rounded-2xl shadow-xl overflow-hidden">
                 <Skeleton className="w-full h-96" />
                 <div className="p-8">
                     <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">

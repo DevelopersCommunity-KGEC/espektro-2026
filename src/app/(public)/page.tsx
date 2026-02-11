@@ -9,6 +9,7 @@ import { Sponsors } from "@/components/landing/sponsors";
 import ClubsSection from "@/components/landing/about-sections/clubs";
 import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
+import { LogoPreloader } from "@/components/landing/logo-preloader";
 import { Navigation } from "@/components/landing/navigation";
 import { getTimelineData } from "@/actions/landing-data";
 import { auth } from "@/lib/auth";
@@ -32,7 +33,8 @@ export default async function LandingPage() {
     }
 
     return (
-        <main className="min-h-screen bg-background selection:bg-[#B7410E] selection:text-white">
+        <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+            <LogoPreloader />
             <Navigation isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
             <Hero />
             <About />
