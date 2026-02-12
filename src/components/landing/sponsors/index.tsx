@@ -104,17 +104,22 @@ export function Sponsors() {
     return (
         <section ref={ref} id="sponsors" className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden">
             {/* Decorative side borders */}
-            <img
-                src="/border.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            <div
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto'
+                }}
             />
-            <img
-                src="/border.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            <div
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    transform: 'scaleX(-1)'
+                }}
             />
             <div className="container mx-auto px-6 lg:px-24">
                 <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
