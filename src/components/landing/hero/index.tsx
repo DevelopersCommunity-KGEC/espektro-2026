@@ -33,7 +33,7 @@ export function Hero() {
         );
 
     return (
-        <section ref={heroRef} className="relative h-[150vh]">
+        <section ref={heroRef} className="relative z-10 h-[150vh]">
             <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
                 {/* Background layers */}
                 <div className="absolute inset-0">

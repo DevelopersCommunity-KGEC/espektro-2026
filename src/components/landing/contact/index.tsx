@@ -30,7 +30,7 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 bg-muted relative overflow-hidden"
+            className="py-20 lg:py-32 bg-muted relative z-10 overflow-hidden"
         >
             {/* Decorative side borders */}
             <img

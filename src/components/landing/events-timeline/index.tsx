@@ -107,7 +107,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
         <section
             ref={sectionRef}
             id="schedule"
-            className="relative py-24 lg:py-36 bg-muted/40 overflow-hidden"
+            className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden"
         >
             {/* Decorative side borders */}
             {/* <img

@@ -32,7 +32,7 @@ export function Gallery() {
         <section
             ref={sectionRef}
             id="aftermovie"
-            className="relative py-24 lg:py-36 bg-muted/20 overflow-hidden"
+            className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden"
         >
             {/* Decorative side borders */}
             <img
@@ -69,7 +69,7 @@ export function Gallery() {
                     className={`max-w-5xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
                         }`}
                 >
-                    <div className="relative aspect-video rounded-3xl overflow-hidden bg-black border-4 border-white/10 shadow-2xl">
+                    <div className="relative z-10 aspect-video rounded-3xl overflow-hidden bg-black border-4 border-white/10 shadow-2xl">
                         <iframe
                             src={embedUrl}
                             title="Espektro Aftermovie"
