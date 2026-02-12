@@ -160,7 +160,7 @@ export function FeaturedArtists() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 lg:px-8 relative">
+            <div className="container mx-auto px-6 lg:px-8 relative mb-15">
                 <ArtistGallery />
             </div>
         </section>
