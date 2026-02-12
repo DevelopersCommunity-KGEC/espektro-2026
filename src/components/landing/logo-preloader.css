@@ -1,0 +1,198 @@
+/* ===== Logo Preloader Styles ===== */
+
+.preloader-overlay {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    padding: 5vh 5vw;
+    box-sizing: border-box;
+}
+
+.preloader-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.preloader-overlay svg {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeScaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes drawStroke {
+    0% {
+        stroke-dashoffset: var(--path-length, 2000);
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fillIn {
+    0% {
+        fill-opacity: 0;
+    }
+
+    100% {
+        fill-opacity: 1;
+    }
+}
+
+@keyframes appear {
+
+    0%,
+    100% {
+        visibility: visible;
+    }
+}
+
+@keyframes containerFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes arriveIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Phases 1 & 3: Fade + Scale ── */
+.preloader-overlay .logo-animate [data-phase="1"],
+.preloader-overlay .logo-animate [data-phase="3"] {
+    opacity: 0;
+    transform-origin: center center;
+    transform-box: fill-box;
+    animation: fadeScaleIn var(--anim-dur, 0.8s) ease-out var(--anim-delay, 0s) forwards;
+}
+
+.preloader-overlay .logo-animate [data-phase="3"] {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+}
+
+/* ── Phases 2 & 4: Stroke draw + Color fill ── */
+.preloader-overlay .logo-animate [data-phase="2"],
+.preloader-overlay .logo-animate [data-phase="4"] {
+    visibility: hidden;
+    fill-opacity: 0;
+    stroke: #222;
+    stroke-width: 1.2;
+    stroke-dasharray: var(--path-length, 2000);
+    stroke-dashoffset: var(--path-length, 2000);
+    animation:
+        appear 0s var(--stroke-start, 0s) forwards,
+        drawStroke var(--stroke-dur, 2s) ease-in-out var(--stroke-start, 0s) forwards,
+        fillIn var(--fill-dur, 0.8s) ease-in-out var(--fill-delay, 2s) forwards;
+}
+
+/* ── Phase 5: "espektro" text arrival ── */
+.preloader-overlay .logo-animate [data-phase="5"] {
+    opacity: 0;
+    transform-origin: center center;
+    transform-box: fill-box;
+    animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 4.6s) forwards;
+}
+
+/* ── Phase 6: "26" text arrival ── */
+.preloader-overlay .logo-animate [data-phase="6"] {
+    opacity: 0;
+    transform-origin: center center;
+    transform-box: fill-box;
+    animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 5.6s) forwards;
+}
+
+/* Preserve original stroke styles */
+.preloader-overlay .logo-animate .st1,
+.preloader-overlay .logo-animate .st2,
+.preloader-overlay .logo-animate .st3,
+.preloader-overlay .logo-animate .st4,
+.preloader-overlay .logo-animate .st5,
+.preloader-overlay .logo-animate .st6,
+.preloader-overlay .logo-animate .st7,
+.preloader-overlay .logo-animate .st8 {
+    stroke-width: inherit;
+}
+
+/* ---------- Continuous zoom + dissolve ---------- */
+@keyframes continuousZoom {
+    0% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes dissolveOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes pageFadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.preloader-logo-container {
+    animation:
+        containerFadeIn 0.4s ease-out forwards,
+        continuousZoom 7s ease-in-out 0s forwards,
+        dissolveOut 1s ease-in-out 7.5s forwards;
+}
+
+.preloader-overlay {
+    animation: pageFadeOut 0.3s ease-out 8.5s forwards;
+    pointer-events: none;
+}
