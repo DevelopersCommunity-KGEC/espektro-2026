@@ -24,19 +24,19 @@ export function Sponsors() {
         // Track if section has been fully exited and scroll direction
         let hasFullyExitedDown = false;
         let lastScrollY = window.scrollY;
-        
+
         // Detect scroll direction on every scroll
         const handleScroll = () => {
             lastScrollY = window.scrollY;
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
-        
+
         // Observer for the entire section to detect full exit
         const sectionObserver = new IntersectionObserver(
             ([entry]) => {
                 const currentScrollY = window.scrollY;
                 const isScrollingDown = currentScrollY > lastScrollY;
-                
+
                 if (!entry.isIntersecting) {
                     // Only mark as exited if scrolling DOWN past the section
                     if (isScrollingDown) {
@@ -50,19 +50,19 @@ export function Sponsors() {
             },
             { threshold: 0 }
         );
-        
+
         if (ref.current) {
             sectionObserver.observe(ref.current);
         }
 
         const observers = cardRefs.current.map((cardRef, index) => {
             if (!cardRef) return null;
-            
+
             const observer = new IntersectionObserver(
                 ([entry]) => {
                     const currentScrollY = window.scrollY;
                     const isScrollingDown = currentScrollY > lastScrollY;
-                    
+
                     if (entry.isIntersecting && isScrollingDown) {
                         // Only animate if section was fully exited before AND scrolling down
                         if (hasFullyExitedDown || visibleCards.size === 0) {
@@ -89,7 +89,7 @@ export function Sponsors() {
                 },
                 { threshold: 0.2 }
             );
-            
+
             observer.observe(cardRef);
             return observer;
         });
@@ -133,12 +133,11 @@ export function Sponsors() {
                     {SPONSORS.map((s, index) => (
                         <div
                             key={s.id}
-                            ref={el => cardRefs.current[index] = el}
-                            className={`transition-all duration-700 ease-out ${
-                                visibleCards.has(index)
+                            ref={(el) => { cardRefs.current[index] = el; }}
+                            className={`transition-all duration-700 ease-out ${visibleCards.has(index)
                                     ? 'opacity-100 translate-y-0 blur-0'
                                     : 'opacity-0 translate-y-[10px] blur-[10px]'
-                            }`}
+                                }`}
                         >
                             <SponsorCard sponsor={s} />
                         </div>

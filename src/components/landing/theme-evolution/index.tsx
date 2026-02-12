@@ -52,54 +52,6 @@ const arr = [
     }
 ]
 
-const arr = [
-    {
-        "name" : "div1",
-        "color" : "blue",
-        "position" : "top-85 left-30"
-    },
-    {
-        "name" : "div2",
-        "color" : "yellow",
-        "position" : "top-95 left-60"
-    },
-    {
-        "name" : "div3",
-        "color" : "blue",
-        "position" : "top-110 left-90"
-    },
-    {
-        "name" : "div4",
-        "color" : "yellow",
-        "position" : "top-105 left-120"
-    },
-    {
-        "name" : "div5",
-        "color" : "blue",
-        "position" : "top-95 left-150"
-    },
-    {
-        "name" : "div6",
-        "color" : "yellow",
-        "position" : "top-85 left-180"
-    },
-    {
-        "name" : "div7",
-        "color" : "blue",
-        "position" : "top-100 left-210"
-    },
-    {
-        "name" : "div8",
-        "color" : "yellow",
-        "position" : "top-105 left-240"
-    },
-    {
-        "name" : "div9",
-        "color" : "blue",
-        "position" : "top-110 left-270"
-    }
-]
-
 export function ThemeEvolution() {
     const containerRef = useRef<HTMLDivElement>(null);
 
