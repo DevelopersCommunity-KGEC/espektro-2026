@@ -98,7 +98,7 @@ const AboutV2 = () => {
     }, { scope: wrapperRef }); // Scope ensures clean cleanup
 
     return (
-        <div className={styles.wrapper} ref={wrapperRef}>
+        <div className={`${styles.wrapper} z-10`} ref={wrapperRef}>
             <div className={styles.main_container}>
                 
                 {/* Techtix Section */}

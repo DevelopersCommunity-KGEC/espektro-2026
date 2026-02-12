@@ -74,7 +74,7 @@ export function ThemeEvolution() {
     }, [scrollYProgress]);
 
     return (
-        <div ref={containerRef} className="relative h-[400vh]">
+        <div ref={containerRef} className="relative z-10 h-[400vh] bg-white">
             <section className="sticky top-0 h-screen w-full overflow-hidden">
 
                 {/* <div className="absolute inset-0">

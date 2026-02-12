@@ -102,7 +102,7 @@ export function Sponsors() {
     }, []);
 
     return (
-        <section ref={ref} id="sponsors" className="relative py-24 lg:py-36 bg-muted/20 overflow-hidden">
+        <section ref={ref} id="sponsors" className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden">
             {/* Decorative side borders */}
             <img
                 src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"

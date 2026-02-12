@@ -75,7 +75,7 @@ export function FeaturedArtists() {
         <section
             ref={sectionRef}
             id="artists"
-            className="relative bg-white text-black overflow-hidden scroll-mt-0"
+            className="relative z-10 bg-white text-black overflow-hidden scroll-mt-0"
         >
             {/* Decorative side borders */}
             <img
