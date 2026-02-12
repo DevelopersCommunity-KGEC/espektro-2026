@@ -104,18 +104,22 @@ export function Sponsors() {
     return (
         <section ref={ref} id="sponsors" className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden">
             {/* Decorative side borders */}
-            <img
-                src="/border.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
-            />
-            <img
-                src="/border.svg"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
-            />
+            <Image
+                            src="/border.svg"
+                            alt=""
+                            width={60}
+                            height={100}
+                            aria-hidden="true"
+                            className="absolute top-0 left-0 bottom-0 h-full w-[30px] md:w-[60px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+                        />
+                        <Image
+                            src="/border.svg"
+                            alt=""
+                            width={60}
+                            height={100}
+                            aria-hidden="true"
+                            className="absolute top-0 right-0 bottom-0 h-full w-[30px] md:w-[60px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+                        />
             <div className="container mx-auto px-6 lg:px-24">
                 <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
                     <p className="text-[#B7410E] text-xs uppercase tracking-[0.3em] mb-5 font-semibold">Our Partners</p>
@@ -177,7 +181,7 @@ function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url:
                         src={sponsor.url}
                         alt={sponsor.sponsor}
                         fill
-                        className="object-contain grayscale brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
+                        className="object-contain brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                 </div>

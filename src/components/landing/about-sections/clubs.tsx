@@ -16,17 +16,21 @@ export default function ClubsSection() {
     return (
         <section id="clubs" className={`${styles.clubs_section} relative z-10`} style={{ position: 'relative' }}>
             {/* Decorative side borders */}
-            <img
+            <Image
                 src="/border.svg"
                 alt=""
+                width={60}
+                height={100}
                 aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 left-0 bottom-0 h-full w-[30px] md:w-[50px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
             />
-            <img
+            <Image
                 src="/border.svg"
                 alt=""
+                width={60}
+                height={100}
                 aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+                className="absolute top-0 right-0 bottom-0 h-full w-[30px] md:w-[50px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
             />
             <div className="container mx-auto px-6 lg:px-24">
                 <div className={styles.clubs_header}>
