@@ -9,7 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const ASSETS = {
-    BORDER_SIDE: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png",
+    BORDER_SIDE: "/border.svg",
     CENTER_DECOR: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841101/b5de07a807fe30f3bb20a1ca2f2bb61f_q1mxom.png",
     // BOTTOM_BIRDS: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841097/birds_fxvslb.png"
 };
@@ -23,7 +23,7 @@ const AboutV2 = () => {
     useGSAP(() => {
         // Desktop check: only run complex stacking animation on larger screens
         const isDesktop = window.innerWidth > 768;
-        
+
         if (!isDesktop) return; // Exit if mobile, let CSS handle natural flow
 
         const tl = gsap.timeline({
@@ -33,7 +33,7 @@ const AboutV2 = () => {
         // --- STACKING SETUP ---
         // Initially set sections off-screen using yPercent (Reliable)
         // Techtix stays at 0
-        gsap.set(exoticaRef.current, { yPercent: 100 }); 
+        gsap.set(exoticaRef.current, { yPercent: 100 });
         gsap.set(quizineRef.current, { yPercent: 200 }); // Further down to prevent early overlap
 
         // --- MAIN SCROLL SEQUENCE ---
@@ -41,10 +41,10 @@ const AboutV2 = () => {
             yPercent: 0,
             duration: 1
         })
-        .to(quizineRef.current, {
-            yPercent: 0,
-            duration: 1
-        });
+            .to(quizineRef.current, {
+                yPercent: 0,
+                duration: 1
+            });
 
         // Pin the wrapper while the sequence plays
         ScrollTrigger.create({
@@ -62,16 +62,16 @@ const AboutV2 = () => {
         const getChildren = (element: HTMLElement | null, isCollage: boolean) => {
             if (!element) return [];
             const contentWrapper = element.children[4]; // 4th index because of 4 decor images before it
-            if(!contentWrapper) return [];
-            return isCollage 
-                ? contentWrapper.children[1]?.children[0]?.children || [] 
+            if (!contentWrapper) return [];
+            return isCollage
+                ? contentWrapper.children[1]?.children[0]?.children || []
                 : contentWrapper.children[0]?.children || [];
         };
 
         // Internal Animation Timelines (triggered when the specific section arrives)
         // Note: Using containerAnimation property of ScrollTrigger might be cleaner, 
         // but simple triggers work if we account for the pinning.
-        
+
         // Techtix Internal
         const techtixTl = gsap.timeline({
             scrollTrigger: {
@@ -80,7 +80,7 @@ const AboutV2 = () => {
                 toggleActions: 'play none none reverse'
             }
         });
-        
+
         // Techtix Images
         gsap.utils.toArray(getChildren(techtixRef.current, true)).forEach((el, index) => {
             gsap.set(el as HTMLElement, { y: `${index * 30}px` }); // reduced stagger offset
@@ -94,13 +94,13 @@ const AboutV2 = () => {
         // We link this to the main timeline progress or use the section as trigger
         // Since Exotica is moving via transform, standard ScrollTrigger might miss it.
         // It's safer to attach these internal animations to the main `tl` directly or rely on the visual entry.
-        
+
     }, { scope: wrapperRef }); // Scope ensures clean cleanup
 
     return (
         <div className={`${styles.wrapper} z-10`} ref={wrapperRef}>
             <div className={styles.main_container}>
-                
+
                 {/* Techtix Section */}
                 <div className={`${styles.section_container} ${styles.techtix_section}`} ref={techtixRef}>
                     <img src={ASSETS.BORDER_SIDE} className={styles.decor_border_left} alt="" />
@@ -113,7 +113,7 @@ const AboutV2 = () => {
                             <p className={styles.section_label}>Technical Excellence</p>
                             <h2 className={styles.section_title}>Techtix</h2>
                             <p className={styles.section_description}>
-                                The technical heartbeat of Espektro where innovation meets competition. 
+                                The technical heartbeat of Espektro where innovation meets competition.
                                 Experience cutting-edge technology through coding marathons and tech showcases.
                             </p>
                             <p className={styles.section_description}>
@@ -140,17 +140,7 @@ const AboutV2 = () => {
                     <img src={ASSETS.CENTER_DECOR} className={styles.decor_center} alt="" />
                     {/* <img src={ASSETS.BOTTOM_BIRDS} className={styles.decor_bottom} alt="" /> */}
 
-                    <div className={styles.content_wrapper}>
-                        <div className={styles.description_side}>
-                            <p className={styles.section_label}>Cultural Celebration</p>
-                            <h2 className={styles.section_title}>Exotica</h2>
-                            <p className={styles.section_description}>
-                                A celebration of culture and artistry where tradition meets contemporary expression. 
-                            </p>
-                            <p className={styles.section_description}>
-                                From classical performances to modern interpretations, Exotica is a vibrant tapestry.
-                            </p>
-                        </div>
+                    <div className={`${styles.content_wrapper} flex flex-row-reverse`}>
                         <div className={styles.collage_side}>
                             <div className={`${styles.grid_collage} ${styles.grid_exotica}`}>
                                 <div className={`${styles.grid_item} ${styles.exotica_item_1}`}><img src="/images/artist-4.jpg" alt="" /></div>
@@ -160,6 +150,16 @@ const AboutV2 = () => {
                                 <div className={`${styles.grid_item} ${styles.exotica_item_5}`}><img src="/images/artist-1.jpg" alt="" /></div>
                                 <div className={`${styles.grid_item} ${styles.exotica_item_6}`}><img src="/images/kolkata-monochrome.jpeg" alt="" /></div>
                             </div>
+                        </div>
+                        <div className={styles.description_side}>
+                            <p className={`${styles.section_label} text-end w-full`}>Cultural Celebration</p>
+                            <h2 className={`${styles.section_title} text-end w-full`}>Exotica</h2>
+                            <p className={`${styles.section_description} text-end w-full`}>
+                                A celebration of culture and artistry where tradition meets contemporary expression.
+                            </p>
+                            <p className={`${styles.section_description} text-end w-full`}>
+                                From classical performances to modern interpretations, Exotica is a vibrant tapestry.
+                            </p>
                         </div>
                     </div>
                 </div>
