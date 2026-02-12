@@ -17,18 +17,18 @@ export default function ClubsSection() {
         <section id="clubs" className={`${styles.clubs_section} relative z-10`} style={{ position: 'relative' }}>
             {/* Decorative side borders */}
             <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                src="/border.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 left-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
             />
             <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                src="/border.svg"
                 alt=""
                 aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+                className="absolute top-0 right-0 bottom-0 h-full w-[60px] md:w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
             />
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-24">
                 <div className={styles.clubs_header}>
                     <p>Our Community</p>
                     <h2 className="font-serif">KGEC Clubs &amp; Societies</h2>
