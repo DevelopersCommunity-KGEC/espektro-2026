@@ -249,47 +249,51 @@ export const schedule: DaySchedule[] = [
 
 export const artists = [
   {
-    name: "Arijit Singh",
+    name: "Sonu Nigam",
     genre: "Playback Singer",
     description:
       "India's most celebrated playback singer with a voice that transcends generations. Grammy-nominated artist with multiple Filmfare awards and countless chart-topping hits.",
     date: "March 16, 2026",
     time: "8:00 PM",
     venue: "Main Stage",
-    image: "/images/artist-1.jpg",
+    image: "/images/artist-1.png",
+    bg: "/images/bg1.png",
     social: { instagram: "@arijitsingh", twitter: "@arijitsingh" },
   },
   {
-    name: "Raftaar",
+    name: "Darshan Raval",
     genre: "Hip-Hop Artist & Rapper",
     description:
       "Pioneer of Indian hip-hop culture with groundbreaking tracks. Known for high-energy performances and revolutionary collaborations that shaped the urban music scene.",
     date: "March 15, 2026",
     time: "9:30 PM",
     venue: "Arena Stage",
-    image: "/images/artist-2.jpg",
+    image: "/images/artist-2.png",
+    bg: "/images/bg2.png",
     social: { instagram: "@raftaarmusic", twitter: "@raftaarmusic" },
   },
   {
-    name: "Nucleya",
+    name: "Shreya Ghoshal",
     genre: "Electronic / Bass Music",
     description:
       "India\u0027s bass music pioneer blending traditional Indian sounds with cutting-edge electronic beats. Multiple album awards and international acclaim for innovative soundscapes.",
     date: "March 14, 2026",
     time: "10:00 PM",
     venue: "EDM Arena",
-    image: "/images/artist-3.jpg",
+    image: "/images/artist-3.png",
+    bg: "/images/bg3.png",
     social: { instagram: "@nucleya", twitter: "@nucleya" },
   },
   {
-    name: "The Local Train",
+    name: "Sunidhi Chauhan",
     genre: "Indie Rock Band",
     description:
       "Hindi rock band known for their poetic lyrics and powerful live performances. Youth anthem creators with a massive following across India's indie music scene.",
     date: "March 17, 2026",
     time: "7:00 PM",
     venue: "Indie Stage",
-    image: "/images/artist-4.jpg",
+    image: "/images/artist-4.png",
+    bg: "/images/bg4.png",
     social: { instagram: "@thelocaltrain", twitter: "@thelocaltrain" },
   },
 ];

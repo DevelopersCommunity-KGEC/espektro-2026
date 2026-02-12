@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "../artist-gallery/artist-v3.module.css";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,17 +97,52 @@ export function FeaturedArtists() {
                     </div>
 
                     <div className={styles.imageContentContainer}>
-                        <ul ref={imageListRef}>
+                        <ul ref={imageListRef} className="flex flex-col gap-4 h-630">
                             {artists.map((artist) => (
-                                <li key={artist.name} className="h-[40rem] relative">
-                                    <Image src={artist.image} alt={artist.name} fill className="object-cover" sizes="100vw" />
+                                <li key={artist.name} className="h-160">
+                                    <CardContainer className="inter-var">
+                                        <CardBody className="relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/10 w-auto sm:w-120 h-auto">
+                                            <CardItem
+                                                translateZ="50"
+                                                className="absolute h-140"
+                                            >
+                                                <img
+                                                    src={artist.bg}
+                                                    alt="background"
+                                                />
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="80"
+                                                className="absolute h-120"
+                                            >
+                                                <CardItem id="myfont" className="leading-none absolute left-5 text-start top-3">
+                                                    <h2 className={`font-extrabold text-yellow-400 tracking-tight text-6xl`}>
+                                                        {artist.name.split(" ")[0]}
+                                                    </h2>
+                                                    <h2 className="text-6xl text-yellow-400 font-semibold">
+                                                        {artist.name.split(" ")[1]}
+                                                    </h2>
+                                                </CardItem>
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="100"
+                                                className="relative z-10 w-full flex-col mt-20"
+                                            >
+                                                <img
+                                                    src={artist.image}
+                                                    alt={artist.name}
+                                                    className="relative"
+                                                />
+                                            </CardItem>
+                                        </CardBody>
+                                    </CardContainer>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     <div className={styles.bottomHeadingContainer}>
-                        <h1 className={styles.heading}><span>Renowned </span>Artists!</h1>
+                        <h1 className={styles.heading}><span>Artist </span>Spotlight!</h1>
                     </div>
                 </div>
             </div>

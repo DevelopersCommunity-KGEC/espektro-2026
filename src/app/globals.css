@@ -103,6 +103,18 @@
   --ring: hsl(42 96% 48%);
 }
 
+@font-face {
+  font-family: "MyHeadingFont";
+  src: url("/fonts/Akira_Expanded_Demo.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+#myfont {
+  font-family: "MyHeadingFont", sans-serif;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
