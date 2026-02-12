@@ -69,7 +69,7 @@
 
 .imageContentContainer li {
     overflow: hidden;
-    margin-bottom: 1rem;
+    margin-bottom: -3rem;
     height: 40rem; /* Fixed height for slide items to match container max height */
 }
 
