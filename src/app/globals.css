@@ -43,34 +43,46 @@
 
 :root {
   /* Espektro Bengali Culture Theme */
-  --background: hsl(34 22% 96%); /* #FAF6F1 */
-  --foreground: hsl(0 0% 10%); /* #1A1A1A */
-  --card: hsl(0 0% 100%); /* #FFFFFF */
+  --background: hsl(34 22% 96%);
+  /* #FAF6F1 */
+  --foreground: hsl(0 0% 10%);
+  /* #1A1A1A */
+  --card: hsl(0 0% 100%);
+  /* #FFFFFF */
   --card-foreground: hsl(0 0% 10%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(0 0% 10%);
 
   /* Primary: Terracotta Red - Temples & Culture */
-  --primary: hsl(14 86% 39%); /* #B7410E */
+  --primary: hsl(14 86% 39%);
+  /* #B7410E */
   --primary-foreground: hsl(0 0% 100%);
 
   /* Secondary: Marigold Yellow - Festivity */
-  --secondary: hsl(42 96% 48%); /* #F4A900 */
+  --secondary: hsl(42 96% 48%);
+  /* #F4A900 */
   --secondary-foreground: hsl(0 0% 10%);
 
   /* Muted: Clay Beige - Canvas texture */
-  --muted: hsl(26 21% 87%); /* #E8DDD4 */
-  --muted-foreground: hsl(26 13% 34%); /* #5C5147 */
+  --muted: hsl(26 21% 87%);
+  /* #E8DDD4 */
+  --muted-foreground: hsl(26 13% 34%);
+  /* #5C5147 */
 
   /* Accent: River Blue - Ganges */
-  --accent: hsl(40, 100%, 25%); /* #A52A2A */
+  --accent: hsl(40, 100%, 25%);
+  /* #A52A2A */
   --accent-foreground: hsl(0 0% 100%);
 
-  --destructive: hsl(0 72% 51%); /* #DC2626 */
+  --destructive: hsl(0 72% 51%);
+  /* #DC2626 */
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(29 23% 78%); /* #D4C5B9 */
-  --input: hsl(26 21% 87%); /* #E8DDD4 */
-  --ring: hsl(14 86% 39%); /* #B7410E */
+  --border: hsl(29 23% 78%);
+  /* #D4C5B9 */
+  --input: hsl(26 21% 87%);
+  /* #E8DDD4 */
+  --ring: hsl(14 86% 39%);
+  /* #B7410E */
 
   --radius: 0.625rem;
 
@@ -107,6 +119,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -117,6 +134,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -126,6 +144,7 @@
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }

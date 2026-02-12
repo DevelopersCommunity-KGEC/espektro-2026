@@ -3,7 +3,7 @@ import React from "react";
 import { getClubTeam } from "@/actions/admin-actions";
 import { getCurrentUser, hasClubPermission } from "@/lib/rbac";
 import { redirect, notFound } from "next/navigation";
-import { ClubUserList } from "@/components/clubs/club-user-list";
+import { ClubUserList } from "@/app/clubs/club-user-list";
 
 export default async function ClubUsersPage({ params }: { params: Promise<{ clubId: string }> }) {
     const user = await getCurrentUser();

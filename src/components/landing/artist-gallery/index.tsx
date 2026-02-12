@@ -38,7 +38,7 @@ export function ArtistGallery() {
   }, []);
 
   return (
-    <div className="mt-20">
+    <div id="gallery" className="mt-20">
       <div className="text-center mb-12">
         <h3 className="font-serif text-2xl lg:text-3xl font-bold text-black mb-2">
           Glimpses of <span className="text-[#F4A900]">Past Artists</span>
