@@ -12,7 +12,7 @@ import { Footer } from "@/components/landing/footer";
 import { LogoPreloader } from "@/components/landing/logo-preloader";
 import Header from "@/components/layout/header/Index";
 import { getTimelineData } from "@/actions/landing-data";
-
+import Timeline from "@/components/landing/timeline/timeline";
 export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
@@ -25,9 +25,11 @@ export default async function LandingPage() {
             <Header />
             <Hero />
             <About />
-            <ThemeEvolution />
+            <Timeline />
+            {/* <ThemeEvolution /> */}
             {/* <CulturalIllustrations /> */}
             <EventsTimeline scheduleData={timelineData} />
+            
             <FeaturedArtists />
             {/* <Gallery /> */}
             <Sponsors />
