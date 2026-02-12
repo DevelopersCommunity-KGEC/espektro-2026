@@ -140,17 +140,7 @@ const AboutV2 = () => {
                     <img src={ASSETS.CENTER_DECOR} className={styles.decor_center} alt="" />
                     {/* <img src={ASSETS.BOTTOM_BIRDS} className={styles.decor_bottom} alt="" /> */}
 
-                    <div className={styles.content_wrapper}>
-                        <div className={styles.description_side}>
-                            <p className={styles.section_label}>Cultural Celebration</p>
-                            <h2 className={styles.section_title}>Exotica</h2>
-                            <p className={styles.section_description}>
-                                A celebration of culture and artistry where tradition meets contemporary expression. 
-                            </p>
-                            <p className={styles.section_description}>
-                                From classical performances to modern interpretations, Exotica is a vibrant tapestry.
-                            </p>
-                        </div>
+                    <div className={`${styles.content_wrapper} flex flex-row-reverse`}>
                         <div className={styles.collage_side}>
                             <div className={`${styles.grid_collage} ${styles.grid_exotica}`}>
                                 <div className={`${styles.grid_item} ${styles.exotica_item_1}`}><img src="/images/artist-4.jpg" alt="" /></div>
@@ -160,6 +150,16 @@ const AboutV2 = () => {
                                 <div className={`${styles.grid_item} ${styles.exotica_item_5}`}><img src="/images/artist-1.jpg" alt="" /></div>
                                 <div className={`${styles.grid_item} ${styles.exotica_item_6}`}><img src="/images/kolkata-monochrome.jpeg" alt="" /></div>
                             </div>
+                        </div>
+                        <div className={styles.description_side}>
+                            <p className={`${styles.section_label} text-end w-full`}>Cultural Celebration</p>
+                            <h2 className={`${styles.section_title} text-end w-full`}>Exotica</h2>
+                            <p className={`${styles.section_description} text-end w-full`}>
+                                A celebration of culture and artistry where tradition meets contemporary expression. 
+                            </p>
+                            <p className={`${styles.section_description} text-end w-full`}>
+                                From classical performances to modern interpretations, Exotica is a vibrant tapestry.
+                            </p>
                         </div>
                     </div>
                 </div>
