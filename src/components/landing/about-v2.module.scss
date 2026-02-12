@@ -67,10 +67,8 @@
     bottom: 0;
     height: 100%;
     width: auto;
-    max-width: 80px;
-    /* Removed z-index: 2 so they don't cover text. 
-       They will naturally sit behind content_wrapper due to DOM order 
-       and content_wrapper having a higher z-index. */
+    /* Removed max-width constraint that was causing height shrinking */
+    min-height: 100%;
     pointer-events: none;
     object-fit: cover;
 }
@@ -352,7 +350,7 @@
     .content_wrapper {
         grid-template-columns: 1fr;
         gap: 3rem;
-        padding: 4rem 1.5rem;
+        padding: 4rem 3.5rem;
     }
 
     .decor_border_left,
