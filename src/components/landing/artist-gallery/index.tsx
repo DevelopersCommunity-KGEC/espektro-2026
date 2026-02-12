@@ -226,12 +226,12 @@ export function ArtistGallery() {
   return (
     <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl" ref={containerRef}>
       <div className="text-center mb-15 ">
-        <h3 className="font-serif text-2xl lg:text-3xl font-bold text-black mb-2">
+        <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
           Glimpses of <span className="text-[#F4A900]">Past Artists</span>
         </h3>
-        <p className="text-black/60 text-sm max-w-lg mx-auto">
+        {/* <p className="text-black/60 text-sm max-w-lg mx-auto">
           A legacy of unforgettable performances that have graced our stages over the years.
-        </p>
+        </p> */}
       </div>
 
       <div className={styles.galleryMask}>

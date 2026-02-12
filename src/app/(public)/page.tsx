@@ -48,6 +48,7 @@ export default async function LandingPage() {
             
             <FeaturedArtists />
             {/* <Gallery /> */}
+            {/* <ArtistGallery /> */}
             <Sponsors />
             <ClubsSection />
             <Contact />

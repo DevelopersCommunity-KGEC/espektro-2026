@@ -17,7 +17,7 @@ export default function ClubsSection() {
         <section id="clubs" className={`${styles.clubs_section} relative z-10`} style={{ position: 'relative' }}>
             {/* Decorative side borders */}
             <div
-                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
                 style={{
                     backgroundImage: 'url(/border.svg)',
                     backgroundRepeat: 'repeat-y',
@@ -25,7 +25,7 @@ export default function ClubsSection() {
                 }}
             />
             <div
-                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
                 style={{
                     backgroundImage: 'url(/border.svg)',
                     backgroundRepeat: 'repeat-y',

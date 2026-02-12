@@ -105,7 +105,7 @@ export function Sponsors() {
         <section ref={ref} id="sponsors" className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden">
             {/* Decorative side borders */}
             <div
-                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
                 style={{
                     backgroundImage: 'url(/border.svg)',
                     backgroundRepeat: 'repeat-y',
@@ -113,7 +113,7 @@ export function Sponsors() {
                 }}
             />
             <div
-                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] opacity-60 hidden lg:block"
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
                 style={{
                     backgroundImage: 'url(/border.svg)',
                     backgroundRepeat: 'repeat-y',
@@ -182,7 +182,7 @@ function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url:
                         src={sponsor.url}
                         alt={sponsor.sponsor}
                         fill
-                        className="object-contain grayscale brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
+                        className="object-contain brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                 </div>
