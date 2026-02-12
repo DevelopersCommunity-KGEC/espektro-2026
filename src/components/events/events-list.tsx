@@ -126,7 +126,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
 
               <motion.div
                 layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-1"
+                className="flex overflow-x-auto gap-6 pb-6 p-1 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
               >
                 <AnimatePresence mode="popLayout">
                   {group.events.map((event) => (
@@ -137,6 +137,7 @@ export function EventsList({ initialEvents }: EventsListProps) {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.3 }}
+                      className="flex-shrink-0 w-[320px] sm:w-[380px]"
                     >
                       <EventCard event={event} />
                     </motion.div>
