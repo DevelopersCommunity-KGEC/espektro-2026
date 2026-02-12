@@ -12,9 +12,10 @@ interface IndexProps {
   };
   isActive: boolean;
   setSelectedIndicator: (href: string) => void;
+  closeMenu: () => void;
 }
 
-export default function Index({ data, isActive, setSelectedIndicator }: IndexProps) {
+export default function Index({ data, isActive, setSelectedIndicator, closeMenu }: IndexProps) {
   const { title, href, index } = data;
 
   return (
@@ -22,13 +23,14 @@ export default function Index({ data, isActive, setSelectedIndicator }: IndexPro
       className={styles.link}
       onMouseEnter={() => setSelectedIndicator(href)}
       custom={index}
-      variants={slide} // Ensure the 'slide' variant is defined in your animation
+      variants={slide}
       initial="initial"
       animate="enter"
       exit="exit"
+      onClick={closeMenu} // Close menu on click
     >
       <motion.div
-        variants={scale} // Ensure the 'scale' variant is defined in your animation
+        variants={scale}
         animate={isActive ? "open" : "closed"}
         className={styles.indicator}
       />
