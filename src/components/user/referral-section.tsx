@@ -33,8 +33,8 @@ export function ReferralSection({ code, stats }: ReferralSectionProps) {
             <CardHeader>
                 <div className="flex justify-between items-center">
                     <div>
-                        <CardTitle className="text-xl text-primary">Invite Friends & Earn Rewards</CardTitle>
-                        <CardDescription>Share your unique link. You have referred <strong>{stats?.count || 0}</strong> people so far.</CardDescription>
+                        <CardTitle className="text-xl text-blue-700">Invite Friends & Earn Rewards</CardTitle>
+                        <CardDescription>  Share your unique link. You've referred <strong>{stats?.count || 0}</strong> ticket{(stats?.count || 0) === 1 ? "" : "s"} so far.</CardDescription>
                     </div>
                     <div className="bg-card p-3 rounded-full shadow-sm hidden md:block">
                         <Share2 className="h-6 w-6 text-primary" />

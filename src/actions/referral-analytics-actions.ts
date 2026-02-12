@@ -56,16 +56,10 @@ export async function getAdminReferralLeaderboard({
     });
   }
 
-  // Calculate Revenue (Price - Discount)
-  // Assuming Event has 'price' and Ticket has 'discountAmount'
+  // Revenue: use the price stored on the ticket at time of purchase
   pipeline.push({
     $addFields: {
-      paidAmount: {
-        $max: [
-          0,
-          { $subtract: ["$event.price", { $ifNull: ["$discountAmount", 0] }] },
-        ],
-      },
+      paidAmount: { $ifNull: ["$price", 0] },
     },
   });
 
@@ -81,7 +75,7 @@ export async function getAdminReferralLeaderboard({
   // Lookup User Details
   pipeline.push({
     $lookup: {
-      from: "users",
+      from: "user",
       localField: "_id",
       foreignField: "_id",
       as: "referrer",
