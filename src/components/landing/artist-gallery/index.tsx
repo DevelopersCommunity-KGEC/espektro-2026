@@ -216,16 +216,16 @@ export function ArtistGallery() {
 
   const closePopup = () => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = 'auto'
   };
 
   // Duplicate images based on screen size
-  const duplicateTimes = isMobile ? 8 : 6;
+  const duplicateTimes = isMobile ? 12 : 10;
   const allArtists = Array(duplicateTimes).fill(pastArtists).flat();
 
   return (
-    <div className="mt-20" ref={containerRef}>
-      <div className="text-center mb-15">
+    <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl" ref={containerRef}>
+      <div className="text-center mb-15 ">
         <h3 className="font-serif text-2xl lg:text-3xl font-bold text-black mb-2">
           Glimpses of <span className="text-[#F4A900]">Past Artists</span>
         </h3>

@@ -1,16 +1,16 @@
 .gridWrapper {
-  width: 200vw;
-  height: 120vh;
+  width: 140%;
+  height: 180vh;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-auto-rows: 12rem;
+  grid-auto-rows: 18rem;
   grid-auto-flow: dense;
-  gap: 0.5rem;
+  gap: 0.3rem; /* Further reduced from 0.8rem */
   align-content: center;
   transform: rotate(-15deg);
   transform-origin: center center;
   position: relative;
-  left: -50vw;
+  left: -20%;
   padding: 10vh 0;
 }
 
@@ -19,6 +19,10 @@
   cursor: pointer;
   transition: filter 0.3s ease;
   will-change: transform, filter;
+}
+
+.rowItem:hover .rowItemImg {
+  transform: scale(1.15); /* Slightly more zoom on hover */
 }
 
 .rowItem:hover {
@@ -45,7 +49,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 4px; /* Reduced from 10px to pack images tighter */
 }
 
 .rowItemImg {
@@ -56,6 +60,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  transform: scale(1.1); /* Scale up to fill more space and reduce visible container edges */
+  transition: transform 0.5s ease;
 }
 
 /* Popup styles */
@@ -134,12 +140,12 @@
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .gridWrapper {
-    width: 280vw;
-    left: -90vw;
+    width: 200%;
+    left: -50%;
     height: 140vh;
-    gap: 0.4rem;
+    gap: 0.2rem; /* Reduced from 0.4rem */
     grid-template-columns: repeat(8, 1fr);
-    grid-auto-rows: 10rem;
+    grid-auto-rows: 15rem;
   }
 }
 
@@ -151,10 +157,10 @@
     min-height: 150vh;
     left: 0;
     transform: rotate(0deg);
-    gap: 0.5rem;
+    gap: 0.2rem; /* Reduced from 0.5rem */
     padding: 2rem 1rem;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 14rem; /* HEIGHT CONTROL: Increase this value to make items taller */
+    grid-auto-rows: 20rem; /* HEIGHT CONTROL: Increase this value to make items taller */
     grid-auto-flow: row; /* Ensure proper row flow */
   }
 
@@ -180,10 +186,10 @@
 @media (max-width: 520px) {
   .gridWrapper {
     min-height: 200vh;
-    gap: 0.3rem;
+    gap: 0.2rem; /* Reduced from 0.3rem */
     padding: 2rem 0.5rem;
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 12rem; /* Decreased height for 2-column layout */
+    grid-auto-rows: 16rem; /* Decreased height for 2-column layout */
   }
 
   .closeBtn {
@@ -200,12 +206,9 @@
 }
 
 .galleryMask {
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  margin: 0 auto;
   overflow: hidden;
   height: 100vh;
   margin-top: -3rem;

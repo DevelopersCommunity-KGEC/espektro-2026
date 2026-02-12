@@ -78,7 +78,7 @@ export function FeaturedArtists() {
             className="relative z-10 bg-white text-black overflow-hidden scroll-mt-0"
         >
             {/* Decorative side borders */}
-            <img
+            {/* <img
                 src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
                 alt=""
                 aria-hidden="true"
@@ -89,7 +89,7 @@ export function FeaturedArtists() {
                 alt=""
                 aria-hidden="true"
                 className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
-            />
+            /> */}
             <div className="container mx-auto px-6 lg:px-8 relative pt-24">
                 <div
                     className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
