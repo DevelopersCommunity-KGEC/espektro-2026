@@ -23,6 +23,7 @@ export interface ITicket extends Document {
   couponCode?: string;
   referrerUserId?: mongoose.Types.ObjectId;
   discountAmount?: number;
+  price: number;
 }
 
 const TicketSchema: Schema = new Schema({
@@ -58,6 +59,7 @@ const TicketSchema: Schema = new Schema({
   couponCode: { type: String }, // Used for discount coupons
   referrerUserId: { type: Schema.Types.ObjectId, ref: "User" }, // Used for user attribution
   discountAmount: { type: Number },
+  price: { type: Number, required: true, default: 0 },
 });
 
 export default mongoose.models.Ticket ||
