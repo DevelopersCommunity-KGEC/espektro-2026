@@ -32,8 +32,21 @@ export function Gallery() {
         <section
             ref={sectionRef}
             id="aftermovie"
-            className="py-24 lg:py-36 bg-muted/20 overflow-hidden"
+            className="relative py-24 lg:py-36 bg-muted/20 overflow-hidden"
         >
+            {/* Decorative side borders */}
+            <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            />
+            <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            />
             <div className="container mx-auto px-6 lg:px-8 text-center">
                 {/* Header */}
                 <div

@@ -213,7 +213,7 @@ export default function ScanPage() {
                         </Button>
                     )}
                     {hasTorch && (
-                        <Button onClick={toggleTorch} size="icon" variant={torchOn ? "default" : "secondary"} className={`w-16 h-auto ${torchOn ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`} title="Toggle Flashlight">
+                        <Button onClick={toggleTorch} size="icon" variant={torchOn ? "default" : "secondary"} className={`w-16 h-auto ${torchOn ? 'bg-secondary hover:bg-secondary/80' : ''}`} title="Toggle Flashlight">
                             {torchOn ? <ZapOff className="w-6 h-6" /> : <Zap className="w-6 h-6" />}
                         </Button>
                     )}

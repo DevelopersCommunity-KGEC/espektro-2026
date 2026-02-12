@@ -93,7 +93,7 @@ export function EventsGridSkeleton() {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-white rounded-xl shadow-lg overflow-hidden border">
+                <div key={i} className="bg-card rounded-xl shadow-lg overflow-hidden border">
                     <Skeleton className="w-full h-48" />
                     <div className="p-6">
                         <Skeleton className="h-8 w-3/4 mb-2" />
@@ -135,7 +135,7 @@ export function MyTicketsSkeleton() {
 
 export function DashboardTableSkeleton() {
     return (
-        <div className="bg-white rounded shadow overflow-hidden">
+        <div className="bg-card rounded shadow overflow-hidden">
             <div className="p-4 border-b">
                 <div className="flex justify-between items-center">
                     <Skeleton className="h-8 w-48" />

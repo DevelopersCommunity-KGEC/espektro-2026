@@ -125,7 +125,7 @@ export function EventPerformance({ events = [] }: EventPerformanceProps) {
                                                     </span>
                                                     <div className="h-1.5 w-16 bg-secondary rounded-full overflow-hidden">
                                                         <div
-                                                            className="h-full bg-blue-600"
+                                                            className="h-full bg-primary"
                                                             style={{ width: `${Math.min(checkInRate, 100)}%` }}
                                                         />
                                                     </div>

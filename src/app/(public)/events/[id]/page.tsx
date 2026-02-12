@@ -38,7 +38,7 @@ export default async function EventDetailsPage({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-card rounded-2xl shadow-xl overflow-hidden">
         <EventImageViewer title={event?.title} image={event?.image} />
         <div className="p-8">
           <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
@@ -46,7 +46,7 @@ export default async function EventDetailsPage({
               <h1 className="text-3xl md:text-4xl font-bold mb-2">
                 {event?.title}
               </h1>
-              <p className="text-gray-500 flex items-center gap-2">
+              <p className="text-muted-foreground flex items-center gap-2">
                 <span>
                   {new Date(event?.date).toLocaleString("en-IN", {
                     dateStyle: "medium",
@@ -59,10 +59,10 @@ export default async function EventDetailsPage({
             </div>
             <div className="flex flex-col items-end gap-2 w-full md:w-auto">
               <div className="text-left md:text-right">
-                <p className="text-3xl font-bold text-blue-600">
+                <p className="text-3xl font-bold text-primary">
                   {event?.price === 0 ? "Free" : `₹${event?.price}`}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   {event?.capacity === -1
                     ? "Unlimited tickets"
                     : `${event?.capacity - event?.ticketsSold} tickets left`}
@@ -74,7 +74,7 @@ export default async function EventDetailsPage({
 
           <div className="mb-8">
             <h3 className="text-xl font-semibold mb-2">About this event</h3>
-            <div className="prose max-w-none text-gray-700 dark:text-gray-300 dark:prose-invert">
+            <div className="prose max-w-none text-muted-foreground dark:prose-invert">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {event?.description}
               </ReactMarkdown>

@@ -150,7 +150,7 @@ export function UserManagementSheet({ user, open, onOpenChange }: UserManagement
 
                 <div className="px-6 pb-10 space-y-6">
                     {/* User Info & Global Role */}
-                    <div className="flex items-center gap-4 p-4 border rounded-lg bg-slate-50">
+                    <div className="flex items-center gap-4 p-4 border rounded-lg bg-muted">
                         <Avatar className="h-12 w-12">
                             <AvatarImage src={user.image} />
                             <AvatarFallback>{user.name?.[0]}</AvatarFallback>
@@ -181,7 +181,7 @@ export function UserManagementSheet({ user, open, onOpenChange }: UserManagement
                         <div className="grid gap-3">
                             {user.clubRoles && user.clubRoles.length > 0 ? (
                                 user.clubRoles.map((role: any) => (
-                                    <div key={role._id} className="flex items-center justify-between p-3 border rounded-lg bg-white shadow-sm">
+                                    <div key={role._id} className="flex items-center justify-between p-3 border rounded-lg bg-card shadow-sm">
                                         <div>
                                             <p className="font-medium text-sm">{getClubName(role.clubId)}</p>
                                             <div className="flex items-center gap-2 mt-1">
