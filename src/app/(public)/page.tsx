@@ -45,7 +45,7 @@ export default async function LandingPage() {
             {/* <CulturalIllustrations /> */}
             <EventsTimeline scheduleData={timelineData} />
             <FeaturedArtists />
-            <Gallery />
+            {/* <Gallery /> */}
             <Sponsors />
             <ClubsSection />
             <Contact />

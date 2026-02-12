@@ -17,7 +17,7 @@ interface EventImageViewerProps {
 
 export function EventImageViewer({ image, title }: EventImageViewerProps) {
   return (
-    <div className="relative w-full overflow-hidden bg-muted rounded-xl flex justify-center items-center">
+    <div className="relative w-full overflow-hidden bg-gray-100 dark:bg-zinc-800 rounded-xl flex justify-center items-center">
       {/* Mobile: 4:5 Aspect Ratio | Desktop: Fixed Height Cover */}
       <div className="relative w-full max-w-sm md:max-w-none md:w-full aspect-[4/5] md:aspect-auto md:h-96 group">
         <img

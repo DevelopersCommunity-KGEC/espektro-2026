@@ -22,6 +22,7 @@ const footerLinks = {
 
 export function Footer() {
     return (
+        <div className="sticky bottom-0 z-0">
         <footer className="bg-foreground text-background relative overflow-hidden">
             <div className="absolute inset-0 opacity-5">
                 <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -116,5 +117,6 @@ export function Footer() {
                 </div>
             </div>
         </footer>
+        </div>
     );
 }

@@ -14,7 +14,7 @@ export default function ClubsSection() {
     const marqueeRow2 = [...row2, ...row2, ...row2, ...row2];
 
     return (
-        <section id="clubs" className={styles.clubs_section} style={{ position: 'relative' }}>
+        <section id="clubs" className={`${styles.clubs_section} relative z-10`} style={{ position: 'relative' }}>
             {/* Decorative side borders */}
             <img
                 src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
