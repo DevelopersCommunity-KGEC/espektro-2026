@@ -85,12 +85,18 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
         end: window.innerHeight,
         onLeave: () => {
           gsap.to(header.current, {
-            scale: 0,
+            opacity: 0,
+            pointerEvents: "none",
+            duration: 0.25,
+            ease: "power1.out",
           });
         },
         onEnterBack: () => {
           gsap.to(header.current, {
-            scale: 1,
+            opacity: 1,
+            pointerEvents: "all",
+            duration: 0.25,
+            ease: "power1.out",
           });
         },
       },
