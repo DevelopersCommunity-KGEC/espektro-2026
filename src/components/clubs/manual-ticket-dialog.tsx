@@ -99,7 +99,7 @@ export function ManualTicketDialog({ clubId, events }: ManualTicketDialogProps) 
                     Manual Ticket
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-106.25 bg-gray-50">
+            <DialogContent className="sm:max-w-106.25 bg-background">
                 <DialogHeader>
                     <DialogTitle>Issue Manual Ticket</DialogTitle>
                     <DialogDescription>

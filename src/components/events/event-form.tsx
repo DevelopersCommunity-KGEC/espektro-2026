@@ -313,13 +313,13 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                             </FormControl>
                                         </TabsContent>
                                         <TabsContent value="preview" className="mt-0">
-                                            <div className="prose prose-sm dark:prose-invert max-w-none border rounded-md p-4 min-h-50 bg-white dark:bg-zinc-950 overflow-y-auto">
+                                            <div className="prose prose-sm dark:prose-invert max-w-none border rounded-md p-4 min-h-50 bg-card overflow-y-auto">
                                                 {field.value ? (
                                                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                                         {field.value}
                                                     </ReactMarkdown>
                                                 ) : (
-                                                    <p className="text-gray-400 italic">No description content to preview</p>
+                                                    <p className="text-muted-foreground italic">No description content to preview</p>
                                                 )}
                                             </div>
                                         </TabsContent>

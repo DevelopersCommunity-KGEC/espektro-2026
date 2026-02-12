@@ -29,15 +29,15 @@ export function ReferralSection({ code, stats }: ReferralSectionProps) {
     };
 
     return (
-        <Card className="mb-8 border-dashed border-2 bg-blue-50/50">
+        <Card className="mb-8 border-dashed border-2 bg-primary/5">
             <CardHeader>
                 <div className="flex justify-between items-center">
                     <div>
-                        <CardTitle className="text-xl text-blue-700">Invite Friends & Earn Rewards</CardTitle>
+                        <CardTitle className="text-xl text-primary">Invite Friends & Earn Rewards</CardTitle>
                         <CardDescription>Share your unique link. You have referred <strong>{stats?.count || 0}</strong> people so far.</CardDescription>
                     </div>
-                    <div className="bg-white p-3 rounded-full shadow-sm hidden md:block">
-                        <Share2 className="h-6 w-6 text-blue-600" />
+                    <div className="bg-card p-3 rounded-full shadow-sm hidden md:block">
+                        <Share2 className="h-6 w-6 text-primary" />
                     </div>
                 </div>
             </CardHeader>
@@ -46,7 +46,7 @@ export function ReferralSection({ code, stats }: ReferralSectionProps) {
                     <Input
                         readOnly
                         value={referralLink}
-                        className="bg-white font-mono text-sm"
+                        className="bg-card font-mono text-sm"
                     />
                     <Button onClick={handleCopy} className="gap-2 shrink-0">
                         {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
