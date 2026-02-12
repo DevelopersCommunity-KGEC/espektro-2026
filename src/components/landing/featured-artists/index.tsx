@@ -92,14 +92,14 @@ export function FeaturedArtists() {
             /> */}
             <div className="container mx-auto px-6 lg:px-8 relative pt-24">
                 <div
-                    className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-4 font-semibold">
+                    {/* <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-4 font-semibold">
                         Legacy & Future
                     </p>
                     <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                         Artist <span className="text-[#F4A900]">Showcase</span>
-                    </h2>
+                    </h2> */}
                 </div>
             </div>
 

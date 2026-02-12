@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { menuSlide } from "../animation";
+import { menuSlide, slide } from "../animation";
 import Link from "./link/Index";
 import Curve from "./curve/Index";
+import Magnetic from "@/components/layout/magnetic/Index";
 
 const navItems = [
   {
@@ -35,12 +36,16 @@ const navItems = [
     title: "Events",
     href: "/events",
   },
+  {
+    title: "My Clubs",
+    href: "/my-clubs",
+  },
 ];
 
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User, Ticket, ScanLine, LayoutDashboard } from "lucide-react";
+import { LogOut, User, Ticket, ScanLine, LayoutDashboard, ChevronDown } from "lucide-react";
 import LinkNext from "next/link"; // Renamed to avoid conflict with local Link component
 
 // ... (navItems definition - mostly same but I'll filter it inside component)
@@ -54,8 +59,11 @@ interface NavProps {
 export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps) {
   const pathname = usePathname();
   const [selectedIndicator, setSelectedIndicator] = useState(pathname);
+  const [isClubsDropdownOpen, setIsClubsDropdownOpen] = useState(false);
   const { data: session } = authClient.useSession();
   const hasClubs = clubRoles && clubRoles.length > 0;
+
+  console.log(clubRoles);
 
   // Ref for the menu container
   const menuRef = React.useRef<HTMLDivElement>(null);
@@ -106,7 +114,7 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
           className={styles.nav}
         >
           {/* Navigation Header Removed */}
-          {navItems.filter(item => session || (item.href !== "/events")).map((data, index) => {
+          {navItems.filter(item => session || (item.href !== "/events")).filter(item => item.href !== "/my-clubs").map((data, index) => {
             return (
               <Link
                 key={index}
@@ -118,20 +126,61 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
             );
           })}
 
-          {/* My Clubs Link - Integreated into flow */}
-          {hasClubs && clubRoles.map((role: any, i: number) => (
-            <Link
-              key={role.clubId}
-              data={{
-                title: "My Clubs", // Or role.clubId if you want specific names
-                href: `/club/${role.clubId}/dashboard`,
-                index: navItems.length + i // Continue the stagger index
-              }}
-              isActive={selectedIndicator == `/club/${role.clubId}/dashboard`}
-              setSelectedIndicator={setSelectedIndicator}
-              closeMenu={closeMenu}
-            />
-          ))}
+          {/* My Clubs Dropdown */}
+          {hasClubs && (
+            <div className="relative">
+              <motion.div
+                className={styles.link}
+                custom={navItems.length - 1}
+                variants={slide}
+                initial="initial"
+                animate="enter"
+                exit="exit"
+              >
+                <div
+                  className="flex items-center justify-between cursor-pointer"
+                  onClick={() => setIsClubsDropdownOpen(!isClubsDropdownOpen)}
+                >
+                  <Magnetic>
+                    <span className="text-white/70 hover:text-white transition-colors text-xl font-light">
+                      My Clubs
+                    </span>
+                  </Magnetic>
+                  <motion.div
+                    animate={{ rotate: isClubsDropdownOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown size={18} className="text-white/50" />
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Dropdown Menu */}
+              {isClubsDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="ml-6 mt-2 flex flex-col gap-2"
+                >
+                  {clubRoles.map((role: any, i: number) => (
+                    <Link
+                      key={role.clubId}
+                      data={{
+                        title: role.clubId.toUpperCase(),
+                        href: `/club/${role.clubId}/dashboard`,
+                        index: navItems.length + i
+                      }}
+                      isActive={selectedIndicator == `/club/${role.clubId}/dashboard`}
+                      setSelectedIndicator={setSelectedIndicator}
+                      closeMenu={closeMenu}
+                    />
+                  ))}
+                </motion.div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={`flex flex-col gap-4 ${hasClubs ? 'mt-8' : 'mt-auto'} border-t border-gray-700 pt-6`}>
