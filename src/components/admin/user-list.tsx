@@ -26,7 +26,7 @@ export function UserList({ users, loading, onManage }: UserListProps) {
     const getClubName = (id: string) => clubs.find(c => c.id === id)?.name || id;
 
     return (
-        <div className="rounded-md border bg-white overflow-hidden">
+        <div className="rounded-md border bg-card overflow-hidden">
             <div className="overflow-x-auto">
                 <Table>
                     <TableHeader>

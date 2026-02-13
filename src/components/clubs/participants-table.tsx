@@ -119,15 +119,17 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox
-                            id="issued-by-me"
-                            checked={issuedByMe}
-                            onCheckedChange={(checked) => setIssuedByMe(checked as boolean)}
-                        />
-                        <Label htmlFor="issued-by-me">Issued by me</Label>
-                    </div>
-                    {canIssueTickets && (
+                    {clubId.toLowerCase() !== "espektro" && (
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="issued-by-me"
+                                checked={issuedByMe}
+                                onCheckedChange={(checked) => setIssuedByMe(checked as boolean)}
+                            />
+                            <Label htmlFor="issued-by-me">Issued by me</Label>
+                        </div>
+                    )}
+                    {canIssueTickets && clubId.toLowerCase() !== "espektro" && (
                         <ManualTicketDialog clubId={clubId} events={events} />
                     )}
                 </div>
@@ -174,10 +176,10 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
                                     <TableCell>{participant.eventId?.title}</TableCell>
                                     <TableCell>
                                         <Select
-                                            defaultValue={participant.status}
+                                            value={participant.status}
                                             onValueChange={(val) => handleStatusChange(participant._id, val)}
                                         >
-                                            <SelectTrigger className="w-32.5 h-8">
+                                            <SelectTrigger className="w-36 h-8">
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>

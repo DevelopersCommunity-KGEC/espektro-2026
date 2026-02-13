@@ -49,7 +49,7 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
                 ) : (
                     events.map((event: any) => (
                         <Card key={event._id} className="overflow-hidden">
-                            <div className="h-48 bg-gray-200 relative">
+                            <div className="h-48 bg-muted relative">
                                 {event.image ? (
                                     <img
                                         src={event.image}
@@ -57,7 +57,7 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
-                                    <div className="flex items-center justify-center h-full text-gray-400">
+                                    <div className="flex items-center justify-center h-full text-muted-foreground">
                                         No Image
                                     </div>
                                 )}
@@ -78,7 +78,7 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
                                     {event.description}
                                 </p>
                                 <div className="flex justify-between items-center text-sm font-medium">

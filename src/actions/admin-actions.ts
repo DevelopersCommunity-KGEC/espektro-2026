@@ -390,6 +390,7 @@ async function createTicketForEvent(
     origin: "admin-dashboard",
     purchaseDate: new Date(),
     issuedBy,
+    price: event.price,
   });
 
   await EventModel.findByIdAndUpdate(event._id, { $inc: { ticketsSold: 1 } });

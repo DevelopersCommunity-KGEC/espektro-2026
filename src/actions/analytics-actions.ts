@@ -10,13 +10,34 @@ export async function getAnalyticsData() {
   try {
     const events = await Event.find({}).lean();
 
+    // Calculate revenue using Ticket aggregation for accuracy
+    const revenueStats = await Ticket.aggregate([
+      { $match: { status: { $in: ["booked", "checked-in"] } } },
+      {
+        $project: {
+          eventId: 1,
+          computedPrice: { $ifNull: ["$price", 0] },
+        },
+      },
+      {
+        $group: {
+          _id: "$eventId",
+          revenue: { $sum: "$computedPrice" },
+        },
+      },
+    ]);
+
+    const revenueMap = new Map(
+      revenueStats.map((stat) => [stat._id.toString(), stat.revenue]),
+    );
+
     // Calculate aggregate metrics
     const totalTicketsSold = events.reduce(
       (acc, event) => acc + (event.ticketsSold || 0),
       0,
     );
-    const totalRevenue = events.reduce(
-      (acc, event) => acc + (event.ticketsSold || 0) * (event.price || 0),
+    const totalRevenue = Array.from(revenueMap.values()).reduce(
+      (acc, val) => acc + val,
       0,
     );
 
@@ -44,7 +65,7 @@ export async function getAnalyticsData() {
         clubId: event.clubId,
         ticketsSold: event.ticketsSold || 0,
         checkedInCount,
-        revenue: (event.ticketsSold || 0) * (event.price || 0),
+        revenue: revenueMap.get(event._id.toString()) || 0,
         capacity: event.capacity,
         occupancy: event.capacity
           ? Math.round(((event.ticketsSold || 0) / event.capacity) * 100)

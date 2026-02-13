@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "../artist-gallery/artist-v3.module.css";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,18 +75,31 @@ export function FeaturedArtists() {
         <section
             ref={sectionRef}
             id="artists"
-            className="relative bg-white text-black overflow-hidden scroll-mt-0"
+            className="relative z-10 bg-white text-black overflow-hidden scroll-mt-0"
         >
+            {/* Decorative side borders */}
+            {/* <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            />
+            <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            /> */}
             <div className="container mx-auto px-6 lg:px-8 relative pt-24">
                 <div
-                    className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-4 font-semibold">
+                    {/* <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-4 font-semibold">
                         Legacy & Future
                     </p>
                     <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                         Artist <span className="text-[#F4A900]">Showcase</span>
-                    </h2>
+                    </h2> */}
                 </div>
             </div>
 
@@ -96,22 +110,57 @@ export function FeaturedArtists() {
                     </div>
 
                     <div className={styles.imageContentContainer}>
-                        <ul ref={imageListRef}>
+                        <ul ref={imageListRef} className="flex flex-col gap-4 h-630">
                             {artists.map((artist) => (
-                                <li key={artist.name} className="h-[40rem] relative">
-                                    <Image src={artist.image} alt={artist.name} fill className="object-cover" sizes="100vw" />
+                                <li key={artist.name} className="h-160">
+                                    <CardContainer className="inter-var">
+                                        <CardBody className="relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/10 w-auto sm:w-120 h-auto">
+                                            <CardItem
+                                                translateZ="50"
+                                                className="absolute h-140"
+                                            >
+                                                <img
+                                                    src={artist.bg}
+                                                    alt="background"
+                                                />
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="80"
+                                                className="absolute h-120"
+                                            >
+                                                <CardItem id="myfont" className="leading-none absolute left-5 text-start top-3">
+                                                    <h2 className={`font-extrabold text-yellow-400 tracking-tight text-6xl`}>
+                                                        {artist.name.split(" ")[0]}
+                                                    </h2>
+                                                    <h2 className="text-6xl text-yellow-400 font-semibold">
+                                                        {artist.name.split(" ")[1]}
+                                                    </h2>
+                                                </CardItem>
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="100"
+                                                className="relative z-10 w-full flex-col mt-20"
+                                            >
+                                                <img
+                                                    src={artist.image}
+                                                    alt={artist.name}
+                                                    className="relative"
+                                                />
+                                            </CardItem>
+                                        </CardBody>
+                                    </CardContainer>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
                     <div className={styles.bottomHeadingContainer}>
-                        <h1 className={styles.heading}><span>Renowned </span>Artists!</h1>
+                        <h1 className={styles.heading}><span>Artist </span>Spotlight!</h1>
                     </div>
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 lg:px-8 relative pb-24">
+            <div className="container mx-auto px-6 lg:px-8 relative mb-15">
                 <ArtistGallery />
             </div>
         </section>

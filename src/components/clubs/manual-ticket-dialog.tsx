@@ -64,6 +64,11 @@ export function ManualTicketDialog({ clubId, events }: ManualTicketDialogProps) 
         },
     });
 
+    // If the club is Espektro, do not allow manual ticket issuance
+    if (clubId.toLowerCase() === "espektro") {
+        return null;
+    }
+
     async function onSubmit(data: ManualTicketFormValues) {
         setLoading(true);
         try {
@@ -99,7 +104,7 @@ export function ManualTicketDialog({ clubId, events }: ManualTicketDialogProps) 
                     Manual Ticket
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-106.25 bg-gray-50">
+            <DialogContent className="sm:max-w-[425px] bg-background">
                 <DialogHeader>
                     <DialogTitle>Issue Manual Ticket</DialogTitle>
                     <DialogDescription>

@@ -9,6 +9,7 @@ export interface EventData {
   capacity: number;
   ticketsSold: number;
   maxTeamSize: number;
+  allowMultipleBookings?: boolean;
   isVisible: boolean;
   clubId: string;
   editors: string[];

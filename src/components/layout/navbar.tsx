@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Menu, Ticket, User, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, Ticket, User, LogOut, LayoutDashboard, ScanLine } from "lucide-react";
 
 interface NavbarProps {
     isAdmin?: boolean;
@@ -46,7 +46,10 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
     };
 
     const getAdminLink = () => {
-        if (isAdmin || userRole === "super-admin") return { name: "Admin Dashboard", href: "/dashboard" };
+        const sessionRole = (session?.user as any)?.role;
+        if (isAdmin || userRole === "super-admin" || sessionRole === "admin" || sessionRole === "super-admin") {
+            return { name: "Admin Dashboard", href: "/dashboard" };
+        }
         return null;
     };
 
@@ -98,9 +101,9 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" size="sm" className="hidden md:flex gap-2 items-center h-auto py-2">
                                     {activeClubRole ? (
-                                        <div className="flex flex-col items-start leading-none gap-1">
+                                        <div className="flex flex-col items-start leading-none gap-1 hover:text-white text-black">
                                             <span className="font-semibold capitalize text-sm">{activeClubRole.clubId}</span>
-                                            <span className="text-[10px] text-muted capitalize">{activeClubRole.role.replace('-', ' ')}</span>
+                                            <span className="text-[10px] font-semibold capitalize">{activeClubRole.role.replace('-', ' ')}</span>
                                         </div>
                                     ) : (
                                         <>
@@ -163,6 +166,14 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         <span>Profile</span>
                                     </Link>
                                 </DropdownMenuItem>
+                                {hasClubs && (
+                                    <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                                        <Link href="/scan" className="cursor-pointer">
+                                            <ScanLine className="mr-2 h-4 w-4" />
+                                            <span>Scan Ticket</span>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                )}
                                 {/* Admin Link again here for convenience */}
                                 {adminLink && (
                                     <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
@@ -218,21 +229,33 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         </Link>
                                     ))}
                                     {session && (
-                                        <Link
-                                            href="/profile"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === "/profile"
-                                                ? "text-foreground bg-muted"
-                                                : "text-muted-foreground"
-                                                }`}
-                                        >
-                                            Profile
-                                        </Link>
+                                        <>
+                                            <Link
+                                                href="/profile"
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === "/profile"
+                                                    ? "text-foreground bg-muted"
+                                                    : "text-muted-foreground"
+                                                    }`}
+                                            >
+                                                Profile
+                                            </Link>
+                                            <Link
+                                                href="/my-tickets"
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className={`text-sm font-medium transition-colors hover:text-primary px-2 py-2 rounded-md hover:bg-muted ${pathname === "/my-tickets"
+                                                    ? "text-foreground bg-muted"
+                                                    : "text-muted-foreground"
+                                                    }`}
+                                            >
+                                                My Tickets
+                                            </Link>
+                                        </>
                                     )}
                                 </div>
 
                                 {hasClubs && (
-                                    <div className="mt-6 border-t pt-4">
+                                    <div className="mt-2 pt-4 border-t">
                                         <h4 className="mb-2 px-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">My Clubs</h4>
                                         <div className="flex flex-col gap-1">
                                             {clubRoles?.map((cr) => (
@@ -254,6 +277,43 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                                         </div>
                                     </div>
                                 )}
+
+                                <div className="mt-auto pt-4 border-t">
+                                    {!session ? (
+                                        <Button
+                                            onClick={handleSignIn}
+                                            className="w-full"
+                                        >
+                                            Login
+                                        </Button>
+                                    ) : (
+                                        <div className="flex items-center gap-3 px-2 py-2">
+                                            <Avatar className="h-9 w-9">
+                                                <AvatarImage
+                                                    src={session.user.image || ""}
+                                                    alt={session.user.name || "User"}
+                                                />
+                                                <AvatarFallback>{session.user.name?.charAt(0) || "U"}</AvatarFallback>
+                                            </Avatar>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium truncate">
+                                                    {session.user.name}
+                                                </p>
+                                                <p className="text-xs text-muted-foreground truncate">
+                                                    {session.user.email}
+                                                </p>
+                                            </div>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={handleSignOut}
+                                                className="text-muted-foreground hover:text-destructive"
+                                            >
+                                                <LogOut className="h-5 w-5" />
+                                            </Button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </SheetContent>
                     </Sheet>

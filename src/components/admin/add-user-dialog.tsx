@@ -86,6 +86,7 @@ export function AddUserDialog({ open, onOpenChange, onUserSelected }: AddUserDia
                             id="search-email"
                             placeholder="user@example.com"
                             value={email}
+                            autoFocus
                             onChange={(e) => setEmail(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                         />

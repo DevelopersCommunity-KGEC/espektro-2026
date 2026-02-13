@@ -31,6 +31,7 @@ export default function ScanPage() {
         }
     }, [session, isPending, router]);
 
+
     useEffect(() => {
         if (!isScanning) return;
 
@@ -39,6 +40,15 @@ export default function ScanPage() {
         }).catch(err => {
             console.warn("Error checking cameras", err);
         });
+
+        // Ensure cleanup of previous instance if any
+        if (scannerRef.current) {
+            try {
+                scannerRef.current.clear();
+            } catch (e) {
+                console.warn(e);
+            }
+        }
 
         const scanner = new Html5Qrcode("reader");
         scannerRef.current = scanner;
@@ -54,13 +64,23 @@ export default function ScanPage() {
             },
         };
 
+        let isMounted = true;
+
         scanner.start(
             { facingMode: facingMode },
             config,
-            onScanSuccess,
+            (decodedText) => {
+                if (isMounted) onScanSuccess(decodedText);
+            },
             () => { }
         ).then(() => {
+            if (!isMounted) {
+                // If unmounted during start, stop immediately
+                scanner.stop().catch(console.warn);
+                return;
+            }
             try {
+                // Some devices don't support getRunningTrackCameraCapabilities
                 const capabilities = scanner.getRunningTrackCameraCapabilities();
                 setHasTorch(!!(capabilities as any).torch);
             } catch (e) {
@@ -68,57 +88,55 @@ export default function ScanPage() {
                 setHasTorch(false);
             }
         }).catch(err => {
-            console.error("Error starting scanner", err);
-            setError("Failed to start camera: " + (err?.message || err));
-            setIsScanning(false);
+            if (isMounted) {
+                console.error("Error starting scanner", err);
+                setError("Failed to start camera: " + (err?.message || err));
+                setIsScanning(false);
+            }
         });
 
         async function onScanSuccess(decodedText: string) {
             if (isProcessingRef.current) return;
             isProcessingRef.current = true;
 
-            try {
-                if (scannerRef.current) {
+            // Stop scanner before verifying to free up camera
+            if (scannerRef.current) {
+                try {
                     await scannerRef.current.stop();
+                    scannerRef.current.clear();
                     scannerRef.current = null;
+                } catch (e) {
+                    console.error("Failed to stop scanner", e);
                 }
-            } catch (e) {
-                console.error("Failed to stop scanner", e);
             }
 
-            setIsScanning(false);
-            setLoading(true);
+            if (isMounted) setIsScanning(false);
+            if (isMounted) setLoading(true);
 
             try {
-                // Pass clubId context if enforced? verifyTicket currently infers from ticket.eventId
-                // But we could enforce client side check if we knew the clubs.
                 const result = await verifyTicket(decodedText);
-                setScanResult(result);
-                if (!result.success) {
-                    setError(result.message);
+                if (isMounted) {
+                    setScanResult(result);
+                    if (!result.success) {
+                        setError(result.message);
+                    }
                 }
             } catch (err: any) {
-                setError(err.message || "Verification failed");
+                if (isMounted) setError(err.message || "Verification failed");
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
                 isProcessingRef.current = false;
             }
         }
 
         return () => {
+            isMounted = false;
             if (scannerRef.current) {
-                const scanner = scannerRef.current;
-                scanner.stop()
-                    .then(() => {
-                        try {
-                            scanner.clear();
-                        } catch (e) {
-                            console.warn("Failed to clear scanner", e);
-                        }
-                    })
-                    .catch((err) => {
-                        console.warn("Scanner cleanup error", err);
-                    });
+                const instance = scannerRef.current;
+                // We don't await here because cleanup must be synchronous-ish
+                instance.stop()
+                    .then(() => instance.clear())
+                    .catch((err) => console.warn("Scanner cleanup error", err));
             }
         };
     }, [isScanning, facingMode]);
@@ -213,7 +231,7 @@ export default function ScanPage() {
                         </Button>
                     )}
                     {hasTorch && (
-                        <Button onClick={toggleTorch} size="icon" variant={torchOn ? "default" : "secondary"} className={`w-16 h-auto ${torchOn ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`} title="Toggle Flashlight">
+                        <Button onClick={toggleTorch} size="icon" variant={torchOn ? "default" : "secondary"} className={`w-16 h-auto ${torchOn ? 'bg-secondary hover:bg-secondary/80' : ''}`} title="Toggle Flashlight">
                             {torchOn ? <ZapOff className="w-6 h-6" /> : <Zap className="w-6 h-6" />}
                         </Button>
                     )}

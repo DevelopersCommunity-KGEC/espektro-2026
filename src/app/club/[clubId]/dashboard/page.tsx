@@ -47,6 +47,20 @@ export default async function ClubDashboardPage({ params }: { params: Promise<{ 
                     </Card>
                 )}
 
+                {canManageTeam && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Coupons</CardTitle>
+                            <CardDescription>Manage discount codes</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Button asChild variant="outline">
+                                <Link href={`/club/${clubId}/coupons`}>Manage Coupons</Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                )}
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Referrals & Leaderboard</CardTitle>

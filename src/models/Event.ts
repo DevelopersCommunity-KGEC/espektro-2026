@@ -12,6 +12,7 @@ export interface IEvent extends Document {
   isVisible: boolean;
   clubId: string; // Reference to Club.clubId
   maxTeamSize: number;
+  allowMultipleBookings: boolean;
   editors: string[]; // Array of User Emails
   type: "fest-day" | "event";
   winners?: {
@@ -33,6 +34,7 @@ const EventSchema: Schema = new Schema({
   isVisible: { type: Boolean, default: true },
   clubId: { type: String, required: true },
   maxTeamSize: { type: Number, default: 1 },
+  allowMultipleBookings: { type: Boolean, default: false },
   editors: [{ type: String }],
   type: {
     type: String,

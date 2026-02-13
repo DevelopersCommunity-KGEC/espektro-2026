@@ -1,110 +1,265 @@
-.main_gallery {
+.gridWrapper {
+  width: 200%;
+  height: 180vh;
   display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.9rem;
-  grid-template-rows: repeat(5, 10rem);
-  grid-template-areas:
-    "area1 area1"
-    "area2 area3"
-    "area2 area4"
-    "area5 area4"
-    "area6 area6"
-    "area7 area8";
-  max-width: 1350px;
-  margin: 0 auto;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 18rem;
+  grid-auto-flow: dense;
+  gap: 0.3rem;
+  /* Further reduced from 0.8rem */
+  align-content: center;
+  transform: rotate(-15deg);
+  transform-origin: center center;
+  position: relative;
+  left: -50%;
+  padding: 10vh 0;
 }
 
-.main_gallery > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 0.9rem;
+.rowItem {
+  position: relative;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+  will-change: transform, filter;
 }
 
-.main_gallery > div img {
+.rowItem:hover .rowItemImg {
+  transform: scale(1.15);
+  /* Slightly more zoom on hover */
+}
+
+.rowItem:hover {
+  filter: brightness(1.1);
+  z-index: 10;
+}
+
+/* Varied grid spans for desktop */
+.span2x2 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.span2x1 {
+  grid-column: span 2;
+}
+
+.span1x2 {
+  grid-row: span 2;
+}
+
+.rowItemInner {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.6s ease-out;
+  overflow: hidden;
+  border-radius: 4px;
+  /* Reduced from 10px to pack images tighter */
 }
 
-.main_gallery > div:hover img {
+.rowItemImg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
   transform: scale(1.1);
+  /* Scale up to fill more space and reduce visible container edges */
+  transition: transform 0.5s ease;
 }
 
-.main_gallery > div:nth-child(1) { grid-area: area1; }
-.main_gallery > div:nth-child(2) { grid-area: area2; }
-.main_gallery > div:nth-child(3) { grid-area: area3; }
-.main_gallery > div:nth-child(4) { grid-area: area4; }
-.main_gallery > div:nth-child(5) { grid-area: area5; }
-.main_gallery > div:nth-child(6) { grid-area: area6; }
-.main_gallery > div:nth-child(7) { grid-area: area7; }
-.main_gallery > div:nth-child(8) { grid-area: area8; }
+/* Popup styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
 
-@media (min-width: 481px) and (max-width: 768px) {
-  .main_gallery {
-    grid-template-rows: repeat(5, 15rem);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
-@media (min-width: 480px) {
-  .main_gallery {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      "area1 area1 area2"
-      "area3 area4 area2"
-      "area5 area4 area7"
-      "area6 area6 area7"
-      "area9 area8 area8";
-  }
-  .main_gallery > div:nth-child(9) { grid-area: area9; display: flex; }
+.popupContent {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  animation: scaleIn 0.3s ease;
 }
 
-@media (min-width: 769px) {
-  .main_gallery {
-    grid-template-rows: repeat(5, 20rem);
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
-@media (min-width: 1024px) {
-  .main_gallery {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(6, 15rem);
-    grid-template-areas:
-      "area1 area1 area2 area3"
-      "area4 area5 area2 area7"
-      "area4 area6 area6 area7"
-      "area9 area8 area8 area10"
-      "area11 area11 area12 area12"
-      "area13 area14 area14 area15";
-  }
-  .main_gallery > div:nth-child(10) { grid-area: area10; display: flex; }
-  .main_gallery > div:nth-child(11) { grid-area: area11; display: flex; }
-  .main_gallery > div:nth-child(12) { grid-area: area12; display: flex; }
-  .main_gallery > div:nth-child(13) { grid-area: area13; display: flex; }
-  .main_gallery > div:nth-child(14) { grid-area: area14; display: flex; }
-  .main_gallery > div:nth-child(15) { grid-area: area15; display: flex; }
+.popupImg {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
-@media (min-width: 1090px) {
-  .main_gallery {
+.closeBtn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: black;
+  font-weight: bold;
+}
+
+.closeBtn:hover {
+  background: #F4A900;
+  transform: rotate(90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .gridWrapper {
+    width: 200%;
+    left: -50%;
+    height: 140vh;
+    gap: 0.2rem;
+    /* Reduced from 0.4rem */
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 15rem);
-    grid-template-areas:
-      "area1 area1 area2 area6 area6"
-      "area3 area4 area2 area7 area5"
-      "area10 area8 area8 area7 area9"
-      "area14 area14 area12 area12 area12"
-      "area11 area15 area15 area13 area16";
+    grid-auto-rows: 15rem;
   }
-  .main_gallery > div:nth-child(16) { grid-area: area16; display: flex; }
 }
 
-/* Hide extra items on smaller screens */
-.main_gallery > div:nth-child(n+9) { display: none; }
-@media (min-width: 480px) { .main_gallery > div:nth-child(n+9) { display: flex; } .main_gallery > div:nth-child(n+10) { display: none; } }
-@media (min-width: 1024px) { .main_gallery > div:nth-child(n+10) { display: flex; } .main_gallery > div:nth-child(n+16) { display: none; } }
-@media (min-width: 1090px) { .main_gallery > div:nth-child(16) { display: flex; } }
+/* Mobile - Vertical Layout with Uniform Sizes */
+@media (max-width: 640px) {
+  .gridWrapper {
+    width: 100vw;
+    height: auto;
+    min-height: 150vh;
+    left: 0;
+    transform: rotate(0deg);
+    gap: 0.2rem;
+    /* Reduced from 0.5rem */
+    padding: 2rem 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 20rem;
+    /* HEIGHT CONTROL: Increase this value to make items taller */
+    grid-auto-flow: row;
+    /* Ensure proper row flow */
+  }
+
+  .galleryMask {
+    margin-top: 0;
+  }
+
+  /* Disable all span variations on mobile - make all items same size */
+  .span2x2,
+  .span2x1,
+  .span1x2 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  /* Ensure uniform sizing */
+  .rowItem {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .gridWrapper {
+    min-height: 200vh;
+    gap: 0.2rem;
+    /* Reduced from 0.3rem */
+    padding: 2rem 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 16rem;
+    /* Decreased height for 2-column layout */
+  }
+
+  .closeBtn {
+    top: -50px;
+  }
+
+  /* All items uniform size on 2-column layout */
+  .span2x2,
+  .span2x1,
+  .span1x2 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+.galleryMask {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 100vh;
+  margin-top: -3rem;
+  border-radius: 20px 20px 20px 20px;
+}
+
+/* SVG Border Decorations */
+.borderLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  object-fit: fill;
+}
+
+.borderRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  object-fit: fill;
+  transform: scaleX(-1);
+}
+
+.borderBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vh;
+  height: 80px;
+  z-index: 100;
+  pointer-events: none;
+  object-fit: fill;
+  transform: rotate(90deg);
+  transform-origin: left bottom;
+}

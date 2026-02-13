@@ -27,21 +27,22 @@ export async function getMyReferralStats() {
       },
     },
     {
+      $project: {
+        computedPrice: { $ifNull: ["$price", 0] },
+      },
+    },
+    {
       $group: {
         _id: null,
         count: { $sum: 1 },
-        revenue: { $sum: "$discountAmount" }, // Or some other metric. Usually just count is enough for user.
+        revenue: { $sum: "$computedPrice" },
       },
     },
   ]);
 
-  // Wait, revenue attributed? Usually we track purchase value.
-  // Ticket model doesn't explicitly store price paid unless we infer it.
-  // But Event has price. Or we use a fixed value.
-  // For now, return count.
   return {
     count: stats[0]?.count || 0,
-    // revenue: stats[0]?.revenue || 0
+    revenue: stats[0]?.revenue || 0,
   };
 }
 
@@ -109,7 +110,7 @@ export async function getReferralLeaderboard() {
     { $limit: 10 },
     {
       $lookup: {
-        from: "users",
+        from: "user",
         localField: "_id",
         foreignField: "_id",
         as: "user",

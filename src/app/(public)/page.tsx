@@ -9,38 +9,46 @@ import { Sponsors } from "@/components/landing/sponsors";
 import ClubsSection from "@/components/landing/about-sections/clubs";
 import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
-import { Navigation } from "@/components/landing/navigation";
+import { LogoPreloader } from "@/components/landing/logo-preloader";
+import Header from "@/components/layout/header/Index";
 import { getTimelineData } from "@/actions/landing-data";
+import Timeline from "@/components/landing/timeline/timeline";
+export const dynamic = "force-dynamic";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { getUserClubRoles } from "@/lib/rbac";
-
-export const dynamic = "force-dynamic";
-
+import ClubRole from "@/models/ClubRole";
 export default async function LandingPage() {
-    const [timelineData, session] = await Promise.all([
-        getTimelineData(),
-        auth.api.getSession({ headers: await headers() }),
-    ]);
+    const timelineData = await getTimelineData();
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
-    const adminEmails = (process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL || "").split(",").map(e => e.trim());
-    const isAdmin = session?.user?.role === "super-admin" || (session?.user?.email && adminEmails.includes(session.user.email));
-
-    let clubRoles: { clubId: string; role: string }[] = [];
+    let clubRoles: any[] = [];
     if (session?.user) {
-        clubRoles = await getUserClubRoles(session.user.id);
+        try {
+            const rawRoles = await ClubRole.find({ userId: session.user.id }).lean();
+            clubRoles = JSON.parse(JSON.stringify(rawRoles));
+        } catch (error) {
+            console.error("Error fetching club roles:", error);
+        }
     }
 
+
     return (
-        <main className="min-h-screen bg-background selection:bg-[#B7410E] selection:text-white">
-            <Navigation isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
+        <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+            <LogoPreloader />
+            <Header clubRoles={clubRoles} userRole={session?.user?.role} />
             <Hero />
             <About />
-            <ThemeEvolution />
+            <Timeline />
+            {/* <ThemeEvolution /> */}
             {/* <CulturalIllustrations /> */}
             <EventsTimeline scheduleData={timelineData} />
+            
             <FeaturedArtists />
-            <Gallery />
+            {/* <Gallery /> */}
+            {/* <ArtistGallery /> */}
             <Sponsors />
             <ClubsSection />
             <Contact />

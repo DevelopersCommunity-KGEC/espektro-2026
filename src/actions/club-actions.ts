@@ -103,6 +103,7 @@ export async function createManualTicket(data: CreateManualTicketData) {
     purchaseDate: new Date(),
     guestName: userName,
     guestPhone: phone,
+    price: event.price,
   });
 
   await newTicket.save();

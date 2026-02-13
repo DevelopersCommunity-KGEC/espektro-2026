@@ -14,8 +14,26 @@ export default function ClubsSection() {
     const marqueeRow2 = [...row2, ...row2, ...row2, ...row2];
 
     return (
-        <section id="clubs" className={styles.clubs_section}>
-            <div className="container mx-auto px-6 lg:px-8">
+        <section id="clubs" className={`${styles.clubs_section} relative z-10`} style={{ position: 'relative' }}>
+            {/* Decorative side borders */}
+            <div
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto'
+                }}
+            />
+            <div
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    transform: 'scaleX(-1)'
+                }}
+            />
+            <div className="container mx-auto px-6 lg:px-24">
                 <div className={styles.clubs_header}>
                     <p>Our Community</p>
                     <h2 className="font-serif">KGEC Clubs &amp; Societies</h2>

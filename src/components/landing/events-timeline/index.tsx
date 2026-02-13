@@ -107,8 +107,21 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
         <section
             ref={sectionRef}
             id="schedule"
-            className="py-24 lg:py-36 bg-muted/40 overflow-hidden"
+            className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden"
         >
+            {/* Decorative side borders */}
+            {/* <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            />
+            <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            /> */}
             <div className="container mx-auto px-6 lg:px-8">
                 {/* Header */}
                 <div
@@ -182,17 +195,17 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                     </span>
                                 </div>
                                 {/* Hour columns */}
-                                        <div className="flex-1 flex relative">
-                                            {hours.map((label, i) => (
-                                                <div
-                                                    key={label}
-                                                    className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
-                                                >
-                                                    {i % 2 === 0 ? label : ""}
-                                                </div>
-                                            ))}
-                                            {/* Final tick at 12 AM/midnight if needed, but last column handles it */}
+                                <div className="flex-1 flex relative">
+                                    {hours.map((label, i) => (
+                                        <div
+                                            key={label}
+                                            className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
+                                        >
+                                            {i % 2 === 0 ? label : ""}
                                         </div>
+                                    ))}
+                                    {/* Final tick at 12 AM/midnight if needed, but last column handles it */}
+                                </div>
                             </div>
 
                             {/* Event rows */}

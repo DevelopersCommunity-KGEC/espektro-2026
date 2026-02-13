@@ -1,9 +1,56 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { eras } from "@/data/landing-content";
+
+const arr = [
+    {
+        "name" : "div1",
+        "color" : "blue",
+        "position" : "top-85 left-30"
+    },
+    {
+        "name" : "div2",
+        "color" : "yellow",
+        "position" : "top-95 left-60"
+    },
+    {
+        "name" : "div3",
+        "color" : "blue",
+        "position" : "top-110 left-90"
+    },
+    {
+        "name" : "div4",
+        "color" : "yellow",
+        "position" : "top-105 left-120"
+    },
+    {
+        "name" : "div5",
+        "color" : "blue",
+        "position" : "top-95 left-150"
+    },
+    {
+        "name" : "div6",
+        "color" : "yellow",
+        "position" : "top-85 left-180"
+    },
+    {
+        "name" : "div7",
+        "color" : "blue",
+        "position" : "top-100 left-210"
+    },
+    {
+        "name" : "div8",
+        "color" : "yellow",
+        "position" : "top-105 left-240"
+    },
+    {
+        "name" : "div9",
+        "color" : "blue",
+        "position" : "top-110 left-270"
+    }
+]
 
 export function ThemeEvolution() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -27,51 +74,58 @@ export function ThemeEvolution() {
     }, [scrollYProgress]);
 
     return (
-        <div ref={containerRef} className="relative h-[400vh]">
+        <div ref={containerRef} className="relative z-10 h-[400vh] bg-white">
             <section className="sticky top-0 h-screen w-full overflow-hidden">
 
-                <div className="absolute inset-0">
+                {/* <div className="absolute inset-0">
                     <Image
                         src="/images/timeline.jpg"
                         fill
                         className="object-cover grayscale opacity-40"
                         alt="Bengali Culture Timeline"
-                        sizes="100vw"
                     />
-
-                    <motion.div
+                    
+                    <motion.div 
                         className="absolute inset-0"
                         style={{ clipPath }}
                     >
-                        <Image
-                            src="/images/timeline.jpg"
-                            fill
-                            className="object-cover"
+                        <img 
+                            src="/images/timeline.jpg" 
+                            className="w-full h-full object-cover" 
                             alt="Bengali Culture Timeline Color"
-                            sizes="100vw"
                         />
                     </motion.div>
-                </div>
+                </div> */}
 
                 <div className="relative z-20 h-full flex flex-col justify-between p-8 lg:p-16">
 
-                    <div className="max-w-2xl pt-4">
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground">
+                    <div className="w-full h-full">
+                        {arr.map((item, i) => (
+                            <div key={i} className={`absolute ${item.position} w-30 h-30 bg-${item.color}-500 ml-5`}>
+                                {item.name}
+                            </div>
+                        ))}
+                    </div>
+                    
+                    {/* Background 1 above */}
+                    <div className="pt-4 bg-red-500 w-full h-200">
+                        {/* <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground">
                             Evolution of <span className="text-[#B7410E]">Bengali Culture</span>
-                        </h2>
+                        </h2> */}
                     </div>
 
-                    <div className="w-full max-w-7xl mx-auto">
-                        <div className="w-full h-[1px] bg-border mb-8 relative">
+                    {/* Background 2 below */}  
+                    <div className="w-full h-200 bg-blue-500">
+                        {/* <div className="w-full h-[1px] bg-border mb-8 relative">
                             <motion.div
                                 className="absolute h-full bg-[#B7410E] left-0 top-0"
                                 style={{ width: progressWidth }}
                             />
-                        </div>
+                        </div> */}
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+                        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
                             {eras.map((era, i) => (
-                                <EraItem
+                                <EraItem 
                                     key={i}
                                     item={era}
                                     index={i}
@@ -80,7 +134,7 @@ export function ThemeEvolution() {
                                     isActive={i === activeIdx}
                                 />
                             ))}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -90,22 +144,31 @@ export function ThemeEvolution() {
 
 function EraItem({ item, index, total, scrollYProgress, isActive }: any) {
     // Each item appears sequentially across the scroll range
-    // Spread from 0.1 to 0.7 (before the color animation completes at 0.95)
-    const startBase = 0.1; // Don't start at 0 to avoid initial visibility
-    const endRange = 0.7;
-    const duration = 0.15; // Each item fades in over 15% of scroll
+    const startBase = 0.1;
+    const endRange = 0.8;
 
-    const start = startBase + (index / total) * (endRange - startBase);
-    const end = start + duration;
+    // Calculate the exact trigger point for this item
+    const trigger = startBase + (index / total) * (endRange - startBase);
 
+    // "Abrupt" appearance: Opacity jumps from 0 to 1 instantly at the trigger point
     const opacity = useTransform(
         scrollYProgress,
-        [start, end],
+        [trigger - 0.001, trigger],
         [0, 1]
     );
 
+    // "Dropdown" effect: Slides down slightly as it appears
+    const y = useTransform(
+        scrollYProgress,
+        [trigger, trigger + 0.05],
+        [-20, 0]
+    );
+
     return (
-        <motion.div style={{ opacity }} className="relative z-10">
+        <motion.div
+            style={{ opacity, y }}
+            className="relative z-10"
+        >
             <div className="flex items-center gap-2 mb-3">
                 <div className={`w-2 h-2 rounded-full transition-all duration-500 ${isActive ? 'bg-[#B7410E] scale-125' : 'bg-muted-foreground/30'}`} />
                 <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isActive ? 'text-[#B7410E]' : 'text-muted-foreground'}`}>

@@ -9,7 +9,7 @@ import { DashboardTableSkeleton } from "@/components/skeletons";
 
 async function UserList({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const page = Number(searchParams.page) || 1;
-    const limit = 10;
+    const limit = 20;
     const search = (searchParams.search as string) || "";
     const clubId = (searchParams.clubId as string) || "all";
     const role = (searchParams.role as string) || "all";

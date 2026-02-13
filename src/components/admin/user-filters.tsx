@@ -45,14 +45,6 @@ export function UserFilters() {
         router.push(`${pathname}?${params.toString()}`);
     };
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        // The input value is controlled by url? No, local state for input, submit pushes to URL.
-        const form = e.target as HTMLFormElement;
-        const input = form.elements.namedItem("search") as HTMLInputElement;
-        updateParams({ search: input.value });
-    };
-
     // We need local state for the input to allow typing
     const [localSearch, setLocalSearch] = React.useState(searchQuery);
 
@@ -60,10 +52,20 @@ export function UserFilters() {
         setLocalSearch(searchQuery);
     }, [searchQuery]);
 
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            if (localSearch !== searchQuery) {
+                updateParams({ search: localSearch });
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [localSearch, searchQuery]);
+
     return (
         <Card>
             <CardContent className="p-4 space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
-                <form onSubmit={handleSearch} className="flex-1 flex gap-2">
+                <div className="flex-1 flex gap-2">
                     <div className="relative flex-1">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
@@ -74,8 +76,7 @@ export function UserFilters() {
                             onChange={(e) => setLocalSearch(e.target.value)}
                         />
                     </div>
-                    <Button type="submit" variant="secondary">Search</Button>
-                </form>
+                </div>
                 <div className="flex gap-2">
                     <Select
                         value={clubFilter}

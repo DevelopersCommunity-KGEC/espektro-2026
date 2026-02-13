@@ -30,9 +30,27 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 bg-muted relative overflow-hidden"
+            className="py-20 lg:py-32 bg-muted relative z-10 overflow-hidden"
         >
-            <div className="container mx-auto px-4 lg:px-8">
+            {/* Decorative side borders */}
+            <div
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto'
+                }}
+            />
+            <div
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    transform: 'scaleX(-1)'
+                }}
+            />
+            <div className="container mx-auto px-4 lg:px-24">
                 {/* Section Header */}
                 <div
                     className={`text-center mb-12 lg:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"

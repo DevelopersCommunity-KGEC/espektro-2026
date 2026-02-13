@@ -7,18 +7,9 @@ import Coupon from "@/models/Coupon"; // Import Coupon model
 import { auth } from "@/lib/auth";
 import { headers, cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-// import Razorpay from "razorpay";
 import { v4 as uuidv4 } from "uuid";
 import { validateCouponCode } from "@/actions/coupon-actions"; // Import validation
 import { validateUserReferral } from "@/lib/referral"; // Import user referral validation
-
-// const razorpay =
-//   process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
-//     ? new Razorpay({
-//         key_id: process.env.RAZORPAY_KEY_ID,
-//         key_secret: process.env.RAZORPAY_KEY_SECRET,
-//       })
-//     : null;
 
 async function getSession() {
   return await auth.api.getSession({
@@ -39,9 +30,11 @@ export async function createOrder(
   let finalPrice = 0;
   let eventTitle = "";
   let discountAmount = 0;
+  let isEspektroEvent = false;
 
   // Handle Season Pass Bundle
   if (eventId === "season-pass") {
+    isEspektroEvent = true;
     const festDays = await Event.find({ type: "fest-day" });
     if (!festDays || festDays.length === 0)
       throw new Error("No fest days found");
@@ -77,6 +70,23 @@ export async function createOrder(
     // Standard Single Event
     const event = await Event.findById(eventId);
     if (!event) throw new Error("Event not found");
+
+    if (event.clubId === "espektro") {
+      isEspektroEvent = true;
+    }
+
+    // Check if multiple bookings are allowed
+    if (!event.allowMultipleBookings) {
+      const existingTicket = await Ticket.findOne({
+        userId: session.user.id,
+        eventId: eventId,
+        status: { $ne: "cancelled" },
+      });
+      if (existingTicket) {
+        throw new Error("You have already booked a ticket for this event.");
+      }
+    }
+
     if (event.capacity !== -1 && event.ticketsSold >= event.capacity)
       throw new Error("Event is sold out");
 
@@ -111,7 +121,7 @@ export async function createOrder(
   const attributedCode = cookieStore.get("referral_source")?.value;
   let referrerUserId = "";
 
-  if (attributedCode) {
+  if (attributedCode && isEspektroEvent) {
     const referrer = await validateUserReferral(
       attributedCode,
       session.user.id,
@@ -342,6 +352,7 @@ export async function verifyPayment(
           couponCode: couponCode || undefined,
           referrerUserId: referrerUserId || undefined, // Attributed User
           discountAmount: itemDiscount,
+          price: Math.max(0, event.price - itemDiscount),
           teamMembers: teamMembers || [],
         };
       });
@@ -476,6 +487,7 @@ export async function verifyPayment(
       couponCode: couponCode || undefined,
       referrerUserId: referrerUserId || undefined, // Attributed User
       discountAmount: appliedDiscount,
+      price: Math.max(0, event.price - appliedDiscount),
       teamMembers: teamMembers || [],
     });
 
