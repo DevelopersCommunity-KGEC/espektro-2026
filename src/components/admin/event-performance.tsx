@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { clubs } from "@/data/clubs";
+import { DODO_COMMISION_PERCENTAGE, DODO_COMMISION_FIXED_PER_TRANSACTION } from "@/data/config";
 
 interface EventStat {
     id: string;
@@ -34,13 +35,22 @@ interface EventStat {
 
 interface EventPerformanceProps {
     events: EventStat[];
+    netRevenueMode?: boolean;
 }
 
-export function EventPerformance({ events = [] }: EventPerformanceProps) {
+export function EventPerformance({ events = [], netRevenueMode = false }: EventPerformanceProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedClub, setSelectedClub] = useState("all");
 
     const getClubName = (id: string) => clubs.find(c => c.id === id)?.name || id;
+
+    const calculateNetRevenue = (revenue: number, sold: number) => {
+        if (!netRevenueMode || sold === 0) return revenue;
+
+        const percentageFee = (revenue * DODO_COMMISION_PERCENTAGE) / 100;
+        const fixedFee = sold * DODO_COMMISION_FIXED_PER_TRANSACTION;
+        return Math.max(0, revenue - percentageFee - fixedFee);
+    };
 
     const filteredEvents = useMemo(() => {
         return events.filter(event => {
@@ -132,7 +142,9 @@ export function EventPerformance({ events = [] }: EventPerformanceProps) {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right">{event.capacity === -1 ? "Unlimited" : event.capacity}</TableCell>
-                                            <TableCell className="text-right">₹{event.revenue.toLocaleString()}</TableCell>
+                                            <TableCell className="text-right font-mono">
+                                                ₹{Math.round(calculateNetRevenue(event.revenue, event.ticketsSold)).toLocaleString()}
+                                            </TableCell>
                                         </TableRow>
                                     )
                                 })
