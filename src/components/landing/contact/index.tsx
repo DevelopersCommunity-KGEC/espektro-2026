@@ -33,19 +33,24 @@ export function Contact() {
             className="py-20 lg:py-32 bg-muted relative z-10 overflow-hidden"
         >
             {/* Decorative side borders */}
-            <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            <div
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto'
+                }}
             />
-            <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            <div
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    transform: 'scaleX(-1)'
+                }}
             />
-            <div className="container mx-auto px-4 lg:px-8">
+            <div className="container mx-auto px-4 lg:px-24">
                 {/* Section Header */}
                 <div
                     className={`text-center mb-12 lg:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"

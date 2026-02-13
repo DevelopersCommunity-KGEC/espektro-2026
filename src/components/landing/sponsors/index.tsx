@@ -104,19 +104,24 @@ export function Sponsors() {
     return (
         <section ref={ref} id="sponsors" className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden">
             {/* Decorative side borders */}
-            <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            <div
+                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto'
+                }}
             />
-            <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            <div
+                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                style={{
+                    backgroundImage: 'url(/border.svg)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    transform: 'scaleX(-1)'
+                }}
             />
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-24">
                 <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
                     <p className="text-[#B7410E] text-xs uppercase tracking-[0.3em] mb-5 font-semibold">Our Partners</p>
                     <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -128,15 +133,15 @@ export function Sponsors() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-24">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
                     {SPONSORS.map((s, index) => (
                         <div
                             key={s.id}
                             ref={(el) => { cardRefs.current[index] = el; }}
                             className={`transition-all duration-700 ease-out ${visibleCards.has(index)
-                                    ? 'opacity-100 translate-y-0 blur-0'
-                                    : 'opacity-0 translate-y-[10px] blur-[10px]'
+                                ? 'opacity-100 translate-y-0 blur-0'
+                                : 'opacity-0 translate-y-[10px] blur-[10px]'
                                 }`}
                         >
                             <SponsorCard sponsor={s} />
@@ -145,7 +150,7 @@ export function Sponsors() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-24">
                 <div className={`mt-20 text-center bg-card border border-border rounded-2xl p-8 lg:p-12 max-w-2xl mx-auto transition-all duration-700 delay-500 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
                     <h3 className="font-serif text-2xl font-bold text-foreground mb-3">
                         Want to Partner with Us?
@@ -177,7 +182,7 @@ function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url:
                         src={sponsor.url}
                         alt={sponsor.sponsor}
                         fill
-                        className="object-contain grayscale brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
+                        className="object-contain brightness-125 transition-all group-hover/card:grayscale-0 group-hover/card:brightness-100"
                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                 </div>

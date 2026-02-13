@@ -20,10 +20,10 @@ export function ArtistGallery() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 640);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -31,12 +31,12 @@ export function ArtistGallery() {
     if (!gridRef.current || !containerRef.current) return;
 
     const gridItems = gridRef.current.querySelectorAll(`.${styles.rowItem}`);
-    
+
     if (isMobile) {
       // Mobile: Simple alternating column animation
       const numColumns = window.innerWidth < 520 ? 2 : 3;
       const columnGroups: Element[][] = Array.from({ length: numColumns }, () => []);
-      
+
       // Distribute items into column groups
       gridItems.forEach((item, index) => {
         const columnIndex = index % numColumns;
@@ -50,20 +50,20 @@ export function ArtistGallery() {
         scrub: 1,
         onUpdate: (self) => {
           const scrollProgress = self.progress;
-          
+
           columnGroups.forEach((columnItems, columnIndex) => {
             // Alternate columns: even columns move down, odd columns move up
             const direction = columnIndex % 2 === 0 ? 1 : -1;
-            
+
             // Increased speed for 2-column layout
             const baseSpeed = numColumns === 2 ? 350 : 200;
             const scrollAmount = (scrollProgress - 0.5) * baseSpeed;
-            
+
             // For odd columns (moving up), add negative initial offset to prevent white space
             // This makes them start as if they're already scrolled up
             const initialOffset = columnIndex % 2 === 1 ? -250 : 0;
             const yOffset = scrollAmount * direction + initialOffset;
-            
+
             columnItems.forEach((item) => {
               gsap.set(item, {
                 y: yOffset,
@@ -82,7 +82,7 @@ export function ArtistGallery() {
       // Desktop: Original animation logic
       const itemsPerGroup = 10;
       const groups: Element[][] = [];
-      
+
       for (let i = 0; i < gridItems.length; i += itemsPerGroup) {
         groups.push(Array.from(gridItems).slice(i, i + itemsPerGroup));
       }
@@ -226,15 +226,24 @@ export function ArtistGallery() {
   return (
     <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl" ref={containerRef}>
       <div className="text-center mb-15 ">
-        <h3 className="font-serif text-2xl lg:text-3xl font-bold text-black mb-2">
+        <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
           Glimpses of <span className="text-[#F4A900]">Past Artists</span>
         </h3>
-        <p className="text-black/60 text-sm max-w-lg mx-auto">
+        {/* <p className="text-black/60 text-sm max-w-lg mx-auto">
           A legacy of unforgettable performances that have graced our stages over the years.
-        </p>
+        </p> */}
       </div>
 
       <div className={styles.galleryMask}>
+        {/* Left Border SVG */}
+        <img src="/border.svg" alt="" className={styles.borderLeft} />
+
+        {/* Right Border SVG */}
+        <img src="/border.svg" alt="" className={styles.borderRight} />
+
+        {/* Bottom Border SVG */}
+        <img src="/border.svg" alt="" className={styles.borderBottom} />
+
         <div className={styles.gridWrapper} ref={gridRef}>
           {allArtists.map((item, index) => {
             const spanClass = isMobile ? '' : (() => {

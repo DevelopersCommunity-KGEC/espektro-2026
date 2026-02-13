@@ -101,9 +101,9 @@ export function Navbar({ isAdmin, userRole, clubRoles }: NavbarProps) {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" size="sm" className="hidden md:flex gap-2 items-center h-auto py-2">
                                     {activeClubRole ? (
-                                        <div className="flex flex-col items-start leading-none gap-1">
+                                        <div className="flex flex-col items-start leading-none gap-1 hover:text-white text-black">
                                             <span className="font-semibold capitalize text-sm">{activeClubRole.clubId}</span>
-                                            <span className="text-[10px] text-muted capitalize">{activeClubRole.role.replace('-', ' ')}</span>
+                                            <span className="text-[10px] font-semibold capitalize">{activeClubRole.role.replace('-', ' ')}</span>
                                         </div>
                                     ) : (
                                         <>
