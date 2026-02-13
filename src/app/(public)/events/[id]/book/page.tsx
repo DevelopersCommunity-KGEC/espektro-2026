@@ -36,7 +36,7 @@ export default function BookingPage() {
     if (!isSessionLoading && !session) {
       // Redirect to login with proper callback
       const returnUrl = encodeURIComponent(window.location.pathname);
-      router.push(`/login?callbackUrl=${returnUrl}`);
+      router.replace(`/login?callbackUrl=${returnUrl}`);
     }
   }, [session, isSessionLoading, router]);
 

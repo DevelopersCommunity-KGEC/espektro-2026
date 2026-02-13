@@ -1,5 +1,5 @@
 import { getClubParticipants, getClubEventsSimple } from "@/actions/club-actions";
-import { ParticipantsTable } from "@/app/clubs/participants-table";
+import { ParticipantsTable } from "@/components/clubs/participants-table";
 import { ParticipantsTableSkeleton } from "@/components/skeletons";
 import { getCurrentUser, hasClubPermission } from "@/lib/rbac";
 import { notFound, redirect } from "next/navigation";

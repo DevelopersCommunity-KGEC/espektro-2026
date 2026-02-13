@@ -37,7 +37,7 @@ export function ShowTicketQr({ ticket }: ShowTicketQrProps) {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button
-                    className="w-full py-8 text-xl font-bold bg-green-600 hover:bg-green-700"
+                    className="w-full py-8 text-xl font-bold bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                     <QrCode className="mr-2 h-6 w-6" />
                     View Your Ticket
