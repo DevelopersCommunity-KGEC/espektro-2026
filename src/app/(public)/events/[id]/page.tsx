@@ -10,6 +10,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Button } from "@/components/ui/button";
 import { EventImageViewer } from "@/components/events/event-image-viewer";
+import dbConnect from "@/lib/db";
+import Ticket from "@/models/Ticket";
+import { ShowTicketQr } from "@/components/events/show-ticket-qr";
 
 export default async function EventDetailsPage({
   params,
@@ -38,6 +41,19 @@ export default async function EventDetailsPage({
 
   const isSoldOut =
     event.capacity !== -1 && event.ticketsSold >= event.capacity;
+
+  let existingTicket = null;
+  if (session?.user && !event.allowMultipleBookings) {
+    await dbConnect();
+    const ticket = await Ticket.findOne({
+      userId: session.user.id,
+      eventId: event._id,
+      status: { $in: ["booked", "checked-in"] } // Only show QR for valid tickets, not pending/cancelled
+    });
+    if (ticket) {
+      existingTicket = JSON.parse(JSON.stringify(ticket));
+    }
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
@@ -84,17 +100,19 @@ export default async function EventDetailsPage({
             </div>
           </div>
 
-                    <div className="border-t pt-8">
-                        {isSoldOut ? (
-                            <Button disabled className="w-full py-8 text-xl font-bold" variant="secondary">
-                                Sold Out
-                            </Button>
-                        ) : (
-                            <BookButton eventId={event?._id.toString()} />
-                        )}
-                    </div>
-                </div>
-            </div>
+          <div className="border-t pt-8">
+            {existingTicket ? (
+              <ShowTicketQr ticket={existingTicket} />
+            ) : isSoldOut ? (
+              <Button disabled className="w-full py-8 text-xl font-bold" variant="secondary">
+                Sold Out
+              </Button>
+            ) : (
+              <BookButton eventId={event?._id.toString()} />
+            )}
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

@@ -46,6 +46,7 @@ const formSchema = z.object({
     price: z.coerce.number().min(0, "Entry Fees must be 0 or greater"),
     capacity: z.coerce.number().min(-1, "Capacity cannot be less than -1"),
     maxTeamSize: z.coerce.number().min(1, "Max team size must be at least 1").default(1),
+    allowMultipleBookings: z.boolean().default(false),
     isVisible: z.boolean(),
     editors: z.string().optional(),
 });
@@ -75,6 +76,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
             price: initialData?.price || 0,
             capacity: initialData?.capacity,
             maxTeamSize: initialData?.maxTeamSize || 1,
+            allowMultipleBookings: initialData?.allowMultipleBookings ?? false,
             isVisible: initialData?.isVisible ?? true,
             editors: initialData?.editors?.join(", ") || "",
             clubId: lockedClubId || initialData?.clubId || "",
@@ -132,7 +134,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 name="clubId"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Club <span className="text-red-500">*</span></FormLabel>
+                                        <FormLabel className="gap-1">Club<span className="text-red-500">*</span></FormLabel>
                                         <Select
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
@@ -185,7 +187,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Event Title" {...field} />
+                                        <Input placeholder="Event Title" {...field} autoFocus />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -221,7 +223,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
                                 name="price"
@@ -287,6 +289,28 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                             <Input type="number" min="1" {...field} value={field.value as number} />
                                         </FormControl>
                                         <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="allowMultipleBookings"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3 mt-8">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                Allow Multiple Tickets
+                                            </FormLabel>
+                                            <FormDescription>
+                                                Allow users to book multiple tickets. (Default: One per user)
+                                            </FormDescription>
+                                        </div>
                                     </FormItem>
                                 )}
                             />

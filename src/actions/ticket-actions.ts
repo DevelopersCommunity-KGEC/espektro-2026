@@ -97,6 +97,17 @@ export async function bookTicket(eventId: string) {
   const event = await Event.findById(eventId);
   if (!event) throw new Error("Event not found");
 
+  if (!event.allowMultipleBookings) {
+    const existingTicket = await Ticket.findOne({
+      userId: session.user.id,
+      eventId: eventId,
+      status: { $ne: "cancelled" },
+    });
+    if (existingTicket) {
+      throw new Error("You have already booked a ticket for this event.");
+    }
+  }
+
   if (event.capacity !== -1 && event.ticketsSold >= event.capacity) {
     throw new Error("Event is sold out");
   }
@@ -109,6 +120,7 @@ export async function bookTicket(eventId: string) {
     paymentId: "PENDING",
     qrCodeToken: "PENDING-" + Date.now(), // Temporary token
     status: "pending",
+    price: event.price,
   });
 
   return { success: true, ticketId: ticket._id.toString() };
