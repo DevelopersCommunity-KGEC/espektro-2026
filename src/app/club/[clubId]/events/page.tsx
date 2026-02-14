@@ -22,12 +22,15 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
 
     const events = await getClubEvents(clubId);
 
+    // Sort events by date (ascending)
+    events.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
     return (
         <div className="container mx-auto py-10 px-4">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold capitalize">{clubId} Events</h1>
                 {canCreate && (
-                    <Button asChild>
+                    <Button asChild className="mr-20 md:mr-24">
                         {/* Note: We might need a clean way to create events scoped to a club. 
                             The admin 'new' page might need club context or we create a specific one.
                             For now, link to admin new if user is generic admin, 
@@ -49,22 +52,24 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
                 ) : (
                     events.map((event: any) => (
                         <Card key={event._id} className="overflow-hidden">
-                            <div className="h-48 bg-muted relative">
+                            <Link href={`/events/${event._id}`} className="block h-48 bg-muted relative overflow-hidden group">
                                 {event.image ? (
                                     <img
                                         src={event.image}
                                         alt={event.title}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
                                 ) : (
                                     <div className="flex items-center justify-center h-full text-muted-foreground">
                                         No Image
                                     </div>
                                 )}
-                            </div>
+                            </Link>
                             <CardHeader>
-                                <CardTitle className="flex justify-between items-start gap-2">
-                                    <span className="truncate">{event.title}</span>
+                                <CardTitle className="flex justify-between items-center gap-2">
+                                    <Link href={`/events/${event._id}`} className="truncate hover:underline h-6">
+                                        {event.title}
+                                    </Link>
                                     {canEdit && (
                                         <Link href={`/club/${clubId}/events/${event._id}/edit`}>
                                             <Button variant="ghost" size="icon" className="h-8 w-8">

@@ -25,6 +25,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { clubs } from "@/data/clubs";
+import { VENUES } from "@/data/venues";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -47,6 +48,7 @@ const formSchema = z.object({
     capacity: z.coerce.number().min(-1, "Capacity cannot be less than -1"),
     maxTeamSize: z.coerce.number().min(1, "Max team size must be at least 1").default(1),
     allowMultipleBookings: z.boolean().default(false),
+    allowBooking: z.boolean().default(true),
     isVisible: z.boolean(),
     editors: z.string().optional(),
 });
@@ -77,6 +79,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
             capacity: initialData?.capacity,
             maxTeamSize: initialData?.maxTeamSize || 1,
             allowMultipleBookings: initialData?.allowMultipleBookings ?? false,
+            allowBooking: initialData?.allowBooking ?? true,
             isVisible: initialData?.isVisible ?? true,
             editors: initialData?.editors?.join(", ") || "",
             clubId: lockedClubId || initialData?.clubId || "",
@@ -84,10 +87,30 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
     });
 
     const clubId = form.watch("clubId");
+    const allowBooking = form.watch("allowBooking");
+
+    // Clear price, capacity, and maxTeamSize when allowBooking is disabled
+    React.useEffect(() => {
+        if (!allowBooking) {
+            form.setValue("price", 0);
+            form.setValue("capacity", -1);
+            form.setValue("maxTeamSize", 1);
+            form.setValue("allowMultipleBookings", false);
+        }
+    }, [allowBooking, form]);
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setLoading(true);
         try {
+            // Ensure values are reset if booking is disabled
+            // This is a safety check in case the useEffect didn't fire or state is inconsistent
+            if (!values.allowBooking) {
+                values.price = 0;
+                values.capacity = -1;
+                values.maxTeamSize = 1;
+                values.allowMultipleBookings = false;
+            }
+
             const data = {
                 ...values,
                 price: Number(values.price),
@@ -214,10 +237,48 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Venue</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Main Auditorium" {...field} />
-                                        </FormControl>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            value={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select venue" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {VENUES.map((venue) => (
+                                                    <SelectItem key={venue.name} value={venue.name}>
+                                                        {venue.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                         <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="allowBooking"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3 mt-8">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                Allow Booking
+                                            </FormLabel>
+                                            <FormDescription>
+                                                Enable or disable ticket booking.
+                                            </FormDescription>
+                                        </div>
                                     </FormItem>
                                 )}
                             />
@@ -231,7 +292,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                     <FormItem>
                                         <FormLabel>Entry Fees (₹)</FormLabel>
                                         <FormControl>
-                                            <Input type="number" min="0" {...field} value={field.value as number} />
+                                            <Input type="number" min="0" {...field} value={field.value as number} disabled={!allowBooking} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -250,7 +311,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                                     min="-1"
                                                     {...field}
                                                     value={field.value === -1 ? "" : (field.value?.toString() ?? "")}
-                                                    disabled={field.value === -1}
+                                                    disabled={field.value === -1 || !allowBooking}
                                                     placeholder={field.value === -1 ? "Unlimited" : "Capacity"}
                                                     className={field.value === -1 ? "opacity-50 flex-1" : "flex-1"}
                                                 />
@@ -259,6 +320,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                                 <Checkbox
                                                     id="unlimited-capacity"
                                                     checked={field.value === -1}
+                                                    disabled={!allowBooking}
                                                     onCheckedChange={(checked) => {
                                                         if (checked) {
                                                             field.onChange(-1);
@@ -286,7 +348,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                     <FormItem>
                                         <FormLabel>Max Team Size</FormLabel>
                                         <FormControl>
-                                            <Input type="number" min="1" {...field} value={field.value as number} />
+                                            <Input type="number" min="1" {...field} value={field.value as number} disabled={!allowBooking} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -301,6 +363,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                             <Checkbox
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
+                                                disabled={!allowBooking}
                                             />
                                         </FormControl>
                                         <div className="space-y-1 leading-none">
