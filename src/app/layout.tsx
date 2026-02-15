@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { Navbar } from "@/components/layout/navbar";
+import Header from "@/components/layout/header/Index";
 import { OnboardingCheck } from "@/components/layout/onboarding-check";
 
 const geistSans = Geist({
@@ -70,7 +70,7 @@ export default async function RootLayout({
       >
         <AdminSync />
         <OnboardingCheck />
-        <Navbar isAdmin={!!isAdmin} userRole={session?.user?.role} clubRoles={clubRoles} />
+        <Header clubRoles={clubRoles} userRole={session?.user?.role} />
         {children}
         <Toaster />
       </body>
