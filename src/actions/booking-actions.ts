@@ -144,16 +144,16 @@ export async function createOrder(
   }
 
   // Handle Payment Bypass (Dev Mode)
-  if (process.env.BYPASS_PAYMENT === "true") {
-    return {
-      orderId: "BYPASS_" + uuidv4(),
-      amount: finalPrice,
-      currency: "INR",
-      key: "PAYMENT_BYPASS",
-      couponCode,
-      checkoutUrl: null,
-    };
-  }
+  // if (process.env.BYPASS_PAYMENT === "true") {
+  //   return {
+  //     orderId: "BYPASS_" + uuidv4(),
+  //     amount: finalPrice,
+  //     currency: "INR",
+  //     key: "PAYMENT_BYPASS",
+  //     couponCode,
+  //     checkoutUrl: null,
+  //   };
+  // }
 
   // Dodo Payments Session Creation
   try {

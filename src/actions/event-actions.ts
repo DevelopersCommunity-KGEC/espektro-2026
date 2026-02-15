@@ -38,13 +38,16 @@ export async function getPublicEvents() {
         festDays.map((e: any) => e.title).join(", "),
       image: festDays[0].image, // Use first day image
       date: festDays[0].date,
-      venue: "KGEC Campus",
+      venue: festDays[0].venue || "Espektro Ground",
       price: totalPrice,
       capacity: minAvailable, // Trick: capacity = available, sold = 0
       ticketsSold: 0,
       type: "fest-day",
       clubId: "espektro",
       isVisible: true,
+      allowMultipleBookings: true,
+      allowBooking: true,
+      maxTeamSize: 1,
     };
 
     // Add to top of list
@@ -91,13 +94,16 @@ export async function getPublicEventById(id: string) {
         festDaysJson.map((e: any) => e.title).join(", "),
       image: festDaysJson[0].image,
       date: festDaysJson[0].date,
-      venue: "KGEC Campus",
+      venue: festDaysJson[0].venue || "Espektro Ground",
       price: totalPrice,
       capacity: minAvailable,
       ticketsSold: 0,
       type: "fest-day",
       clubId: "espektro",
       isVisible: true,
+      allowMultipleBookings: true,
+      allowBooking: true,
+      maxTeamSize: 1,
       editors: [],
       winners: [],
     };

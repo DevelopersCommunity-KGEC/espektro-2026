@@ -61,7 +61,7 @@ export async function getTimelineData(): Promise<DaySchedule[]> {
         // Default duration 2 hours if not present
         const duration = 2;
 
-        let category: GanttEvent["category"] = "tech"; // Default
+        let category: GanttEvent["category"] = "technical"; // Default
         const lowerTitle = e.title.toLowerCase();
 
         if (
@@ -87,9 +87,10 @@ export async function getTimelineData(): Promise<DaySchedule[]> {
           lowerTitle.includes("hackathon") ||
           lowerTitle.includes("code")
         )
-          category = "tech";
+          category = "technical";
 
         return {
+          _id: e._id || e.id,
           name: e.title,
           category,
           startHour,

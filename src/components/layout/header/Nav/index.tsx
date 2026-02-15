@@ -9,28 +9,28 @@ import Magnetic from "@/components/layout/magnetic/Index";
 
 const navItems = [
   {
+    title: "Home",
+    href: "/",
+  },
+  {
     title: "About",
-    href: "#about",
+    href: "/#about",
   },
   {
     title: "Schedule",
-    href: "#schedule",
+    href: "/#schedule",
   },
   {
     title: "Artists",
-    href: "#artists",
-  },
-  {
-    title: "Gallery",
-    href: "#gallery",
+    href: "/#artists",
   },
   {
     title: "Sponsors",
-    href: "#sponsors",
+    href: "/#sponsors",
   },
   {
     title: "Contact",
-    href: "#contact",
+    href: "/#contact",
   },
   {
     title: "Events",
@@ -45,7 +45,7 @@ const navItems = [
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User, Ticket, ScanLine, LayoutDashboard, ChevronDown } from "lucide-react";
+import { LogOut, User, Ticket, ScanLine, LayoutDashboard, ChevronDown, Shield, Handshake, PenLine } from "lucide-react";
 import LinkNext from "next/link"; // Renamed to avoid conflict with local Link component
 
 // ... (navItems definition - mostly same but I'll filter it inside component)
@@ -62,8 +62,6 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
   const [isClubsDropdownOpen, setIsClubsDropdownOpen] = useState(false);
   const { data: session } = authClient.useSession();
   const hasClubs = clubRoles && clubRoles.length > 0;
-
-  console.log(clubRoles);
 
   // Ref for the menu container
   const menuRef = React.useRef<HTMLDivElement>(null);
@@ -93,7 +91,7 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
   const handleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/my-tickets"
+      callbackURL: pathname || "/",
     });
   };
 
@@ -162,21 +160,42 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="ml-6 mt-2 flex flex-col gap-2"
+                  className="ml-0 mt-2 flex flex-col gap-1.5"
                 >
-                  {clubRoles.map((role: any, i: number) => (
-                    <Link
-                      key={role.clubId}
-                      data={{
-                        title: role.clubId.toUpperCase(),
-                        href: `/club/${role.clubId}/dashboard`,
-                        index: navItems.length + i
-                      }}
-                      isActive={selectedIndicator == `/club/${role.clubId}/dashboard`}
-                      setSelectedIndicator={setSelectedIndicator}
-                      closeMenu={closeMenu}
-                    />
-                  ))}
+                  {clubRoles.map((role: any, i: number) => {
+                    const RoleIcon = role.role === "club-admin" ? Shield
+                      : role.role === "volunteer" ? Handshake
+                        : role.role === "event-editor" ? PenLine
+                          : LayoutDashboard;
+                    const roleLabel = role.role === "club-admin" ? "Admin"
+                      : role.role === "volunteer" ? "Volunteer"
+                        : role.role === "event-editor" ? "Editor"
+                          : role.role;
+                    return (
+                      <motion.div
+                        key={role.clubId}
+                        custom={navItems.length + i}
+                        variants={slide}
+                        initial="initial"
+                        animate="enter"
+                        exit="exit"
+                        onClick={closeMenu}
+                      >
+                        <LinkNext
+                          href={`/club/${role.clubId}/dashboard`}
+                          className={`flex items-center gap-2.5 py-1.5 px-4 rounded-md transition-colors group ${selectedIndicator === `/club/${role.clubId}/dashboard`
+                            ? "text-white"
+                            : "text-white/50 hover:text-white/80"
+                            }`}
+                          onMouseEnter={() => setSelectedIndicator(`/club/${role.clubId}/dashboard`)}
+                        >
+                          <RoleIcon size={14} className="shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                          <span className="text-sm font-light capitalize">{role.clubId}</span>
+                          <span className="text-[10px] opacity-40 group-hover:opacity-60 transition-opacity ml-auto">{roleLabel}</span>
+                        </LinkNext>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
               )}
             </div>

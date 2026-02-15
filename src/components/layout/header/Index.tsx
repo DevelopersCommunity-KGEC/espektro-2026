@@ -7,7 +7,6 @@ import Nav from "./Nav";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Rounded from "@/components/ui/rounded-button";
-// import Magnetic from "@/components/ui/magnetic";
 import { NavbarLinks } from "@/data/Navbar";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -29,6 +28,9 @@ interface HeaderProps {
   clubRoles?: any[];
 }
 
+// Routes where the Header should NOT render at all (they have their own navigation)
+const HIDDEN_ROUTES = ["/dashboard", "/login", "/onboarding"];
+
 export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProps) {
   const header = useRef(null);
   const [isActive, setIsActive] = useState(false);
@@ -38,6 +40,9 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
   const session = data;
   const userInfoRole = userRole || (session?.user as any)?.role;
 
+  const isLandingPage = pathname === "/";
+  const isHiddenRoute = HIDDEN_ROUTES.some((route) => pathname.startsWith(route));
+
   const handleSignOut = async () => {
     await authClient.signOut();
     window.location.href = "/";
@@ -46,7 +51,7 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
   const handleSignIn = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/my-tickets",
+      callbackURL: pathname || "/",
     });
   };
 
@@ -55,6 +60,9 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
   }, [pathname]);
 
   useLayoutEffect(() => {
+    // Only run GSAP scroll animations on the landing page
+    if (!isLandingPage) return;
+
     gsap.registerPlugin(ScrollTrigger);
     gsap.to(button.current, {
       scrollTrigger: {
@@ -101,170 +109,178 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
         },
       },
     });
-  }, []);
+  }, [isLandingPage]);
+
+  // Don't render on admin dashboard, login, or onboarding routes
+  if (isHiddenRoute) return null;
 
   return (
     <div className="w-[100%] z-50 nav">
-      <div ref={header} className={styles.header}>
-        <div className={styles.nav}>
-          {NavbarLinks.filter(link => link.url !== "/events").map((link, index) => (
-            <Magnetic key={index}>
-              <div className={styles.el}>
-                <a href={link.url}>{link.text}</a>
-                <div className={styles.indicator}></div>
-              </div>
-            </Magnetic>
-          ))}
-          {!session ? (
-            <Magnetic>
-              <div className={styles.el}>
-                <Button
-                  onClick={handleSignIn}
-                  className="bg-[#1C1D20] hover:bg-[#1C1D20]/90 text-white px-4 py-2 text-xs"
-                >
-                  Login
-                </Button>
-              </div>
-            </Magnetic>
-          ) : (
-            <div className="flex items-center gap-10">
-              {/* Events link */}
-              <Magnetic>
-                <div className={styles.el}>
-                  <a href="/events">Events</a>
-                  <div className={styles.indicator}></div>
-                </div>
-              </Magnetic>
-
-              {/* Club switcher dropdown */}
-              {clubRoles && clubRoles.length > 0 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <div className="cursor-pointer">
-                      <Magnetic>
-                        <div className={styles.el}>
-                          <div className="flex items-center gap-1">
-                            <LayoutDashboard className="h-3.5 w-3.5" />
-                            {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)) ? (
-                              <span className="capitalize">
-                                {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)).clubId}
-                              </span>
-                            ) : (
-                              <span>Clubs</span>
-                            )}
-                          </div>
-                          <div className={styles.indicator}></div>
-                        </div>
-                      </Magnetic>
+      {/* Inline header bar — only on landing page */}
+      {isLandingPage && (
+        <>
+          <div ref={header} className={styles.header}>
+            <div className={styles.nav}>
+              {NavbarLinks.filter(link => link.url !== "/events").map((link, index) => (
+                <Magnetic key={index}>
+                  <div className={styles.el}>
+                    <a href={link.url}>{link.text}</a>
+                    <div className={styles.indicator}></div>
+                  </div>
+                </Magnetic>
+              ))}
+              {!session ? (
+                <Magnetic>
+                  <div className={styles.el}>
+                    <Button
+                      onClick={handleSignIn}
+                      className="bg-[#1C1D20] hover:bg-[#1C1D20]/90 text-white px-4 py-2 text-xs"
+                    >
+                      Login
+                    </Button>
+                  </div>
+                </Magnetic>
+              ) : (
+                <div className="flex items-center gap-10">
+                  {/* Events link */}
+                  <Magnetic>
+                    <div className={styles.el}>
+                      <a href="/events">Events</a>
+                      <div className={styles.indicator}></div>
                     </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    sideOffset={8}
-                  >
-                    <DropdownMenuLabel>
-                      Switch Club
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {clubRoles.map((cr) => (
-                      <DropdownMenuItem
-                        key={cr.clubId}
-                        asChild
-                        className="focus:bg-primary/10 focus:text-primary focus:outline-none"
+                  </Magnetic>
+
+                  {/* Club switcher dropdown */}
+                  {clubRoles && clubRoles.length > 0 && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="cursor-pointer">
+                          <Magnetic>
+                            <div className={styles.el}>
+                              <div className="flex items-center gap-1">
+                                <LayoutDashboard className="h-3.5 w-3.5" />
+                                {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)) ? (
+                                  <span className="capitalize">
+                                    {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)).clubId}
+                                  </span>
+                                ) : (
+                                  <span>Clubs</span>
+                                )}
+                              </div>
+                              <div className={styles.indicator}></div>
+                            </div>
+                          </Magnetic>
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        sideOffset={8}
                       >
-                        <a
-                          href={`/club/${cr.clubId}/dashboard`}
-                          className="flex justify-between items-center w-full"
-                        >
-                          <span className="capitalize">
-                            {cr.clubId}
-                          </span>
-                          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
-                            {cr.role.replace(
-                              "-",
-                              " "
-                            )}
-                          </span>
+                        <DropdownMenuLabel>
+                          Switch Club
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {clubRoles.map((cr) => (
+                          <DropdownMenuItem
+                            key={cr.clubId}
+                            asChild
+                            className="focus:bg-primary/10 focus:text-primary focus:outline-none"
+                          >
+                            <a
+                              href={`/club/${cr.clubId}/dashboard`}
+                              className="flex justify-between items-center w-full"
+                            >
+                              <span className="capitalize">
+                                {cr.clubId}
+                              </span>
+                              <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
+                                {cr.role.replace(
+                                  "-",
+                                  " "
+                                )}
+                              </span>
+                            </a>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
+                        <Avatar className="h-9 w-9">
+                          <AvatarImage src={session.user?.image || ""} alt={session.user?.name || "User"} />
+                          <AvatarFallback>{session.user?.name?.charAt(0) || "U"}</AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 bg-background" align="end" forceMount>
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">{session.user?.name}</p>
+                          <p className="text-xs leading-none text-muted-foreground">{session.user?.email}</p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                        <a href="/my-tickets" className="cursor-pointer">
+                          <Ticket className="mr-2 h-4 w-4" />
+                          <span>My Tickets</span>
                         </a>
                       </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                        <a href="/profile" className="cursor-pointer">
+                          <User className="mr-2 h-4 w-4" />
+                          <span>Profile</span>
+                        </a>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                        <a href="/scan" className="cursor-pointer">
+                          <ScanLine className="mr-2 h-4 w-4" />
+                          <span>Scan Ticket</span>
+                        </a>
+                      </DropdownMenuItem>
+                      {((session.user as any)?.role === "admin" || (session.user as any)?.role === "super-admin") && (
+                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                          <a href="/dashboard" className="cursor-pointer">
+                            <LayoutDashboard className="mr-2 h-4 w-4" />
+                            <span>Admin Dashboard</span>
+                          </a>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={handleSignOut}
+                        className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 focus:outline-none focus:[&_svg]:text-destructive"
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               )}
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
-                    <Avatar className="h-9 w-9">
-                      <AvatarImage src={session.user?.image || ""} alt={session.user?.name || "User"} />
-                      <AvatarFallback>{session.user?.name?.charAt(0) || "U"}</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-background" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{session.user?.name}</p>
-                      <p className="text-xs leading-none text-muted-foreground">{session.user?.email}</p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                    <a href="/my-tickets" className="cursor-pointer">
-                      <Ticket className="mr-2 h-4 w-4" />
-                      <span>My Tickets</span>
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                    <a href="/profile" className="cursor-pointer">
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                    </a>
-                  </DropdownMenuItem>
-                  {/* Scan Ticket logic */}
-                  <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                    <a href="/scan" className="cursor-pointer">
-                      <ScanLine className="mr-2 h-4 w-4" />
-                      <span>Scan Ticket</span>
-                    </a>
-                  </DropdownMenuItem>
-                  {((session.user as any)?.role === "admin" || (session.user as any)?.role === "super-admin") && (
-                    <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                      <a href="/dashboard" className="cursor-pointer">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>Admin Dashboard</span>
-                      </a>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={handleSignOut}
-                    className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 focus:outline-none focus:[&_svg]:text-destructive"
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
-          )}
-        </div>
-        <div className={styles.menuSmall}>
-          {!isActive && (
-            <Magnetic>
-              <div
-                onClick={() => {
-                  setIsActive(!isActive);
-                }}
-                className={styles.el}
-              >
-                <p>Menu</p>
-                <div className={styles.indicator}></div>
-              </div>
-            </Magnetic>
-          )}
-        </div>
-      </div>
+            <div className={styles.menuSmall}>
+              {!isActive && (
+                <Magnetic>
+                  <div
+                    onClick={() => {
+                      setIsActive(!isActive);
+                    }}
+                    className={styles.el}
+                  >
+                    <p>Menu</p>
+                    <div className={styles.indicator}></div>
+                  </div>
+                </Magnetic>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+      {/* Active nav button (shown when sidebar is open, on all pages) */}
       {isActive && (
         <div className={styles.navButton}>
           <Rounded
@@ -280,21 +296,42 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
           </Rounded>
         </div>
       )}
-      <div ref={button} className={styles.headerButtonContainer}>
-        <Magnetic>
-          <Rounded
-            onClick={() => {
-              setIsActive(!isActive);
-            }}
-            className={`${styles.button}`}
-          >
-            <div
-              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                }`}
-            ></div>
-          </Rounded>
-        </Magnetic>
-      </div>
+      {/* Floating hamburger button */}
+      {isLandingPage ? (
+        // Landing: GSAP-controlled, starts at scale(0) and appears after scrolling
+        <div ref={button} className={styles.headerButtonContainer}>
+          <Magnetic>
+            <Rounded
+              onClick={() => {
+                setIsActive(!isActive);
+              }}
+              className={`${styles.button}`}
+            >
+              <div
+                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                  }`}
+              ></div>
+            </Rounded>
+          </Magnetic>
+        </div>
+      ) : (
+        // Inner pages: always visible at scale(1)
+        <div className={styles.headerButtonContainer} style={{ transform: "scale(1)" }}>
+          <Magnetic>
+            <Rounded
+              onClick={() => {
+                setIsActive(!isActive);
+              }}
+              className={`${styles.button}`}
+            >
+              <div
+                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                  }`}
+              ></div>
+            </Rounded>
+          </Magnetic>
+        </div>
+      )}
       <AnimatePresence mode="wait">{isActive && <Nav clubRoles={clubRoles} userRole={userInfoRole} closeMenu={() => setIsActive(false)} />}</AnimatePresence>
     </div>
   );
