@@ -133,10 +133,21 @@ export default function ScanPage() {
             isMounted = false;
             if (scannerRef.current) {
                 const instance = scannerRef.current;
-                // We don't await here because cleanup must be synchronous-ish
-                instance.stop()
-                    .then(() => instance.clear())
-                    .catch((err) => console.warn("Scanner cleanup error", err));
+                scannerRef.current = null;
+                try {
+                    const state = instance.getState();
+                    // Only stop if actually scanning or paused (states 2 and 3)
+                    if (state === 2 || state === 3) {
+                        instance.stop()
+                            .then(() => { try { instance.clear(); } catch (_) { } })
+                            .catch(() => { try { instance.clear(); } catch (_) { } });
+                    } else {
+                        try { instance.clear(); } catch (_) { }
+                    }
+                } catch (_) {
+                    // getState itself may throw if scanner is in a bad state
+                    try { instance.clear(); } catch (_e) { }
+                }
             }
         };
     }, [isScanning, facingMode]);
