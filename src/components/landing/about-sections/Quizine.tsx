@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 const Quizine: React.FC = () => {
   return (
-    <section className={styles.about_section}>
+    <section className={`${styles.about_section} bg-cover bg-center bg-no-repeat bg-[url('/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png')]`}>
       <div className={styles.about_main_section}>
         <div className={styles.about_img_grid_container}>
           <motion.div

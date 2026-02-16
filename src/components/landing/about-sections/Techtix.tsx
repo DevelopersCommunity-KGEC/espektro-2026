@@ -3,59 +3,64 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import styles from './about-sections.module.scss';
-import clsx from 'clsx';
 
 const Techtix: React.FC = () => {
   return (
-    <section className={styles.about_section}>
-      <div className={styles.about_main_section}>
-        <div className={styles.about_img_grid_container}>
+    <section className="relative flex justify-center items-center w-full flex-col overflow-hidden text-foreground py-16 px-3 bg-cover bg-center bg-no-repeat bg-[url('/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png')] bg-white">
+      <div className="flex justify-center items-center flex-col w-full h-min">
+        <div className="flex flex-col w-full max-w-[1400px] mx-auto gap-8 p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
           <motion.div
-            className={styles.imgtwo}
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
+            className="flex-1 text-left pr-0 lg:pr-8"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Image
-              src="https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705035889/espektro/2023/about/techtix.webp"
-              alt="Techtix technical event"
-              fill
-              className={styles.about_img}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            <h3 className="text-xl text-[#333] tracking-wide mb-2 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">Technical Excellence</h3>
+            <h1 className="text-6xl text-[#1a1a1a] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">Techtix</h1>
+            <p className="text-base leading-relaxed text-[#555] font-[family-name:var(--font-open-sans)]">
+              The technical heartbeat of Espektro where innovation meets competition. Experience cutting-edge technology through coding marathons and tech showcases.
+              <br /><br />
+              From AI workshops to hackathons, Techtix brings together the brightest minds.
+            </p>
           </motion.div>
-          {/* <motion.div
-            className={styles.imgthree}
-            initial={{ opacity: 0, scale: 0.5, x: 50 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1 }}
+
+          <motion.div
+            className="flex-[1.5] grid grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.5fr] grid-rows-[auto_auto_auto] gap-4 w-full"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="w-[80%]">
-              <img
-                src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742233725/download_14_hgxhex.png"
-                alt="Techtix decorative image"
-                className={styles.about_img}
-              />
+            {/* Top Row */}
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
             </div>
-          </motion.div> */}
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+
+            {/* Second Row Starts */}
+            {/* Column 1 items */}
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+
+            {/* Big items */}
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-2 h-auto">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-2 h-auto">
+              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+            </div>
+          </motion.div>
         </div>
-        <motion.div
-          className={styles.about_content_section}
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="font-serif">
-            <span className="text-[#B7410E] text-2xl font-bold">Techtix</span> serves as the technical cornerstone of Espektro, immersing participants in a diverse variety of activities throughout the day. Organized by the college's technical clubs, this segment showcases a spectrum of <span className="text-[#B7410E]">compelling games and interactive challenges.</span>
-          </div>
-          <p className="mt-4">
-            Participants are afforded the opportunity to demonstrate their skills, engage in friendly competition, and immerse themselves in hands-on experiences. From <span className="text-[#B7410E] font-bold">innovative workshops to competitive events</span>, Techtix is designed to captivate and challenge attendees, fostering a spirit of ingenuity and collaboration.
-          </p>
-        </motion.div>
       </div>
     </section>
   );
