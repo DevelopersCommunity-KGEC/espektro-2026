@@ -2,12 +2,26 @@
 
 import dbConnect from "@/lib/db";
 import Event from "@/models/Event";
+import Ticket from "@/models/Ticket";
 
 export async function getPublicEvents() {
   await dbConnect();
   const events = await Event.find({ isVisible: true }).sort({ date: 1 });
 
-  const eventsList = JSON.parse(JSON.stringify(events));
+  // const eventsList = JSON.parse(JSON.stringify(events));
+  // Manually compute ticketsSold for each event
+  const eventsList = await Promise.all(
+    events.map(async (event) => {
+      const soldCount = await Ticket.countDocuments({
+        eventId: event._id,
+        status: { $in: ["booked", "checked-in"] },
+      });
+      return {
+        ...JSON.parse(JSON.stringify(event)),
+        ticketsSold: soldCount,
+      };
+    }),
+  );
 
   // Construct Season Pass
   const festDays = eventsList.filter((e: any) => e.type === "fest-day");
@@ -67,7 +81,19 @@ export async function getPublicEventById(id: string) {
     }).sort({ date: 1 });
     if (!festDays || festDays.length === 0) return null;
 
-    const festDaysJson = JSON.parse(JSON.stringify(festDays));
+    // Calculate ticketsSold for each festDay
+    const festDaysJson = await Promise.all(
+      festDays.map(async (event) => {
+        const soldCount = await Ticket.countDocuments({
+          eventId: event._id,
+          status: { $in: ["booked", "checked-in"] },
+        });
+        return {
+          ...JSON.parse(JSON.stringify(event)),
+          ticketsSold: soldCount,
+        };
+      }),
+    );
 
     const totalPrice = festDaysJson.reduce(
       (acc: number, curr: any) => acc + curr.price,
@@ -111,5 +137,12 @@ export async function getPublicEventById(id: string) {
 
   const event = await Event.findOne({ _id: id, isVisible: true });
   // console.log(event);
-  return event ? JSON.parse(JSON.stringify(event)) : null;
+  if (!event) return null;
+
+  const ticketsSold = await Ticket.countDocuments({
+    eventId: event._id,
+    status: { $in: ["booked", "checked-in"] },
+  });
+
+  return { ...JSON.parse(JSON.stringify(event)), ticketsSold };
 }

@@ -108,8 +108,14 @@ export async function bookTicket(eventId: string) {
     }
   }
 
-  if (event.capacity !== -1 && event.ticketsSold >= event.capacity) {
-    throw new Error("Event is sold out");
+  if (event.capacity !== -1) {
+    const sold = await Ticket.countDocuments({
+      eventId: event._id,
+      status: { $in: ["booked", "checked-in"] },
+    });
+    if (sold >= event.capacity) {
+      throw new Error("Event is sold out");
+    }
   }
 
   // Create pending ticket
@@ -177,8 +183,7 @@ export async function confirmPayment(ticketId: string) {
   ticket.qrCodeToken = newToken;
   await ticket.save();
 
-  // Update event count
-  await Event.findByIdAndUpdate(ticket.eventId, { $inc: { ticketsSold: 1 } });
+  // Update event count (handled dynamically now)
 
   return { success: true };
 }
