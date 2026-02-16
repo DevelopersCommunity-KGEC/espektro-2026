@@ -25,8 +25,8 @@ export const VENUES = [
       "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d809.4903233473802!2d88.44832010507388!3d22.99217863656635!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8952d3e53cbb3%3A0x7dab2090a0befbd7!2sDepartment%20of%20Electrical%20Engineering%2C%20K.G.E.C.!5e0!3m2!1sen!2sin!4v1771067716986!5m2!1sen!2sin",
   },
   {
-    name: "Mechanical Building",
+    name: "SAC Workshop",
     map_iframe:
-      "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d268.71963303443795!2d88.44835874325615!3d22.99245482866009!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8952d3cf22e79%3A0xe046265f84b24cc0!2sXCRX%2BW9R%2C%20University%20Of%20Kalyani%2C%20Kalyani%2C%20West%20Bengal%20741235!5e0!3m2!1sen!2sin!4v1771067839129!5m2!1sen!2sin",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.848757395964!2d88.44621577469984!3d22.992588417447575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895c44da51e53%3A0xc7487146dab9af4e!2sSAC%20KGEC!5e0!3m2!1sen!2sin!4v1771158328744!5m2!1sen!2sin",
   },
 ];

@@ -375,7 +375,11 @@ async function createTicketForEvent(
   issuedBy?: string,
   issueType: "manual" | "pass" = "manual",
 ) {
-  if (event.capacity !== -1 && event.ticketsSold >= event.capacity) {
+  const soldCount = await TicketModel.countDocuments({
+    eventId: event._id,
+    status: { $in: ["booked", "checked-in"] },
+  });
+  if (event.capacity !== -1 && soldCount >= event.capacity) {
     throw new Error(`Event ${event.title} is sold out`);
   }
 
@@ -393,7 +397,6 @@ async function createTicketForEvent(
     price: event.price,
   });
 
-  await EventModel.findByIdAndUpdate(event._id, { $inc: { ticketsSold: 1 } });
   return ticket;
 }
 
@@ -476,12 +479,30 @@ export async function getEvents() {
     club: clubMap.get(event.clubId) || null,
   }));
 
+  // Fetch ticket counts for each event
+  await Promise.all(
+    populatedEvents.map(async (e: any) => {
+      e.ticketsSold = await TicketModel.countDocuments({
+        eventId: e._id,
+        status: { $in: ["booked", "checked-in"] },
+      });
+    }),
+  );
+
   return JSON.parse(JSON.stringify(populatedEvents));
 }
 
 export async function getClubEvents(clubId: string) {
   await dbConnect();
-  const events = await EventModel.find({ clubId }).sort({ date: 1 });
+  const events = await EventModel.find({ clubId }).sort({ date: 1 }).lean();
+  await Promise.all(
+    events.map(async (e: any) => {
+      e.ticketsSold = await TicketModel.countDocuments({
+        eventId: e._id,
+        status: { $in: ["booked", "checked-in"] },
+      });
+    }),
+  );
   return JSON.parse(JSON.stringify(events));
 }
 
@@ -510,6 +531,13 @@ export async function getClubTeam(clubId: string) {
 
 export async function getEventById(id: string) {
   await dbConnect();
-  const event = await EventModel.findById(id);
+  const event = await EventModel.findById(id).lean();
+  if (event) {
+    const soldCount = await TicketModel.countDocuments({
+      eventId: event._id,
+      status: { $in: ["booked", "checked-in"] },
+    });
+    event.ticketsSold = soldCount;
+  }
   return event ? JSON.parse(JSON.stringify(event)) : null;
 }

@@ -27,17 +27,26 @@ export async function getAnalyticsData() {
       },
     ]);
 
-    const revenueMap = new Map(
-      revenueStats.map((stat) => [stat._id.toString(), stat.revenue]),
+    const revenueMap = new Map<string, number>(
+      revenueStats.map((stat: any) => [stat._id.toString(), stat.revenue]),
+    );
+
+    // Aggregate ticket counts per event
+    const ticketCounts = await Ticket.aggregate([
+      { $match: { status: { $in: ["booked", "checked-in"] } } },
+      { $group: { _id: "$eventId", count: { $sum: 1 } } },
+    ]);
+    const ticketsSoldMap = new Map<string, number>(
+      ticketCounts.map((tc: any) => [tc._id.toString(), tc.count]),
     );
 
     // Calculate aggregate metrics
-    const totalTicketsSold = events.reduce(
-      (acc, event) => acc + (event.ticketsSold || 0),
+    const totalTicketsSold = Array.from(ticketsSoldMap.values()).reduce(
+      (acc: number, val: number) => acc + val,
       0,
     );
     const totalRevenue = Array.from(revenueMap.values()).reduce(
-      (acc, val) => acc + val,
+      (acc: number, val: number) => acc + val,
       0,
     );
 
@@ -52,23 +61,24 @@ export async function getAnalyticsData() {
       { $group: { _id: "$eventId", count: { $sum: 1 } } },
     ]);
 
-    const checkInMap = new Map(
-      checkInStats.map((stat) => [stat._id.toString(), stat.count]),
+    const checkInMap = new Map<string, number>(
+      checkInStats.map((stat: any) => [stat._id.toString(), stat.count]),
     );
 
     // Format event data for table
     const eventStats = events.map((event: any) => {
       const checkedInCount = checkInMap.get(event._id.toString()) || 0;
+      const soldCount = ticketsSoldMap.get(event._id.toString()) || 0;
       return {
         id: event._id.toString(),
         title: event.title,
         clubId: event.clubId,
-        ticketsSold: event.ticketsSold || 0,
+        ticketsSold: soldCount,
         checkedInCount,
         revenue: revenueMap.get(event._id.toString()) || 0,
         capacity: event.capacity,
         occupancy: event.capacity
-          ? Math.round(((event.ticketsSold || 0) / event.capacity) * 100)
+          ? Math.round((soldCount / event.capacity) * 100)
           : 0,
       };
     });
