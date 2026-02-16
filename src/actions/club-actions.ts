@@ -108,9 +108,6 @@ export async function createManualTicket(data: CreateManualTicketData) {
 
   await newTicket.save();
 
-  // Increment tickets sold
-  await Event.findByIdAndUpdate(eventId, { $inc: { ticketsSold: 1 } });
-
   return { success: true, message: "Ticket created successfully" };
 }
 

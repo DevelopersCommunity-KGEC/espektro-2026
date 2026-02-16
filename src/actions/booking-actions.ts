@@ -41,10 +41,20 @@ export async function createOrder(
 
     // Calculate total price
     const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
+
     // Check bundle availability (if any day is sold out, bundle is sold out)
-    const isSoldOut = festDays.some(
-      (e) => e.capacity !== -1 && e.ticketsSold >= e.capacity,
-    );
+    const isSoldOut = (
+      await Promise.all(
+        festDays.map(async (e) => {
+          const sold = await Ticket.countDocuments({
+            eventId: e._id,
+            status: { $in: ["booked", "checked-in"] },
+          });
+          return e.capacity !== -1 && sold >= e.capacity;
+        }),
+      )
+    ).some(Boolean);
+
     if (isSoldOut)
       throw new Error(
         "One or more fest days are sold out. Season pass unavailable.",
@@ -87,8 +97,13 @@ export async function createOrder(
       }
     }
 
-    if (event.capacity !== -1 && event.ticketsSold >= event.capacity)
-      throw new Error("Event is sold out");
+    if (event.capacity !== -1) {
+      const sold = await Ticket.countDocuments({
+        eventId: eventId,
+        status: { $in: ["booked", "checked-in"] },
+      });
+      if (sold >= event.capacity) throw new Error("Event is sold out");
+    }
 
     // Validate Team Size
     if (teamMembers && teamMembers.length > 0) {
@@ -144,16 +159,16 @@ export async function createOrder(
   }
 
   // Handle Payment Bypass (Dev Mode)
-  if (process.env.BYPASS_PAYMENT === "true") {
-    return {
-      orderId: "BYPASS_" + uuidv4(),
-      amount: finalPrice,
-      currency: "INR",
-      key: "PAYMENT_BYPASS",
-      couponCode,
-      checkoutUrl: null,
-    };
-  }
+  // if (process.env.BYPASS_PAYMENT === "true") {
+  //   return {
+  //     orderId: "BYPASS_" + uuidv4(),
+  //     amount: finalPrice,
+  //     currency: "INR",
+  //     key: "PAYMENT_BYPASS",
+  //     couponCode,
+  //     checkoutUrl: null,
+  //   };
+  // }
 
   // Dodo Payments Session Creation
   try {
@@ -297,31 +312,18 @@ export async function verifyPayment(
       const reservedEventIds: string[] = [];
       const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
 
-      // 2. Reserve spots for all events
+      // 2. Check capacity for all events
       for (const event of festDays) {
-        const updated = await Event.findOneAndUpdate(
-          {
-            _id: event._id,
-            $expr: {
-              $or: [
-                { $eq: ["$capacity", -1] },
-                { $lt: ["$ticketsSold", "$capacity"] },
-              ],
-            },
-          },
-          { $inc: { ticketsSold: 1 } },
-          { new: true },
-        );
+        if (event.capacity === -1) continue;
 
-        if (!updated) {
-          // Rollback previously reserved
-          await Event.updateMany(
-            { _id: { $in: reservedEventIds } },
-            { $inc: { ticketsSold: -1 } },
-          );
+        const soldCount = await Ticket.countDocuments({
+          eventId: event._id,
+          status: { $in: ["booked", "checked-in"] },
+        });
+
+        if (soldCount >= event.capacity) {
           throw new Error(`Sold out: ${event.title}. Bundle purchase failed.`);
         }
-        reservedEventIds.push(event._id.toString());
       }
 
       // Determine discount percentage if coupon was used
@@ -443,25 +445,20 @@ export async function verifyPayment(
   }
 
   try {
-    // Atomic check and increment
-    const event = await Event.findOneAndUpdate(
-      {
-        _id: eventId,
-        $expr: {
-          $or: [
-            { $eq: ["$capacity", -1] },
-            { $lt: ["$ticketsSold", "$capacity"] },
-          ],
-        },
-      },
-      { $inc: { ticketsSold: 1 } },
-      { new: true },
-    );
+    // Check Capacity
+    const event = await Event.findById(eventId);
+    if (!event) throw new Error("Event not found");
 
-    if (!event) {
-      throw new Error(
-        "Event capacity reached. Please contact support for refund.",
-      );
+    if (event.capacity !== -1) {
+      const soldCount = await Ticket.countDocuments({
+        eventId: eventId,
+        status: { $in: ["booked", "checked-in"] },
+      });
+      if (soldCount >= event.capacity) {
+        throw new Error(
+          "Event capacity reached. Please contact support for refund.",
+        );
+      }
     }
 
     if (teamMembers && teamMembers.length > 0) {

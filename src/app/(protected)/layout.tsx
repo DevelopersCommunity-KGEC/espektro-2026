@@ -12,7 +12,10 @@ export default async function ProtectedLayout({
     });
 
     if (!session) {
-        redirect("/login");
+        // Read the current path from the x-next-url header set by Next.js
+        const headersList = await headers();
+        const currentPath = headersList.get("x-next-url") || headersList.get("referer") || "/my-tickets";
+        redirect(`/login?callbackUrl=${encodeURIComponent(currentPath)}`);
     }
 
     return (

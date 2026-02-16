@@ -27,7 +27,9 @@ export function middleware(request: NextRequest) {
   }
 
   if (isProtected && !sessionToken) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   return response;

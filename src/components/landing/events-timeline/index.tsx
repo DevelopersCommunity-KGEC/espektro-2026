@@ -1,27 +1,25 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { DaySchedule } from "@/types/landing";
+import { CLUB_CATEGORIES } from "@/data/config";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const HOUR_START = 0;
 const HOUR_END = 24;
 const TOTAL_HOURS = HOUR_END - HOUR_START;
 
-const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
-    tech: { bg: "bg-[#2E7D9B]/15", text: "text-[#2E7D9B]", border: "border-[#2E7D9B]/40" },
-    cultural: { bg: "bg-[#B7410E]/15", text: "text-[#B7410E]", border: "border-[#B7410E]/40" },
-    food: { bg: "bg-[#F4A900]/15", text: "text-[#F4A900]", border: "border-[#F4A900]/40" },
-    gaming: { bg: "bg-[#4A7C59]/15", text: "text-[#4A7C59]", border: "border-[#4A7C59]/40" },
-    ceremony: { bg: "bg-foreground/5", text: "text-muted-foreground", border: "border-border" },
-};
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = Object.entries(CLUB_CATEGORIES).reduce((acc, [key, value]) => {
+    acc[key] = value.color;
+    return acc;
+}, {} as any);
 
-const categoryLabels: Record<string, string> = {
-    tech: "Tech",
-    cultural: "Cultural",
-    food: "Food",
-    gaming: "Gaming",
-    ceremony: "Ceremony",
-};
+const categoryLabels: Record<string, string> = Object.entries(CLUB_CATEGORIES).reduce((acc, [key, value]) => {
+    acc[key] = value.label;
+    return acc;
+}, {} as any);
 
 const hours = Array.from({ length: TOTAL_HOURS }, (_, i) => {
     const h = HOUR_START + i;
@@ -36,11 +34,30 @@ interface EventsTimelineProps {
 
 export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
     const containerRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const innerRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const [activeDay, setActiveDay] = useState(0);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+    const [tooltipData, setTooltipData] = useState<{ x: number; y: number; event: any } | null>(null);
+    const [headerHeight, setHeaderHeight] = useState(0);
+
+    // Measure header height on mount and resize
+    useEffect(() => {
+        if (headerRef.current) {
+            setHeaderHeight(headerRef.current.offsetHeight);
+        }
+        const handleResize = () => {
+            if (headerRef.current) {
+                setHeaderHeight(headerRef.current.offsetHeight);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [scheduleData, activeDay]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -74,8 +91,9 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             const target = event.target as HTMLElement;
-            if (!target.closest(".event-bar")) {
+            if (!target.closest(".event-bar") && !target.closest("#timeline-tooltip")) {
                 setSelectedEvent(null);
+                setTooltipData(null);
             }
         };
 
@@ -102,6 +120,51 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
     }
 
     const currentSchedule = scheduleData[activeDay] || scheduleData[0];
+
+    // Auto-scroll to closest event / current time
+    useEffect(() => {
+        const scrollContainer = scrollRef.current;
+        const inner = innerRef.current;
+        if (!scrollContainer || !inner || !currentSchedule) return;
+
+        const todayStr = currentTime.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+        });
+
+        const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
+
+        let leftPct: number | null = null;
+
+        if (currentSchedule.date === todayStr) {
+            // Center on current time
+            leftPct = ((nowHour - HOUR_START) / TOTAL_HOURS) * 100;
+        } else {
+            // Find closest event center in current schedule
+            if (currentSchedule.events && currentSchedule.events.length > 0) {
+                let best = currentSchedule.events[0];
+                let bestDiff = Math.abs((best.startHour + best.duration / 2) - nowHour);
+                for (const ev of currentSchedule.events) {
+                    const center = ev.startHour + ev.duration / 2;
+                    const diff = Math.abs(center - nowHour);
+                    if (diff < bestDiff) {
+                        best = ev;
+                        bestDiff = diff;
+                    }
+                }
+                const center = best.startHour + best.duration / 2;
+                leftPct = ((center - HOUR_START) / TOTAL_HOURS) * 100;
+            }
+        }
+
+        if (leftPct === null) return;
+
+        const totalWidth = inner.scrollWidth;
+        const target = (leftPct / 100) * totalWidth;
+        const scrollLeft = Math.max(0, target - scrollContainer.clientWidth / 2);
+
+        scrollContainer.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }, [scheduleData, activeDay, currentTime, currentSchedule]);
 
     return (
         <section
@@ -184,10 +247,10 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                     className={`bg-card border border-border rounded-2xl overflow-hidden transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
                     {/* Time header */}
-                    <div className="overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-                        <div style={{ minWidth: "900px" }}>
+                    <div ref={scrollRef} className="overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+                        <div ref={innerRef} className="relative" style={{ minWidth: "900px" }}>
                             {/* Hour labels */}
-                            <div className="flex border-b border-border">
+                            <div ref={headerRef} className="flex border-b border-border">
                                 {/* Left gutter for event labels */}
                                 <div className="w-36 lg:w-44 flex-shrink-0 border-r border-border px-4 py-3">
                                     <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
@@ -209,7 +272,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                             </div>
 
                             {/* Event rows */}
-                            {currentSchedule.events.map((event) => {
+                            {currentSchedule.events.map((event, idx) => {
                                 const leftPct =
                                     ((event.startHour - HOUR_START) / TOTAL_HOURS) * 100;
                                 const widthPct = (event.duration / TOTAL_HOURS) * 100;
@@ -251,9 +314,11 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                                     className="absolute top-0 bottom-0 w-px bg-red-500 z-20 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
                                                                     style={{ left: `${left}%` }}
                                                                 >
-                                                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full px-1.5 py-0.5 bg-red-500 text-[8px] text-white rounded-sm font-bold whitespace-nowrap">
-                                                                        NOW
-                                                                    </div>
+                                                                    {idx === 0 && (
+                                                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full px-1.5 py-0.5 bg-red-500 text-[8px] text-white rounded-sm font-bold whitespace-nowrap">
+                                                                            NOW
+                                                                        </div>
+                                                                    )}
                                                                 </div>
                                                             );
                                                         }
@@ -265,7 +330,18 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                             <div
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    setSelectedEvent(selectedEvent === event.name ? null : event.name);
+                                                    if (selectedEvent === event.name) {
+                                                        setSelectedEvent(null);
+                                                        setTooltipData(null);
+                                                    } else {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        setSelectedEvent(event.name);
+                                                        setTooltipData({
+                                                            x: rect.left + rect.width / 2,
+                                                            y: rect.top,
+                                                            event: event,
+                                                        });
+                                                    }
                                                 }}
                                                 className={`event-bar relative h-10 rounded-md ${c.bg} border ${c.border} flex items-center px-3 transition-all duration-300 group-hover:shadow-md cursor-pointer active:scale-[0.98] ${(() => {
                                                     const todayStr = currentTime.toLocaleDateString("en-US", {
@@ -295,14 +371,6 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                         </span>
                                                     )}
                                                 </span>
-
-                                                {/* Time Badge - shown above bar when clicked */}
-                                                {selectedEvent === event.name && (
-                                                    <div className="absolute bottom-[calc(100%+8px)] left-0 bg-popover text-popover-foreground border border-border px-2 py-1 rounded shadow-xl text-[9px] font-bold whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200">
-                                                        <div className="absolute -bottom-1 left-4 w-2 h-2 bg-popover border-b border-r border-border rotate-45" />
-                                                        {formatTime(event.startHour)} - {formatTime(event.startHour + event.duration)}
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -316,7 +384,69 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 <p className="text-center text-xs text-muted-foreground mt-4 lg:hidden">
                     Scroll horizontally to see the full schedule
                 </p>
+
+                {tooltipData && (
+                    <PortalTooltip x={tooltipData.x} y={tooltipData.y}>
+                        <div
+                            id="timeline-tooltip"
+                            className="bg-popover text-popover-foreground border border-border px-3 py-2 rounded-md shadow-xl min-w-[140px] animate-in fade-in zoom-in-95 duration-200 flex flex-col gap-1 pointer-events-auto"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="text-[10px] font-bold text-muted-foreground">
+                                {formatTime(tooltipData.event.startHour)} - {formatTime(tooltipData.event.startHour + tooltipData.event.duration)}
+                            </div>
+                            {tooltipData.event._id ? (
+                                <Link
+                                    href={`/events/${tooltipData.event._id}`}
+                                    className="text-[10px] font-medium text-primary hover:underline group/link block"
+                                >
+                                    <div className="font-semibold text-xs mb-1 line-clamp-2 flex items-center gap-1">
+                                        {tooltipData.event.name}
+                                        <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-0.5" />
+                                    </div>
+                                </Link>
+                            ) : (
+                                <div className="font-semibold text-xs mb-1 line-clamp-2">
+                                    {tooltipData.event.name}
+                                </div>
+                            )}
+                        </div>
+                    </PortalTooltip>
+                )}
             </div>
         </section>
+    );
+}
+
+function PortalTooltip({ children, x, y }: { children: React.ReactNode; x: number; y: number }) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
+
+    // Shift tooltip to be above the point (y) and centered on x
+    // Add some offset (e.g. 10px above)
+    // We render at top/left but use transform to center
+    // Using inline style for positioning
+    return createPortal(
+        <div
+            style={{
+                position: "fixed",
+                top: y - 10,
+                left: x,
+                transform: "translate(-50%, -100%)", // Centered horizontally, moved up by 100% of its height
+                zIndex: 60, // Higher than navbar usually
+            }}
+        >
+            {children}
+            {/* Arrow */}
+            <div
+                className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 w-2 h-2 bg-popover border-b border-r border-border rotate-45"
+            />
+        </div>,
+        document.body
     );
 }

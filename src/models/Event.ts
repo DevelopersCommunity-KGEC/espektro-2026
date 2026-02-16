@@ -8,11 +8,11 @@ export interface IEvent extends Document {
   venue: string;
   price: number;
   capacity: number;
-  ticketsSold: number;
   isVisible: boolean;
   clubId: string; // Reference to Club.clubId
   maxTeamSize: number;
   allowMultipleBookings: boolean;
+  allowBooking: boolean;
   editors: string[]; // Array of User Emails
   type: "fest-day" | "event";
   winners?: {
@@ -30,11 +30,11 @@ const EventSchema: Schema = new Schema({
   venue: { type: String, required: true },
   price: { type: Number, required: true },
   capacity: { type: Number, required: true },
-  ticketsSold: { type: Number, default: 0 },
   isVisible: { type: Boolean, default: true },
   clubId: { type: String, required: true },
   maxTeamSize: { type: Number, default: 1 },
   allowMultipleBookings: { type: Boolean, default: false },
+  allowBooking: { type: Boolean, default: true },
   editors: [{ type: String }],
   type: {
     type: String,
