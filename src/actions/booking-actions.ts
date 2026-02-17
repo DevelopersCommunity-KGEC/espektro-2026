@@ -13,10 +13,12 @@ import { validateUserReferral } from "@/lib/referral";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+const getRazorpay = () => {
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID!,
+    key_secret: process.env.RAZORPAY_KEY_SECRET!,
+  });
+};
 
 async function getSession() {
   return await auth.api.getSession({
@@ -166,6 +168,7 @@ export async function createOrder(
 
   // Razorpay Order Creation
   try {
+    const razorpay = getRazorpay();
     const order = await razorpay.orders.create({
       amount: finalPrice * 100, // Razorpay expects amount in paise
       currency: "INR",
