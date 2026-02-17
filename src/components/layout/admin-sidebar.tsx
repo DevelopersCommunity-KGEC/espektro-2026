@@ -50,7 +50,7 @@ export function AdminSidebar() {
             {/* Desktop Sidebar */}
             <aside className="hidden border-r bg-muted/40 md:block w-64 min-h-screen sticky top-0">
                 <div className="flex h-14 items-center border-b px-4 lg:h-15 lg:px-6">
-                    <Link href="/" className="flex items-center gap-2 font-semibold">
+                    <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
                         <span className="">Admin Panel</span>
                     </Link>
                 </div>
@@ -78,7 +78,7 @@ export function AdminSidebar() {
                             <SheetDescription className="sr-only">Mobile navigation for admin panel</SheetDescription>
                             <nav className="grid gap-2 text-lg font-medium">
                                 <Link
-                                    href="#"
+                                    href="/dashboard"
                                     className="flex items-center gap-2 text-lg font-semibold mb-4 px-2"
                                 >
                                     <span className="">Admin Panel</span>
