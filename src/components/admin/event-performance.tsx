@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { clubs } from "@/data/clubs";
-import { DODO_COMMISION_PERCENTAGE, DODO_COMMISION_FIXED_PER_TRANSACTION } from "@/data/config";
+import { RAZORPAY_COMMISSION_PERCENTAGE } from "@/data/config";
 
 interface EventStat {
     id: string;
@@ -47,9 +47,8 @@ export function EventPerformance({ events = [], netRevenueMode = false }: EventP
     const calculateNetRevenue = (revenue: number, sold: number) => {
         if (!netRevenueMode || sold === 0) return revenue;
 
-        const percentageFee = (revenue * DODO_COMMISION_PERCENTAGE) / 100;
-        const fixedFee = sold * DODO_COMMISION_FIXED_PER_TRANSACTION;
-        return Math.max(0, revenue - percentageFee - fixedFee);
+        const percentageFee = (revenue * RAZORPAY_COMMISSION_PERCENTAGE) / 100;
+        return Math.max(0, revenue - percentageFee);
     };
 
     const filteredEvents = useMemo(() => {
