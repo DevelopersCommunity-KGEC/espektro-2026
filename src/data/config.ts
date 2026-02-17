@@ -1,5 +1,4 @@
-export const DODO_COMMISION_PERCENTAGE = 4;
-export const DODO_COMMISION_FIXED_PER_TRANSACTION = 4;
+export const RAZORPAY_COMMISSION_PERCENTAGE = 2.5;
 
 export const CLUB_CATEGORIES = {
   technical: {

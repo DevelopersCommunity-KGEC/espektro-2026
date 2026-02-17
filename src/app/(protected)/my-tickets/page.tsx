@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { getMyTickets } from "@/actions/ticket-actions";
 import { getMyReferralCode, getMyReferralStats } from "@/actions/user-actions";
 import TicketCard from "@/components/tickets/ticket-card";
+import { TicketDisclaimerDialog } from "@/components/tickets/ticket-disclaimer-dialog";
 import { MyTicketsSkeleton } from "@/components/skeletons";
 import { ReferralSection } from "@/components/user/referral-section";
 
@@ -21,6 +22,7 @@ async function TicketsList() {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TicketDisclaimerDialog hasTickets={true} />
             {tickets.map((ticket: any) => (
                 <TicketCard key={ticket._id} ticket={ticket} />
             ))}

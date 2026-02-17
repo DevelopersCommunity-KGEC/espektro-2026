@@ -9,8 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@dodopayments/better-auth": "^1.4.2",
-    "@dodopayments/nextjs": "^0.3.3",
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -27,7 +25,6 @@
     "better-auth": "^1.4.17",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "dodopayments": "^2.17.1",
     "framer-motion": "^12.34.0",
     "gsap": "^3.14.2",
     "html5-qrcode": "^2.3.8",

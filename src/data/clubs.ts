@@ -1,12 +1,12 @@
 export const clubs = [
   {
     id: "espektro",
-    name: "Espektro",
+    name: "ESPEKTRO",
     description: "Main Fest Events and Activities",
   },
   {
-    id: "quisin",
-    name: "QUISIN",
+    id: "quizine",
+    name: "QUIZINE",
     description: "The Food and Cuisine Club",
   },
   {

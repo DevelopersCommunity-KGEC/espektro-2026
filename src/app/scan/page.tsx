@@ -6,7 +6,7 @@ import { verifyTicket } from "@/actions/ticket-actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { ScannerSkeleton } from "@/components/skeletons";
-import { Loader2, SwitchCamera, Zap, ZapOff } from "lucide-react";
+import { Loader2, SwitchCamera, Zap, ZapOff, ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ScanPage() {
@@ -184,14 +184,20 @@ export default function ScanPage() {
         <div className="container mx-auto max-w-md p-4 min-h-screen flex flex-col">
             <h1 className="text-2xl font-bold mb-4 text-center">Ticket Scanner</h1>
 
-            <div id="reader" className="w-full bg-black rounded-lg overflow-hidden mb-6 min-h-75 relative">
+            <div className="w-full bg-black rounded-lg overflow-hidden mb-6 min-h-[300px] relative">
+                {/* Scanner logic handles this div */}
+                {isScanning && <div id="reader" className="w-full h-full" />}
+
+                {/* Fallback / Initial State */}
                 {!isScanning && !loading && !scanResult && (
-                    <div className="absolute inset-0 flex items-center justify-center text-white">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white bg-gray-900">
+                        <ScanLine className="w-16 h-16 opacity-50" />
                         <Button onClick={startScanning} size="lg" className="font-bold">
                             Start Camera
                         </Button>
                     </div>
                 )}
+
                 {loading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white z-10">
                         <Loader2 className="h-10 w-10 animate-spin" />

@@ -3,8 +3,6 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 import dbConnect from "./db";
 import mongoose from "mongoose";
-import { dodopayments, checkout, webhooks } from "@dodopayments/better-auth";
-import DodoPayments from "dodopayments";
 
 if (!process.env.MONGODB_URI) {
   throw new Error("MONGODB_URI is not defined");
@@ -13,67 +11,8 @@ if (!process.env.MONGODB_URI) {
 const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db();
 
-export const dodoPayments = new DodoPayments({
-  bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-  environment:
-    (process.env.DODO_PAYMENTS_ENVIRONMENT as "test_mode" | "live_mode") ||
-    "test_mode",
-});
-
 export const auth = betterAuth({
   database: mongodbAdapter(db),
-  plugins: [
-    dodopayments({
-      client: dodoPayments,
-      createCustomerOnSignUp: true,
-      use: [
-        checkout({
-          products: [
-            {
-              productId: process.env.DODO_PRODUCT_ID || "pdt_PLACEHOLDER",
-              slug: "general-ticket",
-            },
-          ],
-          successUrl: "/my-tickets",
-          authenticatedUsersOnly: true,
-        }),
-        webhooks({
-          webhookKey: process.env.DODO_PAYMENTS_WEBHOOK_KEY!,
-          onPaymentSucceeded: async (payload) => {
-            console.log("Payment Succeeded Webhook:", payload);
-            try {
-              // Dynamic import to avoid circular dependency
-              const { verifyPayment } =
-                await import("@/actions/booking-actions");
-
-              // Dodo payload 'data' field contains the transaction details
-              const data = payload.data as any;
-              const { payment_id, metadata } = data;
-
-              if (metadata?.eventId && metadata?.userId) {
-                await verifyPayment(
-                  metadata.eventId,
-                  payment_id,
-                  "WEBHOOK",
-                  "WEBHOOK_VERIFIED",
-                  metadata.referralCode, // Coupon Code
-                  { userId: metadata.userId, email: metadata.email },
-                  metadata.referrerUserId, // Attributed User ID
-                );
-              }
-            } catch (error) {
-              console.error("Error processing payment webhook:", error);
-            }
-          },
-          onPayload: async (payload) => {
-            if (payload.type !== "payment.succeeded") {
-              console.log("Received webhook:", payload.type);
-            }
-          },
-        }),
-      ],
-    }),
-  ],
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,

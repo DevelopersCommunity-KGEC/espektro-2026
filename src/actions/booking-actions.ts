@@ -3,13 +3,22 @@
 import dbConnect from "@/lib/db";
 import Event from "@/models/Event";
 import Ticket from "@/models/Ticket";
-import Coupon from "@/models/Coupon"; // Import Coupon model
+import Coupon from "@/models/Coupon";
 import { auth } from "@/lib/auth";
 import { headers, cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
-import { validateCouponCode } from "@/actions/coupon-actions"; // Import validation
-import { validateUserReferral } from "@/lib/referral"; // Import user referral validation
+import { validateCouponCode } from "@/actions/coupon-actions";
+import { validateUserReferral } from "@/lib/referral";
+import Razorpay from "razorpay";
+import crypto from "crypto";
+
+const getRazorpay = () => {
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID!,
+    key_secret: process.env.RAZORPAY_KEY_SECRET!,
+  });
+};
 
 async function getSession() {
   return await auth.api.getSession({
@@ -154,104 +163,53 @@ export async function createOrder(
       currency: "INR",
       key: "FREE_TICKET",
       couponCode,
-      checkoutUrl: null, // No checkout URL for free tickets
     };
   }
 
-  // Handle Payment Bypass (Dev Mode)
-  // if (process.env.BYPASS_PAYMENT === "true") {
-  //   return {
-  //     orderId: "BYPASS_" + uuidv4(),
-  //     amount: finalPrice,
-  //     currency: "INR",
-  //     key: "PAYMENT_BYPASS",
-  //     couponCode,
-  //     checkoutUrl: null,
-  //   };
-  // }
-
-  // Dodo Payments Session Creation
+  // Razorpay Order Creation
   try {
-    const headersList = await headers();
-    const host = headersList.get("host");
-    const protocol = host?.includes("localhost") ? "http" : "https";
-    const baseUrl = `${protocol}://${host}`;
-
-    if (!process.env.DODO_PRODUCT_ID) {
-      throw new Error("DODO_PRODUCT_ID is not set in environment variables");
-    }
-
-    const response = await fetch(`${baseUrl}/api/checkout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const razorpay = getRazorpay();
+    const order = await razorpay.orders.create({
+      amount: finalPrice * 100, // Razorpay expects amount in paise
+      currency: "INR",
+      receipt: `rcpt_${Date.now()}_${eventId.slice(-8)}`,
+      notes: {
+        eventId: eventId,
+        userId: session.user.id,
+        email: session.user.email,
+        couponCode: couponCode || "",
+        referrerUserId: referrerUserId || "",
+        discountAmount: String(discountAmount),
+        eventTitle: eventTitle,
+        ticketType: eventId === "season-pass" ? "BUNDLE" : "SINGLE",
+        teamMembers: teamMembers ? JSON.stringify(teamMembers) : "",
       },
-      body: JSON.stringify({
-        product_cart: [
-          {
-            product_id: process.env.DODO_PRODUCT_ID,
-            quantity: 1,
-            amount: finalPrice * 100,
-          },
-        ],
-        billing: {
-          street: "KGEC",
-          city: "Kalyani",
-          state: "West Bengal",
-          country: "IN",
-          zipcode: "741235",
-        },
-        customer: {
-          email: session.user.email,
-          name: session.user.name,
-        },
-        returnUrl:
-          process.env.DODO_PAYMENTS_RETURN_URL ||
-          "http://localhost:3000/my-tickets",
-        metadata: {
-          eventId: eventId,
-          userId: session.user.id,
-          email: session.user.email,
-          couponCode: couponCode || "",
-          referrerUserId: referrerUserId || "", // Add attribution
-          discountAmount: String(discountAmount),
-          eventTitle: eventTitle,
-          ticketType: eventId === "season-pass" ? "BUNDLE" : "SINGLE",
-          teamMembers: teamMembers ? JSON.stringify(teamMembers) : "", // Store in metadata
-          originalPrice: String(
-            eventId === "season-pass"
-              ? finalPrice + discountAmount
-              : finalPrice + discountAmount,
-          ),
-        },
-      }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Dodo API Error:", errorText);
-      throw new Error("Failed to create payment session");
-    }
-
-    const data = await response.json();
     return {
-      checkoutUrl: data.checkout_url || data.url,
+      orderId: order.id,
       amount: finalPrice,
+      currency: "INR",
+      key: process.env.RAZORPAY_KEY_ID!,
+      couponCode,
+      referrerUserId,
+      name: session.user.name,
+      email: session.user.email,
     };
   } catch (error) {
-    console.error(error);
+    console.error("Razorpay Order Creation Error:", error);
     throw new Error("Payment initialization failed");
   }
 }
 
 export async function verifyPayment(
   eventId: string,
-  payment_id: string,
-  signature: string,
-  signature_check_mode: string = "RAZORPAY",
+  razorpay_order_id: string,
+  razorpay_payment_id: string,
+  razorpay_signature: string,
   couponCode?: string,
   userContext?: { userId: string; email: string },
-  referrerUserId?: string, // New Argument
+  referrerUserId?: string,
   teamMembers?: { name: string; email: string; phone: string }[],
 ) {
   const session = await getSession();
@@ -261,6 +219,22 @@ export async function verifyPayment(
 
   if (!userId || !userEmail) {
     throw new Error("Unauthorized: User context missing");
+  }
+
+  // Verify Razorpay Signature (skip for free/bypass tickets)
+  if (
+    razorpay_signature !== "SIGNATURE_BYPASS" &&
+    razorpay_signature !== "WEBHOOK_VERIFIED"
+  ) {
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+      .update(body)
+      .digest("hex");
+
+    if (expectedSignature !== razorpay_signature) {
+      throw new Error("Payment verification failed: Invalid signature");
+    }
   }
 
   await dbConnect();
@@ -277,16 +251,12 @@ export async function verifyPayment(
       );
 
       if (!coupon) {
-        if (signature_check_mode === "WEBHOOK_VERIFIED") {
-          // ...
-          const alreadyUsed = await Coupon.findOne({
-            code: couponCode.toUpperCase(),
-            usedBy: userEmail,
-          });
-          if (!alreadyUsed) {
-            // Warning
-          }
-        } else {
+        // Idempotency check — coupon may have been consumed on a previous attempt
+        const alreadyUsed = await Coupon.findOne({
+          code: couponCode.toUpperCase(),
+          usedBy: userEmail,
+        });
+        if (!alreadyUsed) {
           throw new Error("Coupon code invalid or already used.");
         }
       } else {
@@ -300,16 +270,12 @@ export async function verifyPayment(
         }
       }
     }
-    // Note: We don't recalculate the exact discount amount here as we don't have the original total handy
-    // without re-fetching events, but we can if we want to store it in tickets.
-    // For now, we trust the checkout flow handled the price.
 
     try {
       const festDays = await Event.find({ type: "fest-day" });
       if (!festDays || festDays.length === 0)
         throw new Error("No fest days found");
 
-      const reservedEventIds: string[] = [];
       const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
 
       // 2. Check capacity for all events
@@ -329,9 +295,6 @@ export async function verifyPayment(
       // Determine discount percentage if coupon was used
       let discountPercentage = 0;
       if (couponCode) {
-        // We can fetch the coupon again or carry it over?
-        // We already fetched and consumed it above. But didn't keep the object variable in scope nicely.
-        // Let's refactor slightly to keep 'coupon' object handy or just fetch it again by code (it's used now).
         const ref = await Coupon.findOne({
           code: couponCode.toUpperCase(),
         });
@@ -347,12 +310,12 @@ export async function verifyPayment(
           userId,
           userEmail,
           eventId: event._id,
-          paymentId: payment_id,
+          paymentId: razorpay_payment_id,
           status: "booked",
           issueType: couponCode ? "coupon" : "payment",
           qrCodeToken: uuidv4(),
           couponCode: couponCode || undefined,
-          referrerUserId: referrerUserId || undefined, // Attributed User
+          referrerUserId: referrerUserId || undefined,
           discountAmount: itemDiscount,
           price: Math.max(0, event.price - itemDiscount),
           teamMembers: teamMembers || [],
@@ -379,9 +342,8 @@ export async function verifyPayment(
   let issueType = "payment";
   let appliedDiscount = 0;
 
-  // If coupon code is present, consume it FIRST (or check validity)
+  // If coupon code is present, consume it FIRST
   if (couponCode) {
-    // Atomic consume
     const coupon = await Coupon.findOneAndUpdate(
       { code: couponCode.toUpperCase(), isUsed: false },
       {
@@ -392,23 +354,18 @@ export async function verifyPayment(
     );
 
     if (!coupon) {
-      if (signature_check_mode === "WEBHOOK_VERIFIED") {
-        // Check idempotency if webhook retry
-        const alreadyUsed = await Coupon.findOne({
-          code: couponCode.toUpperCase(),
-          usedBy: userEmail,
-        });
-        if (alreadyUsed) {
-          // proceed
-          const evt = await Event.findById(eventId);
-          if (evt)
-            appliedDiscount = Math.ceil(
-              (evt.price * alreadyUsed.discountPercentage) / 100,
-            );
-          issueType = "coupon";
-        } else {
-          console.error("Coupon failed in webhook");
-        }
+      // Idempotency: check if already consumed by this user
+      const alreadyUsed = await Coupon.findOne({
+        code: couponCode.toUpperCase(),
+        usedBy: userEmail,
+      });
+      if (alreadyUsed) {
+        const evt = await Event.findById(eventId);
+        if (evt)
+          appliedDiscount = Math.ceil(
+            (evt.price * alreadyUsed.discountPercentage) / 100,
+          );
+        issueType = "coupon";
       } else {
         throw new Error(
           "Coupon code invalid or already used during processing.",
@@ -418,7 +375,6 @@ export async function verifyPayment(
       // Check club match
       const eventCheck = await Event.findById(eventId);
       if (!eventCheck) {
-        // Should not happen if eventId is valid but safety check
         await Coupon.findByIdAndUpdate(coupon._id, {
           isUsed: false,
           usedBy: null,
@@ -428,7 +384,6 @@ export async function verifyPayment(
       }
 
       if (coupon.clubId !== eventCheck.clubId) {
-        // Rollback
         await Coupon.findByIdAndUpdate(coupon._id, {
           isUsed: false,
           usedBy: null,
@@ -461,28 +416,16 @@ export async function verifyPayment(
       }
     }
 
-    if (teamMembers && teamMembers.length > 0) {
-      if (teamMembers.length + 1 > (event.maxTeamSize || 1)) {
-        // This check usually happens before payment, but double check here.
-        // If fails, we have an issue (user paid).
-        // Ideally invalid requests shouldn't reach here.
-        // For now, proceed or throw? Throwing locks money.
-        // Let's assume validation happened in createOrder and trusted client for 'verify'.
-        // Or update schema to allow whatever is passed if paid.
-        // But let's save what we have.
-      }
-    }
-
     const ticket = await Ticket.create({
       userId: userId,
       userEmail: userEmail,
       eventId: eventId,
-      paymentId: payment_id,
+      paymentId: razorpay_payment_id,
       status: "booked",
       issueType,
       qrCodeToken: uuidv4(),
       couponCode: couponCode || undefined,
-      referrerUserId: referrerUserId || undefined, // Attributed User
+      referrerUserId: referrerUserId || undefined,
       discountAmount: appliedDiscount,
       price: Math.max(0, event.price - appliedDiscount),
       teamMembers: teamMembers || [],
@@ -498,16 +441,6 @@ export async function verifyPayment(
         { isUsed: false, usedBy: null, usedAt: null },
       );
     }
-    // Also rollback event ticket count if it was incremented but ticket creation failed
-    // (We only check "Event capacity reached" above, but if Ticket.create fails we should technically decrement too,
-    // but the error might be 'Capacity reached' itself so we need to be careful.
-    // If error is NOT 'Capacity reached', we effectively sold a slot but didn't give a ticket.
-    // For simplicity focusing on the User's request about Referral Code first).
-
-    // Actually, good practice to decrement if we incremented.
-    // But detecting if we successfully incremented is tricky without a separate flag.
-    // Given the prompt focuses on "referel code is not deactivated", the rollback above is the critical part.
-
     throw error;
   }
 }

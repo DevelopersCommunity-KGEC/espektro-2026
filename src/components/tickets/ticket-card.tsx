@@ -9,8 +9,9 @@ import { Badge } from "@/components/ui/badge"; // Note: Badge might need to be i
 // I haven't installed `badge` yet. I'll use standard classes for badge for now or standard tailwind, to be safe. 
 // Wait, I should install badge.
 // Actually, I'll stick to minimal components to be fast. I'll use div for badge.
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Download, Loader2 } from "lucide-react";
 import { TicketData } from "@/types/tickets";
+import { generateTicketImage } from "@/lib/generate-ticket-image";
 
 interface TicketCardProps {
     ticket: TicketData;
@@ -19,7 +20,7 @@ interface TicketCardProps {
 export default function TicketCard({ ticket }: TicketCardProps) {
     const [qrUrl, setQrUrl] = useState("");
     const [showQR, setShowQR] = useState(false);
-    console.log("Ticket in TicketCard:", ticket);
+    const [downloading, setDownloading] = useState(false);
 
     useEffect(() => {
         if (ticket.qrCodeToken) {
@@ -41,6 +42,41 @@ export default function TicketCard({ ticket }: TicketCardProps) {
             </Card>
         )
     }
+
+
+    // Determine the ticket holder (Team Leader)
+    const holderName = typeof ticket.userId === 'object' ? ticket.userId?.name : (ticket.guestName || "Ticket Holder");
+    const holderEmail = typeof ticket.userId === 'object' ? ticket.userId?.email : ticket.userEmail;
+
+    const handleDownload = async () => {
+        setDownloading(true);
+        try {
+            const dataUrl = await generateTicketImage({
+                eventTitle: event.title,
+                venue: event.venue,
+                date: new Date(event.date).toLocaleString("en-IN", { dateStyle: "full", timeStyle: "short" }),
+                holderName: holderName || "Guest",
+                holderEmail: holderEmail || ticket.userEmail,
+                status: ticket.status,
+                ticketType: ticket.issueType,
+                price: ticket.price,
+                qrCodeToken: ticket.qrCodeToken,
+                teamMembers: ticket.teamMembers,
+                ticketId: ticket._id,
+            });
+            const link = document.createElement("a");
+            link.download = `espektro-ticket-${event.title.replace(/\s+/g, "-").toLowerCase()}.png`;
+            link.href = dataUrl;
+            link.click();
+        } catch (err) {
+            console.error("Failed to generate ticket image", err);
+        } finally {
+            setDownloading(false);
+        }
+    };
+
+    // Combine holder with team members if present
+    const hasTeam = ticket.teamMembers && ticket.teamMembers.length > 0;
 
     return (
         <Card className="overflow-hidden">
@@ -67,11 +103,20 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                     </div>
                 )}
 
-                {ticket.teamMembers && ticket.teamMembers.length > 0 && (
+                {hasTeam ? (
                     <div className="mt-4 pt-4 border-t">
                         <h4 className="text-sm font-semibold mb-2">Team Members</h4>
-                        <ul className="text-sm space-y-1">
-                            {ticket.teamMembers.map((member, i) => (
+                        <ul className="text-sm space-y-2">
+                            {/* Team Leader (Ticket Holder) */}
+                            <li className="flex flex-col bg-muted/50 p-2 rounded border border-primary/20">
+                                <span className="font-medium text-foreground flex items-center gap-2">
+                                    {holderName} <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">Leader</span>
+                                </span>
+                                <span className="text-xs text-muted-foreground">{holderEmail}</span>
+                            </li>
+
+                            {/* Other Members */}
+                            {ticket.teamMembers?.map((member, i) => (
                                 <li key={i} className="flex flex-col text-muted-foreground bg-muted/30 p-2 rounded">
                                     <span className="font-medium text-foreground">{member.name}</span>
                                     <span className="text-xs">{member.email}</span>
@@ -79,15 +124,26 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                             ))}
                         </ul>
                     </div>
+                ) : (
+                    null
                 )}
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex gap-2">
                 <Button
                     variant={showQR ? "secondary" : "default"}
                     onClick={() => setShowQR(!showQR)}
-                    className="w-full"
+                    className="flex-1"
                 >
-                    {showQR ? <><EyeOff className="mr-2 h-4 w-4" /> Hide QR Code</> : <><Eye className="mr-2 h-4 w-4" /> View QR Code</>}
+                    {showQR ? <><EyeOff className="mr-2 h-4 w-4" /> Hide QR</> : <><Eye className="mr-2 h-4 w-4" /> View QR</>}
+                </Button>
+                <Button
+                    variant="outline"
+                    onClick={handleDownload}
+                    disabled={downloading}
+                    className="flex-1"
+                >
+                    {downloading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
+                    {downloading ? "Generating..." : "Download"}
                 </Button>
             </CardFooter>
         </Card>

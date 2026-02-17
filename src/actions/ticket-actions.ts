@@ -26,6 +26,7 @@ export async function getMyTickets() {
       path: "eventId",
       model: Event,
     })
+    .populate("userId", "name email phone") // Populate user details for display
     .sort({ purchaseDate: -1 });
 
   return JSON.parse(JSON.stringify(tickets));
