@@ -3,6 +3,9 @@ import { EventData } from "./events";
 export interface TicketData {
   _id: string;
   userEmail: string;
+  userId?: string | any; // Populated User or ObjectId string
+  guestName?: string;
+  guestPhone?: string;
   eventId: EventData; // Populated
   paymentId: string;
   qrCodeToken: string;
