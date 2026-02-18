@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Roboto_Slab, MedievalSharp, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Header from "@/components/layout/header/Index";
@@ -17,6 +17,22 @@ const geistMono = Geist_Mono({
 
 const playfair = Playfair_Display({
   variable: "--font-playfair-display",
+  subsets: ["latin"],
+});
+
+const robotoSlab = Roboto_Slab({
+  variable: "--font-roboto-slab",
+  subsets: ["latin"],
+});
+
+const medievalSharp = MedievalSharp({
+  weight: "400",
+  variable: "--font-medieval-sharp",
+  subsets: ["latin"],
+});
+
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
 });
 
@@ -66,7 +82,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${robotoSlab.variable} ${medievalSharp.variable} ${openSans.variable} antialiased`}
       >
         <AdminSync />
         <OnboardingCheck />

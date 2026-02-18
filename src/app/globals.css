@@ -169,3 +169,14 @@
 .animate-marquee-right {
   animation: marquee-right 30s linear infinite;
 }
+
+.theatrical-shape {
+  clip-path: polygon(10px 0%,
+      calc(100% - 10px) 0%,
+      100% 50%,
+      calc(100% - 10px) 100%,
+      10px 100%,
+      0% 50%);
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}

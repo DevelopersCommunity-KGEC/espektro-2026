@@ -224,64 +224,99 @@ export function ArtistGallery() {
   const allArtists = Array(duplicateTimes).fill(pastArtists).flat();
 
   return (
-    <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl" ref={containerRef}>
-      <div className="text-center mb-15 ">
-        <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
-          Glimpses of <span className="text-[#F4A900]">Past Artists</span>
-        </h3>
-        {/* <p className="text-black/60 text-sm max-w-lg mx-auto">
-          A legacy of unforgettable performances that have graced our stages over the years.
-        </p> */}
-      </div>
+    <div className="relative w-full z-10" style={{ backgroundColor: "#FFF8F0" }}>
+      {/* Global Vertical Pattern Alignment */}
+      <div
+        className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
+        style={{
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '100% auto',
+          backgroundPosition: 'top center'
+        }}
+      />
 
-      <div className={styles.galleryMask}>
-        {/* Left Border SVG */}
-        <img src="/border.svg" alt="" className={styles.borderLeft} />
-
-        {/* Right Border SVG */}
-        <img src="/border.svg" alt="" className={styles.borderRight} />
-
-        {/* Bottom Border SVG */}
-        <img src="/border.svg" alt="" className={styles.borderBottom} />
-
-        <div className={styles.gridWrapper} ref={gridRef}>
-          {allArtists.map((item, index) => {
-            const spanClass = isMobile ? '' : (() => {
-              const pattern = index % 15;
-              if (pattern === 0) return styles.span2x2;
-              if (pattern === 5) return styles.span2x1;
-              if (pattern === 10) return styles.span1x2;
-              return '';
-            })();
-
-            return (
-              <div
-                key={`${item.id}-${index}`}
-                className={`${styles.rowItem} ${spanClass}`}
-                onClick={() => handleImageClick(item.url)}
-              >
-                <div className={styles.rowItemInner}>
-                  <div
-                    className={styles.rowItemImg}
-                    style={{ backgroundImage: `url(${item.url})` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {selectedImage && (
-        <div className={styles.popup} onClick={closePopup}>
-          <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.closeBtn} onClick={closePopup}>
-              ×
-            </button>
-            <img src={selectedImage} alt="Artist" className={styles.popupImg} />
+      <div className="container mx-auto relative pt-20 pl-4 sm:pl-20 md:pl-28 lg:pl-32" ref={containerRef}>
+        <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl ">
+          {/* <div className="text-center mb-15">
+            <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
+              Glimpses of <span className="text-[#F4A900]">Past Artists</span>
+            </h3>
+          </div> */}
+          <div className="relative z-10 flex justify-center mb-12">
+            <div className="flex flex-col items-center">
+              <p className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center">
+                Cultural Stars
+              </p>
+              <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center">
+                Glimpses of <span className="text-[#B7410E]">Past Artists</span>
+              </h2>
+            </div>
           </div>
+          <div className={styles.galleryMask}>
+            {/* Left Border SVG */}
+            <div
+              className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
+              style={{
+                backgroundImage: 'url(/images/border2.png)',
+                backgroundRepeat: 'repeat-y',
+                backgroundSize: '100% auto',
+                backgroundPosition: 'top center'
+              }}
+            />
+            {/* Right Border SVG */}
+            <div
+              className="absolute top-0 right-0 rotate-180 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
+              style={{
+                backgroundImage: 'url(/images/border2.png)',
+                backgroundRepeat: 'repeat-y',
+                backgroundSize: '100% auto',
+                backgroundPosition: 'top center'
+              }}
+            />
+            {/* Bottom Border SVG */}
+            <img src="/border.svg" alt="" className={styles.borderBottom} />
+
+            <div className={styles.gridWrapper} ref={gridRef}>
+              {allArtists.map((item, index) => {
+                const spanClass = isMobile ? '' : (() => {
+                  const pattern = index % 15;
+                  if (pattern === 0) return styles.span2x2;
+                  if (pattern === 5) return styles.span2x1;
+                  if (pattern === 10) return styles.span1x2;
+                  return '';
+                })();
+
+                return (
+                  <div
+                    key={`${item.id}-${index}`}
+                    className={`${styles.rowItem} ${spanClass}`}
+                    onClick={() => handleImageClick(item.url)}
+                  >
+                    <div className={styles.rowItemInner}>
+                      <div
+                        className={styles.rowItemImg}
+                        style={{ backgroundImage: `url(${item.url})` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {selectedImage && (
+            <div className={styles.popup} onClick={closePopup}>
+              <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
+                <button className={styles.closeBtn} onClick={closePopup}>
+                  ×
+                </button>
+                <img src={selectedImage} alt="Artist" className={styles.popupImg} />
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

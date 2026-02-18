@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { DaySchedule } from "@/types/landing";
 import { CLUB_CATEGORIES } from "@/data/config";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 const HOUR_START = 0;
@@ -170,33 +171,42 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
         <section
             ref={sectionRef}
             id="schedule"
-            className="relative z-10 py-24 lg:py-36 bg-muted overflow-hidden"
+            className="relative z-10 py-24 lg:py-36 overflow-hidden z-10"
+            style={{ backgroundColor: "#FFF8F0" }}
         >
-            {/* Decorative side borders */}
-            {/* <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
+            {/* Lotus Mandala Background - Centered and Subtle */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
+                <Image
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    alt="Decorative lotus mandala"
+                    width={800}
+                    height={600}
+                    className="object-contain"
+                />
+            </div>
+
+            {/* Left Tribal Border Pattern */}
+            <div
+                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
+                style={{
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    backgroundPosition: 'top center'
+                }}
             />
-            <img
-                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
-            /> */}
-            <div className="container mx-auto px-6 lg:px-8">
+            <div className="container mx-auto px-6 lg:px-8 pl-16 sm:pl-20 md:pl-28 lg:pl-32">
                 {/* Header */}
                 <div
-                    className={`mb-14 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`mb-14 transition-all duration-700 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <p className="text-[#B7410E] text-xs uppercase tracking-[0.3em] mb-5 font-semibold">
+                    <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
                         {scheduleData.length} Days of Excellence
-                    </p>
-                    <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
+                    </h3>
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
                         Event Schedule
                     </h2>
-                    <p className="text-muted-foreground max-w-xl">
+                    <p className="text-muted-foreground max-w-xl mx-auto">
                         A bird&rsquo;s-eye view of every event across {scheduleData.length} transformative days.
                     </p>
                 </div>

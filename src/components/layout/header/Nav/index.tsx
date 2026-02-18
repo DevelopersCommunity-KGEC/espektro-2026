@@ -140,7 +140,7 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
                   onClick={() => setIsClubsDropdownOpen(!isClubsDropdownOpen)}
                 >
                   <Magnetic>
-                    <span className="text-white/70 hover:text-white transition-colors text-xl font-light">
+                    <span className="text-[#2C1810]/70 hover:text-[#B7410E] transition-colors text-3xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">
                       My Clubs
                     </span>
                   </Magnetic>
@@ -148,7 +148,7 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
                     animate={{ rotate: isClubsDropdownOpen ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ChevronDown size={18} className="text-white/50" />
+                    <ChevronDown size={18} className="text-[#2C1810]/50" />
                   </motion.div>
                 </div>
               </motion.div>
@@ -184,8 +184,8 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
                         <LinkNext
                           href={`/club/${role.clubId}/dashboard`}
                           className={`flex items-center gap-2.5 py-1.5 px-4 rounded-md transition-colors group ${selectedIndicator === `/club/${role.clubId}/dashboard`
-                            ? "text-white"
-                            : "text-white/50 hover:text-white/80"
+                            ? "text-[#B7410E]"
+                            : "text-[#2C1810]/50 hover:text-[#2C1810]/80"
                             }`}
                           onMouseEnter={() => setSelectedIndicator(`/club/${role.clubId}/dashboard`)}
                         >
@@ -202,9 +202,9 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
           )}
         </div>
 
-        <div className={`flex flex-col gap-4 ${hasClubs ? 'mt-8' : 'mt-auto'} border-t border-gray-700 pt-6`}>
+        <div className={`flex flex-col gap-4 ${hasClubs ? 'mt-8' : 'mt-auto'} border-t border-[#2C1810]/10 pt-6`}>
           {!session ? (
-            <Button onClick={() => { handleSignIn(); closeMenu(); }} className="w-full bg-white text-black hover:bg-gray-200">
+            <Button onClick={() => { handleSignIn(); closeMenu(); }} className="w-full bg-[#2C1810] text-white hover:bg-[#2C1810]/90">
               Login
             </Button>
           ) : (
@@ -215,46 +215,46 @@ export default function Index({ clubRoles = [], userRole, closeMenu }: NavProps)
                 </div>
 
                 {/* User Info as a pseudo-header/card */}
-                <div className="flex items-center gap-3 mb-4 p-2 rounded-lg bg-white/5 mx-[-8px]">
-                  <Avatar className="h-10 w-10">
+                <div className="flex items-center gap-3 mb-4 p-2 rounded-lg bg-[#2C1810]/5 mx-[-8px]">
+                  <Avatar className="h-10 w-10 ring-1 ring-[#2C1810]/10">
                     <AvatarImage src={session.user?.image || ""} />
-                    <AvatarFallback>{session.user?.name?.charAt(0) || "U"}</AvatarFallback>
+                    <AvatarFallback className="bg-[#B7410E] text-white">{session.user?.name?.charAt(0) || "U"}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col overflow-hidden">
-                    <span className="text-sm font-medium text-white truncate">{session.user?.name}</span>
-                    <span className="text-xs text-white/50 truncate">{session.user?.email}</span>
+                    <span className="text-sm font-bold text-[#2C1810] truncate">{session.user?.name}</span>
+                    <span className="text-xs text-[#2C1810]/50 truncate">{session.user?.email}</span>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <LinkNext href="/my-tickets" className="flex items-center justify-between text-white/70 hover:text-white transition-colors group" onClick={closeMenu}>
-                    <span className="text-xl font-light">My Tickets</span>
-                    <Ticket size={18} className="text-white/50 group-hover:text-white transition-colors" />
+                  <LinkNext href="/my-tickets" className="flex items-center justify-between text-[#2C1810]/40 hover:text-[#2C1810] transition-colors group" onClick={closeMenu}>
+                    <span className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">My Tickets</span>
+                    <Ticket size={18} className="text-[#2C1810]/30 group-hover:text-[#B7410E] transition-colors" />
                   </LinkNext>
-                  <LinkNext href="/profile" className="flex items-center justify-between text-white/70 hover:text-white transition-colors group" onClick={closeMenu}>
-                    <span className="text-xl font-light">Profile</span>
-                    <User size={18} className="text-white/50 group-hover:text-white transition-colors" />
+                  <LinkNext href="/profile" className="flex items-center justify-between text-[#2C1810]/40 hover:text-[#2C1810] transition-colors group" onClick={closeMenu}>
+                    <span className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">Profile</span>
+                    <User size={18} className="text-[#2C1810]/30 group-hover:text-[#B7410E] transition-colors" />
                   </LinkNext>
                   {hasClubs && (
-                    <LinkNext href="/scan" className="flex items-center justify-between text-white/70 hover:text-white transition-colors group" onClick={closeMenu}>
-                      <span className="text-xl font-light">Scan Ticket</span>
-                      <ScanLine size={18} className="text-white/50 group-hover:text-white transition-colors" />
+                    <LinkNext href="/scan" className="flex items-center justify-between text-[#2C1810]/40 hover:text-[#2C1810] transition-colors group" onClick={closeMenu}>
+                      <span className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">Scan Ticket</span>
+                      <ScanLine size={18} className="text-[#2C1810]/30 group-hover:text-[#B7410E] transition-colors" />
                     </LinkNext>
                   )}
                   {(userRole === "admin" || userRole === "super-admin") && (
-                    <LinkNext href="/dashboard" className="flex items-center justify-between text-white/70 hover:text-white transition-colors group" onClick={closeMenu}>
-                      <span className="text-xl font-light">Admin Dashboard</span>
-                      <LayoutDashboard size={18} className="text-white/50 group-hover:text-white transition-colors" />
+                    <LinkNext href="/dashboard" className="flex items-center justify-between text-[#8B2635] hover:text-[#B7410E] transition-colors group" onClick={closeMenu}>
+                      <span className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">Admin Dashboard</span>
+                      <LayoutDashboard size={18} className="text-[#8B2635]/50 group-hover:text-[#B7410E] transition-colors" />
                     </LinkNext>
                   )}
 
                   {/* Logout */}
                   <div
                     onClick={() => { handleSignOut(); closeMenu(); }}
-                    className="flex items-center justify-between text-white/70 hover:text-red-400 transition-colors group cursor-pointer mt-2"
+                    className="flex items-center justify-between text-[#2C1810]/30 hover:text-red-500 transition-colors group cursor-pointer mt-2"
                   >
-                    <span className="text-xl font-light">Log out</span>
-                    <LogOut size={18} className="text-white/50 group-hover:text-red-400 transition-colors" />
+                    <span className="text-xl font-bold font-[family-name:var(--font-medieval-sharp)] uppercase">Log out</span>
+                    <LogOut size={18} className="text-[#2C1810]/30 group-hover:text-red-500 transition-colors" />
                   </div>
                 </div>
               </div>
