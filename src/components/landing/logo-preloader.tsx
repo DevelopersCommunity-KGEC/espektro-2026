@@ -77,13 +77,11 @@ export function LogoPreloader() {
     console.log("[Preloader] Start button clicked");
     setShowStartButton(false);
     setStartTrigger(true);
-    // Notify MusicController to start BGM
-    window.dispatchEvent(new Event("ESPEKTRO_START_EXPERIENCE"));
   };
 
   useEffect(() => {
     console.log("[Preloader] Effect run. StartTrigger:", startTrigger);
-    if (!startTrigger) return;
+    if (!startTrigger || showStartButton) return;
 
     // Audio effect
     const audio = new Audio("/music/loading-effect.wav");
@@ -225,10 +223,12 @@ export function LogoPreloader() {
     const timer = setTimeout(() => {
       console.log("[Preloader] Timer finished. Dismissing.");
       setVisible(false);
+      // Notify MusicController to start BGM after preloader is done
+      window.dispatchEvent(new Event("ESPEKTRO_START_EXPERIENCE"));
     }, TOTAL_DURATION_MS);
 
     return () => clearTimeout(timer);
-  }, [startTrigger]);
+  }, [startTrigger, showStartButton]);
 
   if (!visible) return null;
 
