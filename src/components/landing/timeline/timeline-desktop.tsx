@@ -64,7 +64,7 @@ export default function TimelineDesktop() {
                 {/* Background Image */}
                 <div className="absolute inset-0 pointer-events-none">
                     <Image
-                        src="/images/timeline_bg.png"
+                        src="/images/bg1.png"
                         alt="Timeline background"
                         fill
                         className="object-cover opacity-30"
@@ -134,7 +134,7 @@ export default function TimelineDesktop() {
                                 }}
                             >
                                 {/* The Image Container */}
-                                <div 
+                                <div
                                     className={`relative transition-all duration-700 flex items-center justify-center
                                     ${isActive ? "scale-125 opacity-100 grayscale-0" : isPast ? "scale-115 opacity-100 grayscale-0" : "scale-120 opacity-100 grayscale"}
                                     `}
