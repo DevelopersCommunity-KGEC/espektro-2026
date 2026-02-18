@@ -1,234 +1,163 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { artists } from "@/data/landing-content";
-import { Button } from "@/components/ui/button";
+import { ArtistGallery } from "../artist-gallery";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "./artist.module.css";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function FeaturedArtists() {
     const sectionRef = useRef<HTMLElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const footerRef = useRef<HTMLDivElement>(null);
-    const windowRef = useRef<HTMLDivElement>(null);
-    const cardsRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const imageListRef = useRef<HTMLUListElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) setIsVisible(true);
+            },
+            { threshold: 0.05 }
+        );
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     useGSAP(() => {
-        if (!sectionRef.current || !headerRef.current || !footerRef.current || !windowRef.current || !cardsRef.current || !buttonRef.current) return;
+        if (!wrapperRef.current || !containerRef.current || !imageListRef.current) return;
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: sectionRef.current,
+                trigger: wrapperRef.current,
                 start: "top top",
-                end: "+=5000",
+                end: "+=1500",
                 pin: true,
-                scrub: 1,
-                anticipatePin: 1
+                scrub: 0.5,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                fastScrollEnd: true,
             }
         });
 
-        // 1. Initial State
-        gsap.set(headerRef.current, { yPercent: 0, opacity: 1 });
-        gsap.set(footerRef.current, { yPercent: 0, opacity: 1 });
-        gsap.set(windowRef.current, { opacity: 0, scale: 0.9 });
-        gsap.set(buttonRef.current, { opacity: 0, y: 50 });
-
-        const artistCards = gsap.utils.toArray(".artist-card-reveal-wrapper");
-        gsap.set(artistCards, { opacity: 0, y: 100, scale: 0.8 });
-
-        // 2. Interaction Timeline
-        tl.to({}, { duration: 1.5 })
-
-            // Phase B: The Split
-            .to(headerRef.current, {
-                y: "-28vh",
-                duration: 2.5,
-                ease: "power2.inOut"
-            }, ">")
-            .to(footerRef.current, {
-                y: "28vh",
-                duration: 2.5,
-                ease: "power2.inOut"
-            }, "<")
-            .to(windowRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 2,
-                ease: "power2.inOut"
-            }, "<0.5");
-
-        // Phase C: Artist Reveal
-        tl.to(artistCards, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            stagger: 0.8,
-            duration: 1.5,
-            ease: "back.out(1.2)"
-        });
-
-        // Phase D: Button Reveal
-        tl.to(buttonRef.current, {
-            opacity: 1,
-            y: 0,
+        tl.to(containerRef.current, {
+            height: "40rem",
             duration: 1,
-            ease: "power2.out"
-        }, ">-0.5");
+            ease: "power1.out"
+        })
+            .to(imageListRef.current, {
+                y: "-75%",
+                duration: 2,
+                ease: "none"
+            })
+            .to(containerRef.current, {
+                height: "0rem",
+                duration: 0.8,
+                ease: "power1.in"
+            });
 
-        // Final hold
-        tl.to({}, { duration: 1.5 });
-
-    }, { scope: sectionRef });
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.vars.trigger === wrapperRef.current) {
+                    trigger.kill();
+                }
+            });
+        };
+    }, { scope: sectionRef, dependencies: [] });
 
     return (
         <section
             ref={sectionRef}
             id="artists"
-            className="relative z-10 overflow-hidden min-h-screen"
-            style={{ backgroundColor: "#FFF8F0" }}
+            className="relative z-10 bg-white text-black overflow-hidden scroll-mt-0"
         >
-            {/* Left Decorative Pattern */}
-            <div
-                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-50"
-                style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
-                    backgroundRepeat: 'repeat-y',
-                    backgroundSize: '100% auto',
-                    backgroundPosition: 'top center'
-                }}
+            {/* Decorative side borders */}
+            {/* <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 left-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block"
             />
-
-            {/* Pinned Content Wrapper */}
-            <div ref={contentRef} className="w-full h-screen flex flex-col items-center justify-start pt-20 md:pt-40 relative overflow-hidden">
-
-                {/* Header Half of the Split Block */}
-                <div ref={headerRef} className="relative w-full z-40">
-                    <div className="absolute top-[60%] left-0 w-full h-12 md:h-40 -translate-y-[50%] overflow-hidden pointer-events-none opacity-90">
-                        <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
-                            {[...Array(15)].map((_, i) => (
-                                <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">
-                                    <Image
-                                        src="/images/shapartist.png"
-                                        alt=""
-                                        fill
-                                        className="object-contain"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="relative z-10 flex justify-center mt-6">
-                        <div className="bg-white px-10 md:px-20 py-4 md:py-1 shadow-sm rounded-sm">
-                            <p className="text-[#8B2635] text-[10px] md:text-sm uppercase tracking-[0.5em] font-bold text-center mb-1 font-[family-name:var(--font-roboto-slab)]">
-                                Cultural Stars
-                            </p>
-                            <h2 className="text-4xl md:text-6xl lg:text-7xl text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] leading-none text-center">
-                                Renowned <span className="text-[#B7410E]">Artists</span>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Animated Central Window for Artist Display */}
+            <img
+                src="https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute top-0 right-0 bottom-0 h-full w-auto max-w-[60px] md:max-w-[80px] object-cover pointer-events-none z-[5] opacity-60 hidden lg:block scale-x-[-1]"
+            /> */}
+            <div className="container mx-auto px-6 lg:px-8 relative pt-24">
                 <div
-                    ref={windowRef}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] md:-translate-y-1/2 w-[95%] md:w-[85%] lg:w-[75%] h-[55vh] md:h-[65vh] bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col items-center justify-center z-30 border-[10px] md:border-[20px] border-white"
+                    className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <div className="absolute inset-0 bg-[#FFF8F0]/30 z-0" />
+                    {/* <p className="text-[#F4A900] text-xs uppercase tracking-[0.3em] mb-4 font-semibold">
+                        Legacy & Future
+                    </p>
+                    <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+                        Artist <span className="text-[#F4A900]">Showcase</span>
+                    </h2> */}
+                </div>
+            </div>
 
-                    {/* Interior Container for Artist Cards */}
-                    <div
-                        ref={cardsRef}
-                        className="relative z-10 w-full px-4 flex flex-wrap justify-center gap-4 md:gap-12 mb-6 overflow-visible"
-                    >
-                        {artists.slice(0, 3).map((artist) => (
-                            <div
-                                key={artist.name}
-                                className="artist-card-reveal-wrapper opacity-0 translate-y-24 scale-90 w-48 md:w-60 lg:w-72 flex-shrink-0"
-                            >
-                                <CardContainer className="inter-var w-full" containerClassName="py-0">
-                                    <CardBody className="bg-white relative group/card border-black/[0.1] w-full aspect-[3/4] rounded-xl p-4 border shadow-xl flex flex-col items-center justify-center overflow-hidden">
-                                        {/* 1. Background Layer (Deep) */}
-                                        <CardItem
-                                            translateZ="-20"
-                                            className="absolute inset-0 z-0 p-4 pointer-events-none opacity-10"
-                                        >
-                                            <img
-                                                src={artist.bg || "/images/bg1.png"}
-                                                alt="background"
-                                                className="w-full h-full object-contain"
-                                            />
-                                        </CardItem>
+            <div ref={wrapperRef} className={styles.mainWrapper}>
+                <div ref={containerRef} className={styles.mainContainer}>
+                    <div className={styles.topHeadingContainer}>
+                        <h1 className={styles.heading}>Renowned <span>Artists!</span></h1>
+                    </div>
 
-                                        {/* 2. Artist Main Portrait (Floating) */}
-                                        <CardItem
-                                            translateZ="100"
-                                            className="relative z-20 w-full mb-6 flex justify-center"
-                                        >
-                                            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-md border-2 border-white">
-                                                <Image
+                    <div className={styles.imageContentContainer}>
+                        <ul ref={imageListRef} className="flex flex-col gap-4 h-630">
+                            {artists.map((artist) => (
+                                <li key={artist.name} className="h-160">
+                                    <CardContainer className="inter-var">
+                                        <CardBody className="relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/10 w-auto sm:w-120 h-auto">
+                                            <CardItem
+                                                translateZ="50"
+                                                className="absolute h-140"
+                                            >
+                                                <img
+                                                    src={artist.bg}
+                                                    alt="background"
+                                                />
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="80"
+                                                className="absolute h-120"
+                                            >
+                                                <CardItem id="myfont" className="leading-none absolute left-5 text-start top-3">
+                                                    <h2 className={`font-extrabold text-yellow-400 tracking-tight text-6xl`}>
+                                                        {artist.name.split(" ")[0]}
+                                                    </h2>
+                                                    <h2 className="text-6xl text-yellow-400 font-semibold">
+                                                        {artist.name.split(" ")[1]}
+                                                    </h2>
+                                                </CardItem>
+                                            </CardItem>
+                                            <CardItem
+                                                translateZ="100"
+                                                className="relative z-10 w-full flex-col mt-20"
+                                            >
+                                                <img
                                                     src={artist.image}
                                                     alt={artist.name}
-                                                    fill
-                                                    className="object-cover grayscale group-hover/card:grayscale-0 transition-all duration-700"
+                                                    className="relative"
                                                 />
-                                            </div>
-                                        </CardItem>
-
-                                        {/* 3. Text Info (Middle Z) */}
-                                        <CardItem
-                                            translateZ="50"
-                                            className="text-center relative z-20"
-                                        >
-                                            <h3 className="text-lg md:text-xl lg:text-2xl font-[family-name:var(--font-medieval-sharp)] text-[#2C1810] mb-1 uppercase tracking-tight">
-                                                {artist.name}
-                                            </h3>
-                                            <div className="w-8 h-0.5 bg-[#B7410E] mx-auto opacity-50" />
-                                        </CardItem>
-                                    </CardBody>
-                                </CardContainer>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Full Lineup Button Overlay */}
-                    <div ref={buttonRef} className="relative z-20">
-                        <Button
-                            variant="theatrical"
-                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
-                            asChild
-                        >
-                            <Link href="/events#lineup">View Full Lineup</Link>
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Footer Half of the Split Block */}
-                <div ref={footerRef} className="relative w-full z-40">
-                    <div className="absolute top-[80%] left-0 w-full h-12 md:h-40 translate-y-[25%] overflow-hidden pointer-events-none ">
-                        <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
-                            {[...Array(15)].map((_, i) => (
-                                <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">
-                                    <Image
-                                        src="/images/shapartist.png"
-                                        alt=""
-                                        fill
-                                        className="object-contain"
-                                    />
-                                </div>
+                                            </CardItem>
+                                        </CardBody>
+                                    </CardContainer>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
+                    </div>
+
+                    <div className={styles.bottomHeadingContainer}>
+                        <h1 className={styles.heading}><span>Artist </span>Spotlight!</h1>
                     </div>
                 </div>
-
             </div>
         </section>
     );
