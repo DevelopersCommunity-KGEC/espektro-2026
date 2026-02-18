@@ -295,7 +295,7 @@ export const artists: Artist[] = [
     time: "8:00 PM",
     venue: "Main Stage",
     image: "/images/artist-1.png",
-    bg: "/images/bg1.png",
+    bg: "/images/artist_section_card.png",
     social: { instagram: "@arijitsingh", twitter: "@arijitsingh" },
   },
   {
@@ -307,7 +307,7 @@ export const artists: Artist[] = [
     time: "9:30 PM",
     venue: "Arena Stage",
     image: "/images/artist-2.png",
-    bg: "/images/bg2.png",
+    bg: "/images/artist_section_card.png",
     social: { instagram: "@raftaarmusic", twitter: "@raftaarmusic" },
   },
   {
@@ -319,7 +319,7 @@ export const artists: Artist[] = [
     time: "10:00 PM",
     venue: "EDM Arena",
     image: "/images/artist-3.png",
-    bg: "/images/bg3.png",
+    bg: "/images/artist_section_card.png",
     social: { instagram: "@nucleya", twitter: "@nucleya" },
   },
   {
@@ -331,7 +331,7 @@ export const artists: Artist[] = [
     time: "7:00 PM",
     venue: "Indie Stage",
     image: "/images/artist-4.png",
-    bg: "/images/bg4.png",
+    bg: "/images/artist_section_card.png",
     social: { instagram: "@thelocaltrain", twitter: "@thelocaltrain" },
   },
 ];
