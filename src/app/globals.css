@@ -134,10 +134,12 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip; /* Fix for horizontal scroll without breaking sticky */
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip; /* Fix for horizontal scroll without breaking sticky */
   }
 }
 

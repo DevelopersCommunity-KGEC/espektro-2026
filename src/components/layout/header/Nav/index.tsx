@@ -36,10 +36,10 @@ const navItems = [
     title: "Events",
     href: "/events",
   },
-  {
-    title: "My Clubs",
-    href: "/my-clubs",
-  },
+  // {
+  //   title: "My Clubs",
+  //   href: "/my-clubs",
+  // },
 ];
 
 import { authClient } from "@/lib/auth-client";
@@ -151,8 +151,6 @@ export default function Index({
             <div
               className={`relative ${styles.link}`}
               style={{ marginTop: "10px" }}
-              onMouseEnter={() => setIsClubsDropdownOpen(true)}
-              onMouseLeave={() => setIsClubsDropdownOpen(false)}
             >
               <DropdownMenu
                 open={isClubsDropdownOpen}
@@ -178,8 +176,6 @@ export default function Index({
                   className="w-56 bg-[#ffffff] border-[#2C1810]/10 shadow-lg z-[3000]"
                   align="start"
                   sideOffset={5}
-                  onMouseEnter={() => setIsClubsDropdownOpen(true)}
-                  onMouseLeave={() => setIsClubsDropdownOpen(false)}
                 >
                   {clubRoles.map((role: any) => {
                     const RoleIcon =
