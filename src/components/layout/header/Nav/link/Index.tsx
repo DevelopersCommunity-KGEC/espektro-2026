@@ -35,7 +35,7 @@ export default function Index({ data, isActive, setSelectedIndicator, closeMenu 
         className={styles.indicator}
       />
       <Magnetic>
-        <Link href={href}>
+        <Link href={href} className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all uppercase">
           {title}
         </Link>
       </Magnetic>

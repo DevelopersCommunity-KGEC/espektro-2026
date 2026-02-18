@@ -6,62 +6,194 @@ import { motion } from 'framer-motion';
 
 const Techtix: React.FC = () => {
   return (
-    <section className="relative flex justify-center items-center w-full flex-col overflow-hidden text-foreground py-16 px-3 bg-cover bg-center bg-no-repeat bg-[url('/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png')] bg-white">
-      <div className="flex justify-center items-center flex-col w-full h-min">
-        <div className="flex flex-col w-full max-w-[1400px] mx-auto gap-8 p-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+    <section className="relative flex justify-center items-center w-full py-20 px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
+      {/* Lotus Mandala Background - Centered and Subtle */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
+        <Image
+          src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+          alt="Decorative lotus mandala"
+          width={800}
+          height={600}
+          className="object-contain"
+        />
+      </div>
+
+      {/* Left Tribal Border Pattern */}
+      <div
+        className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-0"
+        style={{
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '100% auto',
+          backgroundPosition: 'top center'
+        }}
+      />
+
+      {/* Top-Left Circular Basket Decoration - Front */}
+      {/* <motion.div
+        className="absolute left-4 top-8 w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 z-[21] hidden sm:block"
+        initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <Image
+          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
+          alt="Traditional woven basket decoration"
+          fill
+          className="object-contain drop-shadow-lg"
+        />
+      </motion.div> */}
+
+      {/* Top-Left Circular Pattern - Back */}
+      {/* <motion.div
+        className="absolute left-[-2rem] top-[-2rem] w-40 h-40 md:w-60 md:h-60 lg:w-72 lg:h-72 z-[20] hidden sm:block"
+        initial={{ opacity: 0, scale: 0.8, rotate: 20 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+        viewport={{ once: true }}
+      >
+        <Image
+          src="/images/992241cef4a2175dfd465b2ebbe92e8e.png"
+          alt="Decorative circular pattern"
+          fill
+          className="object-contain"
+        />
+      </motion.div> */}
+
+      {/* Main Content Container */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16">
+
+          {/* Left Content - Text */}
           <motion.div
-            className="flex-1 text-left pr-0 lg:pr-8"
+            className="flex-1 text-justify max-w-xl flex flex-col items-center"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xl text-[#333] tracking-wide mb-2 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">Technical Excellence</h3>
-            <h1 className="text-6xl text-[#1a1a1a] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">Techtix</h1>
-            <p className="text-base leading-relaxed text-[#555] font-[family-name:var(--font-open-sans)]">
+            <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
+              Technical Excellence
+            </h3>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
+              Techtix
+            </h1>
+            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
               The technical heartbeat of Espektro where innovation meets competition. Experience cutting-edge technology through coding marathons and tech showcases.
               <br /><br />
-              From AI workshops to hackathons, Techtix brings together the brightest minds.
+              From AI workshops to hackathons, Techtix brings together the brightest minds to push the boundaries of what&apos;s possible.
             </p>
           </motion.div>
 
+          {/* Right Content - Image Collage */}
           <motion.div
-            className="flex-[1.5] grid grid-cols-2 lg:grid-cols-[1fr_1.5fr_1.5fr] grid-rows-[auto_auto_auto] gap-4 w-full"
+            className="flex-[1.2] w-full max-w-2xl relative"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            {/* Top Row */}
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
+            <div className="relative w-full h-[500px] md:h-[600px]">
+              {/* Image 1 - Top Left */}
+              <motion.div
+                className="absolute top-0 left-0 w-[45%] h-[35%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: -3 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/images/artist-2.jpg"
+                  alt="Tech event"
+                  fill
+                  className="object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </motion.div>
 
-            {/* Second Row Starts */}
-            {/* Column 1 items */}
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-1 h-[120px]">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
+              {/* Image 2 - Top Right */}
+              <motion.div
+                className="absolute top-[5%] right-0 w-[48%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 3 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/images/kolkata-monochrome.jpeg"
+                  alt="Kolkata heritage"
+                  fill
+                  className="object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </motion.div>
 
-            {/* Big items */}
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-2 h-auto">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
-            </div>
-            <div className="relative rounded overflow-hidden bg-[#e0e0e0] min-h-[100px] col-span-1 row-span-2 h-auto">
-              <div className="w-full h-full bg-[#7a7a7a] min-h-full transition-transform duration-300 ease-in-out hover:scale-105"></div>
+              {/* Image 3 - Middle Left */}
+              <motion.div
+                className="absolute top-[38%] left-[8%] w-[42%] h-[38%] rounded-lg overflow-hidden shadow-xl z-[3]"
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/images/bengali-culture.jpeg"
+                  alt="Bengali culture"
+                  fill
+                  className="object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </motion.div>
+
+              {/* Image 4 - Bottom Right Large */}
+              <motion.div
+                className="absolute bottom-0 right-[5%] w-[50%] h-[45%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/images/kolkata-city.jpeg"
+                  alt="Kolkata cityscape"
+                  fill
+                  className="object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </motion.div>
+
+              {/* Image 5 - Bottom Left Small */}
+              <motion.div
+                className="absolute bottom-[8%] left-0 w-[35%] h-[28%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/images/timeline.jpg"
+                  alt="Event timeline"
+                  fill
+                  className="object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Bottom Decorative Element - Tribal Pattern Footer */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 w-64 h-16 opacity-30 hidden md:block"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 0.3, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        viewport={{ once: true }}
+      >
+        {/* <Image
+          src="/images/225fc2b0491f29fb9a027d0a94bfcf53.png"
+          alt="Decorative tribal pattern"
+          fill
+          className="object-contain"
+        /> */}
+      </motion.div>
     </section>
   );
 };
