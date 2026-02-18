@@ -18,6 +18,7 @@ import Exotica from "@/components/landing/about-sections/Exotica";
 import { ArtistGallery } from "@/components/landing/artist-gallery";
 import { FeaturedArtists } from "@/components/landing/featured-artists";
 import { MusicController } from "@/components/audio/MusicController";
+import ComingSoon from "@/components/landing/coming-soon";
 
 export const dynamic = "force-dynamic";
 
@@ -67,6 +68,7 @@ export default async function LandingPage() {
 
       <div id="sponsors" data-section-id="sponsors">
         <Sponsors />
+        {/* <ComingSoon /> */}
       </div>
 
       <div id="clubs" data-section-id="clubs">
