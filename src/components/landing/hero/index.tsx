@@ -1,156 +1,135 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
-    const heroRef = useRef<HTMLElement>(null);
-    const [scrollProgress, setScrollProgress] = useState(0);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
-        const handleScroll = () => {
-            if (heroRef.current) {
-                const rect = heroRef.current.getBoundingClientRect();
-                const progress = Math.min(
-                    1,
-                    Math.max(0, -rect.top / (window.innerHeight * 0.6))
-                );
-                setScrollProgress(progress);
-            }
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll();
-        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     if (!mounted)
         return (
-            <section className="h-screen bg-[#1A1A1A]" aria-hidden="true" />
+            <section className="h-screen bg-[#FFF8F0]" aria-hidden="true" />
         );
 
     return (
-        <section ref={heroRef} className="relative z-10 h-[150vh]">
-            <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-                {/* Background layers */}
-                <div className="absolute inset-0">
-                    {/* B&W layer */}
-                    <div
-                        className="absolute inset-0 transition-opacity duration-500"
-                        style={{ opacity: 1 - scrollProgress }}
-                    >
-                        <Image
-                            src="/images/kolkata-monochrome.jpeg"
-                            alt=""
-                            fill
-                            priority
-                            className="object-cover grayscale"
-                            sizes="100vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/70 via-[#1A1A1A]/40 to-[#1A1A1A]/80" />
-                    </div>
+        <section className="relative flex justify-center items-center w-full min-h-screen py-20 px-4 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
+            {/* Lotus Mandala Background - Centered and Subtle */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.1] pointer-events-none">
+                <Image
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    alt="Decorative lotus mandala"
+                    width={1000}
+                    height={800}
+                    className="object-contain"
+                />
+            </div>
 
-                    {/* Color layer */}
-                    <div
-                        className="absolute inset-0 transition-opacity duration-500"
-                        style={{ opacity: scrollProgress }}
-                    >
-                        <Image
-                            src="/images/bengali-culture.jpeg"
-                            alt=""
-                            fill
-                            className="object-cover"
-                            sizes="100vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/50 via-[#1A1A1A]/30 to-[#1A1A1A]/70" />
-                    </div>
+            {/* Left tribal border pattern */}
+            <div
+                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-10"
+                style={{
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundRepeat: 'repeat-y',
+                    backgroundSize: '100% auto',
+                    backgroundPosition: 'top center'
+                }}
+            />
 
-                    {/* Corner accents */}
-                    <div
-                        className="absolute top-8 left-8 w-24 h-24 border-t-2 border-l-2 opacity-20 transition-colors duration-500 hidden md:block"
-                        style={{
-                            borderColor: scrollProgress > 0.5 ? "#F4A900" : "#fff",
-                        }}
-                    />
-                    <div
-                        className="absolute top-8 right-8 w-24 h-24 border-t-2 border-r-2 opacity-20 transition-colors duration-500 hidden md:block"
-                        style={{
-                            borderColor: scrollProgress > 0.5 ? "#F4A900" : "#fff",
-                        }}
-                    />
-                    <div
-                        className="absolute bottom-8 left-8 w-24 h-24 border-b-2 border-l-2 opacity-20 transition-colors duration-500 hidden md:block"
-                        style={{
-                            borderColor: scrollProgress > 0.5 ? "#B7410E" : "#fff",
-                        }}
-                    />
-                    <div
-                        className="absolute bottom-8 right-8 w-24 h-24 border-b-2 border-r-2 opacity-20 transition-colors duration-500 hidden md:block"
-                        style={{
-                            borderColor: scrollProgress > 0.5 ? "#B7410E" : "#fff",
-                        }}
-                    />
-                </div>
+            {/* Decorative Circular Patterns (Matches EspektroAbout section) */}
+            <motion.div
+                className="absolute right-[-10rem] top-[-10rem] w-80 h-80 md:w-100 md:h-100 lg:w-120 lg:h-120 z-0 opacity-20 hidden lg:block"
+                initial={{ opacity: 0, rotate: 20 }}
+                animate={{ opacity: 0.2, rotate: 0 }}
+                transition={{ duration: 2, ease: "easeOut" }}
+            >
+                <Image
+                    src="/images/992241cef4a2175dfd465b2ebbe92e8e.png"
+                    alt=""
+                    fill
+                    className="object-contain"
+                />
+            </motion.div>
 
-                {/* Main content */}
-                <div
-                    className="relative z-10 container mx-auto px-6 text-center"
-                    style={{
-                        opacity: Math.max(0, 1 - scrollProgress * 2),
-                        transform: `translateY(${scrollProgress * 30}px)`,
-                    }}
+            <motion.div
+                className="absolute left-[-5rem] bottom-[-5rem] w-64 h-64 md:w-80 md:h-80 z-0 opacity-10 hidden lg:block"
+                initial={{ opacity: 0, rotate: -20 }}
+                animate={{ opacity: 0.1, rotate: 0 }}
+                transition={{ duration: 2.2, ease: "easeOut", delay: 0.2 }}
+            >
+                <Image
+                    src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
+                    alt=""
+                    fill
+                    className="object-contain"
+                />
+            </motion.div>
+
+            {/* Main Content */}
+            <div className="relative z-20 container mx-auto px-6 text-center mt-10">
+                <motion.p
+                    className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-8 font-[family-name:var(--font-roboto-slab)]"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
                 >
-                    <p className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium mb-6">
-                        Kalyani Government Engineering College presents
-                    </p>
+                    Kalyani Government Engineering College presents
+                </motion.p>
 
-                    <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] font-bold text-white mb-4 tracking-tight">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                >
+                    <h1 className="text-5xl sm:text-8xl md:text-7xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
                         ESPEKTRO
                     </h1>
-                    <p className="text-[#B7410E] text-3xl sm:text-4xl md:text-5xl font-serif italic font-light mb-8">
+                    <p className="text-[#B7410E] text-4xl sm:text-6xl md:text-7xl lg:text-6xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
                         2026
                     </p>
+                </motion.div>
 
-                    <p className="max-w-md mx-auto text-base sm:text-lg text-white/60 mb-10 font-light leading-relaxed">
-                        A journey through the{" "}
-                        <span className="text-[#F4A900] font-medium">
-                            Evolution of Bengali Culture
-                        </span>
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                        <Button
-                            size="lg"
-                            className="bg-[#B7410E] hover:bg-[#9A3008] text-white border-0 rounded-sm px-8 h-11 text-xs tracking-widest uppercase"
-                            asChild
-                        >
-                            <Link href="/events">Explore Events</Link>
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            className="bg-transparent border-white/20 text-white hover:bg-white/10 hover:text-white rounded-sm px-8 h-11 text-xs tracking-widest uppercase"
-                            asChild
-                        >
-                            <Link href="#about">Learn More</Link>
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Scroll indicator */}
-                <div
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                    style={{ opacity: Math.max(0, 1 - scrollProgress * 3) }}
+                <motion.p
+                    className="max-w-2xl mx-auto text-lg sm:text-xl text-[#4A3428] mb-14 font-medium leading-relaxed font-[family-name:var(--font-open-sans)]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.5 }}
                 >
-                    <span className="text-white/30 text-[9px] uppercase tracking-[0.3em]">
-                        Scroll
+                    A journey through the{" "}
+                    <span className="text-[#B7410E] underline underline-offset-8 decoration-[#B7410E]/20 font-bold">
+                        Evolution of Bengali Culture
                     </span>
-                    <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+                </motion.p>
+
+                <div className="flex justify-center mt-8">
+                    <Button
+                        variant="theatrical"
+                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 px-8 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
+                        asChild
+                    >
+                        <Link href="/events">Explore Events</Link>
+                    </Button>
                 </div>
             </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ duration: 1, delay: 1.5 }}
+            >
+                <span className="text-[#2C1810] text-[10px] uppercase tracking-[0.4em] font-bold">
+                    Scroll
+                </span>
+                <div className="w-px h-12 bg-gradient-to-b from-[#2C1810] to-transparent" />
+            </motion.div>
         </section>
     );
 }

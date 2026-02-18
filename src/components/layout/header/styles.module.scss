@@ -88,12 +88,16 @@
         }
 
         .el {
-            font-size: medium;
+            font-size: 0.9rem;
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 1;
             cursor: pointer;
+            font-family: var(--font-medieval-sharp);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
 
             &:hover {
                 .indicator {
@@ -103,11 +107,11 @@
 
             .indicator {
                 position: absolute;
-                width: 5px;
-                height: 5px;
+                width: 6px;
+                height: 6px;
                 top: 45px;
                 left: 50%;
-                background-color: black;
+                background-color: #B7410E;
                 border-radius: 50%;
                 transform: scale(0) translateX(-50%);
                 transition: transform 0.2s cubic-bezier(0.76, 0, 0.24, 1);

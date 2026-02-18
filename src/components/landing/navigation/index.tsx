@@ -8,29 +8,10 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
     LogOut,
-    Ticket,
     Menu,
-    LayoutDashboard,
-    User,
-    ScanLine,
+    X,
 } from "lucide-react";
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-    SheetClose,
-    SheetTitle,
-    SheetDescription,
-} from "@/components/ui/sheet";
 
 interface ClientSession {
     user: {
@@ -51,6 +32,7 @@ interface NavigationProps {
 }
 
 export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
+    const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { data } = authClient.useSession();
     const session = data as ClientSession | null;
@@ -80,353 +62,181 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
         session?.user?.role === "super-admin" ||
         userRole === "super-admin";
 
-    const hasClubs = clubRoles && clubRoles.length > 0;
-
-    const activeClubRole = hasClubs
-        ? clubRoles!.find((cr) => pathname.startsWith(`/club/${cr.clubId}`))
-        : null;
-
-    // App navigation items for mobile sheet
-    const appLinks = [
-        { name: "All Events", href: "/events" },
-        { name: "My Tickets", href: "/my-tickets" },
-        ...(hasClubs ? [{ name: "Scan Ticket", href: "/scan" }] : []),
-        ...(sessionIsAdmin
-            ? [{ name: "Admin Dashboard", href: "/dashboard" }]
-            : []),
-    ];
+    // Toggle body scroll
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+    }, [isOpen]);
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                ? "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-sm"
-                : "bg-transparent"
-                }`}
-        >
-            <nav className="container mx-auto px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
-                        <span className="font-serif text-xl font-bold text-foreground">
+        <>
+            {/* Header / Logo bar */}
+            <header
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+                    ? "bg-[#FFF8F0]/80 backdrop-blur-md border-b border-[#4A3428]/5 py-3"
+                    : "bg-transparent py-5"
+                    }`}
+            >
+                <nav className="container mx-auto px-6 flex items-center justify-between">
+                    {/* Logo Section */}
+                    <Link href="/" className="flex items-center gap-2 group relative z-[60]">
+                        <span className="text-2xl font-bold text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] group-hover:text-[#B7410E] transition-colors">
                             Espektro
                         </span>
-                        <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mt-0.5">
+                        <span className="text-[10px] font-bold text-[#8B2635] uppercase tracking-widest mt-1.5 font-[family-name:var(--font-roboto-slab)]">
                             &apos;26
                         </span>
                     </Link>
 
-                    {/* Desktop nav */}
-                    <div className="hidden lg:flex items-center gap-1">
-                        {/* Landing page section links */}
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="px-3 py-2 text-[11px] font-medium text-foreground/70 hover:text-[#B7410E] transition-colors uppercase tracking-wider"
+                    {/* Common Hamburger Trigger */}
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className={`group relative flex items-center justify-center w-12 h-12 rounded-full border transition-all duration-300 z-[60] ${scrolled
+                            ? "bg-[#2C1810] border-[#2C1810] text-white hover:bg-[#8B2635]"
+                            : "bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20"
+                            }`}
+                        aria-label="Toggle Menu"
+                    >
+                        <Menu className="w-6 h-6" />
+                    </button>
+                </nav>
+            </header>
+
+            {/* Sidebar Navigation Drawer */}
+            <aside
+                className={`fixed inset-0 z-[100] transition-all duration-500 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                    }`}
+            >
+                {/* Backdrop Layer */}
+                <div
+                    className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-700"
+                    onClick={() => setIsOpen(false)}
+                />
+
+                {/* Drawer Content */}
+                <div
+                    className={`absolute right-0 top-0 bottom-0 w-full max-w-sm bg-[#FBFAF3] text-[#2C1810] shadow-[0_0_50px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-out flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"
+                        }`}
+                >
+                    {/* Tribal Border */}
+                    <div
+                        className="absolute top-0 left-0 bottom-0 w-8 bg-repeat-y bg-contain z-10"
+                        style={{ backgroundImage: "url('/images/border2.png')" }}
+                    />
+
+                    {/* Header in Drawer */}
+                    <div className="flex items-center justify-between p-8 pl-16 border-b border-[#2C1810]/5">
+                        <span className="text-xl font-bold font-[family-name:var(--font-medieval-sharp)] tracking-wider">
+                            Menu
+                        </span>
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="bg-[#2C1810]/5 hover:bg-[#2C1810]/10 w-10 h-10 rounded-full flex items-center justify-center transition-all group"
+                            aria-label="Close Menu"
+                        >
+                            <X className="w-5 h-5 text-[#2C1810]/70 group-hover:rotate-90 transition-transform duration-300" />
+                        </button>
+                    </div>
+
+                    {/* Main Nav Links */}
+                    <div className="flex-1 overflow-y-auto px-10 py-12 pl-16 custom-scrollbar">
+                        <nav className="flex flex-col items-end gap-6 uppercase">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all hover:scale-105 origin-right text-right"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+
+                            <div className="h-px w-24 bg-[#2C1810]/10 my-4" />
+
+                            <Link
+                                href="/events"
+                                onClick={() => setIsOpen(false)}
+                                className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#F4A900] transition-all hover:scale-105 origin-right text-right"
                             >
-                                {link.label}
-                            </a>
-                        ))}
+                                Events
+                            </Link>
 
-                        <div className="h-4 w-px bg-border/50 mx-2" />
+                            {/* Additional Auth-based links */}
+                            {session && (
+                                <div className="mt-6 flex flex-col items-end gap-4 border-t border-[#2C1810]/5 pt-8 w-full">
+                                    <Link
+                                        href="/profile"
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/30 hover:text-[#2C1810] transition-all text-right"
+                                    >
+                                        My Profile
+                                    </Link>
+                                    <Link
+                                        href="/my-tickets"
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/30 hover:text-[#2C1810] transition-all text-right"
+                                    >
+                                        My Tickets
+                                    </Link>
+                                    {sessionIsAdmin && (
+                                        <Link
+                                            href="/dashboard"
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#8B2635] hover:text-[#B7410E] transition-all text-right"
+                                        >
+                                            Admin Dashboard
+                                        </Link>
+                                    )}
+                                </div>
+                            )}
+                        </nav>
+                    </div>
 
+                    {/* Footer in Drawer (User Actions / Login) */}
+                    <div className="p-8 pb-10 pl-16 border-t border-[#2C1810]/10 bg-[#2C1810]/5">
                         {!session ? (
                             <Button
                                 onClick={handleSignIn}
-                                className="bg-[#B7410E] hover:bg-[#9A3008] text-white px-5 py-2 text-[11px] font-bold uppercase tracking-widest rounded-sm"
+                                variant="theatrical"
+                                className="w-full h-11 bg-[#2C1810] hover:bg-[#4A3428] text-white font-bold uppercase tracking-[0.2em] shadow-lg transition-all font-[family-name:var(--font-roboto-slab)] text-xs"
                             >
-                                Login
+                                Enter Espektro
                             </Button>
                         ) : (
-                            <div className="flex items-center gap-2">
-                                {/* Events link */}
-                                <Link
-                                    href="/events"
-                                    className="px-3 py-2 text-[11px] font-medium text-foreground/70 hover:text-[#B7410E] transition-colors uppercase tracking-wider"
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center justify-end gap-3 px-2">
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-[#2C1810] font-[family-name:var(--font-roboto-slab)] truncate max-w-[150px]">
+                                            {session.user.name}
+                                        </p>
+                                        <p className="text-[10px] text-[#2C1810]/40 uppercase tracking-widest font-bold">
+                                            {session.user.role || "Member"}
+                                        </p>
+                                    </div>
+                                    <Avatar className="h-12 w-12 ring-2 ring-[#2C1810]/10">
+                                        <AvatarImage src={session.user.image || ""} />
+                                        <AvatarFallback className="bg-[#B7410E] text-white font-bold">
+                                            {session.user.name?.charAt(0) || "U"}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </div>
+                                <Button
+                                    onClick={handleSignOut}
+                                    variant="outline"
+                                    className="w-full h-12 border-[#2C1810]/10 bg-white hover:bg-[#FFF8F0] text-[#2C1810]/60 hover:text-[#2C1810] rounded-full font-bold uppercase tracking-widest text-[10px]"
                                 >
-                                    Events
-                                </Link>
-
-                                {/* Club switcher dropdown */}
-                                {hasClubs && (
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" className="px-3 py-2 text-[11px] font-medium text-foreground/70 hover:text-[#B7410E] transition-colors uppercase tracking-wider focus:outline-none flex items-center gap-1 h-auto hover:bg-transparent">
-                                                <LayoutDashboard className="h-3.5 w-3.5" />
-                                                {activeClubRole ? (
-                                                    <span className="capitalize">
-                                                        {activeClubRole.clubId}
-                                                    </span>
-                                                ) : (
-                                                    <span>Clubs</span>
-                                                )}
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent
-                                            align="end"
-                                            sideOffset={8}
-                                        >
-                                            <DropdownMenuLabel>
-                                                Switch Club
-                                            </DropdownMenuLabel>
-                                            <DropdownMenuSeparator />
-                                            {clubRoles?.map((cr) => (
-                                                <DropdownMenuItem
-                                                    key={cr.clubId}
-                                                    asChild
-                                                    className="focus:bg-primary/10 focus:text-primary focus:outline-none"
-                                                >
-                                                    <Link
-                                                        href={`/club/${cr.clubId}/dashboard`}
-                                                        className="flex justify-between items-center w-full"
-                                                    >
-                                                        <span className="capitalize">
-                                                            {cr.clubId}
-                                                        </span>
-                                                        <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
-                                                            {cr.role.replace(
-                                                                "-",
-                                                                " "
-                                                            )}
-                                                        </span>
-                                                    </Link>
-                                                </DropdownMenuItem>
-                                            ))}
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                )}
-
-                                {/* User avatar dropdown */}
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="relative h-9 w-9 rounded-full 
-                                        ring-2 ring-border/50 hover:ring-[#B7410E]/50 transition-all focus:outline-none p-0 hover:bg-transparent">
-                                            <Avatar className="h-9 w-9">
-                                                <AvatarImage
-                                                    src={
-                                                        session.user.image || ""
-                                                    }
-                                                    alt={session.user.name}
-                                                />
-                                                <AvatarFallback className="text-xs">
-                                                    {session.user.name?.charAt(
-                                                        0
-                                                    ) || "U"}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent
-                                        className="w-56 bg-background"
-                                        align="end"
-                                        sideOffset={8}
-                                    >
-                                        <DropdownMenuLabel className="font-normal">
-                                            <div className="flex flex-col space-y-1">
-                                                <p className="text-sm font-medium leading-none">
-                                                    {session.user.name}
-                                                </p>
-                                                <p className="text-xs leading-none text-muted-foreground">
-                                                    {session.user.email}
-                                                </p>
-                                            </div>
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                                            <Link
-                                                href="/my-tickets"
-                                                className="cursor-pointer"
-                                            >
-                                                <Ticket className="mr-2 h-4 w-4" />
-                                                My Tickets
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                                            <Link
-                                                href="/profile"
-                                                className="cursor-pointer"
-                                            >
-                                                <User className="mr-2 h-4 w-4" />
-                                                Profile
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        {hasClubs && (
-                                            <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                                                <Link
-                                                    href="/scan"
-                                                    className="cursor-pointer"
-                                                >
-                                                    <ScanLine className="mr-2 h-4 w-4" />
-                                                    Scan Ticket
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        )}
-                                        {sessionIsAdmin && (
-                                            <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
-                                                <Link
-                                                    href="/dashboard"
-                                                    className="cursor-pointer"
-                                                >
-                                                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                                                    Admin Dashboard
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        )}
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            onClick={handleSignOut}
-                                            className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 focus:outline-none focus:[&_svg]:text-destructive"
-                                        >
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            Log out
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                                    <LogOut className="w-4 h-4 mr-2" />
+                                    Disconnect
+                                </Button>
                             </div>
                         )}
                     </div>
-
-                    {/* Mobile menu */}
-                    <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-9 w-9"
-                                >
-                                    <Menu className="h-5 w-5" />
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="right" className="w-72">
-                                <SheetTitle className="font-serif text-xl mb-6">
-                                    Espektro &apos;26
-                                </SheetTitle>
-                                <SheetDescription className="sr-only">
-                                    Site navigation
-                                </SheetDescription>
-                                <div className="flex flex-col gap-1">
-                                    {/* App links */}
-                                    {appLinks.map((item) => (
-                                        <SheetClose key={item.href} asChild>
-                                            <Link
-                                                href={item.href}
-                                                className="py-2.5 px-3 text-sm font-medium hover:bg-muted rounded-md transition-colors"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        </SheetClose>
-                                    ))}
-                                    {session && (
-                                        <SheetClose asChild>
-                                            <Link
-                                                href="/profile"
-                                                className="py-2.5 px-3 text-sm font-medium hover:bg-muted rounded-md transition-colors"
-                                            >
-                                                Profile
-                                            </Link>
-                                        </SheetClose>
-                                    )}
-
-                                    {/* Club links in mobile */}
-                                    {hasClubs && (
-                                        <>
-                                            <div className="h-px bg-border my-3" />
-                                            <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
-                                                My Clubs
-                                            </p>
-                                            {clubRoles?.map((cr) => (
-                                                <SheetClose
-                                                    key={cr.clubId}
-                                                    asChild
-                                                >
-                                                    <Link
-                                                        href={`/club/${cr.clubId}/dashboard`}
-                                                        className="flex items-center justify-between py-2.5 px-3 text-sm rounded-md transition-colors hover:bg-muted text-muted-foreground hover:text-foreground"
-                                                    >
-                                                        <span className="capitalize">
-                                                            {cr.clubId}
-                                                        </span>
-                                                        <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded capitalize">
-                                                            {cr.role.replace(
-                                                                "-",
-                                                                " "
-                                                            )}
-                                                        </span>
-                                                    </Link>
-                                                </SheetClose>
-                                            ))}
-                                        </>
-                                    )}
-
-                                    <div className="h-px bg-border my-3" />
-
-                                    {/* Section links */}
-                                    <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
-                                        On this page
-                                    </p>
-                                    {navLinks.map((link) => (
-                                        <SheetClose key={link.href} asChild>
-                                            <a
-                                                href={link.href}
-                                                className="py-2.5 px-3 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-                                            >
-                                                {link.label}
-                                            </a>
-                                        </SheetClose>
-                                    ))}
-
-                                    <div className="h-px bg-border my-3" />
-
-                                    {/* Auth section */}
-                                    {!session ? (
-                                        <SheetClose asChild>
-                                            <Button
-                                                onClick={handleSignIn}
-                                                className="w-full bg-[#B7410E] hover:bg-[#9A3008]"
-                                            >
-                                                Login
-                                            </Button>
-                                        </SheetClose>
-                                    ) : (
-                                        <div className="flex items-center gap-3 px-3 py-2">
-                                            <Avatar className="h-8 w-8">
-                                                <AvatarImage
-                                                    src={
-                                                        session.user.image || ""
-                                                    }
-                                                    alt={session.user.name}
-                                                />
-                                                <AvatarFallback className="text-xs">
-                                                    {session.user.name?.charAt(
-                                                        0
-                                                    ) || "U"}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium truncate">
-                                                    {session.user.name}
-                                                </p>
-                                                <p className="text-xs text-muted-foreground truncate">
-                                                    {session.user.email}
-                                                </p>
-                                            </div>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                className="h-8 w-8 shrink-0"
-                                                onClick={handleSignOut}
-                                            >
-                                                <LogOut className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
-                            </SheetContent>
-                        </Sheet>
-                    </div>
                 </div>
-            </nav>
-        </header>
+            </aside>
+        </>
     );
 }

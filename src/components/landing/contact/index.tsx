@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { MapPin, Phone, Mail, Clock, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { contacts } from "@/data/landing-content";
@@ -30,40 +31,44 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 bg-muted relative z-10 overflow-hidden"
+            className="py-20 lg:py-32 relative z-10 overflow-hidden"
+            style={{ backgroundColor: "#FFF8F0" }}
         >
-            {/* Decorative side borders */}
+            {/* Lotus Mandala Background - Centered and Subtle */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
+                <Image
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    alt="Decorative lotus mandala"
+                    width={800}
+                    height={600}
+                    className="object-contain"
+                />
+            </div>
+
+            {/* Left Tribal Border Pattern */}
             <div
-                className="absolute top-0 left-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
+                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
                 style={{
-                    backgroundImage: 'url(/border.svg)',
-                    backgroundRepeat: 'repeat-y',
-                    backgroundSize: '100% auto'
-                }}
-            />
-            <div
-                className="absolute top-0 right-0 bottom-0 w-[60px] md:w-[80px] pointer-events-none z-[5] hidden lg:block"
-                style={{
-                    backgroundImage: 'url(/border.svg)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
-                    transform: 'scaleX(-1)'
+                    backgroundPosition: 'top center'
                 }}
             />
-            <div className="container mx-auto px-4 lg:px-24">
+            <div className="container mx-auto px-4 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
                 {/* Section Header */}
                 <div
-                    className={`text-center mb-12 lg:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                    className={`flex flex-col items-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                         }`}
                 >
-                    <span className="text-primary font-medium text-sm uppercase tracking-widest mb-4 block">
+                    <p className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center">
                         Get in Touch
-                    </span>
-                    <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                        Contact <span className="text-primary">Us</span>
+                    </p>
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center">
+                        Contact <span className="text-[#B7410E]">Us</span>
                     </h2>
-                    <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                        Have questions? Reach out to our organizing team.
+                    <p className="text-[#4A3428]/80 max-w-2xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-lg">
+                        Have questions? Reach out to our organizing team for information about tickets, events, or sponsorship opportunities.
                     </p>
                 </div>
 
@@ -73,53 +78,51 @@ export function Contact() {
                         className={`transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
                             }`}
                     >
-                        {/* Venue Card */}
-                        <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 mb-8">
-                            <div className="flex items-start gap-4 mb-6">
-                                <div className="bg-primary/10 rounded-full p-3">
-                                    <MapPin className="w-6 h-6 text-primary" />
+                        {/* Venue Block */}
+                        <div className="bg-white/70 backdrop-blur-md border border-[#4A3428]/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl p-6 lg:p-8 mb-8">
+                            <div className="flex items-start gap-5 mb-8">
+                                <div className="bg-[#8B2635]/10 rounded-2xl p-4 flex-shrink-0">
+                                    <MapPin className="w-6 h-6 text-[#8B2635]" />
                                 </div>
                                 <div>
-                                    <h3 className="font-serif text-xl font-bold text-foreground mb-2">
+                                    <h3 className="font-[family-name:var(--font-medieval-sharp)] text-2xl text-[#2C1810] mb-2">
                                         Venue
                                     </h3>
-                                    <p className="text-muted-foreground leading-relaxed">
+                                    <p className="text-[#4A3428] leading-relaxed opacity-80 font-medium">
                                         Kalyani Government Engineering College
                                         <br />
-                                        Kalyani, Nadia
-                                        <br />
-                                        West Bengal - 741235
+                                        Kalyani, Nadia, West Bengal - 741235
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4 mb-6">
-                                <div className="bg-secondary/10 rounded-full p-3">
-                                    <Clock className="w-6 h-6 text-secondary" />
+                            <div className="flex items-start gap-5 mb-8">
+                                <div className="bg-[#B7410E]/10 rounded-2xl p-4 flex-shrink-0">
+                                    <Clock className="w-6 h-6 text-[#B7410E]" />
                                 </div>
                                 <div>
-                                    <h3 className="font-serif text-xl font-bold text-foreground mb-2">
+                                    <h3 className="font-[family-name:var(--font-medieval-sharp)] text-2xl text-[#2C1810] mb-2">
                                         Event Dates
                                     </h3>
-                                    <p className="text-muted-foreground">
-                                        March 2026 (Exact dates TBA)
+                                    <p className="text-[#4A3428] opacity-80 font-medium">
+                                        March 2026 (Dates TBA)
                                         <br />
-                                        <span className="text-sm">4 Days of Non-Stop Action</span>
+                                        <span className="text-sm font-bold uppercase tracking-widest text-[#B7410E]/80">4 Days of Spectacle</span>
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
-                                <div className="bg-accent/10 rounded-full p-3">
-                                    <Mail className="w-6 h-6 text-accent" />
+                            <div className="flex items-start gap-5">
+                                <div className="bg-[#8B2635]/10 rounded-2xl p-4 flex-shrink-0">
+                                    <Mail className="w-6 h-6 text-[#8B2635]" />
                                 </div>
                                 <div>
-                                    <h3 className="font-serif text-xl font-bold text-foreground mb-2">
+                                    <h3 className="font-[family-name:var(--font-medieval-sharp)] text-2xl text-[#2C1810] mb-2">
                                         Email
                                     </h3>
                                     <a
                                         href="mailto:sponsorship.espektro@gmail.com"
-                                        className="text-primary hover:underline underline-offset-4"
+                                        className="text-[#B7410E] hover:text-[#8B2635] font-bold underline underline-offset-4 transition-colors"
                                     >
                                         sponsorship.espektro@gmail.com
                                     </a>
@@ -127,14 +130,23 @@ export function Contact() {
                             </div>
                         </div>
 
-                        {/* Map Embed Placeholder */}
-                        <div className="relative aspect-video rounded-2xl overflow-hidden border border-border bg-card">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.907823258028!2d88.44954007505136!3d22.99041681752783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895327fbf3adb%3A0xabd136dfaf4f1628!2sEspektro%20Ground!5e0!3m2!1sen!2sus!4v1770658553857!5m2!1sen!2sus" width="100%" height="100%" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                        {/* Map Embed */}
+                        <div className="relative aspect-video rounded-3xl overflow-hidden border border-[#4A3428]/10 shadow-xl group">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.907823258028!2d88.44954007505136!3d22.99041681752783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895327fbf3adb%3A0xabd136dfaf4f1628!2sEspektro%20Ground!5e0!3m2!1sen!2sus!4v1770658553857!5m2!1sen!2sus"
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0, filter: 'grayscale(0.2) contrast(1.1)' }}
+                                allowFullScreen={true}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="group-hover:grayscale-0 transition-all duration-1000"
+                            />
                             <a
                                 href="https://maps.google.com/?q=Kalyani+Government+Engineering+College"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="absolute bottom-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg px-4 py-2 flex items-center gap-2 text-sm font-medium text-foreground hover:bg-card transition-colors"
+                                className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 flex items-center gap-2 text-sm font-bold text-[#2C1810] hover:bg-[#8B2635] hover:text-white transition-all shadow-lg"
                             >
                                 Open in Maps
                                 <ExternalLink className="w-4 h-4" />
@@ -142,78 +154,67 @@ export function Contact() {
                         </div>
                     </div>
 
-                    {/* Contact Cards */}
+                    {/* Committee Cards */}
                     <div
                         className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
                             }`}
                     >
-                        <h3 className="font-serif text-2xl font-bold text-foreground mb-6">
+                        <h3 className="font-[family-name:var(--font-medieval-sharp)] text-3xl text-[#2C1810] mb-8">
                             Organizing Committee
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-5">
                             {contacts.map((contact, index) => (
                                 <div
                                     key={contact.name}
-                                    className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-lg transition-all group"
+                                    className="bg-white/80 border border-[#4A3428]/5 rounded-2xl p-6 hover:border-[#B7410E]/30 hover:shadow-2xl transition-all duration-300 group shadow-sm"
                                     style={{ animationDelay: `${index * 100}ms` }}
                                 >
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <h4 className="font-serif text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div className="flex-1">
+                                            <h4 className="font-[family-name:var(--font-medieval-sharp)] text-xl text-[#2C1810] group-hover:text-[#B7410E] transition-colors mb-1">
                                                 {contact.name}
                                             </h4>
-                                            <p className="text-sm text-muted-foreground">
+                                            <p className="text-xs font-bold uppercase tracking-widest text-[#8B2635] opacity-80">
                                                 {contact.role}
                                             </p>
                                         </div>
                                         <Button
                                             asChild
-                                            variant="outline"
-                                            size="sm"
-                                            className="rounded-full bg-transparent"
+                                            variant="theatrical"
+                                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white shadow-md hover:shadow-lg transition-all h-10 shrink-0 font-[family-name:var(--font-roboto-slab)] uppercase text-[10px] tracking-[0.1em]"
                                         >
                                             <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>
-                                                <Phone className="w-4 h-4 mr-2" />
-                                                Call
+                                                <Phone className="w-3 h-3 md:mr-2" />
+                                                <span className="hidden md:inline">Call Now</span>
                                             </a>
                                         </Button>
                                     </div>
-                                    <p className="mt-3 text-foreground font-medium">
-                                        {contact.phone}
-                                    </p>
+                                    <div className="mt-4 pt-4 border-t border-[#4A3428]/5">
+                                        <p className="text-[#2C1810] font-bold tracking-widest font-[family-name:var(--font-open-sans)]">
+                                            {contact.phone}
+                                        </p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Quick Links */}
-                        <div className="mt-8 p-6 bg-primary/5 rounded-2xl border border-primary/10">
-                            <h4 className="font-serif text-lg font-bold text-foreground mb-4">
-                                Quick Links
+                        {/* Quick Navigation Links */}
+                        <div className="mt-10 p-8 bg-[#B7410E]/5 rounded-3xl border border-[#B7410E]/10 shadow-sm">
+                            <h4 className="font-[family-name:var(--font-medieval-sharp)] text-xl text-[#2C1810] mb-6">
+                                Quick Navigation
                             </h4>
-                            <div className="grid grid-cols-2 gap-3">
-                                <a
-                                    href="#events"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Event Schedule
+                            <div className="grid grid-cols-2 gap-y-4 gap-x-6">
+                                <a href="#events" className="text-sm font-bold text-[#4A3428]/70 hover:text-[#B7410E] transition-colors flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" /> Event Schedule
                                 </a>
-                                <a
-                                    href="#tickets"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Buy Tickets
+                                <a href="#tickets" className="text-sm font-bold text-[#4A3428]/70 hover:text-[#B7410E] transition-colors flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" /> Buy Tickets
                                 </a>
-                                <a
-                                    href="#sponsors"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Sponsorship
+                                <a href="#sponsors" className="text-sm font-bold text-[#4A3428]/70 hover:text-[#B7410E] transition-colors flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" /> Sponsorship
                                 </a>
-                                <a
-                                    href="#gallery"
-                                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Gallery
+                                <a href="#gallery" className="text-sm font-bold text-[#4A3428]/70 hover:text-[#B7410E] transition-colors flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" /> Media Gallery
                                 </a>
                             </div>
                         </div>
