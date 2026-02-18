@@ -59,7 +59,7 @@ const EspektroAbout: React.FC = () => {
         initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
         whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
         transition={{
-          rotate: { duration: 30, repeat: Infinity, ease: "linear" },
+          rotate: { duration: 90, repeat: Infinity, ease: "linear" },
           opacity: { duration: 1 },
           scale: { duration: 1 }
         }}
@@ -79,7 +79,7 @@ const EspektroAbout: React.FC = () => {
         initial={{ opacity: 0, scale: 0.8, rotate: -20 }}
         whileInView={{ opacity: 1, scale: 1, rotate: -360 }}
         transition={{
-          rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+          rotate: { duration: 60, repeat: Infinity, ease: "linear" },
           opacity: { duration: 1.2, delay: 0.1 },
           scale: { duration: 1.2, delay: 0.1 }
         }}
