@@ -1,10 +1,13 @@
-import { Checkout } from "@dodopayments/nextjs";
+import { NextResponse } from "next/server";
 
-export const POST = Checkout({
-  bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-  returnUrl: process.env.DODO_PAYMENTS_RETURN_URL,
-  environment:
-    (process.env.DODO_PAYMENTS_ENVIRONMENT as "test_mode" | "live_mode") ||
-    "test_mode",
-  type: "session",
-});
+// Checkout is now handled client-side via Razorpay.
+// This route is no longer used. Razorpay orders are created
+// server-side in booking-actions.ts and the checkout modal
+// is opened on the client via the Razorpay JS SDK.
+
+export async function POST() {
+  return NextResponse.json(
+    { error: "Checkout is handled client-side via Razorpay" },
+    { status: 410 },
+  );
+}

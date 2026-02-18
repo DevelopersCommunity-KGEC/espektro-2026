@@ -5,7 +5,7 @@ export const FEST_DAYS = [
     description: "Access to all Day 1 in fest ground",
     image: "/placeholder.jpg",
     venue: "Espektro Ground",
-    price: 10,
+    price: 2,
     capacity: 5000,
     type: "fest-day" as const,
     clubId: "espektro",

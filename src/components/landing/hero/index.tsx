@@ -21,13 +21,13 @@ export function Hero() {
     return (
         <section className="relative flex justify-center items-center w-full min-h-screen py-20 px-4 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Lotus Mandala Background - Centered and Subtle */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.1] pointer-events-none">
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/background_web.png"
                     alt="Decorative lotus mandala"
                     width={1000}
                     height={800}
-                    className="object-contain"
+                    className="object-contain w-full "
                 />
             </div>
 
@@ -43,7 +43,7 @@ export function Hero() {
             />
 
             {/* Decorative Circular Patterns (Matches EspektroAbout section) */}
-            <motion.div
+            {/* <motion.div
                 className="absolute right-[-10rem] top-[-10rem] w-80 h-80 md:w-100 md:h-100 lg:w-120 lg:h-120 z-0 opacity-20 hidden lg:block"
                 initial={{ opacity: 0, rotate: 20 }}
                 animate={{ opacity: 0.2, rotate: 0 }}
@@ -55,7 +55,7 @@ export function Hero() {
                     fill
                     className="object-contain"
                 />
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
                 className="absolute left-[-5rem] bottom-[-5rem] w-64 h-64 md:w-80 md:h-80 z-0 opacity-10 hidden lg:block"
@@ -87,10 +87,10 @@ export function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
                 >
-                    <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
+                    <h1 className="text-5xl sm:text-8xl md:text-7xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
                         ESPEKTRO
                     </h1>
-                    <p className="text-[#B7410E] text-5xl sm:text-6xl md:text-7xl lg:text-8xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
+                    <p className="text-[#B7410E] text-4xl sm:text-6xl md:text-7xl lg:text-6xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
                         2026
                     </p>
                 </motion.div>
@@ -107,28 +107,15 @@ export function Hero() {
                     </span>
                 </motion.p>
 
-                <motion.div
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                >
+                <div className="flex justify-center mt-8">
                     <Button
-                        size="lg"
-                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white border-0 rounded-full px-12 h-14 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
+                        variant="theatrical"
+                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 px-8 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
                         asChild
                     >
                         <Link href="/events">Explore Events</Link>
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="bg-white/50 backdrop-blur-sm border-[#2C1810]/10 text-[#2C1810] hover:bg-[#2C1810]/5 rounded-full px-12 h-14 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 font-[family-name:var(--font-roboto-slab)]"
-                        asChild
-                    >
-                        <Link href="#about">Learn More</Link>
-                    </Button>
-                </motion.div>
+                </div>
             </div>
 
             {/* Scroll indicator */}

@@ -1,12 +1,25 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 const EspektroAbout: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const y5 = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   return (
-    <section className="relative flex justify-center items-center w-full py-20 px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
+    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.8] pointer-events-none ">
         <Image
@@ -101,9 +114,12 @@ const EspektroAbout: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-block mt-8"
             >
-              <button className="bg-[#B7410E] hover:bg-[#8B2635] text-white font-bold h-12 px-10 rounded-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] uppercase text-xs tracking-widest">
+              <Button
+                variant="theatrical"
+                className="bg-[#B7410E] hover:bg-[#8B2635] text-white font-bold h-10 uppercase text-[10px] tracking-[0.2em] shadow-md hover:shadow-xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] transition-all duration-300"
+              >
                 Event Brochure
-              </button>
+              </Button>
             </a>
           </motion.div>
 
@@ -119,6 +135,7 @@ const EspektroAbout: React.FC = () => {
               {/* Image 1 - Top Right */}
               <motion.div
                 className="absolute top-0 right-0 w-[45%] h-[35%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                style={{ y: y1 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 3 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -135,6 +152,7 @@ const EspektroAbout: React.FC = () => {
               {/* Image 2 - Top Left */}
               <motion.div
                 className="absolute top-[5%] left-0 w-[48%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                style={{ y: y2 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: -3 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -151,6 +169,7 @@ const EspektroAbout: React.FC = () => {
               {/* Image 3 - Middle Right */}
               <motion.div
                 className="absolute top-[38%] right-[8%] w-[42%] h-[38%] rounded-lg overflow-hidden shadow-xl z-[3]"
+                style={{ y: y3 }}
                 initial={{ opacity: 0, scale: 0.8, y: 30 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -167,6 +186,7 @@ const EspektroAbout: React.FC = () => {
               {/* Image 4 - Bottom Left Large */}
               <motion.div
                 className="absolute bottom-0 left-[5%] w-[50%] h-[45%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                style={{ y: y4 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -183,6 +203,7 @@ const EspektroAbout: React.FC = () => {
               {/* Image 5 - Bottom Right Small */}
               <motion.div
                 className="absolute bottom-[8%] right-0 w-[35%] h-[28%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                style={{ y: y5 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
                 transition={{ duration: 0.6, delay: 0.5 }}

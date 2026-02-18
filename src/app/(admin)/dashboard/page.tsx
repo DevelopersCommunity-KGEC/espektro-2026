@@ -11,7 +11,7 @@ import { EventPerformanceSkeleton, AnalyticsSkeleton } from "@/components/skelet
 import { EventPerformance } from "@/components/admin/event-performance";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { DODO_COMMISION_PERCENTAGE, DODO_COMMISION_FIXED_PER_TRANSACTION } from "@/data/config";
+import { RAZORPAY_COMMISSION_PERCENTAGE } from "@/data/config";
 
 export default function DashboardPage() {
     const [data, setData] = useState<any>(null);
@@ -39,11 +39,8 @@ export default function DashboardPage() {
         let revenue = data.totalRevenue;
 
         if (netRevenueMode) {
-            // Percent Fee
-            const percentFee = (revenue * DODO_COMMISION_PERCENTAGE) / 100;
-            // Fixed Fee (Approximated by ticket count as transaction count not tracked globally here easily without new aggregation)
-            const fixedFee = (data.totalTicketsSold || 0) * DODO_COMMISION_FIXED_PER_TRANSACTION;
-            revenue = Math.max(0, revenue - percentFee - fixedFee);
+            const percentFee = (revenue * RAZORPAY_COMMISSION_PERCENTAGE) / 100;
+            revenue = Math.max(0, revenue - percentFee);
         }
         return Math.round(revenue).toLocaleString();
     };
@@ -58,7 +55,7 @@ export default function DashboardPage() {
                         checked={netRevenueMode}
                         onCheckedChange={setNetRevenueMode}
                     />
-                    <Label htmlFor="net-revenue">Show Net Revenue (Excl. 4% + ₹4 per txn)</Label>
+                    <Label htmlFor="net-revenue">Show Net Revenue (Excl. 2.5% Razorpay fee)</Label>
                 </div>
             </div>
 

@@ -201,7 +201,8 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                         {!session ? (
                             <Button
                                 onClick={handleSignIn}
-                                className="w-full h-14 bg-[#2C1810] hover:bg-[#4A3428] text-white font-bold uppercase tracking-[0.2em] rounded-full shadow-lg transition-all font-[family-name:var(--font-roboto-slab)] text-sm"
+                                variant="theatrical"
+                                className="w-full h-11 bg-[#2C1810] hover:bg-[#4A3428] text-white font-bold uppercase tracking-[0.2em] shadow-lg transition-all font-[family-name:var(--font-roboto-slab)] text-xs"
                             >
                                 Enter Espektro
                             </Button>

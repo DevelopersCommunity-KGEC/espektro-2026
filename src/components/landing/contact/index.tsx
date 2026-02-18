@@ -31,7 +31,7 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 relative z-10 overflow-hidden"
+            className="py-20 lg:py-32 relative z-10 "
             style={{ backgroundColor: "#FFF8F0" }}
         >
             {/* Lotus Mandala Background - Centered and Subtle */}
@@ -180,10 +180,11 @@ export function Contact() {
                                         </div>
                                         <Button
                                             asChild
-                                            className="rounded-full bg-[#B7410E] hover:bg-[#8B2635] text-white shadow-md hover:shadow-lg transition-all h-10 px-6 shrink-0"
+                                            variant="theatrical"
+                                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white shadow-md hover:shadow-lg transition-all h-10 shrink-0 font-[family-name:var(--font-roboto-slab)] uppercase text-[10px] tracking-[0.1em]"
                                         >
                                             <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>
-                                                <Phone className="w-4 h-4 md:mr-2" />
+                                                <Phone className="w-3 h-3 md:mr-2" />
                                                 <span className="hidden md:inline">Call Now</span>
                                             </a>
                                         </Button>
@@ -217,7 +218,22 @@ export function Contact() {
                                 </a>
                             </div>
                         </div>
+
                     </div>
+                </div>
+            </div>
+            <div className="absolute -bottom-24 left-0 w-full h-12 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
+                <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
+                    {[...Array(15)].map((_, i) => (
+                        <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">
+                            <Image
+                                src="/images/shapartist.png"
+                                alt=""
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
