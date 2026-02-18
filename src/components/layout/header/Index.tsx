@@ -20,7 +20,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Ticket, User, ScanLine, LayoutDashboard, ChevronDown } from "lucide-react";
+import {
+  LogOut,
+  Ticket,
+  User,
+  ScanLine,
+  LayoutDashboard,
+  ChevronDown,
+} from "lucide-react";
 
 interface HeaderProps {
   isAdmin?: boolean;
@@ -31,7 +38,11 @@ interface HeaderProps {
 // Routes where the Header should NOT render at all (they have their own navigation)
 const HIDDEN_ROUTES = ["/dashboard", "/login", "/onboarding"];
 
-export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProps) {
+export default function Header({
+  isAdmin,
+  userRole,
+  clubRoles = [],
+}: HeaderProps) {
   const header = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
@@ -41,7 +52,9 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
   const userInfoRole = userRole || (session?.user as any)?.role;
 
   const isLandingPage = pathname === "/";
-  const isHiddenRoute = HIDDEN_ROUTES.some((route) => pathname.startsWith(route));
+  const isHiddenRoute = HIDDEN_ROUTES.some((route) =>
+    pathname.startsWith(route),
+  );
 
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -121,20 +134,23 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
         <>
           <div ref={header} className={styles.header}>
             <div className={styles.nav}>
-              {NavbarLinks.filter(link => link.url !== "/events").map((link, index) => (
-                <Magnetic key={index}>
-                  <div className={styles.el}>
-                    <a href={link.url}>{link.text}</a>
-                    <div className={styles.indicator}></div>
-                  </div>
-                </Magnetic>
-              ))}
+              {NavbarLinks.filter((link) => link.url !== "/events").map(
+                (link, index) => (
+                  <Magnetic key={index}>
+                    <div className={styles.el}>
+                      <a href={link.url}>{link.text}</a>
+                      <div className={styles.indicator}></div>
+                    </div>
+                  </Magnetic>
+                ),
+              )}
               {!session ? (
                 <Magnetic>
                   <div className={styles.el}>
                     <Button
                       onClick={handleSignIn}
-                      className="bg-[#1C1D20] hover:bg-[#1C1D20]/90 text-white px-4 py-2 text-xs"
+                      variant="theatrical"
+                      className="bg-[#B7410E] hover:bg-[#8B2635] text-white font-bold h-10 uppercase text-[10px] tracking-[0.2em] shadow-md hover:shadow-xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] transition-all duration-300"
                     >
                       Login
                     </Button>
@@ -159,9 +175,17 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
                             <div className={styles.el}>
                               <div className="flex items-center gap-1">
                                 <LayoutDashboard className="h-3.5 w-3.5" />
-                                {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)) ? (
+                                {clubRoles.find((cr) =>
+                                  pathname.startsWith(`/club/${cr.clubId}`),
+                                ) ? (
                                   <span className="capitalize">
-                                    {clubRoles.find((cr) => pathname.startsWith(`/club/${cr.clubId}`)).clubId}
+                                    {
+                                      clubRoles.find((cr) =>
+                                        pathname.startsWith(
+                                          `/club/${cr.clubId}`,
+                                        ),
+                                      ).clubId
+                                    }
                                   </span>
                                 ) : (
                                   <span>Clubs</span>
@@ -172,13 +196,8 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
                           </Magnetic>
                         </div>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="end"
-                        sideOffset={8}
-                      >
-                        <DropdownMenuLabel>
-                          Switch Club
-                        </DropdownMenuLabel>
+                      <DropdownMenuContent align="end" sideOffset={8}>
+                        <DropdownMenuLabel>Switch Club</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {clubRoles.map((cr) => (
                           <DropdownMenuItem
@@ -190,14 +209,9 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
                               href={`/club/${cr.clubId}/dashboard`}
                               className="flex justify-between items-center w-full"
                             >
-                              <span className="capitalize">
-                                {cr.clubId}
-                              </span>
+                              <span className="capitalize">{cr.clubId}</span>
                               <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded ml-2 capitalize">
-                                {cr.role.replace(
-                                  "-",
-                                  " "
-                                )}
+                                {cr.role.replace("-", " ")}
                               </span>
                             </a>
                           </DropdownMenuItem>
@@ -208,41 +222,70 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
+                      <Button
+                        variant="ghost"
+                        className="relative h-9 w-9 rounded-full p-0"
+                      >
                         <Avatar className="h-9 w-9">
-                          <AvatarImage src={session.user?.image || ""} alt={session.user?.name || "User"} />
-                          <AvatarFallback>{session.user?.name?.charAt(0) || "U"}</AvatarFallback>
+                          <AvatarImage
+                            src={session.user?.image || ""}
+                            alt={session.user?.name || "User"}
+                          />
+                          <AvatarFallback>
+                            {session.user?.name?.charAt(0) || "U"}
+                          </AvatarFallback>
                         </Avatar>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 bg-background" align="end" forceMount>
+                    <DropdownMenuContent
+                      className="w-56 bg-background"
+                      align="end"
+                      forceMount
+                    >
                       <DropdownMenuLabel className="font-normal">
                         <div className="flex flex-col space-y-1">
-                          <p className="text-sm font-medium leading-none">{session.user?.name}</p>
-                          <p className="text-xs leading-none text-muted-foreground">{session.user?.email}</p>
+                          <p className="text-sm font-medium leading-none">
+                            {session.user?.name}
+                          </p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            {session.user?.email}
+                          </p>
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                      <DropdownMenuItem
+                        asChild
+                        className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
+                      >
                         <a href="/my-tickets" className="cursor-pointer">
                           <Ticket className="mr-2 h-4 w-4" />
                           <span>My Tickets</span>
                         </a>
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                      <DropdownMenuItem
+                        asChild
+                        className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
+                      >
                         <a href="/profile" className="cursor-pointer">
                           <User className="mr-2 h-4 w-4" />
                           <span>Profile</span>
                         </a>
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                      <DropdownMenuItem
+                        asChild
+                        className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
+                      >
                         <a href="/scan" className="cursor-pointer">
                           <ScanLine className="mr-2 h-4 w-4" />
                           <span>Scan Ticket</span>
                         </a>
                       </DropdownMenuItem>
-                      {((session.user as any)?.role === "admin" || (session.user as any)?.role === "super-admin") && (
-                        <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary">
+                      {((session.user as any)?.role === "admin" ||
+                        (session.user as any)?.role === "super-admin") && (
+                        <DropdownMenuItem
+                          asChild
+                          className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
+                        >
                           <a href="/dashboard" className="cursor-pointer">
                             <LayoutDashboard className="mr-2 h-4 w-4" />
                             <span>Admin Dashboard</span>
@@ -290,8 +333,9 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
             className={`${styles.button}`}
           >
             <div
-              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                }`}
+              className={`${styles.burger} ${
+                isActive ? styles.burgerActive : ""
+              }`}
             ></div>
           </Rounded>
         </div>
@@ -308,15 +352,19 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
               className={`${styles.button}`}
             >
               <div
-                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                  }`}
+                className={`${styles.burger} ${
+                  isActive ? styles.burgerActive : ""
+                }`}
               ></div>
             </Rounded>
           </Magnetic>
         </div>
       ) : (
         // Inner pages: always visible at scale(1)
-        <div className={styles.headerButtonContainer} style={{ transform: "scale(1)" }}>
+        <div
+          className={styles.headerButtonContainer}
+          style={{ transform: "scale(1)" }}
+        >
           <Magnetic>
             <Rounded
               onClick={() => {
@@ -325,14 +373,23 @@ export default function Header({ isAdmin, userRole, clubRoles = [] }: HeaderProp
               className={`${styles.button}`}
             >
               <div
-                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                  }`}
+                className={`${styles.burger} ${
+                  isActive ? styles.burgerActive : ""
+                }`}
               ></div>
             </Rounded>
           </Magnetic>
         </div>
       )}
-      <AnimatePresence mode="wait">{isActive && <Nav clubRoles={clubRoles} userRole={userInfoRole} closeMenu={() => setIsActive(false)} />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isActive && (
+          <Nav
+            clubRoles={clubRoles}
+            userRole={userInfoRole}
+            closeMenu={() => setIsActive(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

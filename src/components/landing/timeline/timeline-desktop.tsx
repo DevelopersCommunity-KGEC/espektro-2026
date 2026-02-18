@@ -51,7 +51,7 @@ export default function TimelineDesktop() {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden z-50 pointer-events-none"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center',
@@ -64,7 +64,7 @@ export default function TimelineDesktop() {
                 {/* Background Image */}
                 <div className="absolute inset-0 pointer-events-none">
                     <Image
-                        src="/images/timeline_bg.png"
+                        src="/images/bg1.webp"
                         alt="Timeline background"
                         fill
                         className="object-cover opacity-30"
@@ -134,7 +134,7 @@ export default function TimelineDesktop() {
                                 }}
                             >
                                 {/* The Image Container */}
-                                <div 
+                                <div
                                     className={`relative transition-all duration-700 flex items-center justify-center
                                     ${isActive ? "scale-125 opacity-100 grayscale-0" : isPast ? "scale-115 opacity-100 grayscale-0" : "scale-120 opacity-100 grayscale"}
                                     `}

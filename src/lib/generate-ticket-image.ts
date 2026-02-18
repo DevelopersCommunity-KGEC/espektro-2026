@@ -418,7 +418,7 @@ export async function generateTicketImage(
   );
   ctx.textAlign = "start";
 
-  return canvas.toDataURL("image/png");
+  return canvas.toDataURL("image/webp");
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {

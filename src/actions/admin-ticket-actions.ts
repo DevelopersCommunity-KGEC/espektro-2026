@@ -15,6 +15,7 @@ export interface TicketFilter {
   endDate?: string;
   page?: number;
   limit?: number;
+  excludeManual?: boolean;
 }
 
 export async function getAllTickets(filters: TicketFilter) {
@@ -60,6 +61,10 @@ export async function getAllTickets(filters: TicketFilter) {
   // To search by user name, we need to lookup users first.
 
   const pipeline: any[] = [
+    // Optionally exclude manually assigned tickets
+    ...(filters.excludeManual
+      ? [{ $match: { issueType: { $nin: ["manual", "pass"] } } }]
+      : []),
     // Lookup Event
     {
       $lookup: {

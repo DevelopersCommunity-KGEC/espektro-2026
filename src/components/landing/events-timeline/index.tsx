@@ -181,7 +181,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
                     alt="Decorative lotus mandala"
                     width={800}
                     height={600}
@@ -193,7 +193,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center'
@@ -362,7 +362,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                             });
                                                         }
                                                     }}
-                                                    className={`event-bar relative h-10 theatrical-shape ${c.bg} flex items-center px-6 transition-all duration-300 group-hover:shadow-md cursor-pointer active:scale-[0.98] ${(() => {
+                                                    className={`event-bar relative h-10 rounded-sm ${c.bg} border-2 border-[#B7410E]/30 flex items-center px-6 transition-all duration-300 group-hover:shadow-md group-hover:border-[#B7410E]/50 cursor-pointer active:scale-[0.98] ${(() => {
                                                         const todayStr = currentTime.toLocaleDateString("en-US", {
                                                             month: "short",
                                                             day: "numeric",

@@ -330,9 +330,7 @@ export async function issueManualTicket(
   let singleEvent: any = null;
 
   if (isSeasonPass) {
-    // Assume season pass is strictly "espektro" club or handled by super admin?
-    // Or fest-days belong to espektro club.
-    eventClubId = "espektro"; // based on seeding
+    eventClubId = "espektro";
     festDays = await EventModel.find({ type: "fest-day" });
     if (!festDays.length) throw new Error("No Fest Days found");
   } else {
@@ -341,32 +339,83 @@ export async function issueManualTicket(
     eventClubId = singleEvent.clubId;
   }
 
-  // Wait, ticket issuer role is removed. Only club-admin can issue tickets manually now?
-  // Or maybe "volunteer" if specialized? The prompt said: "only the admin or club admin can manually asign tickets"
   const canIssue = await hasClubPermission(session.user.id, eventClubId, [
     "club-admin",
   ]);
   if (!canIssue) throw new Error("Unauthorized to issue tickets for this club");
 
   const issuedBy = session.user.email;
-  const processed = [];
+  const cleanEmail = email.trim().toLowerCase();
 
-  const emails = [email]; // Support single email for now, reuse loop logic if we want bulk locally
-
-  for (const mail of emails) {
-    const cleanEmail = mail.trim();
-    if (isSeasonPass) {
-      for (const dy of festDays) {
-        await createTicketForEvent(dy, cleanEmail, issuedBy, "pass");
-      }
-    } else {
-      await createTicketForEvent(singleEvent, cleanEmail, issuedBy, "manual");
+  if (isSeasonPass) {
+    for (const dy of festDays) {
+      await createTicketForEvent(dy, cleanEmail, issuedBy, "pass");
     }
-    processed.push(cleanEmail);
+  } else {
+    await createTicketForEvent(singleEvent, cleanEmail, issuedBy, "manual");
   }
 
   revalidatePath("/dashboard/manual-tickets");
-  return { success: true, message: "Issued successfully" };
+  return { success: true, message: `Ticket issued to ${cleanEmail}` };
+}
+
+// Bulk version — processes all emails server-side and returns per-email results
+export async function issueBulkManualTickets(
+  eventId: string,
+  emails: string[],
+  isSeasonPass: boolean = false,
+) {
+  const session = await getSession();
+  if (!session) throw new Error("Unauthorized");
+
+  await dbConnect();
+
+  let eventClubId = "";
+  let festDays: any[] = [];
+  let singleEvent: any = null;
+
+  if (isSeasonPass) {
+    eventClubId = "espektro";
+    festDays = await EventModel.find({ type: "fest-day" });
+    if (!festDays.length) throw new Error("No Fest Days found");
+  } else {
+    singleEvent = await EventModel.findById(eventId);
+    if (!singleEvent) throw new Error("Event not found");
+    eventClubId = singleEvent.clubId;
+  }
+
+  const canIssue = await hasClubPermission(session.user.id, eventClubId, [
+    "club-admin",
+  ]);
+  if (!canIssue) throw new Error("Unauthorized to issue tickets for this club");
+
+  const issuedBy = session.user.email;
+  const results: { email: string; success: boolean; message: string }[] = [];
+
+  for (const raw of emails) {
+    const cleanEmail = raw.trim().toLowerCase();
+    if (!cleanEmail) continue;
+    try {
+      if (isSeasonPass) {
+        for (const dy of festDays) {
+          await createTicketForEvent(dy, cleanEmail, issuedBy, "pass");
+        }
+      } else {
+        await createTicketForEvent(singleEvent, cleanEmail, issuedBy, "manual");
+      }
+      results.push({ email: cleanEmail, success: true, message: "Issued" });
+    } catch (err: any) {
+      results.push({ email: cleanEmail, success: false, message: err.message });
+    }
+  }
+
+  revalidatePath("/dashboard/manual-tickets");
+  const successCount = results.filter((r) => r.success).length;
+  return {
+    success: successCount > 0,
+    message: `${successCount}/${results.length} tickets issued`,
+    results,
+  };
 }
 
 async function createTicketForEvent(
@@ -375,6 +424,17 @@ async function createTicketForEvent(
   issuedBy?: string,
   issueType: "manual" | "pass" = "manual",
 ) {
+  // Check for duplicate ticket
+  const existingTicket = await TicketModel.findOne({
+    eventId: event._id,
+    userEmail: email,
+    status: { $in: ["booked", "checked-in"] },
+  });
+  if (existingTicket) {
+    throw new Error(`${email} already has a ticket for ${event.title}`);
+  }
+
+  // Check capacity
   const soldCount = await TicketModel.countDocuments({
     eventId: event._id,
     status: { $in: ["booked", "checked-in"] },
@@ -383,11 +443,15 @@ async function createTicketForEvent(
     throw new Error(`Event ${event.title} is sold out`);
   }
 
+  // Link userId if the user already exists
+  const existingUser = await UserModel.findOne({ email });
+
   const qrCodeToken = uuidv4();
   const ticket = await TicketModel.create({
+    userId: existingUser?._id || undefined,
     userEmail: email,
     eventId: event._id,
-    paymentId: "MANUAL_ISSUE",
+    paymentId: `MANUAL_${uuidv4().slice(0, 8).toUpperCase()}`,
     qrCodeToken,
     status: "booked",
     issueType,
