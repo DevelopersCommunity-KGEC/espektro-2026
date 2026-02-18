@@ -180,10 +180,11 @@ export function Contact() {
                                         </div>
                                         <Button
                                             asChild
-                                            className="rounded-full bg-[#B7410E] hover:bg-[#8B2635] text-white shadow-md hover:shadow-lg transition-all h-10 px-6 shrink-0"
+                                            variant="theatrical"
+                                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white shadow-md hover:shadow-lg transition-all h-10 shrink-0 font-[family-name:var(--font-roboto-slab)] uppercase text-[10px] tracking-[0.1em]"
                                         >
                                             <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>
-                                                <Phone className="w-4 h-4 md:mr-2" />
+                                                <Phone className="w-3 h-3 md:mr-2" />
                                                 <span className="hidden md:inline">Call Now</span>
                                             </a>
                                         </Button>

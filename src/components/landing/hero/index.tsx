@@ -87,10 +87,10 @@ export function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
                 >
-                    <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
+                    <h1 className="text-5xl sm:text-8xl md:text-7xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
                         ESPEKTRO
                     </h1>
-                    <p className="text-[#B7410E] text-5xl sm:text-6xl md:text-7xl lg:text-8xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
+                    <p className="text-[#B7410E] text-4xl sm:text-6xl md:text-7xl lg:text-6xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
                         2026
                     </p>
                 </motion.div>
@@ -107,28 +107,15 @@ export function Hero() {
                     </span>
                 </motion.p>
 
-                <motion.div
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                >
+                <div className="flex justify-center mt-8">
                     <Button
-                        size="lg"
-                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white border-0 rounded-full px-12 h-14 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
+                        variant="theatrical"
+                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 px-8 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
                         asChild
                     >
                         <Link href="/events">Explore Events</Link>
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="bg-white/50 backdrop-blur-sm border-[#2C1810]/10 text-[#2C1810] hover:bg-[#2C1810]/5 rounded-full px-12 h-14 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 font-[family-name:var(--font-roboto-slab)]"
-                        asChild
-                    >
-                        <Link href="#about">Learn More</Link>
-                    </Button>
-                </motion.div>
+                </div>
             </div>
 
             {/* Scroll indicator */}

@@ -174,8 +174,8 @@ export function FeaturedArtists() {
                     {/* Full Lineup Button Overlay */}
                     <div ref={buttonRef} className="relative z-20">
                         <Button
-                            size="lg"
-                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white border-0 rounded-full px-12 h-14 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
+                            variant="theatrical"
+                            className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
                             asChild
                         >
                             <Link href="/events#lineup">View Full Lineup</Link>

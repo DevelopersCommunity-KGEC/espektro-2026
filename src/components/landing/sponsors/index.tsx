@@ -124,7 +124,7 @@ export function Sponsors() {
                     backgroundPosition: 'top center'
                 }}
             />
-            <div className="container mx-auto px-6 lg:px-24 relative z-10 ">
+            <div className="container mx-auto px-6 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
                 <div className="flex flex-col items-center mb-16">
                     <p className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center">
                         Our Partners
@@ -162,8 +162,9 @@ export function Sponsors() {
                         Get unprecedented exposure to 15,000+ engaged students across four days of non-stop cultural and technical celebration.
                     </p>
                     <Button
+                        variant="theatrical"
                         asChild
-                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white font-bold h-12 px-10 rounded-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
+                        className="bg-[#B7410E] hover:bg-[#8B2635] text-white font-bold h-10 uppercase text-[10px] tracking-[0.2em] font-[family-name:var(--font-roboto-slab)] transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1"
                     >
                         <a href="mailto:sponsorship.espektro@gmail.com">
                             <Mail className="w-5 h-4 mr-2" />
