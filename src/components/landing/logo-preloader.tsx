@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./logo-preloader.css";
+import { Button } from "@/components/ui/button";
 
 const TEXT_GROUP_ID = "text";
 const TEXT_SPLIT_Y = 860;
@@ -69,29 +70,43 @@ const TOTAL_DURATION_MS = 9000;
 export function LogoPreloader() {
   const svgContainerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  const [showStartButton, setShowStartButton] = useState(true);
+  const [startTrigger, setStartTrigger] = useState(false);
+
+  const handleStart = () => {
+    console.log("[Preloader] Start button clicked");
+    setShowStartButton(false);
+    setStartTrigger(true);
+    // Notify MusicController to start BGM
+    window.dispatchEvent(new Event("ESPEKTRO_START_EXPERIENCE"));
+  };
 
   useEffect(() => {
+    console.log("[Preloader] Effect run. StartTrigger:", startTrigger);
+    if (!startTrigger) return;
+
     // Audio effect
     const audio = new Audio("/music/loading-effect.wav");
     audio.volume = 0.6;
 
     const playAudio = async () => {
       try {
+        console.log("[Preloader] Attempting audio play");
         await audio.play();
       } catch (err) {
-        console.log("Autoplay blocked, waiting for interaction...", err);
-
+        console.warn("[Preloader] Autoplay blocked or failed:", err);
+        // Interaction fallback
         const enableAudio = () => {
-          audio.play().catch((e) => console.error("Interaction play failed", e));
+          audio
+            .play()
+            .catch((e) => console.error("Interaction play failed", e));
           cleanupListeners();
         };
-
         const cleanupListeners = () => {
           window.removeEventListener("click", enableAudio);
           window.removeEventListener("keydown", enableAudio);
           window.removeEventListener("touchstart", enableAudio);
         };
-
         window.addEventListener("click", enableAudio);
         window.addEventListener("keydown", enableAudio);
         window.addEventListener("touchstart", enableAudio);
@@ -101,110 +116,140 @@ export function LogoPreloader() {
     playAudio();
 
     async function loadAndAnimateSVG() {
-      const res = await fetch("/espektro-logo.svg");
-      const svgText = await res.text();
+      try {
+        console.log("[Preloader] Fetching SVG...");
+        const res = await fetch("/espektro-logo.svg");
+        if (!res.ok) throw new Error(`SVG fetch failed: ${res.status}`);
+        const svgText = await res.text();
 
-      const container = svgContainerRef.current;
-      if (!container) return;
-
-      container.innerHTML = svgText;
-
-      const svg = container.querySelector("svg");
-      if (!svg) return;
-
-      svg.classList.add("logo-animate");
-      svg.removeAttribute("width");
-      svg.removeAttribute("height");
-
-      const contentBBox = svg.getBBox();
-      const pad = 10;
-      svg.setAttribute(
-        "viewBox",
-        `${contentBBox.x - pad} ${contentBBox.y - pad} ${contentBBox.width + pad * 2} ${contentBBox.height + pad * 2}`,
-      );
-
-      const elements = svg.querySelectorAll(
-        "path, polygon, polyline, circle, ellipse, rect, line",
-      );
-
-      const phaseCounters: Record<number, number> = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-      };
-
-      elements.forEach((el) => {
-        const gEl = el as SVGGraphicsElement;
-        const phase = classifyElement(gEl);
-        const htmlEl = el as HTMLElement;
-        const idx = phaseCounters[phase]++;
-
-        htmlEl.setAttribute("data-phase", String(phase));
-
-        if (phase === 1 || phase === 3) {
-          const timing = FADE_TIMING[phase];
-          const microStagger = Math.min(idx * 0.006, 0.3);
-          htmlEl.style.setProperty(
-            "--anim-delay",
-            `${timing.delay + microStagger}s`,
-          );
-          htmlEl.style.setProperty("--anim-dur", `${timing.dur}s`);
-        } else if (phase === 5 || phase === 6) {
-          const timing = TEXT_ARRIVAL_TIMING[phase];
-          const microStagger = Math.min(idx * 0.03, 0.3);
-          htmlEl.style.setProperty(
-            "--arrival-delay",
-            `${timing.delay + microStagger}s`,
-          );
-          htmlEl.style.setProperty("--arrival-dur", `${timing.dur}s`);
-        } else {
-          const timing = STROKE_TIMING[phase];
-          if (!timing) return;
-
-          let len = 2000;
-          try {
-            if (
-              typeof (el as SVGGeometryElement).getTotalLength === "function"
-            ) {
-              len = (el as SVGGeometryElement).getTotalLength();
-            }
-          } catch {
-            /* ignore */
-          }
-
-          const microStagger = Math.min(idx * 0.008, 0.4);
-          htmlEl.style.setProperty("--path-length", String(len));
-          htmlEl.style.setProperty(
-            "--stroke-start",
-            `${timing.strokeStart + microStagger}s`,
-          );
-          htmlEl.style.setProperty("--stroke-dur", `${timing.strokeDur}s`);
-          htmlEl.style.setProperty(
-            "--fill-delay",
-            `${timing.fillDelay + microStagger}s`,
-          );
-          htmlEl.style.setProperty("--fill-dur", `${timing.fillDur}s`);
-          htmlEl.style.strokeDasharray = String(len);
-          htmlEl.style.strokeDashoffset = String(len);
+        const container = svgContainerRef.current;
+        if (!container) {
+          console.error("[Preloader] Container ref is null");
+          return;
         }
-      });
+
+        container.innerHTML = svgText;
+        const svg = container.querySelector("svg");
+        if (!svg) {
+          console.error("[Preloader] No SVG found in response");
+          return;
+        }
+
+        svg.classList.add("logo-animate");
+        svg.removeAttribute("width");
+        svg.removeAttribute("height");
+
+        const contentBBox = svg.getBBox();
+        const pad = 10;
+        svg.setAttribute(
+          "viewBox",
+          `${contentBBox.x - pad} ${contentBBox.y - pad} ${contentBBox.width + pad * 2} ${contentBBox.height + pad * 2}`,
+        );
+
+        const elements = svg.querySelectorAll(
+          "path, polygon, polyline, circle, ellipse, rect, line",
+        );
+
+        const phaseCounters: Record<number, number> = {
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
+          6: 0,
+        };
+
+        elements.forEach((el) => {
+          const gEl = el as SVGGraphicsElement;
+          const phase = classifyElement(gEl);
+          const htmlEl = el as HTMLElement;
+          const idx = phaseCounters[phase]++;
+
+          htmlEl.setAttribute("data-phase", String(phase));
+
+          if (phase === 1 || phase === 3) {
+            const timing = FADE_TIMING[phase];
+            const microStagger = Math.min(idx * 0.006, 0.3);
+            htmlEl.style.setProperty(
+              "--anim-delay",
+              `${timing.delay + microStagger}s`,
+            );
+            htmlEl.style.setProperty("--anim-dur", `${timing.dur}s`);
+          } else if (phase === 5 || phase === 6) {
+            const timing = TEXT_ARRIVAL_TIMING[phase];
+            const microStagger = Math.min(idx * 0.03, 0.3);
+            htmlEl.style.setProperty(
+              "--arrival-delay",
+              `${timing.delay + microStagger}s`,
+            );
+            htmlEl.style.setProperty("--arrival-dur", `${timing.dur}s`);
+          } else {
+            const timing = STROKE_TIMING[phase];
+            if (!timing) return;
+
+            let len = 2000;
+            try {
+              if (
+                typeof (el as SVGGeometryElement).getTotalLength === "function"
+              ) {
+                len = (el as SVGGeometryElement).getTotalLength();
+              }
+            } catch {
+              /* ignore */
+            }
+
+            const microStagger = Math.min(idx * 0.008, 0.4);
+            htmlEl.style.setProperty("--path-length", String(len));
+            htmlEl.style.setProperty(
+              "--stroke-start",
+              `${timing.strokeStart + microStagger}s`,
+            );
+            htmlEl.style.setProperty("--stroke-dur", `${timing.strokeDur}s`);
+            htmlEl.style.setProperty(
+              "--fill-delay",
+              `${timing.fillDelay + microStagger}s`,
+            );
+            htmlEl.style.setProperty("--fill-dur", `${timing.fillDur}s`);
+            htmlEl.style.strokeDasharray = String(len);
+            htmlEl.style.strokeDashoffset = String(len);
+          }
+        });
+        console.log("[Preloader] SVG setup complete");
+      } catch (e) {
+        console.error("[Preloader] Animation error:", e);
+      }
     }
 
     loadAndAnimateSVG();
 
-    // Auto-dismiss after all animations + dissolve complete
-    const timer = setTimeout(() => setVisible(false), TOTAL_DURATION_MS);
+    const timer = setTimeout(() => {
+      console.log("[Preloader] Timer finished. Dismissing.");
+      setVisible(false);
+    }, TOTAL_DURATION_MS);
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [startTrigger]);
 
   if (!visible) return null;
 
   return (
-    <div className="preloader-overlay">
-      <div className="preloader-logo-container" ref={svgContainerRef} />
+    <div className={`preloader-overlay ${startTrigger ? "active-exit" : ""}`}>
+      {showStartButton ? (
+        <div className="flex flex-col items-center gap-4 z-50 animate-in fade-in zoom-in duration-500">
+          <h2 className="text-2xl font-light tracking-widest uppercase text-foreground mb-4">
+            Welcome to Espektro
+          </h2>
+          <Button
+            onClick={handleStart}
+            size="lg"
+            className="rounded-full px-8 py-6 text-lg tracking-wider transition-all hover:scale-105"
+          >
+            ENTER EXPERIENCE
+          </Button>
+        </div>
+      ) : (
+        <div className="preloader-logo-container" ref={svgContainerRef} />
+      )}
     </div>
   );
 }
