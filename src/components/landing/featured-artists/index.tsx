@@ -107,7 +107,7 @@ export function FeaturedArtists() {
                                 ))}
                             </div>
                             {/* Header Box on Top of Border */}
-                            <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm py-4 shadow-md border-y border-gray-100 flex flex-col items-center">
+                            <div className="absolute top-1/2 left-100 w-1/2 -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm py-4 shadow-md border-y border-gray-100 flex flex-col items-center">
                                 <p className="text-[#8B2635] text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-center mb-1 font-[family-name:var(--font-roboto-slab)]">
                                     Cultural Stars
                                 </p>
