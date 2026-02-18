@@ -42,8 +42,8 @@ function classifyElement(el: SVGGraphicsElement): number {
 }
 
 const FADE_TIMING: Record<number, { delay: number; dur: number }> = {
-  1: { delay: 0, dur: 0.8 },
-  3: { delay: 3.6, dur: 0.8 },
+  1: { delay: 0, dur: 0.5 },
+  3: { delay: 1.8, dur: 0.5 },
 };
 
 const STROKE_TIMING: Record<
@@ -55,17 +55,17 @@ const STROKE_TIMING: Record<
     fillDur: number;
   }
 > = {
-  2: { strokeStart: 1.0, strokeDur: 2.0, fillDelay: 2.5, fillDur: 0.8 },
-  4: { strokeStart: 4.6, strokeDur: 1.5, fillDelay: 5.6, fillDur: 0.8 },
+  2: { strokeStart: 0.5, strokeDur: 1.2, fillDelay: 1.3, fillDur: 0.5 },
+  4: { strokeStart: 2.3, strokeDur: 1.0, fillDelay: 2.8, fillDur: 0.5 },
 };
 
 const TEXT_ARRIVAL_TIMING: Record<number, { delay: number; dur: number }> = {
-  5: { delay: 4.6, dur: 1.0 },
-  6: { delay: 5.6, dur: 1.0 },
+  5: { delay: 2.3, dur: 0.6 },
+  6: { delay: 3.0, dur: 0.6 },
 };
 
 /** Total animation duration before the preloader auto-dismisses */
-const TOTAL_DURATION_MS = 9000;
+const TOTAL_DURATION_MS = 5000;
 
 export function LogoPreloader() {
   const svgContainerRef = useRef<HTMLDivElement>(null);
