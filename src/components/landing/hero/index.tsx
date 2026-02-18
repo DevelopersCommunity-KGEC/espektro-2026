@@ -62,7 +62,7 @@ export function Hero() {
                 initial={{ opacity: 0, rotate: -20 }}
                 animate={{ opacity: 0.1, rotate: 360 }}
                 transition={{
-                    rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+                    rotate: { duration: 185, repeat: Infinity, ease: "linear" },
                     opacity: { duration: 2.2 },
                     scale: { duration: 2.2 }
                 }}
