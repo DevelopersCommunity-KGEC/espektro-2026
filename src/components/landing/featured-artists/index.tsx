@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,7 +41,7 @@ export function FeaturedArtists() {
         gsap.set(windowRef.current, { opacity: 0, scale: 0.9 });
         gsap.set(buttonRef.current, { opacity: 0, y: 50 });
 
-        const artistCards = Array.from(cardsRef.current.children);
+        const artistCards = gsap.utils.toArray(".artist-card-reveal-wrapper");
         gsap.set(artistCards, { opacity: 0, y: 100, scale: 0.8 });
 
         // 2. Interaction Timeline
@@ -139,34 +140,61 @@ export function FeaturedArtists() {
                 {/* Animated Central Window for Artist Display */}
                 <div
                     ref={windowRef}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[85%] lg:w-[75%] h-[55vh] md:h-[65vh] bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col items-center justify-center z-30 border-[12px] md:border-[20px] border-white"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] md:-translate-y-1/2 w-[95%] md:w-[85%] lg:w-[75%] h-[55vh] md:h-[65vh] bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col items-center justify-center z-30 border-[10px] md:border-[20px] border-white"
                 >
                     <div className="absolute inset-0 bg-[#FFF8F0]/30 z-0" />
 
                     {/* Interior Container for Artist Cards */}
                     <div
                         ref={cardsRef}
-                        className="relative z-10 w-full px-6 flex flex-wrap justify-center gap-6 md:gap-12 mb-10"
+                        className="relative z-10 w-full px-4 flex flex-wrap justify-center gap-4 md:gap-12 mb-6 overflow-visible"
                     >
                         {artists.slice(0, 3).map((artist) => (
                             <div
                                 key={artist.name}
-                                className="bg-white p-4 md:p-5 shadow-xl border border-gray-100 w-44 md:w-56 lg:w-64 flex-shrink-0"
+                                className="artist-card-reveal-wrapper opacity-0 translate-y-24 scale-90 w-48 md:w-60 lg:w-72 flex-shrink-0"
                             >
-                                <div className="relative aspect-[4/5] overflow-hidden mb-5 bg-gray-50 border-4 border-[#FFF8F0]">
-                                    <Image
-                                        src={artist.image}
-                                        alt={artist.name}
-                                        fill
-                                        className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                                    />
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="text-xl md:text-2xl lg:text-3xl font-[family-name:var(--font-medieval-sharp)] text-[#2C1810] mb-2 uppercase tracking-tight">
-                                        {artist.name}
-                                    </h3>
-                                    <div className="w-10 h-1 bg-[#B7410E] mx-auto opacity-50" />
-                                </div>
+                                <CardContainer className="inter-var w-full" containerClassName="py-0">
+                                    <CardBody className="bg-white relative group/card border-black/[0.1] w-full aspect-[3/4] rounded-xl p-4 border shadow-xl flex flex-col items-center justify-center overflow-hidden">
+                                        {/* 1. Background Layer (Deep) */}
+                                        <CardItem
+                                            translateZ="-20"
+                                            className="absolute inset-0 z-0 p-4 pointer-events-none opacity-10"
+                                        >
+                                            <img
+                                                src={artist.bg || "/images/bg1.png"}
+                                                alt="background"
+                                                className="w-full h-full object-contain"
+                                            />
+                                        </CardItem>
+
+                                        {/* 2. Artist Main Portrait (Floating) */}
+                                        <CardItem
+                                            translateZ="100"
+                                            className="relative z-20 w-full mb-6 flex justify-center"
+                                        >
+                                            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-md border-2 border-white">
+                                                <Image
+                                                    src={artist.image}
+                                                    alt={artist.name}
+                                                    fill
+                                                    className="object-cover grayscale group-hover/card:grayscale-0 transition-all duration-700"
+                                                />
+                                            </div>
+                                        </CardItem>
+
+                                        {/* 3. Text Info (Middle Z) */}
+                                        <CardItem
+                                            translateZ="50"
+                                            className="text-center relative z-20"
+                                        >
+                                            <h3 className="text-lg md:text-xl lg:text-2xl font-[family-name:var(--font-medieval-sharp)] text-[#2C1810] mb-1 uppercase tracking-tight">
+                                                {artist.name}
+                                            </h3>
+                                            <div className="w-8 h-0.5 bg-[#B7410E] mx-auto opacity-50" />
+                                        </CardItem>
+                                    </CardBody>
+                                </CardContainer>
                             </div>
                         ))}
                     </div>
