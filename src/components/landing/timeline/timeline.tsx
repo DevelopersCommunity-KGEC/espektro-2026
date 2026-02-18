@@ -45,11 +45,11 @@ export default function Timeline() {
             const xVal = i * itemSpacing;
             // Parse "10vh" -> 10.
             const topStr = item.position.top || "50vh";
-            const topPx = parseInt(topStr.replace("vh", ""), 10);
+            const topPx = parseInt(topStr.replace(/[^0-9.]/g, ""), 10);
 
-            // Map 0-60vh (container height) to 0-100 (SVG viewBox height)
-            // y = (top in vh / 60) * 100
-            const yVal = (topPx / 60) * 100;
+            // Since container is h-full (100vh) and viewBox height is 100, 
+            // yVal is just the vh number.
+            const yVal = topPx;
 
             return { x: xVal, y: yVal };
         });
@@ -78,45 +78,34 @@ export default function Timeline() {
 
     return (
         <section ref={targetRef} className="relative h-[500vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
-            {/* Lotus Mandala Background - Centered and Sticky */}
-            {/* <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center pointer-events-none opacity-[0.08]">
-                <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
-                    alt="Decorative lotus mandala"
-                    width={800}
-                    height={600}
-                    className="object-contain"
-                />
-            </div> */}
+            {/* STICKY CONTAINER - Unifies everything fixed on screen */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden">
+                {/* 1. Background Image */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="relative w-full h-full">
+                        <Image
+                            src="/images/bg1.webp"
+                            alt="Timeline background"
+                            fill
+                            className="object-cover opacity-30"
+                        />
+                    </div>
+                </div>
 
-            {/* Left fixed tribal border */}
-            <div
-                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-50 pointer-events-none"
-                style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
-                    backgroundRepeat: 'repeat-y',
-                    backgroundSize: '100% auto',
-                    backgroundPosition: 'top center',
-                }}
-            />
-
-            {/* Sticky Scrolling Area */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
-
-                {/* Header - Styled like Exotica */}
-                <div className="absolute top-4 left-0 w-full z-20 text-center px-4">
+                {/* 2. Header */}
+                <div className="absolute top-10 left-0 w-full z-20 text-center px-4">
                     <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-2 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
                         Historical Journey
                     </h3>
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] leading-[1.1] font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
+                    <h2 className="text-4xl md:text-6xl text-[#2C1810] leading-[1.1] font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
                         Evolution of <span className="text-[#B7410E]">Bengali Culture</span>
                     </h2>
                 </div>
 
-                {/* Horizontal Moving Container */}
+                {/* 3. Horizontal Moving Container - Set to h-full to align with vh positions */}
                 <motion.div
                     style={{ x }}
-                    className="relative flex items-center h-[60vh] left-[50vw] mt-40 md:mt-60" // Increased margin to push icons further down
+                    className="relative flex items-center h-full left-[50vw]"
                 >
                     {/* SVG Connecting Line */}
                     {/* We overlay it. Width needs to be huge. */}
@@ -181,7 +170,7 @@ export default function Timeline() {
 
                                 {/* Image Card - Absolute Center */}
                                 <div className={`absolute inset-0 flex items-center justify-center`}>
-                                    <div className={`relative w-[450px] md:w-[600px] aspect-video transition-all duration-700 ${isActive ? "scale-125" : "scale-90 border-transparent grayscale opacity-60"}`}>
+                                    <div className={`relative w-[450px] md:w-[600px] aspect-video transition-all duration-700 ${isActive ? "scale-125" : "scale-90 border-transparent grayscale opacity-100"}`}>
                                         <img
                                             src={item.img}
                                             alt={item.title}

@@ -17,13 +17,14 @@ export default function DashboardPage() {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [netRevenueMode, setNetRevenueMode] = useState(false);
+    const [excludeManual, setExcludeManual] = useState(false);
     const { data: session } = authClient.useSession();
     const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const stats = await getAnalyticsData();
+                const stats = await getAnalyticsData(excludeManual);
                 setData(stats);
             } catch (error) {
                 console.error("Failed to fetch analytics", error);
@@ -32,7 +33,7 @@ export default function DashboardPage() {
             }
         }
         fetchData();
-    }, [session, router]);
+    }, [session, router, excludeManual]);
 
     const calculateTotalRevenue = () => {
         if (!data) return 0;
@@ -49,13 +50,23 @@ export default function DashboardPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-                <div className="flex items-center space-x-2 bg-muted/50 p-2 rounded-lg border">
-                    <Switch
-                        id="net-revenue"
-                        checked={netRevenueMode}
-                        onCheckedChange={setNetRevenueMode}
-                    />
-                    <Label htmlFor="net-revenue">Show Net Revenue (Excl. 2.5% Razorpay fee)</Label>
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center space-x-2 bg-muted/50 p-2 rounded-lg border">
+                        <Switch
+                            id="exclude-manual"
+                            checked={excludeManual}
+                            onCheckedChange={setExcludeManual}
+                        />
+                        <Label htmlFor="exclude-manual">Exclude Manual Tickets</Label>
+                    </div>
+                    <div className="flex items-center space-x-2 bg-muted/50 p-2 rounded-lg border">
+                        <Switch
+                            id="net-revenue"
+                            checked={netRevenueMode}
+                            onCheckedChange={setNetRevenueMode}
+                        />
+                        <Label htmlFor="net-revenue">Show Net Revenue (Excl. 2.5% Razorpay fee)</Label>
+                    </div>
                 </div>
             </div>
 
@@ -112,7 +123,7 @@ export default function DashboardPage() {
                 <EventPerformance events={data?.eventStats} netRevenueMode={netRevenueMode} />
             )}
 
-            <AllTicketsTable />
+            <AllTicketsTable excludeManual={excludeManual} />
         </div>
     );
 }

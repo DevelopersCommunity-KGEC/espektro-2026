@@ -22,7 +22,7 @@ const Exotica: React.FC = () => {
       {/* Lotus Mandala Background - Centered and Subtle */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
         <Image
-          src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+          src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
           alt="Decorative lotus mandala"
           width={800}
           height={600}
@@ -34,7 +34,7 @@ const Exotica: React.FC = () => {
       <div
         className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-0"
         style={{
-          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
           backgroundRepeat: 'repeat-y',
           backgroundSize: '100% auto',
           backgroundPosition: 'top center'
@@ -51,7 +51,7 @@ const Exotica: React.FC = () => {
         viewport={{ once: true }}
       >
         <Image
-          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
+          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.webp"
           alt="Traditional woven basket decoration"
           fill
           className="object-contain drop-shadow-lg"
@@ -67,7 +67,7 @@ const Exotica: React.FC = () => {
         viewport={{ once: true }}
       >
         <Image
-          src="/images/992241cef4a2175dfd465b2ebbe92e8e.png"
+          src="/images/992241cef4a2175dfd465b2ebbe92e8e.webp"
           alt="Decorative circular pattern"
           fill
           className="object-contain"
@@ -135,7 +135,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/artist-1.jpg"
+                  src="/images/artist-1.webp"
                   alt="Artist performance"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -152,7 +152,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/india-culture.jpeg"
+                  src="/images/india-culture.webp"
                   alt="Indian culture"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -169,7 +169,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/kolkata-monochrome.jpeg"
+                  src="/images/kolkata-monochrome.webp"
                   alt="Kolkata heritage"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -186,7 +186,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/artist-3.jpg"
+                  src="/images/artist-3.webp"
                   alt="Performance artist"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -206,7 +206,7 @@ const Exotica: React.FC = () => {
         viewport={{ once: true }}
       >
         {/* <Image
-          src="/images/225fc2b0491f29fb9a027d0a94bfcf53.png"
+          src="/images/225fc2b0491f29fb9a027d0a94bfcf53.webp"
           alt="Decorative tribal pattern"
           fill
           className="object-contain"

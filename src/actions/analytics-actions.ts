@@ -4,15 +4,21 @@ import dbConnect from "@/lib/db";
 import Event from "@/models/Event";
 import Ticket from "@/models/Ticket";
 
-export async function getAnalyticsData() {
+export async function getAnalyticsData(excludeManual = false) {
   await dbConnect();
 
   try {
     const events = await Event.find({}).lean();
 
+    // Base match: only booked/checked-in tickets, optionally exclude manual
+    const baseMatch: any = { status: { $in: ["booked", "checked-in"] } };
+    if (excludeManual) {
+      baseMatch.issueType = { $nin: ["manual", "pass"] };
+    }
+
     // Calculate revenue using Ticket aggregation for accuracy
     const revenueStats = await Ticket.aggregate([
-      { $match: { status: { $in: ["booked", "checked-in"] } } },
+      { $match: baseMatch },
       {
         $project: {
           eventId: 1,
@@ -33,7 +39,7 @@ export async function getAnalyticsData() {
 
     // Aggregate ticket counts per event
     const ticketCounts = await Ticket.aggregate([
-      { $match: { status: { $in: ["booked", "checked-in"] } } },
+      { $match: baseMatch },
       { $group: { _id: "$eventId", count: { $sum: 1 } } },
     ]);
     const ticketsSoldMap = new Map<string, number>(
@@ -51,13 +57,15 @@ export async function getAnalyticsData() {
     );
 
     // Get checked-in count
-    const totalCheckedIn = await Ticket.countDocuments({
-      status: "checked-in",
-    });
+    const checkedInMatch: any = { status: "checked-in" };
+    if (excludeManual) {
+      checkedInMatch.issueType = { $nin: ["manual", "pass"] };
+    }
+    const totalCheckedIn = await Ticket.countDocuments(checkedInMatch);
 
     // Aggregate check-ins per event
     const checkInStats = await Ticket.aggregate([
-      { $match: { status: "checked-in" } },
+      { $match: checkedInMatch },
       { $group: { _id: "$eventId", count: { $sum: 1 } } },
     ]);
 

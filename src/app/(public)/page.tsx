@@ -10,7 +10,7 @@ import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
 import { LogoPreloader } from "@/components/landing/logo-preloader";
 import { getTimelineData } from "@/actions/landing-data";
-import Timeline from "@/components/landing/timeline/timeline";
+import Timeline from "@/components/landing/timeline";
 import Techtix from "@/components/landing/about-sections/Techtix";
 import EspektroAbout from "@/components/landing/about-sections/Espektro";
 import Quizine from "@/components/landing/about-sections/Quizine";

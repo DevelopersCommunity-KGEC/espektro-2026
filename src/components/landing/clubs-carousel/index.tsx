@@ -22,7 +22,7 @@ export function ClubsCarousel() {
                     {row1.map((name, i) => (
                         <div
                             key={`r1-${i}`}
-                            className="flex-shrink-0 bg-card border border-border rounded-full px-5 py-2.5 shadow-sm"
+                            className="flex-shrink-0 bg-card border border-border theatrical-shape px-6 py-2.5 shadow-sm"
                         >
                             <span className="text-sm font-medium text-foreground/70 whitespace-nowrap">
                                 {name}

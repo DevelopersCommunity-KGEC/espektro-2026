@@ -244,7 +244,7 @@ export function About() {
             />
 
             <img
-              src="/images/artist-1.jpg"
+              src="/images/artist-1.webp"
               alt="Espektro Artist"
               className="w-full h-full object-cover border-none"
             />

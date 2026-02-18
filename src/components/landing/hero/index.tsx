@@ -23,7 +23,7 @@ export function Hero() {
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
                 <Image
-                    src="/images/background_web.png"
+                    src="/images/background_web.webp"
                     alt="Decorative lotus mandala"
                     width={1000}
                     height={800}
@@ -35,7 +35,7 @@ export function Hero() {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-10"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center'
@@ -50,7 +50,7 @@ export function Hero() {
                 transition={{ duration: 2, ease: "easeOut" }}
             >
                 <Image
-                    src="/images/992241cef4a2175dfd465b2ebbe92e8e.png"
+                    src="/images/992241cef4a2175dfd465b2ebbe92e8e.webp"
                     alt=""
                     fill
                     className="object-contain"
@@ -62,13 +62,13 @@ export function Hero() {
                 initial={{ opacity: 0, rotate: -20 }}
                 animate={{ opacity: 0.1, rotate: 360 }}
                 transition={{
-                    rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+                    rotate: { duration: 185, repeat: Infinity, ease: "linear" },
                     opacity: { duration: 2.2 },
                     scale: { duration: 2.2 }
                 }}
             >
                 <Image
-                    src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
+                    src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.webp"
                     alt=""
                     fill
                     className="object-contain"

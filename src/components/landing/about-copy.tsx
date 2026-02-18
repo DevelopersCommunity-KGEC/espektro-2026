@@ -122,12 +122,12 @@ const AboutV2 = () => {
                         </div>
                         <div className={styles.collage_side}>
                             <div className={styles.grid_collage}>
-                                <div className={`${styles.grid_item} ${styles.item_1}`}><img src="/images/artist-2.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.item_2}`}><img src="/images/kolkata-monochrome.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.item_3}`}><img src="/images/artist-3.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.item_4}`}><img src="/images/timeline.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.item_5}`}><img src="/images/bengali-culture.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.item_6}`}><img src="/images/kolkata-city.jpeg" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_1}`}><img src="/images/artist-2.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_2}`}><img src="/images/kolkata-monochrome.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_3}`}><img src="/images/artist-3.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_4}`}><img src="/images/timeline.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_5}`}><img src="/images/bengali-culture.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.item_6}`}><img src="/images/kolkata-city.webp" alt="" /></div>
                             </div>
                         </div>
                     </div>
@@ -153,12 +153,12 @@ const AboutV2 = () => {
                         </div>
                         <div className={styles.collage_side}>
                             <div className={`${styles.grid_collage} ${styles.grid_exotica}`}>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_1}`}><img src="/images/artist-4.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_2}`}><img src="/images/bengali-culture.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_3}`}><img src="/images/india-culture.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_4}`}><img src="/images/kolkata-city.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_5}`}><img src="/images/artist-1.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.exotica_item_6}`}><img src="/images/kolkata-monochrome.jpeg" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_1}`}><img src="/images/artist-4.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_2}`}><img src="/images/bengali-culture.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_3}`}><img src="/images/india-culture.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_4}`}><img src="/images/kolkata-city.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_5}`}><img src="/images/artist-1.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.exotica_item_6}`}><img src="/images/kolkata-monochrome.webp" alt="" /></div>
                             </div>
                         </div>
                     </div>
@@ -184,12 +184,12 @@ const AboutV2 = () => {
                         </div>
                         <div className={styles.collage_side}>
                             <div className={`${styles.grid_collage} ${styles.grid_quizine}`}>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_1}`}><img src="/images/india-culture.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_2}`}><img src="/images/artist-1.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_3}`}><img src="/images/timeline.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_4}`}><img src="/images/artist-2.jpg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_5}`}><img src="/images/kolkata-city.jpeg" alt="" /></div>
-                                <div className={`${styles.grid_item} ${styles.quizine_item_6}`}><img src="/images/artist-3.jpg" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_1}`}><img src="/images/india-culture.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_2}`}><img src="/images/artist-1.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_3}`}><img src="/images/timeline.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_4}`}><img src="/images/artist-2.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_5}`}><img src="/images/kolkata-city.webp" alt="" /></div>
+                                <div className={`${styles.grid_item} ${styles.quizine_item_6}`}><img src="/images/artist-3.webp" alt="" /></div>
                             </div>
                         </div>
                     </div>

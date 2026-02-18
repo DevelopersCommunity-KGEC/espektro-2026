@@ -229,7 +229,7 @@ export function ArtistGallery() {
       <div
         className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
         style={{
-          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
           backgroundRepeat: 'repeat-y',
           backgroundSize: '100% auto',
           backgroundPosition: 'top center'
@@ -258,7 +258,7 @@ export function ArtistGallery() {
             {/* <div
               className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
-                backgroundImage: 'url(/images/border2.png)',
+                backgroundImage: 'url(/images/border2.webp)',
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'
@@ -268,7 +268,7 @@ export function ArtistGallery() {
             {/* <div
               className="absolute top-0 right-0 rotate-180 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
-                backgroundImage: 'url(/images/border2.png)',
+                backgroundImage: 'url(/images/border2.webp)',
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'

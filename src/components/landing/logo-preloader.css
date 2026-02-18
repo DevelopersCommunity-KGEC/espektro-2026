@@ -17,11 +17,6 @@
   box-sizing: border-box;
 }
 
-.preloader-overlay.active-exit {
-  animation: pageFadeOut 0.3s ease-out 8.5s forwards;
-  pointer-events: none;
-}
-
 .preloader-logo-container {
   display: flex;
   align-items: center;
@@ -73,6 +68,7 @@
 }
 
 @keyframes appear {
+
   0%,
   100% {
     visibility: visible;
@@ -107,8 +103,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: fadeScaleIn var(--anim-dur, 0.8s) ease-out var(--anim-delay, 0s)
-    forwards;
+  animation: fadeScaleIn var(--anim-dur, 0.5s) ease-out var(--anim-delay, 0s) forwards;
 }
 
 .preloader-overlay .logo-animate [data-phase="3"] {
@@ -127,9 +122,8 @@
   stroke-dashoffset: var(--path-length, 2000);
   animation:
     appear 0s var(--stroke-start, 0s) forwards,
-    drawStroke var(--stroke-dur, 2s) ease-in-out var(--stroke-start, 0s)
-      forwards,
-    fillIn var(--fill-dur, 0.8s) ease-in-out var(--fill-delay, 2s) forwards;
+    drawStroke var(--stroke-dur, 1.2s) ease-in-out var(--stroke-start, 0.5s) forwards,
+    fillIn var(--fill-dur, 0.5s) ease-in-out var(--fill-delay, 1.3s) forwards;
 }
 
 /* ── Phase 5: "espektro" text arrival ── */
@@ -137,8 +131,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1)
-    var(--arrival-delay, 4.6s) forwards;
+  animation: arriveIn var(--arrival-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 2.3s) forwards;
 }
 
 /* ── Phase 6: "26" text arrival ── */
@@ -146,8 +139,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1)
-    var(--arrival-delay, 5.6s) forwards;
+  animation: arriveIn var(--arrival-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 3.0s) forwards;
 }
 
 /* Preserve original stroke styles */
@@ -196,8 +188,8 @@
 .preloader-logo-container {
   animation:
     containerFadeIn 0.4s ease-out forwards,
-    continuousZoom 7s ease-in-out 0s forwards,
-    dissolveOut 1s ease-in-out 7.5s forwards;
+    continuousZoom 4.5s ease-in-out 0s forwards,
+    dissolveOut 0.8s ease-in-out 4.2s forwards;
 }
 
 .preloader-overlay {
@@ -206,6 +198,6 @@
 }
 
 .preloader-overlay.active-exit {
-  animation: pageFadeOut 0.3s ease-out 8.5s forwards;
+  animation: pageFadeOut 0.3s ease-out 4.7s forwards;
   pointer-events: none;
 }

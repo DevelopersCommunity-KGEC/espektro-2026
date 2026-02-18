@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { eras } from "@/data/landing-content";
+import Image from "next/image";
 
 const arr = [
     {
@@ -77,9 +78,9 @@ export function ThemeEvolution() {
         <div ref={containerRef} className="relative z-10 h-[400vh] bg-white">
             <section className="sticky top-0 h-screen w-full overflow-hidden">
 
-                {/* <div className="absolute inset-0">
+                <div className="absolute inset-0">
                     <Image
-                        src="/images/timeline.jpg"
+                        src="/images/timeline.webp"
                         fill
                         className="object-cover grayscale opacity-40"
                         alt="Bengali Culture Timeline"
@@ -90,12 +91,12 @@ export function ThemeEvolution() {
                         style={{ clipPath }}
                     >
                         <img 
-                            src="/images/timeline.jpg" 
+                            src="/images/timeline.webp" 
                             className="w-full h-full object-cover" 
                             alt="Bengali Culture Timeline Color"
                         />
                     </motion.div>
-                </div> */}
+                </div>
 
                 <div className="relative z-20 h-full flex flex-col justify-between p-8 lg:p-16">
 

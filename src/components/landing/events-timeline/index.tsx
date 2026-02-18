@@ -12,8 +12,12 @@ const HOUR_START = 0;
 const HOUR_END = 24;
 const TOTAL_HOURS = HOUR_END - HOUR_START;
 
-const categoryColors: Record<string, { bg: string; text: string; border: string }> = Object.entries(CLUB_CATEGORIES).reduce((acc, [key, value]) => {
-    acc[key] = value.color;
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = Object.keys(CLUB_CATEGORIES).reduce((acc, key) => {
+    acc[key] = {
+        bg: "bg-[#B7410E]/10",
+        text: "text-[#B7410E]",
+        border: "border-[#B7410E]/40",
+    };
     return acc;
 }, {} as any);
 
@@ -177,7 +181,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
                     alt="Decorative lotus mandala"
                     width={800}
                     height={600}
@@ -189,7 +193,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center'
@@ -200,20 +204,20 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 <div
                     className={`mb-14 transition-all duration-700 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
+                    <h3 className="text-[#8B2635] text-[10px] md:text-sm uppercase tracking-[0.5em] font-bold text-center mb-3 font-[family-name:var(--font-roboto-slab)]">
                         {scheduleData.length} Days of Excellence
                     </h3>
                     <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
                         Event Schedule
                     </h2>
-                    <p className="text-muted-foreground max-w-xl mx-auto">
+                    <p className="text-[#4A3428] max-w-xl mx-auto font-medium font-[family-name:var(--font-open-sans)]">
                         A bird&rsquo;s-eye view of every event across {scheduleData.length} transformative days.
                     </p>
                 </div>
 
                 {/* Day selector tabs */}
                 <div
-                    className={`flex gap-2 mb-8 overflow-x-auto pb-2 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`flex gap-3 mb-10 overflow-x-auto pb-4 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     style={{ scrollbarWidth: "none" }}
                 >
                     {scheduleData.map((day, i) => (
@@ -221,14 +225,15 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                             key={day.day}
                             type="button"
                             onClick={() => setActiveDay(i)}
-                            className={`flex-shrink-0 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${activeDay === i
-                                ? "bg-[#B7410E] text-white shadow-lg shadow-[#B7410E]/20"
-                                : "bg-card border border-border text-muted-foreground hover:border-[#B7410E]/30 hover:text-foreground"
+                            className={`flex-shrink-0 px-8 py-4 theatrical-shape text-sm font-bold transition-all duration-300 min-w-[130px] font-[family-name:var(--font-roboto-slab)] uppercase tracking-wider ${activeDay === i
+                                ? "bg-[#B7410E] text-white shadow-xl shadow-[#B7410E]/20 -translate-y-1"
+                                : "bg-white border border-gray-100 text-muted-foreground hover:border-[#B7410E]/30 hover:text-[#B7410E] shadow-sm"
                                 }`}
                         >
-                            <span className="block font-bold">{day.day}</span>
-                            <span className="block text-[10px] mt-0.5 opacity-70">
-                                {day.date} &middot; {day.label}
+                            <span className="block text-xs opacity-60 mb-0.5">{day.date}</span>
+                            <span className="block text-lg">{day.day}</span>
+                            <span className="block text-[9px] mt-1 opacity-50 tracking-[0.1em]">
+                                {day.label}
                             </span>
                         </button>
                     ))}
@@ -236,16 +241,16 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
 
                 {/* Legend */}
                 <div
-                    className={`flex flex-wrap gap-4 mb-6 transition-all duration-700 delay-150 ${isVisible ? "opacity-100" : "opacity-0"}`}
+                    className={`flex flex-wrap justify-center gap-6 md:gap-8 mb-10 transition-all duration-700 delay-150 ${isVisible ? "opacity-100" : "opacity-0"}`}
                 >
                     {Object.entries(categoryLabels).map(([key, label]) => {
                         const c = categoryColors[key];
                         return (
-                            <div key={key} className="flex items-center gap-2">
+                            <div key={key} className="flex items-center gap-2 px-6 py-2 bg-white theatrical-shape shadow-sm flex-shrink-0 transition-all hover:bg-[#B7410E]/5 group cursor-default">
                                 <span
-                                    className={`w-3 h-3 rounded-sm ${c.bg} border ${c.border}`}
+                                    className={`w-2 h-2 rounded-full bg-[#B7410E] border border-[#B7410E]/20 shadow-[0_0_8px_rgba(183,65,14,0.3)]`}
                                 />
-                                <span className="text-xs text-muted-foreground">{label}</span>
+                                <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#4A3428] font-[family-name:var(--font-roboto-slab)] group-hover:text-[#B7410E] transition-colors">{label}</span>
                             </div>
                         );
                     })}
@@ -254,138 +259,143 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 {/* Gantt chart */}
                 <div
                     ref={containerRef}
-                    className={`bg-card border border-border rounded-2xl overflow-hidden transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col items-center justify-center border-[12px] md:border-[20px] border-white transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    {/* Time header */}
-                    <div ref={scrollRef} className="overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-                        <div ref={innerRef} className="relative" style={{ minWidth: "900px" }}>
-                            {/* Hour labels */}
-                            <div ref={headerRef} className="flex border-b border-border">
-                                {/* Left gutter for event labels */}
-                                <div className="w-36 lg:w-44 flex-shrink-0 border-r border-border px-4 py-3">
-                                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                                        {currentSchedule.day} &middot; {currentSchedule.label}
-                                    </span>
-                                </div>
-                                {/* Hour columns */}
-                                <div className="flex-1 flex relative">
-                                    {hours.map((label, i) => (
-                                        <div
-                                            key={label}
-                                            className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
-                                        >
-                                            {i % 2 === 0 ? label : ""}
-                                        </div>
-                                    ))}
-                                    {/* Final tick at 12 AM/midnight if needed, but last column handles it */}
-                                </div>
-                            </div>
+                    <div className="absolute inset-0 bg-[#FFF8F0]/30 z-0 pointer-events-none" />
 
-                            {/* Event rows */}
-                            {currentSchedule.events.map((event, idx) => {
-                                const leftPct =
-                                    ((event.startHour - HOUR_START) / TOTAL_HOURS) * 100;
-                                const widthPct = (event.duration / TOTAL_HOURS) * 100;
-                                const c = categoryColors[event.category];
-
-                                return (
-                                    <div
-                                        key={event.name}
-                                        className="flex border-b border-border/50 last:border-b-0 group"
-                                    >
-                                        {/* Event name gutter */}
-                                        <div className="w-36 lg:w-44 flex-shrink-0 border-r border-border px-4 py-3 flex items-center">
-                                            <span className="text-xs font-medium text-foreground truncate">
-                                                {event.name}
-                                            </span>
-                                        </div>
-                                        {/* Bar area - removed px-1 to align perfectly with grid */}
-                                        <div className="flex-1 relative py-2">
-                                            {/* Grid lines */}
-                                            <div className="absolute inset-0 flex pointer-events-none">
-                                                {hours.map((h) => (
-                                                    <div
-                                                        key={h}
-                                                        className="flex-1 border-r border-border/20 last:border-r-0"
-                                                    />
-                                                ))}
-                                                {/* Current Time Indicator */}
-                                                {(() => {
-                                                    const todayStr = currentTime.toLocaleDateString("en-US", {
-                                                        month: "short",
-                                                        day: "numeric",
-                                                    });
-                                                    if (currentSchedule.date === todayStr) {
-                                                        const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
-                                                        if (nowHour >= HOUR_START && nowHour <= HOUR_END) {
-                                                            const left = ((nowHour - HOUR_START) / TOTAL_HOURS) * 100;
-                                                            return (
-                                                                <div
-                                                                    className="absolute top-0 bottom-0 w-px bg-red-500 z-20 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
-                                                                    style={{ left: `${left}%` }}
-                                                                >
-                                                                    {idx === 0 && (
-                                                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full px-1.5 py-0.5 bg-red-500 text-[8px] text-white rounded-sm font-bold whitespace-nowrap">
-                                                                            NOW
-                                                                        </div>
-                                                                    )}
-                                                                </div>
-                                                            );
-                                                        }
-                                                    }
-                                                    return null;
-                                                })()}
-                                            </div>
-                                            {/* Bar */}
+                    {/* Gantt Content Area */}
+                    <div className="relative z-10 w-full">
+                        {/* Time header */}
+                        <div ref={scrollRef} className="overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+                            <div ref={innerRef} className="relative" style={{ minWidth: "900px" }}>
+                                {/* Hour labels */}
+                                <div ref={headerRef} className="flex border-b border-border">
+                                    {/* Left gutter for event labels */}
+                                    <div className="w-36 lg:w-44 flex-shrink-0 border-r border-border px-4 py-3">
+                                        <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
+                                            {currentSchedule.day} &middot; {currentSchedule.label}
+                                        </span>
+                                    </div>
+                                    {/* Hour columns */}
+                                    <div className="flex-1 flex relative">
+                                        {hours.map((label, i) => (
                                             <div
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    if (selectedEvent === event.name) {
-                                                        setSelectedEvent(null);
-                                                        setTooltipData(null);
-                                                    } else {
-                                                        const rect = e.currentTarget.getBoundingClientRect();
-                                                        setSelectedEvent(event.name);
-                                                        setTooltipData({
-                                                            x: rect.left + rect.width / 2,
-                                                            y: rect.top,
-                                                            event: event,
-                                                        });
-                                                    }
-                                                }}
-                                                className={`event-bar relative h-10 rounded-md ${c.bg} border ${c.border} flex items-center px-3 transition-all duration-300 group-hover:shadow-md cursor-pointer active:scale-[0.98] ${(() => {
-                                                    const todayStr = currentTime.toLocaleDateString("en-US", {
-                                                        month: "short",
-                                                        day: "numeric",
-                                                    });
-                                                    if (currentSchedule.date === todayStr) {
-                                                        const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
-                                                        if (nowHour >= event.startHour && nowHour <= event.startHour + event.duration) {
-                                                            return "ring-2 ring-primary ring-offset-2 ring-offset-card shadow-lg";
-                                                        }
-                                                    }
-                                                    return "";
-                                                })()} ${selectedEvent === event.name ? "z-30 shadow-lg scale-[1.02]" : "z-10"}`}
-                                                style={{
-                                                    marginLeft: `${leftPct}%`,
-                                                    width: `${widthPct}%`,
-                                                }}
+                                                key={label}
+                                                className="flex-1 text-center py-3 text-[10px] text-muted-foreground border-r border-border/50 last:border-r-0"
                                             >
-                                                <span
-                                                    className={`text-[10px] sm:text-xs font-semibold ${c.text} truncate`}
-                                                >
+                                                {i % 2 === 0 ? label : ""}
+                                            </div>
+                                        ))}
+                                        {/* Final tick at 12 AM/midnight if needed, but last column handles it */}
+                                    </div>
+                                </div>
+
+                                {/* Event rows */}
+                                {currentSchedule.events.map((event, idx) => {
+                                    const leftPct =
+                                        ((event.startHour - HOUR_START) / TOTAL_HOURS) * 100;
+                                    const widthPct = (event.duration / TOTAL_HOURS) * 100;
+                                    const c = categoryColors[event.category];
+
+                                    return (
+                                        <div
+                                            key={event.name}
+                                            className="flex border-b border-border/50 last:border-b-0 group"
+                                        >
+                                            {/* Event name gutter */}
+                                            <div className="w-36 lg:w-44 flex-shrink-0 border-r border-border px-4 py-3 flex items-center">
+                                                <span className="text-xs font-medium text-foreground truncate">
                                                     {event.name}
-                                                    {event.prize && (
-                                                        <span className="ml-1.5 opacity-70">
-                                                            &middot; {event.prize}
-                                                        </span>
-                                                    )}
                                                 </span>
                                             </div>
+                                            {/* Bar area - removed px-1 to align perfectly with grid */}
+                                            <div className="flex-1 relative py-2">
+                                                {/* Grid lines */}
+                                                <div className="absolute inset-0 flex pointer-events-none">
+                                                    {hours.map((h) => (
+                                                        <div
+                                                            key={h}
+                                                            className="flex-1 border-r border-border/20 last:border-r-0"
+                                                        />
+                                                    ))}
+                                                    {/* Current Time Indicator */}
+                                                    {(() => {
+                                                        const todayStr = currentTime.toLocaleDateString("en-US", {
+                                                            month: "short",
+                                                            day: "numeric",
+                                                        });
+                                                        if (currentSchedule.date === todayStr) {
+                                                            const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
+                                                            if (nowHour >= HOUR_START && nowHour <= HOUR_END) {
+                                                                const left = ((nowHour - HOUR_START) / TOTAL_HOURS) * 100;
+                                                                return (
+                                                                    <div
+                                                                        className="absolute top-0 bottom-0 w-px bg-red-500 z-20 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+                                                                        style={{ left: `${left}%` }}
+                                                                    >
+                                                                        {idx === 0 && (
+                                                                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full px-1.5 py-0.5 bg-red-500 text-[8px] text-white rounded-sm font-bold whitespace-nowrap">
+                                                                                NOW
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            }
+                                                        }
+                                                        return null;
+                                                    })()}
+                                                </div>
+                                                {/* Bar */}
+                                                <div
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        if (selectedEvent === event.name) {
+                                                            setSelectedEvent(null);
+                                                            setTooltipData(null);
+                                                        } else {
+                                                            const rect = e.currentTarget.getBoundingClientRect();
+                                                            setSelectedEvent(event.name);
+                                                            setTooltipData({
+                                                                x: rect.left + rect.width / 2,
+                                                                y: rect.top,
+                                                                event: event,
+                                                            });
+                                                        }
+                                                    }}
+                                                    className={`event-bar relative h-10 rounded-sm ${c.bg} border-2 border-[#B7410E]/30 flex items-center px-6 transition-all duration-300 group-hover:shadow-md group-hover:border-[#B7410E]/50 cursor-pointer active:scale-[0.98] ${(() => {
+                                                        const todayStr = currentTime.toLocaleDateString("en-US", {
+                                                            month: "short",
+                                                            day: "numeric",
+                                                        });
+                                                        if (currentSchedule.date === todayStr) {
+                                                            const nowHour = currentTime.getHours() + currentTime.getMinutes() / 60;
+                                                            if (nowHour >= event.startHour && nowHour <= event.startHour + event.duration) {
+                                                                return "ring-2 ring-primary ring-offset-2 ring-offset-card shadow-lg";
+                                                            }
+                                                        }
+                                                        return "";
+                                                    })()} ${selectedEvent === event.name ? "z-30 shadow-lg scale-[1.02]" : "z-10"}`}
+                                                    style={{
+                                                        marginLeft: `${leftPct}%`,
+                                                        width: `${widthPct}%`,
+                                                    }}
+                                                >
+                                                    <span
+                                                        className={`text-[10px] sm:text-xs font-semibold ${c.text} truncate`}
+                                                    >
+                                                        {event.name}
+                                                        {event.prize && (
+                                                            <span className="ml-1.5 opacity-70">
+                                                                &middot; {event.prize}
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
