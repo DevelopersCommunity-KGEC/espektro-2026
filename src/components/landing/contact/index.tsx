@@ -31,7 +31,7 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 relative z-10 overflow-hidden"
+            className="py-20 lg:py-32 relative z-10 "
             style={{ backgroundColor: "#FFF8F0" }}
         >
             {/* Lotus Mandala Background - Centered and Subtle */}
@@ -218,7 +218,22 @@ export function Contact() {
                                 </a>
                             </div>
                         </div>
+
                     </div>
+                </div>
+            </div>
+            <div className="absolute -bottom-24 left-0 w-full h-12 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
+                <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
+                    {[...Array(15)].map((_, i) => (
+                        <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">
+                            <Image
+                                src="/images/shapartist.png"
+                                alt=""
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
