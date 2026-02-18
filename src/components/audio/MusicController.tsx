@@ -11,10 +11,11 @@ import { useEffect, useRef, useState } from "react";
 const TRACKS = {
   STARTING: "/music/STARTING SITE1.wav",
   LOADING: "/music/loading-effect.wav",
+  ARTIST: "/music/ARTISTSECTION1.wav",
+  ARTIST2: "/music/PREVIOUS ARTIST.wav",
+  THUNDER: "/music/THUNDER.wav",
 };
 
-// Map Section IDs to Music Tracks
-// Map Section IDs to Music Tracks
 const SECTION_MUSIC_MAP: Record<string, string> = {
   hero: TRACKS.STARTING,
   "espektro-about": TRACKS.STARTING,
@@ -22,15 +23,17 @@ const SECTION_MUSIC_MAP: Record<string, string> = {
   quizine: TRACKS.STARTING,
   exotica: TRACKS.STARTING,
   timeline: TRACKS.STARTING,
-  "events-timeline": TRACKS.STARTING,
-  "featured-artists": TRACKS.LOADING,
-  "artist-gallery": TRACKS.LOADING,
+  "events-timeline": TRACKS.THUNDER,
+  "featured-artists": TRACKS.ARTIST,
+  "artist-gallery": TRACKS.ARTIST2,
   sponsors: "",
   clubs: "",
   contact: "",
 };
 
 const FADE_DURATION = 2000; // ms
+const MAX_VOLUME = 1;
+const THUNDER_VOLUME = 1;
 
 export function MusicController() {
   const [activeSection, setActiveSection] = useState<string>("hero");
@@ -42,6 +45,7 @@ export function MusicController() {
   // We use two audio elements to crossfade
   const audioRefA = useRef<HTMLAudioElement | null>(null);
   const audioRefB = useRef<HTMLAudioElement | null>(null);
+  const thunderRef = useRef<HTMLAudioElement | null>(null);
   const activeAudioRef = useRef<"A" | "B">("A"); // Tracks which element is currently "Main"
 
   // 1. Listen for Start Signal (from Preloader)
@@ -56,7 +60,7 @@ export function MusicController() {
         audio.src = currentTrack || "";
         audio
           .play()
-          .then(() => fadeAudio(audio, 0, 0.5, FADE_DURATION))
+          .then(() => fadeAudio(audio, 0, MAX_VOLUME, FADE_DURATION))
           .catch((e) => console.error("[MusicController] Play failed:", e));
       }
     };
@@ -106,8 +110,7 @@ export function MusicController() {
     if (nextTrack === undefined || nextTrack === currentTrack) return;
 
     console.log(
-      `[MusicController] Switching from ${currentTrack} to ${
-        nextTrack || "Silence"
+      `[MusicController] Switching from ${currentTrack} to ${nextTrack || "Silence"
       }`,
     );
     setCurrentTrack(nextTrack);
@@ -130,17 +133,41 @@ export function MusicController() {
       nextAudio
         .play()
         .then(() => {
-          fadeAudio(nextAudio, 0, 0.5, FADE_DURATION);
+          fadeAudio(nextAudio, 0, MAX_VOLUME, FADE_DURATION);
           activeAudioRef.current = nextRefStr; // Swap active ref
         })
         .catch((e) => console.error("[MusicController] Crossfade failed:", e));
     }
   }, [activeSection, isPlaying, currentTrack]);
 
+  // 4. Handle Ambient Thunder Layer
+  useEffect(() => {
+    if (!isPlaying || !thunderRef.current) return;
+
+    const isThunderSection =
+      activeSection === "events-timeline" ||
+      activeSection === "featured-artists" ||
+      activeSection === "artist-gallery";
+
+    if (isThunderSection) {
+      if (thunderRef.current.paused) {
+        thunderRef.current.volume = 0;
+        thunderRef.current.play()
+          .then(() => fadeAudio(thunderRef.current!, 0, THUNDER_VOLUME, FADE_DURATION))
+          .catch(e => console.error("[MusicController] Thunder play failed:", e));
+      }
+    } else {
+      if (!thunderRef.current.paused) {
+        fadeAudio(thunderRef.current, thunderRef.current.volume, 0, FADE_DURATION);
+      }
+    }
+  }, [activeSection, isPlaying]);
+
   return (
     <div className="hidden">
       <audio ref={audioRefA} loop preload="auto" />
       <audio ref={audioRefB} loop preload="auto" />
+      <audio ref={thunderRef} src={TRACKS.THUNDER} loop preload="auto" />
       <div className="fixed bottom-4 left-4 z-50 bg-black/50 text-white p-2 text-xs rounded pointer-events-none">
         Debug: {activeSection} | Music: {currentTrack}
       </div>
