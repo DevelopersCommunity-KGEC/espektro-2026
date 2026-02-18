@@ -60,8 +60,12 @@ export function Hero() {
             <motion.div
                 className="absolute left-[-5rem] bottom-[-5rem] w-64 h-64 md:w-80 md:h-80 z-0 opacity-10 hidden lg:block"
                 initial={{ opacity: 0, rotate: -20 }}
-                animate={{ opacity: 0.1, rotate: 0 }}
-                transition={{ duration: 2.2, ease: "easeOut", delay: 0.2 }}
+                animate={{ opacity: 0.1, rotate: 360 }}
+                transition={{
+                    rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+                    opacity: { duration: 2.2 },
+                    scale: { duration: 2.2 }
+                }}
             >
                 <Image
                     src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"

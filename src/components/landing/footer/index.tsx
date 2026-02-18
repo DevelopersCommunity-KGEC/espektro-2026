@@ -5,6 +5,7 @@ import Image from "next/image";
 import { navLinks } from "@/data/landing-content";
 import Magnetic from "../../ui/magnetic";
 import { Instagram, Youtube, Facebook, Linkedin } from "lucide-react";
+import { motion } from "framer-motion";
 
 const footerLinks = {
     explore: navLinks,
@@ -33,8 +34,19 @@ export function Footer() {
                         <rect fill="url(#footer-pattern)" width="100%" height="100%" />
                     </svg>
                 </div> */}
+                <motion.div
+                    className="absolute inset-0 flex items-center justify-center opacity-[0.5] pointer-events-none -bottom-60"
 
-                <div className="container mx-auto px-4 lg:px-8 relative z-10">
+                >
+                    <Image
+                        src="/images/background_web_2.png"
+                        alt="Decorative lotus mandala"
+                        width={1000}
+                        height={800}
+                        className="object-contain w-full "
+                    />
+                </motion.div>
+                <div className="container mx-auto px-4 lg:px-8 relative z-10 mt-10">
                     <div className="py-12 lg:py-16 grid md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
                         <div className="lg:col-span-2">
                             <Magnetic>
@@ -70,14 +82,14 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h4 className="text-primary font-bold mb-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Explore
                             </h4>
                             <ul className="space-y-3">
                                 {footerLinks.explore.map((link) => (
                                     <li key={link.label}>
                                         <Magnetic>
-                                            <a href={link.href} className="text-sm text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-open-sans)]">
+                                            <a href={link.href} className="text-xl md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
                                                 {link.label}
                                             </a>
                                         </Magnetic>
@@ -87,14 +99,14 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h4 className="text-primary font-bold mb-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Participate
                             </h4>
                             <ul className="space-y-3">
                                 {footerLinks.participate.map((link) => (
                                     <li key={link.label}>
                                         <Magnetic>
-                                            <Link href={link.href} className="text-sm text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-open-sans)]">
+                                            <Link href={link.href} className="text-xl md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
                                                 {link.label}
                                             </Link>
                                         </Magnetic>
@@ -104,7 +116,7 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h4 className="text-primary font-bold mb-6 text-[10px] md:text-xs uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Connect
                             </h4>
                             <ul className="flex flex-wrap gap-4">
