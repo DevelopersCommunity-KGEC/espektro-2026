@@ -57,8 +57,12 @@ const EspektroAbout: React.FC = () => {
       <motion.div
         className="absolute -left-16 top-6 w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 z-[20] hidden sm:block"
         initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
+        transition={{
+          rotate: { duration: 90, repeat: Infinity, ease: "linear" },
+          opacity: { duration: 1 },
+          scale: { duration: 1 }
+        }}
         viewport={{ once: true }}
       >
         <Image
@@ -73,8 +77,12 @@ const EspektroAbout: React.FC = () => {
       <motion.div
         className="absolute left-[-8rem] top-[-20rem] w-80 h-80 md:w-80 md:h-60 lg:w-100 lg:h-100 z-[21] hidden sm:block"
         initial={{ opacity: 0, scale: 0.8, rotate: -20 }}
-        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: -360 }}
+        transition={{
+          rotate: { duration: 60, repeat: Infinity, ease: "linear" },
+          opacity: { duration: 1.2, delay: 0.1 },
+          scale: { duration: 1.2, delay: 0.1 }
+        }}
         viewport={{ once: true }}
       >
         <Image

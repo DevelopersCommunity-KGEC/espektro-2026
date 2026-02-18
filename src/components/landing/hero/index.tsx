@@ -21,13 +21,13 @@ export function Hero() {
     return (
         <section className="relative flex justify-center items-center w-full min-h-screen py-20 px-4 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Lotus Mandala Background - Centered and Subtle */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.1] pointer-events-none">
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/background_web.png"
                     alt="Decorative lotus mandala"
                     width={1000}
                     height={800}
-                    className="object-contain"
+                    className="object-contain w-full "
                 />
             </div>
 
@@ -43,7 +43,7 @@ export function Hero() {
             />
 
             {/* Decorative Circular Patterns (Matches EspektroAbout section) */}
-            <motion.div
+            {/* <motion.div
                 className="absolute right-[-10rem] top-[-10rem] w-80 h-80 md:w-100 md:h-100 lg:w-120 lg:h-120 z-0 opacity-20 hidden lg:block"
                 initial={{ opacity: 0, rotate: 20 }}
                 animate={{ opacity: 0.2, rotate: 0 }}
@@ -55,13 +55,17 @@ export function Hero() {
                     fill
                     className="object-contain"
                 />
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
                 className="absolute left-[-5rem] bottom-[-5rem] w-64 h-64 md:w-80 md:h-80 z-0 opacity-10 hidden lg:block"
                 initial={{ opacity: 0, rotate: -20 }}
-                animate={{ opacity: 0.1, rotate: 0 }}
-                transition={{ duration: 2.2, ease: "easeOut", delay: 0.2 }}
+                animate={{ opacity: 0.1, rotate: 360 }}
+                transition={{
+                    rotate: { duration: 185, repeat: Infinity, ease: "linear" },
+                    opacity: { duration: 2.2 },
+                    scale: { duration: 2.2 }
+                }}
             >
                 <Image
                     src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
