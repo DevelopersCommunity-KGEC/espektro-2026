@@ -18,7 +18,7 @@ const Exotica: React.FC = () => {
   const y5 = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
+    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 pr-10 md:pr-0 pl-3 md:px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
         <Image
@@ -75,7 +75,7 @@ const Exotica: React.FC = () => {
       </motion.div> */}
 
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto pl-0 md:pl-4 sm:pl-20 md:pl-28 lg:pl-32">
         <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-12 lg:gap-16">
 
           {/* Right Content - Text */}
@@ -92,7 +92,7 @@ const Exotica: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
               Exotica
             </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
+            <p className="text-sm md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
               Exotica stands as the cultural heartbeat of Espektro, showcasing a rich tapestry of talents from KGEC's student body. This segment immerses attendees in a captivating ambiance of music and dance, deeply rooted in the college's cultural essence.
               <br /><br />
               Following the student performances, Exotica ascends to new heights with renowned artists from across India gracing the stage. Their emotive and masterful performances resonate deeply, leaving an indelible impact on every listener.

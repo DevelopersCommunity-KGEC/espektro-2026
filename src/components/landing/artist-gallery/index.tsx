@@ -236,8 +236,8 @@ export function ArtistGallery() {
         }}
       />
 
-      <div className="container mx-auto relative pt-20 pl-4 sm:pl-20 md:pl-28 lg:pl-32" ref={containerRef}>
-        <div className="mt-20 max-w-[95vw] lg:max-w-7xl mx-auto relative rounded-xl ">
+      <div className="container mx-auto relative pt-20 pl-0 md:pl-4 sm:pl-20 md:pl-28 lg:pl-32 px-0" ref={containerRef}>
+        <div className="mt-20 max-w-[100vw] md:max-w-[95vw] lg:max-w-7xl mx-auto relative rounded-xl ">
           {/* <div className="text-center mb-15">
             <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
               Glimpses of <span className="text-[#F4A900]">Past Artists</span>

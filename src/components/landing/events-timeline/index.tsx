@@ -199,7 +199,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                     backgroundPosition: 'top center'
                 }}
             />
-            <div className="container mx-auto px-6 lg:px-8 pl-16 sm:pl-20 md:pl-28 lg:pl-32">
+            <div className="container mx-auto px-0 md:px-6 lg:px-8 pl-2 sm:pl-20 md:pl-28 lg:pl-32">
                 {/* Header */}
                 <div
                     className={`mb-14 transition-all duration-700 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
