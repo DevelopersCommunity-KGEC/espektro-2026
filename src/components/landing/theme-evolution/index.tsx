@@ -80,7 +80,7 @@ export function ThemeEvolution() {
 
                 <div className="absolute inset-0">
                     <Image
-                        src="/images/timeline.jpg"
+                        src="/images/timeline.webp"
                         fill
                         className="object-cover grayscale opacity-40"
                         alt="Bengali Culture Timeline"
@@ -91,7 +91,7 @@ export function ThemeEvolution() {
                         style={{ clipPath }}
                     >
                         <img 
-                            src="/images/timeline.jpg" 
+                            src="/images/timeline.webp" 
                             className="w-full h-full object-cover" 
                             alt="Bengali Culture Timeline Color"
                         />

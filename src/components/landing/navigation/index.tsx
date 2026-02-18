@@ -124,7 +124,7 @@ export function Navigation({ isAdmin, userRole, clubRoles }: NavigationProps) {
                     {/* Tribal Border */}
                     <div
                         className="absolute top-0 left-0 bottom-0 w-8 bg-repeat-y bg-contain z-10"
-                        style={{ backgroundImage: "url('/images/border2.png')" }}
+                        style={{ backgroundImage: "url('/images/border2.webp')" }}
                     />
 
                     {/* Header in Drawer */}

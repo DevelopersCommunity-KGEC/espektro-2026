@@ -62,21 +62,21 @@ export const heritage: HeritageItem[] = [
     subtitle: "Sacred Art",
     description:
       "The ancient Bengali art of floor painting with rice paste. More than decoration, it is a prayer drawn by hand - inviting prosperity and marking every auspicious beginning.",
-    image: "/images/alpona.jpeg",
+    image: "/images/alpona.webp",
   },
   {
     title: "Chhau",
     subtitle: "Masked Dance",
     description:
       "A martial dance form from Purulia that blends athleticism with storytelling. The vibrant, oversized masks represent mythological characters and the triumph of good over evil.",
-    image: "/images/chhau.jpeg",
+    image: "/images/chhau.webp",
   },
   {
     title: "Baul",
     subtitle: "Mystic Songs",
     description:
       "The soul music of Bengal. Wandering minstrels who sing of love, humanity, and the divine, transcending rigorous religious boundaries with their Ektaras.",
-    image: "/images/baul.jpeg",
+    image: "/images/baul.webp",
   },
 ];
 
@@ -294,8 +294,8 @@ export const artists: Artist[] = [
     date: "March 16, 2026",
     time: "8:00 PM",
     venue: "Main Stage",
-    image: "/images/artist-1.png",
-    bg: "/images/bg1.png",
+    image: "/images/artist-1.webp",
+    bg: "/images/bg1.webp",
     social: { instagram: "@arijitsingh", twitter: "@arijitsingh" },
   },
   {
@@ -306,8 +306,8 @@ export const artists: Artist[] = [
     date: "March 15, 2026",
     time: "9:30 PM",
     venue: "Arena Stage",
-    image: "/images/artist-2.png",
-    bg: "/images/bg2.png",
+    image: "/images/artist-2.webp",
+    bg: "/images/bg2.webp",
     social: { instagram: "@raftaarmusic", twitter: "@raftaarmusic" },
   },
   {
@@ -318,8 +318,8 @@ export const artists: Artist[] = [
     date: "March 14, 2026",
     time: "10:00 PM",
     venue: "EDM Arena",
-    image: "/images/artist-3.png",
-    bg: "/images/bg3.png",
+    image: "/images/artist-3.webp",
+    bg: "/images/bg3.webp",
     social: { instagram: "@nucleya", twitter: "@nucleya" },
   },
   {
@@ -330,8 +330,8 @@ export const artists: Artist[] = [
     date: "March 17, 2026",
     time: "7:00 PM",
     venue: "Indie Stage",
-    image: "/images/artist-4.png",
-    bg: "/images/bg4.png",
+    image: "/images/artist-4.webp",
+    bg: "/images/bg4.webp",
     social: { instagram: "@thelocaltrain", twitter: "@thelocaltrain" },
   },
 ];
@@ -405,32 +405,32 @@ export const pastArtists: PastArtist[] = [
 
 export const galleryImages: GalleryImage[] = [
   {
-    src: "/images/india-culture.jpeg",
+    src: "/images/india-culture.webp",
     alt: "Cultural performance at Espektro",
     span: "col-span-2 row-span-2",
   },
   {
-    src: "/images/bengali-culture.jpeg",
+    src: "/images/bengali-culture.webp",
     alt: "Durga Puja celebration",
     span: "",
   },
   {
-    src: "/images/kolkata-city.jpeg",
+    src: "/images/kolkata-city.webp",
     alt: "Kolkata cityscape",
     span: "",
   },
   {
-    src: "/images/kolkata-monochrome.jpeg",
+    src: "/images/kolkata-monochrome.webp",
     alt: "Heritage of Kolkata",
     span: "col-span-1 row-span-2",
   },
   {
-    src: "/images/india-culture.jpeg",
+    src: "/images/india-culture.webp",
     alt: "Technical event at Espektro",
     span: "",
   },
   {
-    src: "/images/bengali-culture.jpeg",
+    src: "/images/bengali-culture.webp",
     alt: "Pronite performance",
     span: "col-span-2",
   },

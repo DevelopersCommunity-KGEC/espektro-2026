@@ -106,7 +106,7 @@ export function Sponsors() {
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
                     alt="Decorative lotus mandala"
                     width={800}
                     height={600}
@@ -118,7 +118,7 @@ export function Sponsors() {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center'

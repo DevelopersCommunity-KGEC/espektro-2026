@@ -39,7 +39,7 @@ export function Footer() {
 
                 >
                     <Image
-                        src="/images/background_web_2.png"
+                        src="/images/background_web_2.webp"
                         alt="Decorative lotus mandala"
                         width={1000}
                         height={800}

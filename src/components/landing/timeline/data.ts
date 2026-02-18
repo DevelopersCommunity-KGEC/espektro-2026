@@ -30,8 +30,8 @@ export interface TimelineItem {
 export const timelineData: TimelineItem[] = [
     {
         id: 1,
-        img: 'images/img1.png',
-        imgBW: 'images/imgbw1.png',
+        img: 'images/img1.webp',
+        imgBW: 'images/imgbw1.webp',
         position: { top: '50vh', left: '17%', width: '35vw', height: 'auto' },
         border: 'right-bottom',
         description: 'Ancient Terracotta Temples',
@@ -42,8 +42,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 2,
-        img: 'images/img2.png',
-        imgBW: 'images/imgbw2.png',
+        img: 'images/img2.webp',
+        imgBW: 'images/imgbw2.webp',
         position: { top: '55vh', left: '25%', width: '35vw', height: 'auto' },
         border: 'left-bottom',
         description: 'Terracotta Horse Craftsmanship',
@@ -54,8 +54,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 3,
-        img: 'images/img3.png',
-        imgBW: 'images/imgbw3.png',
+        img: 'images/img3.webp',
+        imgBW: 'images/imgbw3.webp',
         position: { top: '50vh', left: '35%', width: '33vw', height: 'auto' },
         border: 'right-top',
         description: 'Celebrate Tradition',
@@ -66,8 +66,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 4,
-        img: 'images/img4.png',
-        imgBW: 'images/imgbw4.png',
+        img: 'images/img4.webp',
+        imgBW: 'images/imgbw4.webp',
         position: { top: '55vh', left: '47%', width: '40vw', height: 'auto' },
         border: 'left-top',
         description: 'Historical Currency',
@@ -78,8 +78,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 5,
-        img: 'images/img5.png',
-        imgBW: 'images/imgbw5.png',
+        img: 'images/img5.webp',
+        imgBW: 'images/imgbw5.webp',
         position: { top: '50vh', left: '55%', width: '50vw', height: 'auto' },
         border: 'right-bottom',
         description: 'Victoria Memorial',
@@ -90,8 +90,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 6,
-        img: 'images/img6.png',
-        imgBW: 'images/imgbw6.png',
+        img: 'images/img6.webp',
+        imgBW: 'images/imgbw6.webp',
         position: { top: '55vh', left: '65%', width: '35vw', height: 'auto' },
         border: 'left-top',
         description: 'Heritage Transport',
@@ -102,8 +102,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 7,
-        img: 'images/img7.png',
-        imgBW: 'images/imgbw7.png',
+        img: 'images/img7.webp',
+        imgBW: 'images/imgbw7.webp',
         position: { top: '50vh', left: '75%', width: '35vw', height: 'auto' },
         border: 'left-top',
         description: 'Netaji Subhas Chandra Bose',
@@ -114,8 +114,8 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 8,
-        img: 'images/img8.png',
-        imgBW: 'images/imgbw8.png',
+        img: 'images/img8.webp',
+        imgBW: 'images/imgbw8.webp',
         position: { top: '55vh', left: '85%', width: '35vw', height: 'auto' },
         border: 'left-top',
         description: 'Yellow Taxi',
