@@ -38,7 +38,7 @@ function useDebounceValue<T>(value: T, delay: number): T {
     return debouncedValue;
 }
 
-export function AllTicketsTable() {
+export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boolean }) {
     const [tickets, setTickets] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
@@ -55,7 +55,7 @@ export function AllTicketsTable() {
     // Filter State
     const [filters, setFilters] = useState<TicketFilter>({
         page: 1,
-        limit: 10,
+        limit: 25,
         search: "",
         clubId: "all",
         eventId: "all",
@@ -78,7 +78,8 @@ export function AllTicketsTable() {
         try {
             const result = await getAllTickets({
                 ...filters,
-                search: debouncedSearch
+                search: debouncedSearch,
+                excludeManual,
             });
             setTickets(result.tickets);
             setTotal(result.total);
@@ -88,7 +89,7 @@ export function AllTicketsTable() {
         } finally {
             setLoading(false);
         }
-    }, [filters.page, filters.limit, filters.clubId, filters.eventId, filters.issuedBy, debouncedSearch]);
+    }, [filters.page, filters.limit, filters.clubId, filters.eventId, filters.issuedBy, debouncedSearch, excludeManual]);
 
     // Initial Load of Options
     useEffect(() => {
