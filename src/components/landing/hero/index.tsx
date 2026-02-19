@@ -12,6 +12,7 @@ export function Hero() {
 
     useEffect(() => {
         setMounted(true);
+        console.log("Hero component mounted");
     }, []);
 
     if (!mounted)
