@@ -20,6 +20,7 @@ import { FeaturedArtists } from "@/components/landing/featured-artists";
 import { MusicController } from "@/components/audio/MusicController";
 import ComingSoon from "@/components/landing/coming-soon";
 import { FirstBack } from "@/components/landing/1stback";
+import { SecondBack } from "@/components/landing/2ndback";
 
 export const dynamic = "force-dynamic";
 
@@ -60,7 +61,9 @@ export default async function LandingPage() {
       <div id="events-timeline" data-section-id="events-timeline">
         <EventsTimeline scheduleData={timelineData} />
       </div>
-
+      {/* <div id="2ndback" data-section-id="2ndback">
+        <SecondBack />
+      </div> */}
       <div id="featured-artists" data-section-id="featured-artists">
         <FeaturedArtists />
       </div>

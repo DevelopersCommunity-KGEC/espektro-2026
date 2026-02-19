@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-export function FirstBack() {
+export function SecondBack() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export function FirstBack() {
             {/* Background Image - Fits without cropping */}
             <div className="absolute inset-0 opacity-50 pointer-events-none -w-1/2 ">
                 <Image
-                    src="/images/1stback.png"
+                    src="/images/back2.png"
                     alt="Background Illustration"
                     fill
                     priority
