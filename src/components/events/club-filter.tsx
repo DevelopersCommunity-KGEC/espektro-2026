@@ -27,7 +27,7 @@ export function ClubFilter({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="gap-2 rounded-full border-border">
+        <Button variant="outline" className="gap-2 rounded-full border-border font-[family-name:var(--font-medieval-sharp)]">
           <Filter className="w-4 h-4" />
           Filter by Club
           {selectedClubs.length > 0 && (
@@ -38,8 +38,8 @@ export function ClubFilter({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
-        <DropdownMenuLabel>Select Clubs</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="font-[family-name:var(--font-medieval-sharp)]">Select Clubs</DropdownMenuLabel>
+        <DropdownMenuSeparator /> 
         <DropdownMenuGroup className="max-h-[300px] overflow-y-auto">
           <DropdownMenuItem onClick={onReset} className="cursor-pointer">
             <div
@@ -52,7 +52,7 @@ export function ClubFilter({
             >
               <Check className={cn("h-4 w-4")} />
             </div>
-            <span>All Events</span>
+            <span className="font-[family-name:var(--font-medieval-sharp)]">All Events</span>
           </DropdownMenuItem>
           {clubs.map((club) => {
             const isSelected = selectedClubs.includes(club.id);
@@ -75,7 +75,7 @@ export function ClubFilter({
                 >
                   <Check className={cn("h-4 w-4")} />
                 </div>
-                <span>{club.name}</span>
+                <span className="font-[family-name:var(--font-medieval-sharp)]">{club.name}</span>
               </DropdownMenuItem>
             );
           })}

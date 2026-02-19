@@ -112,92 +112,76 @@ const Quizine: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="relative w-full h-[500px] md:h-[600px]">
-              {/* Image 1 - Top Left */}
-              <motion.div
-                className="absolute top-0 left-0 w-[45%] h-[35%] rounded-lg overflow-hidden shadow-xl z-[1]"
-                style={{ y: y1 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -3 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742327716/Quizine_web_poezry.png"
-                  alt="Quizine food stalls"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Image 2 - Top Right */}
-              <motion.div
-                className="absolute top-[5%] right-0 w-[48%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[2]"
-                style={{ y: y2 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 3 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="/images/artist-2.webp"
-                  alt="Cultural event"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Image 3 - Middle Left */}
-              <motion.div
-                className="absolute top-[38%] left-[8%] w-[42%] h-[38%] rounded-lg overflow-hidden shadow-xl z-[3]"
-                style={{ y: y3 }}
-                initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="/images/timeline.webp"
-                  alt="Event timeline"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Image 4 - Bottom Right Large */}
-              <motion.div
-                className="absolute bottom-0 right-[5%] w-[50%] h-[45%] rounded-lg overflow-hidden shadow-xl z-[2]"
-                style={{ y: y4 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="/images/artist-3.webp"
-                  alt="Performance"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Image 5 - Bottom Left Small */}
-              <motion.div
-                className="absolute bottom-[8%] left-0 w-[35%] h-[28%] rounded-lg overflow-hidden shadow-xl z-[1]"
-                style={{ y: y5 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="/images/kolkata-city.webp"
-                  alt="Kolkata cityscape"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-            </div>
+            <div className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center">
+                          {/* Image 1 - Top Left - Removed as per user request */}
+            
+                          {/* Image 2 - Top Right - Image */}
+                          <motion.div
+                            className="absolute top-[0%] right-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                            style={{ y: y2 }}
+                            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 5 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            viewport={{ once: true }}
+                          >
+                            <Image
+                              src="/images/kolkata-city.webp"
+                              alt="City view"
+                              fill
+                              className="object-cover hover:scale-110 transition-transform duration-500"
+                            />
+                          </motion.div>
+            
+                          {/* Image 3 - Center - Boxed Image */}
+                          <motion.div
+                            className="relative w-[65%] h-[50%] rounded-lg overflow-hidden shadow-2xl z-[50] border-4 border-white"
+                            initial={{ opacity: 0, scale: 0.9, x: -30, y: -30, rotate: 0 }}
+                            whileInView={{ opacity: 1, scale: 1, x: -30, y: -30, rotate: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true }}
+                          >
+                            <Image
+                              src="https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705035698/espektro/2023/about/espektro.webp"
+                              alt="Main Espektro focus"
+                              fill
+                              className="object-cover hover:scale-105 transition-transform duration-700"
+                            />
+                          </motion.div>
+            
+                          {/* Image 4 - Bottom Left - Image */}
+                          <motion.div
+                            className="absolute -bottom-[20%] left-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                            style={{ y: y3 }}
+                            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: -10 }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <Image
+                              src="/images/india-culture.webp"
+                              alt="Culture art"
+                              fill
+                              className="object-cover hover:scale-110 transition-transform duration-500"
+                            />
+                          </motion.div>
+            
+                          {/* Image 5 - Bottom Right - Transparent Element */}
+                          <motion.div
+                            className="absolute bottom-[0%] right-[-5%] w-[50%] h-[50%] z-[60]"
+                            style={{ y: y4 }}
+                            initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 12 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                          >
+                            <Image
+                              src="/images/Elements _20260218_030113_0004.webp"
+                              alt="Clapperboard element"
+                              fill
+                              className="object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500"
+                            />
+                          </motion.div>
+                        </div>
           </motion.div>
         </div>
       </div>
