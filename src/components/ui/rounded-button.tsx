@@ -8,10 +8,16 @@ interface RoundedButtonProps {
     className?: string;
 }
 
-export default function RoundedButton({ children, onClick, className = '' }: RoundedButtonProps) {
-    return (
-        <div onClick={onClick} className={className}>
-            {children}
-        </div>
-    );
-}
+const RoundedButton = React.forwardRef<HTMLDivElement, RoundedButtonProps>(
+    ({ children, onClick, className = '' }, ref) => {
+        return (
+            <div ref={ref} onClick={onClick} className={className}>
+                {children}
+            </div>
+        );
+    }
+);
+
+RoundedButton.displayName = "RoundedButton";
+
+export default RoundedButton;

@@ -12,8 +12,7 @@ export default function Magnetic({ children }: MagneticProps) {
 
     useEffect(() => {
         // Magnetic effect disabled as per user request
-        return;
-
+        /*
         const element = magnetic.current;
         if (element) {
             const xTo = gsap.quickTo(element, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
@@ -41,6 +40,7 @@ export default function Magnetic({ children }: MagneticProps) {
                 element.removeEventListener("mouseleave", handleMouseLeave);
             };
         }
+        */
     }, []);
 
     return (
