@@ -186,7 +186,7 @@ function SponsorCard({ sponsor }: { sponsor: { id: number; sponsor: string; url:
                         src={sponsor.url}
                         alt={sponsor.sponsor}
                         fill
-                        className="object-contain grayscale opacity-70 group-hover/card:grayscale-0 group-hover/card:opacity-100 transition-all duration-500"
+                        className="object-contain opacity-10₹0 group-hover/card:opacity-100 transition-all duration-500"
                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                 </div>

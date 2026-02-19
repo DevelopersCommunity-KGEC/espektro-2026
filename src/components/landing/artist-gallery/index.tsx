@@ -236,8 +236,8 @@ export function ArtistGallery() {
         }}
       />
 
-      <div className="container mx-auto relative pt-20 pl-4 sm:pl-20 md:pl-28 lg:pl-32" ref={containerRef}>
-        <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl ">
+      <div className="relative pt-20" ref={containerRef}>
+        <div className="mt-20 relative rounded-xl ">
           {/* <div className="text-center mb-15">
             <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
               Glimpses of <span className="text-[#F4A900]">Past Artists</span>
@@ -255,7 +255,7 @@ export function ArtistGallery() {
           </div>
           <div className={styles.galleryMask}>
             {/* Left Border SVG */}
-            <div
+            {/* <div
               className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
                 backgroundImage: 'url(/images/border2.png)',
@@ -263,9 +263,9 @@ export function ArtistGallery() {
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'
               }}
-            />
+            /> */}
             {/* Right Border SVG */}
-            <div
+            {/* <div
               className="absolute top-0 right-0 rotate-180 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
                 backgroundImage: 'url(/images/border2.png)',
@@ -273,7 +273,7 @@ export function ArtistGallery() {
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'
               }}
-            />
+            /> */}
             {/* Bottom Border SVG */}
             <img src="/border.svg" alt="" className={styles.borderBottom} />
 
