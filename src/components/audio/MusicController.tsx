@@ -54,7 +54,7 @@ const AUDIO_CONFIG: Record<string, SectionAudioConfig> = {
     track: TRACKS.BENGALI, volume: 0.3, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
   },
   "timeline": {
-    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 800, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
+    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 800, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: false
   },
   "events-timeline": {
     track: TRACKS.ARTIST, volume: 0.4, fadeMs: 1200, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
