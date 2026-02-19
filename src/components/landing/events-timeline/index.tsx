@@ -259,7 +259,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 {/* Gantt chart */}
                 <div
                     ref={containerRef}
-                    className={`bg-white shadow-2xl rounded-sm overflow-hidden flex flex-col items-center justify-center border-[12px] md:border-[20px] border-white transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`bg-white rounded-sm overflow-hidden flex flex-col items-center justify-center border-1 md:border-1 border-[#B7410E] transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
                     <div className="absolute inset-0 bg-[#FFF8F0]/30 z-0 pointer-events-none" />
 

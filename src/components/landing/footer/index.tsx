@@ -25,42 +25,26 @@ const footerLinks = {
 export function Footer() {
     return (
         <div className="sticky bottom-0 z-0">
-            <footer className="bg-[#423f3d] text-background h-[70vh] relative overflow-hidden">
-                {/* <div className="absolute inset-0 opacity-5">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <pattern id="footer-pattern" patternUnits="userSpaceOnUse" width="30" height="30">
-                            <circle cx="15" cy="15" r="1" fill="currentColor" />
-                        </pattern>
-                        <rect fill="url(#footer-pattern)" width="100%" height="100%" />
-                    </svg>
-                </div> */}
+            <footer className="bg-[#423f3d] text-background min-h-[70vh] md:h-[70vh] relative overflow-hidden flex flex-col justify-end">
                 <motion.div
-                    className="absolute inset-0 flex items-center justify-center opacity-[0.5] pointer-events-none -bottom-60"
-
+                    className="absolute inset-0 flex items-center justify-center opacity-[0.5] pointer-events-none -bottom-40 md:-bottom-60"
                 >
                     <Image
                         src="/images/background_web_2.webp"
                         alt="Decorative lotus mandala"
                         width={1000}
                         height={800}
-                        className="object-contain w-full "
+                        className="object-contain w-full"
                     />
                 </motion.div>
-                <div className="container mx-auto px-4 lg:px-8 relative z-10 mt-10">
-                    <div className="py-12 lg:py-16 grid md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-                        <div className="lg:col-span-2">
+                <div className="container mx-auto px-6 lg:px-8 relative z-10 py-12 md:py-16">
+                    <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-12 lg:gap-12">
+                        <div className="col-span-2 lg:col-span-2 pt-24 md:pt-0">
                             <Magnetic>
-                                <Link href="/" className="inline-block mb-4">
+                                <Link href="/" className="inline-block mb-6">
                                     <div className="flex items-center gap-3">
-                                        {/* <Image
-                                            src="/espektro-logo.svg"
-                                            alt="Espektro Logo"
-                                            width={40}
-                                            height={40}
-                                            className="w-10 h-10 object-contain"
-                                        /> */}
                                         <div className="flex items-center">
-                                            <span className="text-7xl font-bold text-primary font-[family-name:var(--font-medieval-sharp)] tracking-wider">
+                                            <span className="text-5xl md:text-7xl font-bold text-primary font-[family-name:var(--font-medieval-sharp)] tracking-wider">
                                                 Espektro
                                             </span>
                                             <span className="text-[10px] font-bold text-background/50 bg-background/10 px-2 py-0.5 rounded ml-2 font-[family-name:var(--font-roboto-slab)] tracking-[0.2em]">
@@ -70,7 +54,7 @@ export function Footer() {
                                     </div>
                                 </Link>
                             </Magnetic>
-                            <p className="text-background/60 leading-relaxed max-w-sm font-[family-name:var(--font-open-sans)] text-sm">
+                            <p className="text-background/60 leading-relaxed max-w-sm font-[family-name:var(--font-open-sans)] text-sm md:text-base">
                                 The annual techno-management cultural fest of Kalyani Government Engineering College.
                                 Evolution of Bengali Culture.
                             </p>
@@ -81,15 +65,15 @@ export function Footer() {
                             </div>
                         </div>
 
-                        <div>
-                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                        <div className="col-span-1">
+                            <h4 className="text-primary font-bold mb-6 text-sm uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Explore
                             </h4>
                             <ul className="space-y-3">
                                 {footerLinks.explore.map((link) => (
                                     <li key={link.label}>
                                         <Magnetic>
-                                            <a href={link.href} className="text-xl md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
+                                            <a href={link.href} className="text-lg md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
                                                 {link.label}
                                             </a>
                                         </Magnetic>
@@ -98,15 +82,15 @@ export function Footer() {
                             </ul>
                         </div>
 
-                        <div>
-                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                        <div className="col-span-1">
+                            <h4 className="text-primary font-bold mb-6 text-sm uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Participate
                             </h4>
                             <ul className="space-y-3">
                                 {footerLinks.participate.map((link) => (
                                     <li key={link.label}>
                                         <Magnetic>
-                                            <Link href={link.href} className="text-xl md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
+                                            <Link href={link.href} className="text-lg md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
                                                 {link.label}
                                             </Link>
                                         </Magnetic>
@@ -115,8 +99,8 @@ export function Footer() {
                             </ul>
                         </div>
 
-                        <div>
-                            <h4 className="text-primary font-bold mb-6 text-sm md:text-base uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
+                        <div className="col-span-2 lg:col-span-1">
+                            <h4 className="text-primary font-bold mb-6 text-sm uppercase tracking-[0.3em] font-[family-name:var(--font-roboto-slab)]">
                                 Connect
                             </h4>
                             <ul className="flex flex-wrap gap-4">
@@ -137,7 +121,6 @@ export function Footer() {
                                 ))}
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </footer>
