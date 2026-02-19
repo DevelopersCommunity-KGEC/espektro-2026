@@ -92,9 +92,7 @@ const Techtix: React.FC = () => {
               Techtix
             </h1>
             <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              The technical heartbeat of Espektro where innovation meets competition. Experience cutting-edge technology through coding marathons and tech showcases.
-              <br /><br />
-              From AI workshops to hackathons, Techtix brings together the brightest minds to push the boundaries of what&apos;s possible.
+              The technical powerhouse of Espektro, Techtix ignites innovation before the main fest begins. From robotics battles and coding showdowns to brain-teasing quizzes and technical challenges, it’s where logic meets creativity. It sets the competitive pulse for the days to follow.
             </p>
           </motion.div>
 

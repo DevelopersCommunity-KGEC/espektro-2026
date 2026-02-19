@@ -112,9 +112,7 @@ const EspektroAbout: React.FC = () => {
               Espektro
             </h1>
             <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              Espektro is the annual cultural and technical spectacle hosted by Kalyani Government Engineering College. As West Bengal's second-largest fest, Espektro masterfully intertwines the realms of technology and creativity.
-              <br /><br />
-              Espektro – Where culture meets technology in a festival of innovation and creativity!
+              At Kalyani Government Engineering College, Espektro is not just a fest — it’s a four-day celebration of talent, technology, culture. It is the grand annual fest that brings together students from different departments under one vibrant platform. Every year, the campus transforms into a hub of excitement, creativity, and collaboration.
             </p>
             <a
               href="https://res.cloudinary.com/dezguraul/image/upload/v1741930364/espektro_sponsor_brochure_5_iubdru.pdf"

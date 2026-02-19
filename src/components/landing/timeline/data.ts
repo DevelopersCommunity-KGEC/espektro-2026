@@ -34,10 +34,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw1.webp',
         position: { top: '50vh', left: '17%', width: '35vw', height: 'auto' },
         border: 'right-bottom',
-        description: 'Ancient Terracotta Temples',
-        era: '17th Century',
-        title: 'Ancient Terracotta Temples',
-        body: 'Exquisite temples of Bishnupur showcasing intricate terracotta artistry.',
+        description: 'Charyapada Era',
+        era: '8th–12th Century',
+        title: 'Charyapada Era',
+        body: 'The mystic script on palm leaves that marks the dawn of the Bengali language.',
         textPosition: { bottom: '2%', left: '10%', width: '80%' }
     },
     {
@@ -46,10 +46,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw2.webp',
         position: { top: '55vh', left: '25%', width: '35vw', height: 'auto' },
         border: 'left-bottom',
-        description: 'Terracotta Horse Craftsmanship',
-        era: 'Traditional',
-        title: 'Bankura Horse Craft',
-        body: 'A symbol of Indian handicrafts, the terracotta horse of Bankura is world-famous.',
+        description: 'Vaishnav Bhakti Movement',
+        era: '15th–16th Century',
+        title: 'Vaishnav Bhakti Movement',
+        body: 'A cultural revolution of love and devotion, united by the divine rhythm of the Mridanga.',
         textPosition: { top: '65%', left: '0', width: '100%' }
     },
     {
@@ -58,10 +58,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw3.webp',
         position: { top: '50vh', left: '35%', width: '33vw', height: 'auto' },
         border: 'right-top',
-        description: 'Celebrate Tradition',
-        era: 'Festive',
-        title: 'Celebrate Tradition',
-        body: 'The vibrant festivals of Bengal bring people together in joy and harmony.',
+        description: 'Mangalkavya & Medieval Literature',
+        era: '16th–18th Century',
+        title: 'Mangalkavya & Medieval Literature',
+        body: 'The golden age of epic narratives, where quill and ink turned folktales into grand literature.',
         textPosition: { bottom: '0%', left: '15%', width: '80%' }
     },
     {
@@ -70,10 +70,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw4.webp',
         position: { top: '55vh', left: '47%', width: '40vw', height: 'auto' },
         border: 'left-top',
-        description: 'Historical Currency',
-        era: 'Pre-Independence',
-        title: 'Historical Currency',
-        body: 'A glimpse into the economic history and coin minting of the region.',
+        description: 'Baul & Folk Spiritual Tradition',
+        era: '17th–19th Century',
+        title: 'Baul & Folk Spiritual Tradition',
+        body: "The Ektara's single string performs a raw, spiritual song in search of the divine within.",
         textPosition: { bottom: '0%', left: '10%', width: '80%' }
     },
     {
@@ -82,10 +82,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw5.webp',
         position: { top: '50vh', left: '55%', width: '50vw', height: 'auto' },
         border: 'right-bottom',
-        description: 'Victoria Memorial',
-        era: '1921',
-        title: 'Victoria Memorial',
-        body: 'An iconic marble building in Kolkata dedicated to the memory of Queen Victoria.',
+        description: 'Bengal Renaissance',
+        era: '19th Century',
+        title: 'Bengal Renaissance',
+        body: "An intellectual awakening of reform and artistry that redefined Bengal's modern identity.",
         textPosition: { bottom: '10%', left: '4%', width: '80%' }
     },
     {
@@ -94,10 +94,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw6.webp',
         position: { top: '55vh', left: '65%', width: '35vw', height: 'auto' },
         border: 'left-top',
-        description: 'Heritage Transport',
-        era: '1873',
-        title: 'Heritage Tram',
-        body: 'Asia\'s oldest operating electric tram network, a symbol of Kolkata\'s heritage.',
+        description: 'Swadeshi & Cultural Nationalism',
+        era: 'Early 20th Century',
+        title: 'Swadeshi & Cultural Nationalism',
+        body: 'The Charkha spun threads of defiance, becoming the ultimate symbol of self-reliance and freedom.',
         textPosition: { bottom: '5%', left: '12%', width: '80%' }
     },
     {
@@ -106,10 +106,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw7.webp',
         position: { top: '50vh', left: '75%', width: '35vw', height: 'auto' },
         border: 'left-top',
-        description: 'Netaji Subhas Chandra Bose',
-        era: '1897-1945',
-        title: 'Netaji Subhas Bose',
-        body: 'A defiant patriot and hero of India\'s struggle for independence.',
+        description: 'Language Movement & Modern Identity',
+        era: '1950s',
+        title: 'Language Movement & Modern Identity',
+        body: 'A single character rose to become the ultimate fortress of our linguistic identity.',
         textPosition: { top: '59%', left: '14%', width: '80%' }
     },
     {
@@ -118,10 +118,10 @@ export const timelineData: TimelineItem[] = [
         imgBW: 'images/imgbw8.webp',
         position: { top: '55vh', left: '85%', width: '35vw', height: 'auto' },
         border: 'left-top',
-        description: 'Yellow Taxi',
-        era: 'Iconic',
-        title: 'Yellow Taxi',
-        body: 'The classic Ambassador taxis are an enduring symbol of Kolkata\'s streets.',
+        description: 'Contemporary Bengali Culture',
+        era: '21st Century',
+        title: 'Contemporary Bengali Culture',
+        body: 'From heritage to the modern screen, the clapperboard signals a dynamic artistic evolution.',
         textPosition: { bottom: '8%', left: '14%', width: '80%' }
     }
 ];

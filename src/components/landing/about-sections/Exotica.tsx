@@ -93,9 +93,7 @@ const Exotica: React.FC = () => {
               Exotica
             </h1>
             <p className="text-sm md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              Exotica stands as the cultural heartbeat of Espektro, showcasing a rich tapestry of talents from KGEC's student body. This segment immerses attendees in a captivating ambiance of music and dance, deeply rooted in the college's cultural essence.
-              <br /><br />
-              Following the student performances, Exotica ascends to new heights with renowned artists from across India gracing the stage. Their emotive and masterful performances resonate deeply, leaving an indelible impact on every listener.
+              The cultural soul of Espektro, Exotica keeps the campus alive throughout all four days. With music, dance, drama, fashion, and star-studded performances, it celebrates art in every form. It’s where passion takes the stage and memories are made under the spotlight.
             </p>
           </motion.div>
 

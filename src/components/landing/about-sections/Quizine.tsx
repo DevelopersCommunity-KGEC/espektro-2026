@@ -90,12 +90,10 @@ const Quizine: React.FC = () => {
               Culinary Excellence
             </h3>
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
-              Quizine
+              Quixine
             </h1>
             <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              Quizine awaits, promising a gastronomic haven that will ignite your senses and elevate your culinary experience. Prepare to embark on a journey through a myriad of flavors and culinary marvels, where every bite tells a story.
-              <br /><br />
-              Immerse yourself in a world of excitement as Quizine hosts exhilarating culinary contests, inviting you to showcase your skills and creativity. Whether you're a seasoned chef or an aspiring home cook, there's something for everyone to savor and enjoy.
+              A paradise for food lovers, Quixine brings together flavors from every craving. From street-style favorites to fusion delights, it adds taste to every moment of the fest. Because no celebration at KGEC is complete without great food and greater company.
             </p>
           </motion.div>
 
