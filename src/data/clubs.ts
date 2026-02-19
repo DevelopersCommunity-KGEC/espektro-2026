@@ -5,8 +5,8 @@ export const clubs = [
     description: "Main Fest Events and Activities",
   },
   {
-    id: "quizine",
-    name: "QUIZINE",
+    id: "quixine",
+    name: "QUIXINE",
     description: "The Food and Cuisine Club",
   },
   {
@@ -35,9 +35,9 @@ export const clubs = [
     description: "The Literary Society",
   },
   {
-    id: "gdgoc-kgec",
-    name: "GDGoC KGEC",
-    description: "Google Developer Groups on Campus",
+    id: "dev-community",
+    name: "Dev Community",
+    description: "The Developer Community",
   },
   {
     id: "robotics-society",
@@ -80,8 +80,13 @@ export const clubs = [
     description: "The Astronomy Club",
   },
   {
-    id: "sportix",
-    name: "SPORTIX",
+    id: "sportrix",
+    name: "SPORTRIX",
     description: "The Sports Club",
+  },
+  {
+    id: "e-cell",
+    name: "E-CELL",
+    description: "The Entrepreneurship and Innovation Club",
   },
 ];

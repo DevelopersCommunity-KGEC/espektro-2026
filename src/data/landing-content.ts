@@ -14,7 +14,7 @@ import {
 } from "@/types/landing";
 
 export const navLinks: NavLink[] = [
-  { label: "About", href: "#about" },
+  { label: "About", href: "#espektro-about" },
   { label: "Schedule", href: "#schedule" },
   { label: "Artists", href: "#artists" },
   { label: "Gallery", href: "#gallery" },

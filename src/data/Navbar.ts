@@ -1,5 +1,5 @@
 export const NavbarLinks = [
-    { text: "About", url: "#about" },
+    { text: "About", url: "#espektro-about" },
     { text: "Schedule", url: "#schedule" },
     { text: "Artists", url: "#artists" },
     { text: "Gallery", url: "#gallery" },

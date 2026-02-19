@@ -362,7 +362,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                             });
                                                         }
                                                     }}
-                                                    className={`event-bar relative h-10 rounded-sm ${c.bg} border-2 border-[#B7410E]/30 flex items-center px-6 transition-all duration-300 group-hover:shadow-md group-hover:border-[#B7410E]/50 cursor-pointer active:scale-[0.98] ${(() => {
+                                                    className={`event-bar relative h-10 rounded-sm ${c.bg} border-2 border-[#B7410E]/30 flex items-center px-1 text-center transition-all duration-300 group-hover:shadow-md group-hover:border-[#B7410E]/50 cursor-pointer active:scale-[0.98] ${(() => {
                                                         const todayStr = currentTime.toLocaleDateString("en-US", {
                                                             month: "short",
                                                             day: "numeric",
@@ -381,7 +381,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                                                     }}
                                                 >
                                                     <span
-                                                        className={`text-[10px] sm:text-xs font-semibold ${c.text} truncate`}
+                                                        className={`text-[10px] sm:text-xs font-semibold ${c.text} truncate text-center w-full`}
                                                     >
                                                         {event.name}
                                                         {event.prize && (
