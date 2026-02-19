@@ -246,14 +246,14 @@ export function LogoPreloader() {
       if (visible) {
         document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = "unset";
+        document.body.style.overflow = "";
       }
     }
 
     return () => {
       // Cleanup: ensure scrolling is restored if component unmounts
       if (typeof window !== "undefined") {
-        document.body.style.overflow = "unset";
+        document.body.style.overflow = "";
       }
     };
   }, [visible]);

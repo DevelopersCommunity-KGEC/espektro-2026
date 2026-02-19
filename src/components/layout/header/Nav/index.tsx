@@ -70,12 +70,14 @@ interface NavProps {
   clubRoles?: any[];
   userRole?: string;
   closeMenu: () => void;
+  toggleButtonRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function Index({
   clubRoles = [],
   userRole,
   closeMenu,
+  toggleButtonRef,
 }: NavProps) {
   const pathname = usePathname();
   const [selectedIndicator, setSelectedIndicator] = useState(pathname);
@@ -88,8 +90,15 @@ export default function Index({
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+
       // If menu is open and click is outside menuRef, close it
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      // But IGNORE clicks on the toggle button itself to avoid race conditions with Header's onClick
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(target) &&
+        (!toggleButtonRef?.current || !toggleButtonRef.current.contains(target))
+      ) {
         closeMenu();
       }
     };
@@ -100,7 +109,7 @@ export default function Index({
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [closeMenu]);
+  }, [closeMenu, toggleButtonRef]);
 
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -166,9 +175,8 @@ export default function Index({
                     </Magnetic>
                     <ChevronDown
                       size={18}
-                      className={`text-[#2C1810]/50 group-hover:text-[#B7410E] transition-transform duration-300 ${
-                        isClubsDropdownOpen ? "-rotate-90" : ""
-                      }`}
+                      className={`text-[#2C1810]/50 group-hover:text-[#B7410E] transition-transform duration-300 ${isClubsDropdownOpen ? "-rotate-90" : ""
+                        }`}
                     />
                   </div>
                 </DropdownMenuTrigger>

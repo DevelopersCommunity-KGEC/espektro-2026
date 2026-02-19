@@ -61,6 +61,7 @@ import { headers } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
 import { AdminSync } from "@/components/admin/admin-sync";
 import { getUserClubRoles } from "@/lib/rbac";
+import RouteAudioTrigger from "@/components/audio/RouteAudioTrigger";
 
 export default async function RootLayout({
   children,
@@ -86,6 +87,7 @@ export default async function RootLayout({
       >
         <AdminSync />
         <OnboardingCheck />
+        <RouteAudioTrigger />
         <Header clubRoles={clubRoles} userRole={session?.user?.role} />
         {children}
         <Toaster />

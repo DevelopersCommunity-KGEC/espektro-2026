@@ -19,7 +19,7 @@ const EspektroAbout: React.FC = () => {
   const y5 = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
-    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 pr-10 md:pr-0 md:px-4  z-10" style={{ backgroundColor: "#FFF8F0" }}>
+    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 md:px-4  z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
       {/* <div className="absolute inset-0  flex items-center justify-center opacity-[0.1] pointer-events-none">
         <Image

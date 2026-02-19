@@ -77,6 +77,7 @@ export default function Header({
     if (!isLandingPage) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    gsap.set(button.current, { scale: 0 });
     gsap.to(button.current, {
       scrollTrigger: {
         trigger: document.documentElement,
@@ -124,12 +125,57 @@ export default function Header({
     });
   }, [isLandingPage]);
 
+  const [isMobileVisible, setIsMobileVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        setIsMobileVisible(true);
+      } else if (currentScrollY > lastScrollY.current) {
+        setIsMobileVisible(false);
+      } else {
+        setIsMobileVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Don't render on admin dashboard, login, or onboarding routes
   if (isHiddenRoute) return null;
 
   return (
-    <div className="w-[100%] z-50 nav">
-      {/* Inline header bar — only on landing page */}
+    <div className="w-full z-50">
+      {/* New Mobile Navbar - Simple and Sticky */}
+      <div
+        className={styles.mobileHeader}
+        style={{
+          transform: isMobileVisible ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.3s ease-in-out'
+        }}
+      >
+        <div className={styles.logo}>
+          <a href="/">
+            <span className="text-2xl font-bold text-[#B7410E] font-[family-name:var(--font-medieval-sharp)] tracking-wider">
+              Espektro 26
+            </span>
+          </a>
+        </div>
+
+        {/* Burger Button inside Mobile Header for perfect alignment */}
+        <div className="md:hidden" ref={button}>
+          <Rounded onClick={() => setIsActive(!isActive)} className={styles.button}>
+            <div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`} />
+          </Rounded>
+        </div>
+      </div>
+
       {isLandingPage && (
         <>
           <div ref={header} className={styles.header}>
@@ -282,16 +328,16 @@ export default function Header({
                       </DropdownMenuItem>
                       {((session.user as any)?.role === "admin" ||
                         (session.user as any)?.role === "super-admin") && (
-                        <DropdownMenuItem
-                          asChild
-                          className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
-                        >
-                          <a href="/dashboard" className="cursor-pointer">
-                            <LayoutDashboard className="mr-2 h-4 w-4" />
-                            <span>Admin Dashboard</span>
-                          </a>
-                        </DropdownMenuItem>
-                      )}
+                          <DropdownMenuItem
+                            asChild
+                            className="focus:bg-primary/10 focus:text-primary focus:outline-none focus:[&_svg]:text-primary"
+                          >
+                            <a href="/dashboard" className="cursor-pointer">
+                              <LayoutDashboard className="mr-2 h-4 w-4" />
+                              <span>Admin Dashboard</span>
+                            </a>
+                          </DropdownMenuItem>
+                        )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onClick={handleSignOut}
@@ -303,21 +349,6 @@ export default function Header({
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-              )}
-            </div>
-            <div className={styles.menuSmall}>
-              {!isActive && (
-                <Magnetic>
-                  <div
-                    onClick={() => {
-                      setIsActive(!isActive);
-                    }}
-                    className={styles.el}
-                  >
-                    <p>Menu</p>
-                    <div className={styles.indicator}></div>
-                  </div>
-                </Magnetic>
               )}
             </div>
           </div>
@@ -333,9 +364,8 @@ export default function Header({
             className={`${styles.button}`}
           >
             <div
-              className={`${styles.burger} ${
-                isActive ? styles.burgerActive : ""
-              }`}
+              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                }`}
             ></div>
           </Rounded>
         </div>
@@ -352,9 +382,8 @@ export default function Header({
               className={`${styles.button}`}
             >
               <div
-                className={`${styles.burger} ${
-                  isActive ? styles.burgerActive : ""
-                }`}
+                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                  }`}
               ></div>
             </Rounded>
           </Magnetic>
@@ -373,9 +402,8 @@ export default function Header({
               className={`${styles.button}`}
             >
               <div
-                className={`${styles.burger} ${
-                  isActive ? styles.burgerActive : ""
-                }`}
+                className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                  }`}
               ></div>
             </Rounded>
           </Magnetic>
@@ -387,6 +415,7 @@ export default function Header({
             clubRoles={clubRoles}
             userRole={userInfoRole}
             closeMenu={() => setIsActive(false)}
+            toggleButtonRef={button}
           />
         )}
       </AnimatePresence>
