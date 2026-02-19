@@ -19,15 +19,15 @@ export function FirstBack() {
         );
 
     return (
-        <section className="relative w-full min-h-[80vh] py-20 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
+        <section className="relative w-full min-h-screen overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Background Image - Fits without cropping */}
-            <div className="absolute inset-0 opacity-50 pointer-events-none -w-1/2 ">
+            <div className="absolute inset-0 opacity-50 pointer-events-none">
                 <Image
                     src="/images/1stback.png"
                     alt="Background Illustration"
                     fill
                     priority
-                    className="object-contain"
+                    className="object-cover md:object-contain"
                 />
             </div>
 
