@@ -263,13 +263,13 @@ export function LogoPreloader() {
   return (
     <div className={`preloader-overlay ${startTrigger ? "active-exit" : ""}`} style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none">
         <Image
           src="/images/background_web.webp"
           alt="Decorative lotus mandala"
-          width={1000}
-          height={800}
-          className="object-contain w-full "
+          fill
+          priority
+          className="object-cover md:object-contain w-full"
         />
       </div>
 
@@ -286,16 +286,16 @@ export function LogoPreloader() {
 
       {showStartButton ? (
         <div className="relative flex flex-col items-center gap-6 z-50 animate-in fade-in zoom-in duration-700">
-          <p className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
+          {/* <p className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
             Kalyani Government Engineering College presents
-          </p>
+          </p> */}
           <div className="text-center mb-8">
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold text-[#2C1810] uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm leading-none">
-              ESPEKTRO
+              Explore With Us
             </h1>
-            <p className="text-[#B7410E] text-3xl sm:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] mt-2">
+            {/* <p className="text-[#B7410E] text-3xl sm:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] mt-2">
               2026
-            </p>
+            </p> */}
           </div>
           <Button
             variant="theatrical"
