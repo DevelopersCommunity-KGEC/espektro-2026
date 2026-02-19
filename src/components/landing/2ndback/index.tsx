@@ -19,15 +19,22 @@ export function SecondBack() {
         );
 
     return (
-        <section className="relative w-full min-h-[80vh] py-20 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
+        <section className="relative w-full min-h-screen overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Background Image - Fits without cropping */}
-            <div className="absolute inset-0 opacity-50 pointer-events-none -w-1/2 ">
+            <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
                 <Image
-                    src="/images/back2.png"
-                    alt="Background Illustration"
+                    src="/images/background_web.webp"
+                    alt="Decorative lotus mandala"
                     fill
                     priority
-                    className="object-contain"
+                    className="object-contain hidden md:block"
+                />
+                <Image
+                    src="/images/background_web_mobile.png"
+                    alt="Decorative lotus mandala"
+                    fill
+                    priority
+                    className="object-contain w-fit md:hidden bottom-50"
                 />
             </div>
 

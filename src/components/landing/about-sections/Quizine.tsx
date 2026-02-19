@@ -20,15 +20,22 @@ const Quizine: React.FC = () => {
   return (
     <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 pr-10 md:pr-0 md:px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
+      {/* <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
         <Image
-          src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
+          src="/images/background_web.webp"
           alt="Decorative lotus mandala"
-          width={800}
-          height={600}
-          className="object-contain"
+          fill
+          priority
+          className="object-contain hidden md:block"
         />
-      </div>
+        <Image
+          src="/images/background_web_mobile.png"
+          alt="Decorative lotus mandala"
+          fill
+          priority
+          className="object-contain w-fit md:hidden bottom-50"
+        />
+      </div> */}
 
       {/* Left Tribal Border Pattern */}
       <div
