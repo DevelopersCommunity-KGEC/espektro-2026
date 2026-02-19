@@ -175,7 +175,7 @@ const EspektroAbout: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/kolkata-city.webp"
+                  src="/about-vectors/img6.jpeg"
                   alt="City view"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -203,7 +203,7 @@ const EspektroAbout: React.FC = () => {
                   frameBorder="0"
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
-              ></iframe>
+                ></iframe>
 
               </motion.div>
 
@@ -217,7 +217,7 @@ const EspektroAbout: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/india-culture.webp"
+                  src="/about-vectors/img8.jpeg"
                   alt="Culture art"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -226,7 +226,7 @@ const EspektroAbout: React.FC = () => {
 
               {/* Image 5 - Bottom Right - Transparent Element */}
               <motion.div
-                className="absolute bottom-[5%] lg:-bottom-[5%] right-0 lg:right-[-5%] w-[50%] h-[50%] z-[60]"
+                className=" rounded-lg absolute bottom-[5%] lg:-bottom-[2%] right-0 lg:right-[-8%] w-[60%] h-[60%] z-[60]   "
                 style={{ y: y4 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 12 }}
@@ -234,10 +234,10 @@ const EspektroAbout: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/Elements _20260218_030113_0004.webp"
+                  src="/about-vectors/book.png"
                   alt="Clapperboard element"
                   fill
-                  className="object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500"
+                  className="object-contain hover:scale-110 transition-transform duration-500 "
                 />
               </motion.div>
             </div>
