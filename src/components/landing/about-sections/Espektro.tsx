@@ -136,8 +136,8 @@ const EspektroAbout: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
               Espektro
             </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              At Kalyani Government Engineering College, Espektro is not just a fest — it’s a four-day celebration of talent, technology, culture. It is the grand annual fest that brings together students from different departments under one vibrant platform. Every year, the campus transforms into a hub of excitement, creativity, and collaboration.
+            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
+              At Kalyani Government Engineering College, Espektro is not just a fest — it&apos;s a four-day celebration of talent, technology, culture. It is the grand annual fest that brings together students from different departments under one vibrant platform. Every year, the campus transforms into a hub of excitement, creativity, and collaboration.
             </p>
             <a
               href="https://res.cloudinary.com/dezguraul/image/upload/v1741930364/espektro_sponsor_brochure_5_iubdru.pdf"

@@ -99,7 +99,7 @@ const Exotica: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
               Exotica
             </h1>
-            <p className="text-sm md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
+            <p className="text-sm md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
               The cultural soul of Espektro, Exotica keeps the campus alive throughout all four days. With music, dance, drama, fashion, and star-studded performances, it celebrates art in every form. It’s where passion takes the stage and memories are made under the spotlight.
             </p>
           </motion.div>
