@@ -51,16 +51,16 @@ const AUDIO_CONFIG: Record<string, SectionAudioConfig> = {
     track: TRACKS.STARTING, volume: 0.8, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
   },
   "1stback": {
-    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 500, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
   },
   "timeline": {
-    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 800, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: false
+    track: TRACKS.ARTIST, volume: 0.3, fadeMs: 100, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: false
   },
   "events-timeline": {
-    track: TRACKS.ARTIST, volume: 0.4, fadeMs: 1200, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
+    track: TRACKS.ARTIST, volume: 0.3, fadeMs: 100, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
   },
   "featured-artists": {
-    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 200, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
+    track: TRACKS.ARTIST, volume: 0.4, fadeMs: 200, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
   },
   "artist-gallery": {
     track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
