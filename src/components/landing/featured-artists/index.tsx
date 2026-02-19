@@ -9,6 +9,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./artist.module.css";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import ComingSoon from "../coming-soon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,7 +38,7 @@ export function FeaturedArtists() {
             scrollTrigger: {
                 trigger: wrapperRef.current,
                 start: "top top",
-                end: "+=12000",
+                end: "+=4000",
                 pin: true,
                 scrub: 0.5,
                 anticipatePin: 1,
@@ -47,18 +48,17 @@ export function FeaturedArtists() {
         });
 
         tl.to(containerRef.current, {
-            height: "120vh",
+            height: "100vh",
             duration: 2,
             ease: "power2.inOut"
         })
-            .to(imageListRef.current, {
-                y: "-85%",
-                duration: 4,
-                ease: "none"
+            .to(containerRef.current, {
+                height: "100vh",
+                duration: 2, // Hold for a bit
             })
             .to(containerRef.current, {
-                height: "0rem",
-                duration: 1.5,
+                height: "2rem",
+                duration: 2,
                 ease: "power2.inOut"
             });
 
@@ -118,14 +118,14 @@ export function FeaturedArtists() {
                         </div>
                     </div>
 
-                    <div className={styles.imageContentContainer}>
-                        <ul ref={imageListRef} className="flex flex-col items-center gap-4 h-[150rem] sm:h-630">
-                            {artists.map((artist) => (
+                    <div className={styles.imageContentContainer} style={{ flex: 1, height: 'auto' }}>
+                        <ul ref={imageListRef} className="flex flex-col items-center justify-center gap-4 h-full w-full">
+                            {/* {artists.map((artist) => (
                                 <li key={artist.name} className="h-[35rem] sm:h-160">
                                     <CardContainer className="inter-var">
-                                        <CardBody className="relative group/card bg-white dark:hover:shadow-2xl dark:hover:shadow-emerald-500/10 w-[85vw] sm:w-[24rem] h-[30rem] sm:h-[36rem] rounded-xl p-4 flex flex-col border shadow-lg overflow-hidden">
-                                            {/* Pattern & Image Area */}
-                                            <div className="relative w-full h-[70%] sm:h-[82%] overflow-hidden rounded-lg mb-6 mt-4">
+                                        <CardBody className="relative group/card bg-white dark:hover:shadow-2xl dark:hover:shadow-emerald-500/10 w-[85vw] sm:w-[24rem] h-[30rem] sm:h-[36rem] rounded-xl p-4 flex flex-col border shadow-lg overflow-hidden"> */}
+                            {/* Pattern & Image Area */}
+                            {/* <div className="relative w-full h-[70%] sm:h-[82%] overflow-hidden rounded-lg mb-6 mt-4">
                                                 <CardItem
                                                     translateZ="30"
                                                     className="absolute inset-0 w-full h-full"
@@ -147,10 +147,10 @@ export function FeaturedArtists() {
                                                         className="h-full w-auto object-contain"
                                                     />
                                                 </CardItem>
-                                            </div>
+                                            </div> */}
 
-                                            {/* Info Area below the pattern */}
-                                            <div className="flex flex-col items-center justify-center flex-1">
+                            {/* Info Area below the pattern */}
+                            {/* <div className="flex flex-col items-center justify-center flex-1">
                                                 <CardItem
                                                     translateZ="50"
                                                     className="text-center"
@@ -164,7 +164,11 @@ export function FeaturedArtists() {
                                         </CardBody>
                                     </CardContainer>
                                 </li>
-                            ))}
+                            ))} */}
+
+                            <div className="flex flex-row justify-center items-center w-full h-full">
+                                <ComingSoon />
+                            </div>
                         </ul>
                     </div>
 

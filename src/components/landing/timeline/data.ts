@@ -30,7 +30,7 @@ export interface TimelineItem {
 export const timelineData: TimelineItem[] = [
     {
         id: 1,
-        img: 'images/Charyapada Era.webp',
+        img: 'images/WhiteBorderImages/CharyapadaEra_WhiteBorder.webp',
         imgBW: 'images/imgbw1.webp',
         position: { top: '50vh', left: '17%', width: '35vw', height: 'auto' },
         border: 'right-bottom',
@@ -42,7 +42,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 2,
-        img: 'images/Vaishnav Bhakti Movement.webp',
+        img: 'images/WhiteBorderImages/Vaishnav Bhakti Movement_WhiteBorder.webp',
         imgBW: 'images/imgbw2.webp',
         position: { top: '55vh', left: '25%', width: '35vw', height: 'auto' },
         border: 'left-bottom',
@@ -54,7 +54,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 3,
-        img: 'images/Mangalkavya & Medieval Literature.webp',
+        img: 'images/WhiteBorderImages/Mangalkavya & Medieval Literature_WhiteBorder.webp',
         imgBW: 'images/imgbw3.webp',
         position: { top: '45vh', left: '40%', width: '33vw', height: 'auto' },
         border: 'right-top',
@@ -66,7 +66,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 4,
-        img: 'images/Baul & Folk Spiritual Tradition.webp',
+        img: 'images/WhiteBorderImages/Baul & Folk Spiritual Tradition_WhiteBorder.webp',
         imgBW: 'images/imgbw4.webp',
         position: { top: '55vh', left: '47%', width: '40vw', height: 'auto' },
         border: 'left-top',
@@ -78,7 +78,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 5,
-        img: 'images/Bengal Renaissance.webp',
+        img: 'images/WhiteBorderImages/Bengal Renaissance_WhiteBorder.webp',
         imgBW: 'images/imgbw5.webp',
         position: { top: '50vh', left: '55%', width: '50vw', height: 'auto' },
         border: 'right-bottom',
@@ -90,7 +90,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 6,
-        img: 'images/Swadeshi & Cultural Nationalism.webp',
+        img: 'images/WhiteBorderImages/Swadeshi & Cultural Nationalism_WhiteBorder.webp',
         imgBW: 'images/imgbw6.webp',
         position: { top: '55vh', left: '65%', width: '35vw', height: 'auto' },
         border: 'left-top',
@@ -102,7 +102,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 7,
-        img: 'images/Language Movement & Modern Identity.webp',
+        img: 'images/WhiteBorderImages/Language Movement & Modern Identity_WhiteBorder.webp',
         imgBW: 'images/img3.webp',
         position: { top: '50vh', left: '75%', width: '35vw', height: 'auto' },
         border: 'left-top',
@@ -114,7 +114,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 8,
-        img: 'images/Contemporary Bengali Culture.webp',
+        img: 'images/WhiteBorderImages/Contemporary Bengali Culture_WhiteBorder.webp',
         imgBW: 'images/imgbw8.webp',
         position: { top: '55vh', left: '85%', width: '35vw', height: 'auto' },
         border: 'left-top',

@@ -135,7 +135,7 @@ export default function TimelineDesktop() {
                             >
                                 {/* The Image Container */}
                                 <div
-                                    className={`relative transition-all duration-700 flex items-center justify-center
+                                    className={`relative pl-10 transition-all duration-700 flex items-center justify-center
                                     ${isActive ? "scale-110 opacity-100 grayscale-0" : isPast ? "scale-100 opacity-100 grayscale-0" : "scale-90 opacity-100 grayscale"}
                                     `}
                                     style={{
