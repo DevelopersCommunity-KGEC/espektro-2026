@@ -205,7 +205,7 @@ export default function BookingPage() {
           "SIGNATURE_BYPASS",
           appliedCode || undefined,
           undefined,
-          undefined,
+          order.referrerUserId || undefined,
           extraMembers
         );
         if (result.success) {

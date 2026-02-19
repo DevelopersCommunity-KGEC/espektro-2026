@@ -4,8 +4,9 @@ import dbConnect from "@/lib/db";
 import Ticket from "@/models/Ticket";
 import Event from "@/models/Event";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { hasClubPermission } from "@/lib/rbac";
+import { validateUserReferral } from "@/lib/referral";
 
 async function getSession() {
   return await auth.api.getSession({
@@ -119,6 +120,21 @@ export async function bookTicket(eventId: string) {
     }
   }
 
+  // Check for User Referral (Attribution)
+  const cookieStore = await cookies();
+  const attributedCode = cookieStore.get("referral_source")?.value;
+  let referrerUserId = undefined;
+
+  if (attributedCode) {
+    const referrer = await validateUserReferral(
+      attributedCode,
+      session.user.id,
+    );
+    if (referrer) {
+      referrerUserId = referrer._id;
+    }
+  }
+
   // Create pending ticket
   const ticket = await Ticket.create({
     userId: session.user.id,
@@ -128,6 +144,7 @@ export async function bookTicket(eventId: string) {
     qrCodeToken: "PENDING-" + Date.now(), // Temporary token
     status: "pending",
     price: event.price,
+    referrerUserId, // Store referral attribution
   });
 
   return { success: true, ticketId: ticket._id.toString() };
