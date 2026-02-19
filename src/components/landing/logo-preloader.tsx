@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./logo-preloader.css";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const TEXT_GROUP_ID = "text";
 const TEXT_SPLIT_Y = 860;
@@ -65,7 +66,7 @@ const TEXT_ARRIVAL_TIMING: Record<number, { delay: number; dur: number }> = {
 };
 
 /** Total animation duration before the preloader auto-dismisses */
-const TOTAL_DURATION_MS = 5000;
+const TOTAL_DURATION_MS = 7000;
 
 export function LogoPreloader() {
   const svgContainerRef = useRef<HTMLDivElement>(null);
@@ -233,22 +234,52 @@ export function LogoPreloader() {
   if (!visible) return null;
 
   return (
-    <div className={`preloader-overlay ${startTrigger ? "active-exit" : ""}`}>
+    <div className={`preloader-overlay ${startTrigger ? "active-exit" : ""}`} style={{ backgroundColor: "#FFF8F0" }}>
+      {/* Lotus Mandala Background - Centered and Subtle */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
+        <Image
+          src="/images/background_web.webp"
+          alt="Decorative lotus mandala"
+          width={1000}
+          height={800}
+          className="object-contain w-full "
+        />
+      </div>
+
+      {/* Left tribal border pattern */}
+      {/* <div
+        className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-10"
+        style={{
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '100% auto',
+          backgroundPosition: 'top center'
+        }}
+      /> */}
+
       {showStartButton ? (
-        <div className="flex flex-col items-center gap-4 z-50 animate-in fade-in zoom-in duration-500">
-          <h2 className="text-2xl font-light tracking-widest uppercase text-foreground mb-4">
-            Welcome to Espektro
-          </h2>
+        <div className="relative flex flex-col items-center gap-6 z-50 animate-in fade-in zoom-in duration-700">
+          <p className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
+            Kalyani Government Engineering College presents
+          </p>
+          <div className="text-center mb-8">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold text-[#2C1810] uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm leading-none">
+              ESPEKTRO
+            </h1>
+            <p className="text-[#B7410E] text-3xl sm:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] mt-2">
+              2026
+            </p>
+          </div>
           <Button
+            variant="theatrical"
             onClick={handleStart}
-            size="lg"
-            className="rounded-full px-8 py-6 text-lg tracking-wider transition-all hover:scale-105"
+            className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-12 px-10 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] rounded-sm"
           >
             ENTER EXPERIENCE
           </Button>
         </div>
       ) : (
-        <div className="preloader-logo-container" ref={svgContainerRef} />
+        <div className="preloader-logo-container relative z-20" ref={svgContainerRef} />
       )}
     </div>
   );

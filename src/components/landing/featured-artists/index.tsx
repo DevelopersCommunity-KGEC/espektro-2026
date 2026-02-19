@@ -95,14 +95,14 @@ export function FeaturedArtists() {
 
             <div ref={wrapperRef} className={styles.mainWrapper} style={{ backgroundColor: "transparent" }}>
                 <div ref={containerRef} className={styles.mainContainer} style={{ background: 'transparent', border: 'none', width: '100vw', maxWidth: 'none', left: '0' }}>
-                    
+
                     {/* Top Tribal Border & Heading Block */}
                     <div className={`${styles.topHeadingContainer} !relative !translate-y-0 w-full z-[70]`}>
                         <div className="relative h-24 md:h-40 overflow-visible mb-2">
                             <div className="absolute inset-0 top-0 flex justify-center h-full w-full opacity-100 overflow-hidden">
                                 {[...Array(25)].map((_, i) => (
                                     <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-12">
-                                        <Image src="/images/shapartist.png" alt="" fill className="object-contain" />
+                                        <Image src="/images/shapartist.webp" alt="" fill className="object-contain" />
                                     </div>
                                 ))}
                             </div>
@@ -136,7 +136,7 @@ export function FeaturedArtists() {
                                                         className="w-full h-full object-fill opacity-100"
                                                     />
                                                 </CardItem>
-                                                
+
                                                 <CardItem
                                                     translateZ="80"
                                                     className="absolute inset-0 z-20 flex items-center justify-center pt-8"
@@ -171,10 +171,10 @@ export function FeaturedArtists() {
                     {/* Bottom Tribal Border & Heading Block */}
                     <div className={`${styles.bottomHeadingContainer} !relative !translate-y-0 w-full z-[70]`}>
                         <div className="relative w-full h-16 md:h-40 overflow-visible mt-2">
-                             <div className="absolute inset-0 -top-[100%] md:-top-[120%] flex justify-center h-full w-full opacity-100 overflow-hidden">
+                            <div className="absolute inset-0 -top-[100%] md:-top-[120%] flex justify-center h-full w-full opacity-100 overflow-hidden">
                                 {[...Array(25)].map((_, i) => (
                                     <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-12">
-                                        <Image src="/images/shapartist.png" alt="" fill className="object-contain" />
+                                        <Image src="/images/shapartist.webp" alt="" fill className="object-contain" />
                                     </div>
                                 ))}
                             </div>
@@ -189,7 +189,7 @@ export function FeaturedArtists() {
                 </div>
             </div>
 
-            
+
         </section>
     );
 }
