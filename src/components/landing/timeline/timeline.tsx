@@ -170,7 +170,7 @@ export default function Timeline() {
 
                                 {/* Image Card - Absolute Center */}
                                 <div className={`absolute inset-0 flex items-center justify-center`}>
-                                    <div className={`relative w-[450px] md:w-[600px] aspect-video transition-all duration-700 ${isActive ? "scale-125" : "scale-90 border-transparent grayscale opacity-100"}`}>
+                                    <div className={`relative w-[320px] md:w-[450px] aspect-video transition-all duration-700 ${isActive ? "scale-110" : "scale-85 border-transparent grayscale opacity-100"}`}>
                                         <img
                                             src={item.img}
                                             alt={item.title}

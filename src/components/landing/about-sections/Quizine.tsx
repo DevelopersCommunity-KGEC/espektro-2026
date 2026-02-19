@@ -90,10 +90,10 @@ const Quizine: React.FC = () => {
               Culinary Excellence
             </h3>
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
-              Quixine
+              Quizine
             </h1>
             <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              A paradise for food lovers, Quixine brings together flavors from every craving. From street-style favorites to fusion delights, it adds taste to every moment of the fest. Because no celebration at KGEC is complete without great food and greater company.
+              A paradise for food lovers, Quizine brings together flavors from every craving. From street-style favorites to fusion delights, it adds taste to every moment of the fest. Because no celebration at KGEC is complete without great food and greater company.
             </p>
           </motion.div>
 
@@ -116,7 +116,7 @@ const Quizine: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742327716/Quixine_web_poezry.png"
+                  src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742327716/Quizine_web_poezry.png"
                   alt="Quizine food stalls"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"

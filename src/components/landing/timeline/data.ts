@@ -30,7 +30,7 @@ export interface TimelineItem {
 export const timelineData: TimelineItem[] = [
     {
         id: 1,
-        img: 'images/img1.webp',
+        img: 'images/Charyapada Era.webp',
         imgBW: 'images/imgbw1.webp',
         position: { top: '50vh', left: '17%', width: '35vw', height: 'auto' },
         border: 'right-bottom',
@@ -42,7 +42,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 2,
-        img: 'images/img2.webp',
+        img: 'images/Vaishnav Bhakti Movement.webp',
         imgBW: 'images/imgbw2.webp',
         position: { top: '55vh', left: '25%', width: '35vw', height: 'auto' },
         border: 'left-bottom',
@@ -54,9 +54,9 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 3,
-        img: 'images/img3.webp',
+        img: 'images/Mangalkavya & Medieval Literature.webp',
         imgBW: 'images/imgbw3.webp',
-        position: { top: '50vh', left: '35%', width: '33vw', height: 'auto' },
+        position: { top: '45vh', left: '40%', width: '33vw', height: 'auto' },
         border: 'right-top',
         description: 'Mangalkavya & Medieval Literature',
         era: '16th–18th Century',
@@ -66,7 +66,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 4,
-        img: 'images/img4.webp',
+        img: 'images/Baul & Folk Spiritual Tradition.webp',
         imgBW: 'images/imgbw4.webp',
         position: { top: '55vh', left: '47%', width: '40vw', height: 'auto' },
         border: 'left-top',
@@ -78,7 +78,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 5,
-        img: 'images/img5.webp',
+        img: 'images/Bengal Renaissance.webp',
         imgBW: 'images/imgbw5.webp',
         position: { top: '50vh', left: '55%', width: '50vw', height: 'auto' },
         border: 'right-bottom',
@@ -90,20 +90,20 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 6,
-        img: 'images/img6.webp',
+        img: 'images/Swadeshi & Cultural Nationalism.webp',
         imgBW: 'images/imgbw6.webp',
         position: { top: '55vh', left: '65%', width: '35vw', height: 'auto' },
         border: 'left-top',
         description: 'Swadeshi & Cultural Nationalism',
         era: 'Early 20th Century',
         title: 'Swadeshi & Cultural Nationalism',
-        body: 'The Charkha spun threads of defiance, becoming the ultimate symbol of self-reliance and freedom.',
+        body: 'The charkha spun threads of defiance, becoming the ultimate symbol of self-reliance and freedom.',
         textPosition: { bottom: '5%', left: '12%', width: '80%' }
     },
     {
         id: 7,
-        img: 'images/img7.webp',
-        imgBW: 'images/imgbw7.webp',
+        img: 'images/Language Movement & Modern Identity.webp',
+        imgBW: 'images/img3.webp',
         position: { top: '50vh', left: '75%', width: '35vw', height: 'auto' },
         border: 'left-top',
         description: 'Language Movement & Modern Identity',
@@ -114,7 +114,7 @@ export const timelineData: TimelineItem[] = [
     },
     {
         id: 8,
-        img: 'images/img8.webp',
+        img: 'images/Contemporary Bengali Culture.webp',
         imgBW: 'images/imgbw8.webp',
         position: { top: '55vh', left: '85%', width: '35vw', height: 'auto' },
         border: 'left-top',
