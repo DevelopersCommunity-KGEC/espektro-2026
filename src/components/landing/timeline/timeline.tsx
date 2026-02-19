@@ -84,7 +84,7 @@ export default function Timeline() {
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="relative w-full h-full">
                         <Image
-                            src="/images/bg1.webp"
+                            src="/images/bg1.png"
                             alt="Timeline background"
                             fill
                             className="object-cover opacity-30"
@@ -170,11 +170,11 @@ export default function Timeline() {
 
                                 {/* Image Card - Absolute Center */}
                                 <div className={`absolute inset-0 flex items-center justify-center`}>
-                                    <div className={`relative w-[320px] md:w-[450px] aspect-video transition-all duration-700 ${isActive ? "scale-110" : "scale-85 border-transparent grayscale opacity-100"}`}>
+                                    <div className={`relative w-[320px] md:w-[450px] aspect-video transition-all duration-700 ${isActive ? "scale-85 md:scale-110" : "scale-75 md:scale-85 border-transparent grayscale opacity-80"}`}>
                                         <img
                                             src={item.img}
                                             alt={item.title}
-                                            className="w-full h-full object-contain scale-310"
+                                            className="w-full h-full object-contain scale-210 md:scale-310"
                                         />
                                     </div>
                                 </div>

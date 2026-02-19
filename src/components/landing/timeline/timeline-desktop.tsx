@@ -59,12 +59,12 @@ export default function TimelineDesktop() {
             />
 
             {/* STICKY CONTAINER */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="sticky top-0 h-screen w-full ">
 
                 {/* Background Image */}
                 <div className="absolute inset-0 pointer-events-none">
                     <Image
-                        src="/images/bg1.webp"
+                        src="/images/bg1.png"
                         alt="Timeline background"
                         fill
                         className="object-cover opacity-30"

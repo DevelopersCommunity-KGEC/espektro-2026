@@ -124,7 +124,7 @@ export function Hero() {
                         className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 px-8 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
                         asChild
                     >
-                        <Link href="/events">Explore Events</Link>
+                        <Link href="/events">Buy Tickets</Link>
                     </Button>
                 </div>
             </div>

@@ -101,12 +101,12 @@ const EspektroAbout: React.FC = () => {
       </motion.div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-20 md:px-28 lg:px-32">
         <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-12 lg:gap-16">
 
           {/* Right Content - Text */}
           <motion.div
-            className="flex-1 text-justify max-w-xl ml-auto flex flex-col items-center"
+            className="flex-1 text-justify lg:text-justify max-w-xl lg:ml-auto flex flex-col items-center"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -149,7 +149,7 @@ const EspektroAbout: React.FC = () => {
 
               {/* Image 2 - Top Right - Image */}
               <motion.div
-                className="absolute top-[0%] right-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                className="absolute -top-[10%] right-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
                 style={{ y: y2 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 5 }}
@@ -166,23 +166,32 @@ const EspektroAbout: React.FC = () => {
 
               {/* Image 3 - Center - Boxed Image */}
               <motion.div
-                className="relative w-[65%] h-[50%] rounded-lg overflow-hidden shadow-2xl z-[50] border-4 border-white"
-                initial={{ opacity: 0, scale: 0.9, x: -30, y: -30, rotate: 0 }}
-                whileInView={{ opacity: 1, scale: 1, x: -30, y: -30, rotate: 0 }}
+                className="relative w-[75%] lg:w-[80%] h-[40%] lg:h-[50%] rounded-lg overflow-hidden shadow-2xl z-[50] border-4 border-white"
+                initial={{ opacity: 0, scale: 0.9, x: 0, y: 0, rotate: 0 }}
+                whileInView={{ opacity: 1, scale: 1, x: 0, y: 0, rotate: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <Image
+                {/* <Image
                   src="https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705035698/espektro/2023/about/espektro.webp"
                   alt="Main Espektro focus"
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
-                />
+                /> */}
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/thz4lJmRO74?start=99&autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&loop=1&playlist=thz4lJmRO74"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+              ></iframe>
+
               </motion.div>
 
               {/* Image 4 - Bottom Left - Image */}
               <motion.div
-                className="absolute -bottom-[20%] left-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
+                className="absolute bottom-[0%] lg:-bottom-[20%] left-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
                 style={{ y: y3 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: -10 }}
@@ -199,7 +208,7 @@ const EspektroAbout: React.FC = () => {
 
               {/* Image 5 - Bottom Right - Transparent Element */}
               <motion.div
-                className="absolute bottom-[0%] right-[-5%] w-[50%] h-[50%] z-[60]"
+                className="absolute bottom-[5%] lg:-bottom-[5%] right-0 lg:right-[-5%] w-[50%] h-[50%] z-[60]"
                 style={{ y: y4 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 12 }}

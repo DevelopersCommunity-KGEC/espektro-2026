@@ -14,7 +14,7 @@ const navItems = [
   },
   {
     title: "About",
-    href: "/#about",
+    href: "/#espektro-about",
   },
   {
     title: "Schedule",
