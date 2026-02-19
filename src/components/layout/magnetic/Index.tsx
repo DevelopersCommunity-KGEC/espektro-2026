@@ -11,8 +11,8 @@ export default function Magnetic({ children }: MagneticProps) {
     const magnetic = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Disable magnetic effect on mobile
-        if (typeof window !== "undefined" && window.innerWidth < 768) return;
+        // Magnetic effect disabled as per user request
+        return;
 
         const element = magnetic.current;
         if (element) {

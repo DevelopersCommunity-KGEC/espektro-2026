@@ -19,7 +19,7 @@ export default function Timeline() {
     // But simplistic approach: map 0-1 vertical scroll to 0-(totalWidth) horizontal.
     // Let's assume a fixed spacing.
     // Let's assume a fixed spacing.
-    const itemSpacing = 150; // px - Reduced closer
+    const itemSpacing = 300; // px - Increased for lengthier feel
     const totalWidth = (timelineData.length - 1) * itemSpacing;
     const x = useTransform(scrollYProgress, [0, 1], [0, -totalWidth]);
 
@@ -77,7 +77,7 @@ export default function Timeline() {
     const activeItem = timelineData[activeIndex];
 
     return (
-        <section ref={targetRef} className="relative h-[500vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
+        <section ref={targetRef} className="relative h-[2000vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
             {/* STICKY CONTAINER - Unifies everything fixed on screen */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 {/* 1. Background Image */}

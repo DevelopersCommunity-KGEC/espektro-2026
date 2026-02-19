@@ -46,7 +46,8 @@ export default function Header({
   const header = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
-  const button = useRef(null);
+  const mobileButtonRef = useRef(null);
+  const desktopButtonRef = useRef(null);
   const { data } = authClient.useSession();
   const session = data;
   const userInfoRole = userRole || (session?.user as any)?.role;
@@ -77,21 +78,21 @@ export default function Header({
     if (!isLandingPage) return;
 
     gsap.registerPlugin(ScrollTrigger);
-    gsap.set(button.current, { scale: 0 });
-    gsap.to(button.current, {
+    gsap.set(desktopButtonRef.current, { scale: 0 });
+    gsap.to(desktopButtonRef.current, {
       scrollTrigger: {
         trigger: document.documentElement,
         start: 0,
         end: window.innerHeight,
         onLeave: () => {
-          gsap.to(button.current, {
+          gsap.to(desktopButtonRef.current, {
             scale: 1,
             duration: 0.25,
             ease: "power1.out",
           });
         },
         onEnterBack: () => {
-          gsap.to(button.current, {
+          gsap.to(desktopButtonRef.current, {
             scale: 0,
             duration: 0.25,
             ease: "power1.out",
@@ -169,7 +170,7 @@ export default function Header({
         </div>
 
         {/* Burger Button inside Mobile Header for perfect alignment */}
-        <div className="md:hidden" ref={button}>
+        <div className="md:hidden" ref={mobileButtonRef}>
           <Rounded onClick={() => setIsActive(!isActive)} className={styles.button}>
             <div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`} />
           </Rounded>
@@ -373,7 +374,7 @@ export default function Header({
       {/* Floating hamburger button */}
       {isLandingPage ? (
         // Landing: GSAP-controlled, starts at scale(0) and appears after scrolling
-        <div ref={button} className={styles.headerButtonContainer}>
+        <div ref={desktopButtonRef} className={styles.headerButtonContainer}>
           <Magnetic>
             <Rounded
               onClick={() => {
@@ -415,7 +416,8 @@ export default function Header({
             clubRoles={clubRoles}
             userRole={userInfoRole}
             closeMenu={() => setIsActive(false)}
-            toggleButtonRef={button}
+            mobileButtonRef={mobileButtonRef}
+            desktopButtonRef={desktopButtonRef}
           />
         )}
       </AnimatePresence>
