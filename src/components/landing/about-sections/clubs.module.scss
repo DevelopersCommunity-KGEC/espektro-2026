@@ -103,6 +103,17 @@
                 transition: color 0.3s ease;
                 font-family: var(--font-roboto-slab);
             }
+
+            // Center the last item (Sportrix) when it's alone on a row (16 items total)
+            &:last-child {
+                @media (min-width: 640px) and (max-width: 1023px) {
+                    grid-column: 2;
+                }
+
+                @media (min-width: 1280px) {
+                    grid-column: 3;
+                }
+            }
         }
     }
 }
