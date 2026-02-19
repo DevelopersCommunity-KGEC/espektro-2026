@@ -46,7 +46,7 @@ export default function TimelineDesktop() {
     })();
 
     return (
-        <section ref={targetRef} className="relative h-[400vh] bg-[#FFF8F0] text-foreground z-20">
+        <section ref={targetRef} className="relative h-[800vh] bg-[#FFF8F0] text-foreground z-20">
             {/* Left fixed tribal border */}
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden z-50 pointer-events-none"

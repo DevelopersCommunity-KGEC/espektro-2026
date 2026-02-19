@@ -231,6 +231,33 @@ export function LogoPreloader() {
     return () => clearTimeout(timer);
   }, [startTrigger, showStartButton]);
 
+  // Force scroll to top on refresh and disable scrolling while preloader is active
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Prevent browser from trying to restore scroll position
+      if (window.history.scrollRestoration) {
+        window.history.scrollRestoration = "manual";
+      }
+
+      // Initial scroll to top
+      window.scrollTo(0, 0);
+
+      // Disable scrolling on body while preloader is visible
+      if (visible) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    }
+
+    return () => {
+      // Cleanup: ensure scrolling is restored if component unmounts
+      if (typeof window !== "undefined") {
+        document.body.style.overflow = "unset";
+      }
+    };
+  }, [visible]);
+
   if (!visible) return null;
 
   return (

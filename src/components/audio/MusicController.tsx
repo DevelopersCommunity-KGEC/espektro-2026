@@ -18,26 +18,63 @@ const TRACKS = {
   BENGALI: "/music/BENGALICULTURE.wav",
 };
 
-// Main Music Mapping
-const SECTION_MUSIC_MAP: Record<string, string> = {
-  hero: TRACKS.STARTING,
-  "espektro-about": TRACKS.STARTING,
-  techtix: TRACKS.STARTING,
-  quizine: TRACKS.STARTING,
-  exotica: TRACKS.STARTING,
-  timeline: TRACKS.BENGALI,
-  "events-timeline": TRACKS.ARTIST,
-  "featured-artists": TRACKS.ARTIST,
-  "artist-gallery": TRACKS.ARTIST_PREV,
-  sponsors: TRACKS.ARTIST_PREV,
-  clubs: TRACKS.ARTIST_PREV,
-  contact: TRACKS.ARTIST_PREV,
-};
+interface SectionAudioConfig {
+  track: string;
+  volume: number;
+  fadeMs: number;
+  delayMs?: number;
+  startTime?: number;
+  isSharp?: boolean;
+  scrollSpeedMs?: number;
+  hasThunder?: boolean;
+}
 
-const FADE_DURATION = 1800; // ms
-const SHARP_FADE = 200; // Almost a cut for Starting/Bengali transition
-const MAX_VOLUME = 0.4;
-const THUNDER_VOLUME = 0.4; // Balanced
+const DEFAULT_SCROLL_SPEED = 1000;
+const DEFAULT_FADE = 1800;
+const DEFAULT_VOLUME = 0.4;
+const THUNDER_INTRO_MS = 2500;
+
+const AUDIO_CONFIG: Record<string, SectionAudioConfig> = {
+  hero: {
+    track: TRACKS.STARTING, volume: 0.8, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 0, hasThunder: false
+  },
+  "espektro-about": {
+    track: TRACKS.STARTING, volume: 0.8, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+  },
+  techtix: {
+    track: TRACKS.STARTING, volume: 0.8, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+  },
+  quizine: {
+    track: TRACKS.STARTING, volume: 0.8, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+  },
+  exotica: {
+    track: TRACKS.STARTING, volume: 0.8, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+  },
+  "1stback": {
+    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+  },
+  "timeline": {
+    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 800, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
+  },
+  "events-timeline": {
+    track: TRACKS.ARTIST, volume: 0.4, fadeMs: 1200, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
+  },
+  "featured-artists": {
+    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: true
+  },
+  "artist-gallery": {
+    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: true
+  },
+  sponsors: {
+    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+  },
+  clubs: {
+    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+  },
+  contact: {
+    track: TRACKS.ARTIST_PREV, volume: 0.4, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+  },
+};
 
 export function MusicController() {
   const [activeSection, setActiveSection] = useState<string>("hero");
@@ -50,24 +87,16 @@ export function MusicController() {
   const thunderRef = useRef<HTMLAudioElement | null>(null);
   const activeAudioRef = useRef<"A" | "B">("A");
   const fadeIntervals = useRef<Record<string, NodeJS.Timeout>>({});
+  const introTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Helper: Smooth volume fade with interval clearing
-  const fadeAudio = (
-    audio: HTMLAudioElement,
-    targetVol: number,
-    duration: number,
-    id: string
-  ) => {
-    if (fadeIntervals.current[id]) {
-      clearInterval(fadeIntervals.current[id]);
-    }
-
+  // Helper: Smooth volume fade
+  const fadeAudio = (audio: HTMLAudioElement, targetVol: number, duration: number, id: string) => {
+    if (fadeIntervals.current[id]) clearInterval(fadeIntervals.current[id]);
     if (duration <= 0) {
       audio.volume = targetVol;
       if (targetVol === 0) audio.pause();
       return;
     }
-
     const steps = 30;
     const stepTime = duration / steps;
     const startVol = audio.volume;
@@ -78,13 +107,10 @@ export function MusicController() {
       currentStep++;
       const newVol = startVol + volStep * currentStep;
       audio.volume = Math.max(0, Math.min(1, newVol));
-
       if (currentStep >= steps) {
         clearInterval(fadeIntervals.current[id]);
         delete fadeIntervals.current[id];
-        if (targetVol === 0) {
-          audio.pause();
-        }
+        if (targetVol === 0) audio.pause();
       }
     }, stepTime);
   };
@@ -92,25 +118,17 @@ export function MusicController() {
   // 1. Listen for Start Signal
   useEffect(() => {
     const handleStart = () => {
-      console.log("[MusicController] Experience started");
+      console.log(`[MusicController] Experience Starting at: ${activeSection}`);
+      // Sync immediately to trigger the main effect
+      setDebouncedSection(activeSection);
       setIsPlaying(true);
-      const initialTrack = SECTION_MUSIC_MAP["hero"];
-
-      if (audioRefA.current && initialTrack) {
-        audioRefA.current.src = initialTrack;
-        audioRefA.current.volume = 0;
-        audioRefA.current.play()
-          .then(() => {
-            fadeAudio(audioRefA.current!, MAX_VOLUME, FADE_DURATION, "A");
-            setCurrentTrack(initialTrack);
-          })
-          .catch(e => console.error("[MusicController] Initial play failed:", e));
-      }
     };
-
     window.addEventListener("ESPEKTRO_START_EXPERIENCE", handleStart);
-    return () => window.removeEventListener("ESPEKTRO_START_EXPERIENCE", handleStart);
-  }, []);
+    return () => {
+      window.removeEventListener("ESPEKTRO_START_EXPERIENCE", handleStart);
+      if (introTimerRef.current) clearTimeout(introTimerRef.current);
+    };
+  }, [activeSection]);
 
   // 2. Observer: Update Active Section
   useEffect(() => {
@@ -118,46 +136,54 @@ export function MusicController() {
       (entries) => {
         let bestCandidate = null;
         let maxRatio = 0;
-
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
             maxRatio = entry.intersectionRatio;
             bestCandidate = entry.target.id;
           }
         });
-
-        if (bestCandidate) {
-          setActiveSection(bestCandidate);
-        }
+        if (bestCandidate) setActiveSection(bestCandidate);
       },
-      {
-        threshold: [0.05, 0.2, 0.5], // Lower threshold for better sensitivity
-        rootMargin: "-10% 0px -10% 0px", // Standard window
-      },
+      { threshold: [0.05, 0.2, 0.5], rootMargin: "-10% 0px -10% 0px" }
     );
-
-    const sections = document.querySelectorAll("[data-section-id]");
-    sections.forEach((s) => observer.observe(s));
+    document.querySelectorAll("[data-section-id]").forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
-  // 2b. Debounce Active Section (2s delay for fast scrolling)
+  // 2b. Debounce Active Section (Scroll Speed)
   useEffect(() => {
+    const config = AUDIO_CONFIG[activeSection];
+    const delay = config?.scrollSpeedMs ?? DEFAULT_SCROLL_SPEED;
+    console.log(`[MusicController] Entering ${activeSection}, scheduled in ${delay}ms`);
     const timer = setTimeout(() => {
+      console.log(`[MusicController] Section Committing: ${activeSection}`);
       setDebouncedSection(activeSection);
-    }, 1000);
-
+    }, delay);
     return () => clearTimeout(timer);
   }, [activeSection]);
 
   // 3. Handle Main Track Change
   useEffect(() => {
     if (!isPlaying) return;
+    const config = AUDIO_CONFIG[debouncedSection];
+    if (!config) return;
 
-    const nextTrack = SECTION_MUSIC_MAP[debouncedSection];
-    if (nextTrack === undefined || nextTrack === currentTrack) return;
+    const isSameTrack = config.track === currentTrack;
 
-    console.log(`[MusicController] Switch (Debounced): ${debouncedSection} -> ${nextTrack}`);
+    // If same track, just update volume/fade without full crossfade
+    if (isSameTrack) {
+      const activeAudio = activeAudioRef.current === "A" ? audioRefA.current : audioRefB.current;
+      if (activeAudio) {
+        console.log(`[MusicController] Same track (${debouncedSection}), updating params: vol=${config.volume}`);
+        fadeAudio(activeAudio, config.volume, config.fadeMs, activeAudioRef.current);
+      }
+      return;
+    }
+
+    console.log(`[MusicController] Track Switch: ${currentTrack} -> ${config.track} (${debouncedSection})`);
+
+    // Clear any existing intro timer
+    if (introTimerRef.current) clearTimeout(introTimerRef.current);
 
     const prevAudio = activeAudioRef.current === "A" ? audioRefA.current : audioRefB.current;
     const nextAudio = activeAudioRef.current === "A" ? audioRefB.current : audioRefA.current;
@@ -166,72 +192,74 @@ export function MusicController() {
 
     if (!prevAudio || !nextAudio) return;
 
-    // Detect if we need a sharp transition (Starting <-> Bengali)
-    const isSharpTransition =
-      (currentTrack === TRACKS.STARTING && nextTrack === TRACKS.BENGALI) ||
-      (currentTrack === TRACKS.BENGALI && nextTrack === TRACKS.STARTING);
+    const fadeTime = config.fadeMs;
+    const bleedDelay = config.isSharp ? 0 : (config.delayMs ?? 500);
 
-    const fadeTime = isSharpTransition ? SHARP_FADE : FADE_DURATION;
-
-    // 1. Prepare and start Next Track immediately
-    if (nextTrack) {
-      nextAudio.src = nextTrack;
+    const startNextTrack = () => {
+      console.log(`[MusicController] Triggering Track: ${config.track} on ${nextId}`);
+      nextAudio.src = config.track;
       nextAudio.volume = 0;
-      nextAudio.play()
-        .then(() => {
-          console.log(`[MusicController] Blending in: ${nextTrack}`);
-          fadeAudio(nextAudio, MAX_VOLUME, fadeTime, nextId);
-          activeAudioRef.current = nextId;
-          setCurrentTrack(nextTrack);
 
-          // 2. Handle Previous Track with "Bleed" overlap
-          if (isSharpTransition) {
-            fadeAudio(prevAudio, 0, fadeTime, prevId);
-          } else {
-            // Wait 500ms before starting fade-out for a richer "bleed" effect
-            setTimeout(() => {
-              fadeAudio(prevAudio, 0, fadeTime, prevId);
-            }, 500);
-          }
-        })
-        .catch(e => console.error("[MusicController] Play failed:", e));
+      // Small delay to ensure src is registered by browser
+      setTimeout(() => {
+        nextAudio.play()
+          .then(() => {
+            console.log(`[MusicController] Play success: ${config.track}`);
+            if (config.startTime !== undefined) nextAudio.currentTime = config.startTime;
+            fadeAudio(nextAudio, config.volume, fadeTime, nextId);
+            activeAudioRef.current = nextId;
+            setCurrentTrack(config.track);
+
+            if (prevAudio && prevAudio.src && prevAudio.volume > 0) {
+              console.log(`[MusicController] Fading out previous track on ${prevId}`);
+              setTimeout(() => fadeAudio(prevAudio, 0, fadeTime, prevId), bleedDelay);
+            }
+          })
+          .catch(e => {
+            console.error(`[MusicController] Play failed for ${config.track}:`, e);
+            // Emergency fallback: just try playing
+            nextAudio.play().catch(e2 => console.error("[MusicController] Full playback failure:", e2));
+          });
+      }, 50);
+    };
+
+    if (config.hasThunder) {
+      console.log(`[MusicController] Thunder intro active (${THUNDER_INTRO_MS}ms delay)`);
+      // Fade out previous track immediately for thunder solo (if it exists)
+      if (prevAudio && prevAudio.src) fadeAudio(prevAudio, 0, 800, prevId);
+      introTimerRef.current = setTimeout(startNextTrack, THUNDER_INTRO_MS);
     } else {
-      fadeAudio(prevAudio, 0, fadeTime, prevId);
-      setCurrentTrack("");
+      startNextTrack();
     }
+
+    return () => {
+      if (introTimerRef.current) clearTimeout(introTimerRef.current);
+    };
   }, [debouncedSection, isPlaying, currentTrack]);
 
   // 4. Handle Thunder Layer
   useEffect(() => {
     if (!isPlaying || !thunderRef.current) return;
+    const config = AUDIO_CONFIG[debouncedSection];
+    const shouldPlayThunder = config?.hasThunder && config.track !== TRACKS.THUNDER;
 
-    // Thunder ambient channel runs if section is flagged AND its NOT the main track
-    const nextMainTrack = SECTION_MUSIC_MAP[debouncedSection];
-    const isThunderSection =
-      debouncedSection === "timeline" ||
-      debouncedSection === "events-timeline" ||
-      debouncedSection === "featured-artists" ||
-      debouncedSection === "artist-gallery";
-
-    const shouldPlayAmbientThunder = isThunderSection && nextMainTrack !== TRACKS.THUNDER;
-
-    if (shouldPlayAmbientThunder) {
+    if (shouldPlayThunder) {
       if (thunderRef.current.paused) {
         thunderRef.current.volume = 0;
         thunderRef.current.play()
-          .then(() => fadeAudio(thunderRef.current!, THUNDER_VOLUME, FADE_DURATION, "thunder"))
+          .then(() => fadeAudio(thunderRef.current!, 0.4, 1800, "thunder"))
           .catch(e => console.error("[MusicController] Thunder failed:", e));
       }
     } else if (!thunderRef.current.paused) {
-      fadeAudio(thunderRef.current, 0, FADE_DURATION, "thunder");
+      fadeAudio(thunderRef.current, 0, 1800, "thunder");
     }
   }, [debouncedSection, isPlaying]);
 
   return (
     <div className="hidden">
-      <audio ref={audioRefA} loop preload="auto" />
-      <audio ref={audioRefB} loop preload="auto" />
-      <audio ref={thunderRef} src={TRACKS.THUNDER} loop preload="auto" />
+      <audio ref={audioRefA} loop preload="auto" crossOrigin="anonymous" />
+      <audio ref={audioRefB} loop preload="auto" crossOrigin="anonymous" />
+      <audio ref={thunderRef} src={TRACKS.THUNDER} loop preload="auto" crossOrigin="anonymous" />
       <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white p-2 text-[9px] rounded-lg backdrop-blur-xl border border-white/20 pointer-events-none font-mono flex flex-col gap-1 min-w-[200px]">
         <div className="flex justify-between items-center opacity-70 border-b border-white/10 pb-1 mb-1">
           <span>ESPEKTRO AUDIO ENGINE</span>
