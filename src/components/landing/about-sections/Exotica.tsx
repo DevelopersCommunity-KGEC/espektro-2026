@@ -158,7 +158,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/about-vectors/img9.jpeg"
+                  src="/about-vectors/img5.jpeg"
                   alt="Culture art"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
