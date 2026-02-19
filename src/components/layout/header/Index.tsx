@@ -12,6 +12,7 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Magnetic from "@/components/layout/magnetic/Index";
+import Logo from "../../landing/logo/Logo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -162,10 +163,13 @@ export default function Header({
         }}
       >
         <div className={styles.logo}>
-          <a href="/">
-            <span className="text-2xl font-bold text-[#B7410E] font-[family-name:var(--font-medieval-sharp)] tracking-wider">
+          <a href="/" className="flex items-center gap-2">
+            <div className="w-18 h-18 -mt-2 -ml-2">
+              <Logo className="p-1" />
+            </div>
+            {/* <span className="text-2xl font-bold text-[#B7410E] font-[family-name:var(--font-medieval-sharp)] tracking-wider">
               Espektro 26
-            </span>
+            </span> */}
           </a>
         </div>
 

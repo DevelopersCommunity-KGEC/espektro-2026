@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Logo from "../logo/Logo";
 
 export function Hero() {
     const [mounted, setMounted] = useState(false);
@@ -85,25 +86,44 @@ export function Hero() {
             {/* Main Content */}
             <div className="relative z-20 container mx-auto px-6 text-center mt-10">
                 <motion.p
-                    className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-8 font-[family-name:var(--font-roboto-slab)]"
+                    className="text-[#8B2635] lg:block hidden text-[8px] sm:text-[10px] md:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] font-bold mb-6 lg:mb-8 sm:mb-8 font-[family-name:var(--font-roboto-slab)] -mt-10 max-w-[90vw] mx-auto leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
                     Kalyani Government Engineering College presents
                 </motion.p>
-
+                <motion.p
+                    className="text-[#8B2635] font-bold lg:hidden block  text-3xl md:text-8xl lg:text-9xl  md:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] font-bold mb-6 lg:mb-8 sm:mb-8 font-[family-name:var(--font-roboto-slab)] -mt-10 max-w-[90vw] mx-auto leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    K.G.E.C
+                </motion.p>
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, ease: "easeOut" }}
+                    className="flex flex-col items-center gap-2"
                 >
-                    <h1 className="text-5xl sm:text-8xl md:text-7xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-4 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
-                        ESPEKTRO
-                    </h1>
-                    <p className="text-[#B7410E] text-4xl sm:text-6xl md:text-7xl lg:text-6xl italic font-bold mb-12 font-[family-name:var(--font-medieval-sharp)]">
-                        2026
-                    </p>
+                    <div className="relative w-[380px] sm:w-[450px] md:w-[500px] lg:hidden aspect-[463/417] mb-0 sm:mb-4">
+                        <Image
+                            src="/espektro-logo-mobile.svg"
+                            alt="Espektro Logo"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+                    <div className="flex flex-col items-center -mt-16 sm:-mt-12 md:-mt-16 lg:mt-0">
+                        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-2 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
+                            ESPEKTRO
+                        </h1>
+                        <p className="text-[#B7410E] text-3xl sm:text-5xl md:text-6xl lg:text-6xl italic font-bold mb-8 font-[family-name:var(--font-medieval-sharp)]">
+                            2026
+                        </p>
+                    </div>
                 </motion.div>
 
                 <motion.p
@@ -112,9 +132,9 @@ export function Hero() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
                 >
-                    A journey through the{" "}
+                    {/* A journey through the{" "} */}
                     <span className="text-[#B7410E] underline underline-offset-8 decoration-[#B7410E]/20 font-bold">
-                        Evolution of Bengali Culture
+                        Aitijhya Āvartanam
                     </span>
                 </motion.p>
 

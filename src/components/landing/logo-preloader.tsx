@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import "./logo-preloader.css";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Logo from "./logo/Logo";
 
 const TEXT_GROUP_ID = "text";
 const TEXT_SPLIT_Y = 860;
@@ -296,9 +297,12 @@ export function LogoPreloader() {
           {/* <p className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
             Kalyani Government Engineering College presents
           </p> */}
+          <div className=" lg:w-[300px] h-[300px] aspect-[463/417]">
+            <Logo />
+          </div>
           <div className="text-center mb-8">
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold text-[#2C1810] uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm leading-none">
-              Explore With Us
+              ESPEKTRO 26
             </h1>
             {/* <p className="text-[#B7410E] text-3xl sm:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] mt-2">
               2026
@@ -309,7 +313,7 @@ export function LogoPreloader() {
             onClick={handleStart}
             className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-12 px-10 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] rounded-sm"
           >
-            ENTER EXPERIENCE
+            EXPLORE
           </Button>
         </div>
       ) : (
