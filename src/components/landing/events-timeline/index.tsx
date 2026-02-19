@@ -175,7 +175,7 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
         <section
             ref={sectionRef}
             id="schedule"
-            className="relative z-10 py-24 lg:py-36 overflow-x-hidden z-10"
+            className="relative z-10 py-24 lg:py-36 overflow-hidden z-10"
             style={{ backgroundColor: "#FFF8F0" }}
         >
             {/* Lotus Mandala Background - Centered and Subtle */}

@@ -94,7 +94,7 @@ export function FeaturedArtists() {
             </div>
 
             <div ref={wrapperRef} className={styles.mainWrapper} style={{ backgroundColor: "transparent" }}>
-                <div ref={containerRef} className={styles.mainContainer} style={{ background: 'transparent', border: 'none', width: '100%', maxWidth: 'none', left: '0' }}>
+                <div ref={containerRef} className={styles.mainContainer} style={{ background: 'transparent', border: 'none', width: '100vw', maxWidth: 'none', left: '0' }}>
 
                     {/* Top Tribal Border & Heading Block */}
                     <div className={`${styles.topHeadingContainer} !relative !translate-y-0 w-full z-[70]`}>
