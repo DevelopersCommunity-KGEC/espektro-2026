@@ -18,7 +18,7 @@ const Quizine: React.FC = () => {
   const y5 = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 pr-10 md:pr-0 md:px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
+    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 md:px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
       {/* <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
         <Image

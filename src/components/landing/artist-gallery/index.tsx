@@ -216,7 +216,7 @@ export function ArtistGallery() {
 
   const closePopup = () => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = '';
   };
 
   // Duplicate images based on screen size
