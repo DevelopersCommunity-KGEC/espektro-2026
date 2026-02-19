@@ -98,7 +98,7 @@ const Techtix: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
               Techtix
             </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
+            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
               The technical powerhouse of Espektro, Techtix ignites innovation before the main fest begins. From robotics battles and coding showdowns to brain-teasing quizzes and technical challenges, it’s where logic meets creativity. It sets the competitive pulse for the days to follow.
             </p>
           </motion.div>

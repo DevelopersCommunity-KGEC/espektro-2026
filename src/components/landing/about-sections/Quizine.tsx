@@ -99,7 +99,7 @@ const Quizine: React.FC = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
               Quixine
             </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
+            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
               A paradise for food lovers, Quixine brings together flavors from every craving. From street-style favorites to fusion delights, it adds taste to every moment of the fest. Because no celebration at KGEC is complete without great food and greater company.
             </p>
           </motion.div>
