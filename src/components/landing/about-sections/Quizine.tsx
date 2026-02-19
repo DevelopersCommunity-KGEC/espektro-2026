@@ -125,7 +125,7 @@ const Quizine: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/kolkata-city.webp"
+                  src="/about-vectors/img8.jpeg"
                   alt="City view"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -141,7 +141,7 @@ const Quizine: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705035698/espektro/2023/about/espektro.webp"
+                  src="/about-vectors/img13.jpeg"
                   alt="Main Espektro focus"
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
@@ -158,7 +158,7 @@ const Quizine: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/india-culture.webp"
+                  src="/about-vectors/img6.jpeg"
                   alt="Culture art"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -167,7 +167,7 @@ const Quizine: React.FC = () => {
 
               {/* Image 5 - Bottom Right - Transparent Element */}
               <motion.div
-                className="absolute bottom-[0%] right-[-5%] w-[50%] h-[50%] z-[60]"
+                className="absolute bottom-[0%] right-[-5%] w-[70%] h-[70%] z-[60]"
                 style={{ y: y4 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
                 whileInView={{ opacity: 1, scale: 1, rotate: 12 }}
@@ -175,7 +175,7 @@ const Quizine: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/Elements _20260218_030113_0004.webp"
+                  src="/images/img2.webp"
                   alt="Clapperboard element"
                   fill
                   className="object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500"

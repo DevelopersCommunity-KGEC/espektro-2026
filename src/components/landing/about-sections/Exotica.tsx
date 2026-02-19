@@ -125,7 +125,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/kolkata-city.webp"
+                  src="/about-vectors/img7.jpeg"
                   alt="City view"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
@@ -141,7 +141,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="https://res.cloudinary.com/dgc9mpvvw/image/upload/v1705035698/espektro/2023/about/espektro.webp"
+                  src="/about-vectors/img10.jpeg"
                   alt="Main Espektro focus"
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
@@ -158,7 +158,7 @@ const Exotica: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/india-culture.webp"
+                  src="/about-vectors/img9.jpeg"
                   alt="Culture art"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
