@@ -46,7 +46,7 @@ export default function TimelineDesktop() {
     })();
 
     return (
-        <section ref={targetRef} className="relative h-[400vh] bg-[#FFF8F0] text-foreground z-20">
+        <section ref={targetRef} className="relative h-[400vh] bg-[#FFF8F0] text-foreground z-20 font-[family-name:var(--font-medieval-sharp)]">
             {/* Left fixed tribal border */}
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden z-50 pointer-events-none"
@@ -158,7 +158,7 @@ export default function TimelineDesktop() {
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                             transition={{ duration: 0.4, ease: "easeOut" }}
-                                            className="absolute left-1/2 -translate-x-1/2 w-[280px] md:w-[320px] z-50"
+                                            className="absolute left-1/2 -translate-x-1/2 w-[280px] md:w-[320px] z-50 font-[family-name:var(--font-medieval-sharp)]"
                                             style={{ top: '80%' }}
                                         >
                                             <div className="bg-[#FFF0E6] backdrop-blur-md p-5 rounded-2xl shadow-2xl">
@@ -168,7 +168,7 @@ export default function TimelineDesktop() {
                                                     </span>
                                                     {/* <div className="h-px bg-gray-200 flex-grow" /> */}
                                                 </div>
-                                                <h3 className="text-xl font-serif font-bold text-[#2C1810] mb-1">
+                                                <h3 className="text-xl font-bold text-[#2C1810] mb-1">
                                                     {item.title}
                                                 </h3>
                                                 <p className="text-gray-600 text-xs leading-relaxed">

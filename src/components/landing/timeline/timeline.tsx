@@ -179,11 +179,11 @@ export default function Timeline() {
                                     </div>
                                 </div>
                                 {/* Description Card - Below Image, Scrolls with it */}
-                                <div className={`absolute top-[120%] left-1/2 -translate-x-1/2 w-64 md:w-80 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-gray-100 transition-all duration-700 text-left ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                                <div className={`absolute top-[120%] left-1/2 -translate-x-1/2 w-64 md:w-80 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-gray-100 transition-all duration-700 text-left font-[family-name:var(--font-medieval-sharp)] ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                                     <p className="text-[#B7410E] text-[10px] uppercase tracking-[0.2em] font-bold mb-2">
                                         {item.era}
                                     </p>
-                                    <h3 className="text-xl font-serif font-bold text-gray-900 mb-2 leading-tight">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
                                         {item.title}
                                     </h3>
                                     <p className="text-gray-600 text-xs leading-relaxed line-clamp-4">
