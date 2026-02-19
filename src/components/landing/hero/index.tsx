@@ -20,14 +20,21 @@ export function Hero() {
 
     return (
         <section className="relative flex justify-center items-center w-full min-h-screen py-20 pr-7 md:pr-0 md:px-4  overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
-            {/* Lotus Mandala Background - Centered and Subtle */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
+            {/* Lotus Mandala Background - Centred and Subtle */}
+            <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
                 <Image
                     src="/images/background_web.webp"
                     alt="Decorative lotus mandala"
-                    width={1000}
-                    height={800}
-                    className="object-contain w-full "
+                    fill
+                    priority
+                    className="object-contain hidden md:block"
+                />
+                <Image
+                    src="/images/background_web_mobile.png"
+                    alt="Decorative lotus mandala"
+                    fill
+                    priority
+                    className="object-contain w-fit md:hidden bottom-50"
                 />
             </div>
 

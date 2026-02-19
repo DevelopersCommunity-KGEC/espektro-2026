@@ -19,15 +19,22 @@ export function FirstBack() {
         );
 
     return (
-        <section className="relative w-full min-h-screen overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
+        <section className="relative w-full min-h-[50vh]  md:min-h-[70vh] overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Background Image - Fits without cropping */}
-            <div className="absolute inset-0 opacity-50 pointer-events-none">
+            <div className="absolute inset-0  flex items-center justify-center opacity-[0.4] pointer-events-none ">
                 <Image
-                    src="/images/1stback.png"
-                    alt="Background Illustration"
+                    src="/images/1stback.webp"
+                    alt="Decorative lotus mandala"
                     fill
                     priority
-                    className="object-cover md:object-contain"
+                    className="object-contain hidden md:block"
+                />
+                <Image
+                    src="/images/1stback.webp"
+                    alt="Decorative lotus mandala"
+                    fill
+                    priority
+                    className="object-contain w-fit md:hidden bottom-50"
                 />
             </div>
 

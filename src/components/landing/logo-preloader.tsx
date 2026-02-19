@@ -263,13 +263,20 @@ export function LogoPreloader() {
   return (
     <div className={`preloader-overlay ${startTrigger ? "active-exit" : ""}`} style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none">
+      <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
         <Image
           src="/images/background_web.webp"
           alt="Decorative lotus mandala"
           fill
           priority
-          className="object-cover md:object-contain w-full"
+          className="object-contain hidden md:block"
+        />
+        <Image
+          src="/images/background_web_mobile.png"
+          alt="Decorative lotus mandala"
+          fill
+          priority
+          className="object-contain w-fit md:hidden bottom-50"
         />
       </div>
 

@@ -27,33 +27,38 @@ export function Footer() {
         <div className="sticky bottom-0 z-0">
             <footer className="bg-[#423f3d] text-background min-h-[70vh] md:h-[70vh] relative overflow-hidden flex flex-col justify-end">
                 <motion.div
-                    className="absolute inset-0 flex items-center justify-center opacity-[0.5] pointer-events-none -bottom-40 md:-bottom-60"
+                    className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.4] pointer-events-none"
                 >
                     <Image
                         src="/images/background_web_2.webp"
                         alt="Decorative lotus mandala"
-                        width={1000}
-                        height={800}
-                        className="object-contain w-full"
+                        fill
+                        priority
+                        className="object-contain hidden md:block"
+                    />
+                    <Image
+                        src="/images/background_web_2_mobile.png"
+                        alt="Decorative lotus mandala"
+                        fill
+                        priority
+                        className="object-contain w-fit md:hidden bottom-50"
                     />
                 </motion.div>
                 <div className="container mx-auto px-6 lg:px-8 relative z-10 py-12 md:py-16">
                     <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-12 lg:gap-12">
                         <div className="col-span-2 lg:col-span-2 pt-24 md:pt-0">
-                            <Magnetic>
-                                <Link href="/" className="inline-block mb-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex items-center">
-                                            <span className="text-5xl md:text-7xl font-bold text-primary font-[family-name:var(--font-medieval-sharp)] tracking-wider">
-                                                Espektro
-                                            </span>
-                                            <span className="text-[10px] font-bold text-background/50 bg-background/10 px-2 py-0.5 rounded ml-2 font-[family-name:var(--font-roboto-slab)] tracking-[0.2em]">
-                                                2K26
-                                            </span>
-                                        </div>
+
+                            <Link href="/" className="inline-block mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="flex items-center">
+                                        <span className="text-5xl md:text-7xl font-bold text-primary font-[family-name:var(--font-medieval-sharp)] tracking-wider">
+                                            Espektro 26
+                                        </span>
+
                                     </div>
-                                </Link>
-                            </Magnetic>
+                                </div>
+                            </Link>
+
                             <p className="text-background/60 leading-relaxed max-w-sm font-[family-name:var(--font-open-sans)] text-sm md:text-base">
                                 The annual techno-management cultural fest of Kalyani Government Engineering College.
                                 Evolution of Bengali Culture.
