@@ -42,7 +42,7 @@ export default function Index({
       <Magnetic>
         <Link
           href={href}
-          className="text-sm font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all uppercase"
+          className="text-sm font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all uppercase no-magnetic-mobile"
         >
           {title}
         </Link>

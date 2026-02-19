@@ -70,14 +70,16 @@ interface NavProps {
   clubRoles?: any[];
   userRole?: string;
   closeMenu: () => void;
-  toggleButtonRef?: React.RefObject<HTMLDivElement | null>;
+  mobileButtonRef?: React.RefObject<HTMLDivElement | null>;
+  desktopButtonRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function Index({
   clubRoles = [],
   userRole,
   closeMenu,
-  toggleButtonRef,
+  mobileButtonRef,
+  desktopButtonRef,
 }: NavProps) {
   const pathname = usePathname();
   const [selectedIndicator, setSelectedIndicator] = useState(pathname);
@@ -97,7 +99,8 @@ export default function Index({
       if (
         menuRef.current &&
         !menuRef.current.contains(target) &&
-        (!toggleButtonRef?.current || !toggleButtonRef.current.contains(target))
+        (!mobileButtonRef?.current || !mobileButtonRef.current.contains(target)) &&
+        (!desktopButtonRef?.current || !desktopButtonRef.current.contains(target))
       ) {
         closeMenu();
       }
@@ -109,7 +112,7 @@ export default function Index({
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [closeMenu, toggleButtonRef]);
+  }, [closeMenu, mobileButtonRef, desktopButtonRef]);
 
   const handleSignOut = async () => {
     await authClient.signOut();

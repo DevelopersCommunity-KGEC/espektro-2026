@@ -243,7 +243,7 @@ export function Contact() {
                     </div>
                 </div>
             </div>
-            <div className="absolute -bottom-12 left-0 w-full h-12 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
+            <div className="absolute -bottom-17 left-0 w-full h-18 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
                 <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
                     {[...Array(15)].map((_, i) => (
                         <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">

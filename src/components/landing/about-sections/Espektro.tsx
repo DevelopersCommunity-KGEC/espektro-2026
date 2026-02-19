@@ -99,7 +99,25 @@ const EspektroAbout: React.FC = () => {
           className="object-contain"
         />
       </motion.div>
-
+      {/* Top-Left Circular Pattern - Back */}
+      <motion.div
+        className="absolute -left-16 -top-120 w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 z-[20] hidden sm:block"
+        initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 360 }}
+        transition={{
+          rotate: { duration: 90, repeat: Infinity, ease: "linear" },
+          opacity: { duration: 1 },
+          scale: { duration: 1 }
+        }}
+        viewport={{ once: true }}
+      >
+        <Image
+          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.webp"
+          alt="Traditional woven basket decoration"
+          fill
+          className="object-contain drop-shadow-lg"
+        />
+      </motion.div>
       {/* Main Content Container */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-20 md:px-28 lg:px-32">
         <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-12 lg:gap-16">
