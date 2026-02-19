@@ -134,12 +134,17 @@
 
   html {
     scroll-behavior: smooth;
-    overflow-x: clip; /* Fix for horizontal scroll without breaking sticky */
+    overflow-x: hidden !important;
+    max-width: 100%;
+    width: 100%;
   }
 
   body {
     @apply bg-background text-foreground;
-    overflow-x: clip; /* Fix for horizontal scroll without breaking sticky */
+    overflow-x: hidden !important;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
   }
 }
 

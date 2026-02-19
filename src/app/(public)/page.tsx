@@ -28,7 +28,7 @@ export default async function LandingPage() {
   const timelineData = await getTimelineData();
 
   return (
-    <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+    <main className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground overflow-x-hidden max-w-full">
       <LogoPreloader />
       <MusicController />
 

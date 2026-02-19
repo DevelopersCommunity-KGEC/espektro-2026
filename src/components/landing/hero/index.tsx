@@ -19,7 +19,7 @@ export function Hero() {
         );
 
     return (
-        <section className="relative flex justify-center items-center w-full min-h-screen py-20 pr-7 md:pr-0 md:px-4  overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
+        <section className="relative flex justify-center items-center w-full min-h-screen py-20 px-4 md:px-4 overflow-hidden z-10" style={{ backgroundColor: "#FFF8F0" }}>
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.9] pointer-events-none -bottom-60">
                 <Image
