@@ -401,9 +401,9 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 </div>
 
                 {/* Mobile hint */}
-                <p className="text-center text-xs text-muted-foreground mt-4 lg:hidden">
+                {/* <p className="text-center text-xs text-muted-foreground mt-4 lg:hidden">
                     Scroll horizontally to see the full schedule
-                </p>
+                </p> */}
 
                 {tooltipData && (
                     <PortalTooltip x={tooltipData.x} y={tooltipData.y}>
