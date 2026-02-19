@@ -140,7 +140,7 @@ const Techtix: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/about-vectors/img4.jpeg"
+                  src="/about-vectors/techtix.webp"
                   alt="Main Espektro focus"
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
