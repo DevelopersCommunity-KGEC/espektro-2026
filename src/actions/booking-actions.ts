@@ -145,7 +145,7 @@ export async function createOrder(
   const attributedCode = cookieStore.get("referral_source")?.value;
   let referrerUserId = "";
 
-  if (attributedCode && isEspektroEvent) {
+  if (attributedCode) {
     const referrer = await validateUserReferral(
       attributedCode,
       session.user.id,
@@ -163,6 +163,7 @@ export async function createOrder(
       currency: "INR",
       key: "FREE_TICKET",
       couponCode,
+      referrerUserId,
     };
   }
 

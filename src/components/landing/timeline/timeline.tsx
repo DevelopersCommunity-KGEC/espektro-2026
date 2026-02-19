@@ -19,7 +19,7 @@ export default function Timeline() {
     // But simplistic approach: map 0-1 vertical scroll to 0-(totalWidth) horizontal.
     // Let's assume a fixed spacing.
     // Let's assume a fixed spacing.
-    const itemSpacing = 150; // px - Reduced closer
+    const itemSpacing = 300; // px - Increased for lengthier feel
     const totalWidth = (timelineData.length - 1) * itemSpacing;
     const x = useTransform(scrollYProgress, [0, 1], [0, -totalWidth]);
 
@@ -45,11 +45,11 @@ export default function Timeline() {
             const xVal = i * itemSpacing;
             // Parse "10vh" -> 10.
             const topStr = item.position.top || "50vh";
-            const topPx = parseInt(topStr.replace("vh", ""), 10);
+            const topPx = parseInt(topStr.replace(/[^0-9.]/g, ""), 10);
 
-            // Map 0-60vh (container height) to 0-100 (SVG viewBox height)
-            // y = (top in vh / 60) * 100
-            const yVal = (topPx / 60) * 100;
+            // Since container is h-full (100vh) and viewBox height is 100, 
+            // yVal is just the vh number.
+            const yVal = topPx;
 
             return { x: xVal, y: yVal };
         });
@@ -77,46 +77,35 @@ export default function Timeline() {
     const activeItem = timelineData[activeIndex];
 
     return (
-        <section ref={targetRef} className="relative h-[500vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
-            {/* Lotus Mandala Background - Centered and Sticky */}
-            {/* <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center pointer-events-none opacity-[0.08]">
-                <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
-                    alt="Decorative lotus mandala"
-                    width={800}
-                    height={600}
-                    className="object-contain"
-                />
-            </div> */}
+        <section ref={targetRef} className="relative h-[1500vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
+            {/* STICKY CONTAINER - Unifies everything fixed on screen */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden">
+                {/* 1. Background Image */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="relative w-full h-full">
+                        <Image
+                            src="/images/bg1.png"
+                            alt="Timeline background"
+                            fill
+                            className="object-cover opacity-30"
+                        />
+                    </div>
+                </div>
 
-            {/* Left fixed tribal border */}
-            <div
-                className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-50 pointer-events-none"
-                style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
-                    backgroundRepeat: 'repeat-y',
-                    backgroundSize: '100% auto',
-                    backgroundPosition: 'top center',
-                }}
-            />
-
-            {/* Sticky Scrolling Area */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
-
-                {/* Header - Styled like Exotica */}
-                <div className="absolute top-4 left-0 w-full z-20 text-center px-4">
+                {/* 2. Header */}
+                <div className="absolute top-10 left-0 w-full z-20 text-center px-4">
                     <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-2 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
                         Historical Journey
                     </h3>
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] leading-[1.1] font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
+                    <h2 className="text-4xl md:text-6xl text-[#2C1810] leading-[1.1] font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
                         Evolution of <span className="text-[#B7410E]">Bengali Culture</span>
                     </h2>
                 </div>
 
-                {/* Horizontal Moving Container */}
+                {/* 3. Horizontal Moving Container - Set to h-full to align with vh positions */}
                 <motion.div
                     style={{ x }}
-                    className="relative flex items-center h-[60vh] left-[50vw] mt-40 md:mt-60" // Increased margin to push icons further down
+                    className="relative flex items-center h-full left-[50vw]"
                 >
                     {/* SVG Connecting Line */}
                     {/* We overlay it. Width needs to be huge. */}
@@ -181,20 +170,20 @@ export default function Timeline() {
 
                                 {/* Image Card - Absolute Center */}
                                 <div className={`absolute inset-0 flex items-center justify-center`}>
-                                    <div className={`relative w-[450px] md:w-[600px] aspect-video transition-all duration-700 ${isActive ? "scale-125" : "scale-90 border-transparent grayscale opacity-60"}`}>
+                                    <div className={`relative w-[320px] md:w-[450px] aspect-video transition-all duration-700 ${isActive ? "scale-85 md:scale-110" : "scale-75 md:scale-85 border-transparent grayscale opacity-80"}`}>
                                         <img
                                             src={item.img}
                                             alt={item.title}
-                                            className="w-full h-full object-contain scale-310"
+                                            className="w-full h-full object-contain scale-210 md:scale-310"
                                         />
                                     </div>
                                 </div>
                                 {/* Description Card - Below Image, Scrolls with it */}
-                                <div className={`absolute top-[120%] left-1/2 -translate-x-1/2 w-64 md:w-80 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-gray-100 transition-all duration-700 text-left ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                                <div className={`absolute top-[120%] left-1/2 -translate-x-1/2 w-64 md:w-80 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-gray-100 transition-all duration-700 text-left font-[family-name:var(--font-medieval-sharp)] ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                                     <p className="text-[#B7410E] text-[10px] uppercase tracking-[0.2em] font-bold mb-2">
                                         {item.era}
                                     </p>
-                                    <h3 className="text-xl font-serif font-bold text-gray-900 mb-2 leading-tight">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
                                         {item.title}
                                     </h3>
                                     <p className="text-gray-600 text-xs leading-relaxed line-clamp-4">

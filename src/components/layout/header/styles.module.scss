@@ -1,19 +1,22 @@
 .header {
-    // @media (max-width: 900px){
-    //     color: white;
-    // }
-    padding: 0 1.5rem;
+    padding: 0;
     position: fixed;
     display: flex;
     flex-direction: row;
     z-index: 200;
-    top: 0;
+    top: 10px;
+    left: 0;
     color: black;
-    justify-content: right;
+    justify-content: flex-end;
     width: 100%;
     font-weight: 300;
     box-sizing: border-box;
     align-items: center;
+    padding: 0 5%;
+
+    @media (max-width: 768px) {
+        display: none !important;
+    }
 
     .logo {
         display: flex;
@@ -122,167 +125,108 @@
             cursor: pointer;
         }
     }
+}
 
-    .menuSmall {
-        position: relative;
-        padding: 1.3rem 0;
-        display: none;
+// Global button/burger styles used in header
+.button {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #B7410E;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    transition: transform 0.3s;
 
-        @media (max-width: 1050px) {
-            display: block;
-        }
-
-        @media (max-width: 1400px) {
-            gap: 1.3rem;
-        }
-
-        .el {
-            font-size: small;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 1;
-            cursor: pointer;
-
-            &:hover {
-                .indicator {
-                    transform: scale(1);
-                }
-            }
-
-            .indicator {
-                position: absolute;
-                width: 5px;
-                height: 5px;
-                top: 45px;
-                left: 50%;
-                background-color: black;
-                border-radius: 50%;
-                transform: scale(0) translateX(-50%);
-                transition: transform 0.2s cubic-bezier(0.76, 0, 0.24, 1);
-            }
-        }
-
-        a {
-            cursor: pointer;
-        }
+    @media (max-width: 768px) {
+        width: 50px !important;
+        height: 50px !important;
+        margin: 0 !important;
     }
 }
 
-.navButton {
+.burger {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+
+    &::after,
+    &::before {
+        content: "";
+        display: block;
+        height: 1px;
+        width: 40%;
+        margin: auto;
+        background-color: white;
+        position: relative;
+        transition: transform 0.3s;
+    }
+
+    &::after {
+        top: -5px;
+    }
+
+    &::before {
+        top: 5px;
+    }
+}
+
+.burgerActive {
+    &::after {
+        transform: rotate(45deg);
+        top: -1px;
+    }
+
+    &::before {
+        transform: rotate(-45deg);
+        top: 0px;
+    }
+}
+
+.navButton,
+.headerButtonContainer {
     position: fixed;
     right: 0px;
     z-index: 10000;
+    top: 0;
+    transform: scale(0);
 
-    .button {
-        position: relative;
-        margin: 20px;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background-color: #1C1D20;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .burger {
-        width: 100%;
-        position: relative;
-        z-index: 1;
-
-        &::after,
-        &::before {
-            content: "";
-            display: block;
-            height: 1px;
-            width: 40%;
-            margin: auto;
-            background-color: white;
-            position: relative;
-            transition: transform 0.3s;
-        }
-
-        &::after {
-            top: -5px;
-        }
-
-        &::before {
-            top: 5px;
-        }
-    }
-
-    .burgerActive {
-
-        &::after {
-            transform: rotate(45deg);
-            top: -1px;
-        }
-
-        &::before {
-            transform: rotate(-45deg);
-            top: 0px;
-        }
+    @media (max-width: 768px) {
+        display: none !important; // Handled by mobileHeader now
     }
 }
 
-.headerButtonContainer {
-    transform: scale(0);
-    position: fixed;
-    right: 0px;
-    z-index: 100;
+.mobileHeader {
+    display: none;
 
-    .button {
-        position: relative;
-        margin: 20px;
-        width: 80px;
+    @media (max-width: 768px) {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: auto;
         height: 80px;
-        border-radius: 50%;
-        background-color: #1C1D20;
-        cursor: pointer;
-        display: flex;
+        background: transparent; // Removed white background
+        z-index: 15000; // Above everything
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
     }
 
-    .burger {
-        width: 100%;
-        position: relative;
-        z-index: 1;
+    .logo {
+        z-index: 151;
+        min-width: 180px;
+        flex-shrink: 0;
 
-        &::after,
-        &::before {
-            content: "";
-            display: block;
-            height: 1px;
-            width: 40%;
-            margin: auto;
-            background-color: white;
-            position: relative;
-            transition: transform 0.3s;
+        span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #B7410E;
         }
-
-        &::after {
-            top: -5px;
-        }
-
-        &::before {
-            top: 5px;
-        }
-    }
-
-    .burgerActive {
-
-        &::after {
-            transform: rotate(45deg);
-            top: -1px;
-        }
-
-        &::before {
-            transform: rotate(-45deg);
-            top: 0px;
-        }
-
     }
 }

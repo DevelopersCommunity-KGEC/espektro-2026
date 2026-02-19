@@ -216,7 +216,7 @@ export function ArtistGallery() {
 
   const closePopup = () => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = '';
   };
 
   // Duplicate images based on screen size
@@ -229,15 +229,15 @@ export function ArtistGallery() {
       <div
         className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
         style={{
-          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
           backgroundRepeat: 'repeat-y',
           backgroundSize: '100% auto',
           backgroundPosition: 'top center'
         }}
       />
 
-      <div className="container mx-auto relative pt-20 pl-4 sm:pl-20 md:pl-28 lg:pl-32" ref={containerRef}>
-        <div className="mt-20 max-w-[95vw] lg:max-w-5xl mx-auto relative rounded-xl ">
+      <div className="container mx-auto relative pt-20 pl-0 md:pl-4 sm:pl-20 md:pl-28 lg:pl-32 px-0" ref={containerRef}>
+        <div className="mt-20 max-w-[100vw] md:max-w-[95vw] lg:max-w-7xl mx-auto relative rounded-xl ">
           {/* <div className="text-center mb-15">
             <h3 className="font-serif text-2xl lg:text-5xl font-bold text-black mb-10">
               Glimpses of <span className="text-[#F4A900]">Past Artists</span>
@@ -255,27 +255,27 @@ export function ArtistGallery() {
           </div>
           <div className={styles.galleryMask}>
             {/* Left Border SVG */}
-            <div
+            {/* <div
               className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
-                backgroundImage: 'url(/images/border2.png)',
+                backgroundImage: 'url(/images/border2.webp)',
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'
               }}
-            />
+            /> */}
             {/* Right Border SVG */}
-            <div
+            {/* <div
               className="absolute top-0 right-0 rotate-180 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-60"
               style={{
-                backgroundImage: 'url(/images/border2.png)',
+                backgroundImage: 'url(/images/border2.webp)',
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% auto',
                 backgroundPosition: 'top center'
               }}
-            />
+            /> */}
             {/* Bottom Border SVG */}
-            <img src="/border.svg" alt="" className={styles.borderBottom} />
+            {/* <img src="/border.svg" alt="" className={styles.borderBottom} /> */}
 
             <div className={styles.gridWrapper} ref={gridRef}>
               {allArtists.map((item, index) => {

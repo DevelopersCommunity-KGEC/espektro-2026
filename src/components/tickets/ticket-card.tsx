@@ -65,7 +65,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                 ticketId: ticket._id,
             });
             const link = document.createElement("a");
-            link.download = `espektro-ticket-${event.title.replace(/\s+/g, "-").toLowerCase()}.png`;
+            link.download = `espektro-ticket-${event.title.replace(/\s+/g, "-").toLowerCase()}.webp`;
             link.href = dataUrl;
             link.click();
         } catch (err) {

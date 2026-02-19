@@ -47,11 +47,18 @@ export async function getAdminReferralLeaderboard({
   });
   pipeline.push({ $unwind: "$event" });
 
-  // Filter by Club ID if provided
+  // Filter by Club ID if provided, otherwise default to 'espektro' per requirement
   if (clubId) {
     pipeline.push({
       $match: {
-        "event.clubId": clubId, // Assuming clubId is stored as string in Event or matched type
+        "event.clubId": clubId,
+      },
+    });
+  } else {
+    // Current requirement: Leaderboard only based on Espektro event tickets
+    pipeline.push({
+      $match: {
+        "event.clubId": "espektro",
       },
     });
   }

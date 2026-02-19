@@ -15,7 +15,9 @@ export default function Magnetic({ children }: { children: React.ReactElement })
         const mouseMove = (e: MouseEvent) => {
             if (!magnetic.current) return;
             const { clientX, clientY } = e;
-            const { height, width, left, top } = magnetic.current.getBoundingClientRect();
+            const rect = magnetic.current.getBoundingClientRect();
+            if (!rect) return;
+            const { height, width, left, top } = rect;
             const x = clientX - (left + width / 2);
             const y = clientY - (top + height / 2);
             xTo(x);

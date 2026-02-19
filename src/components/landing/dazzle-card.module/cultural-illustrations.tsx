@@ -82,7 +82,7 @@ export function CulturalIllustrations() {
 
         <div className={styles.bgContainer}>
           <Image
-            src="/images/kolkata-city.jpeg"
+            src="/images/kolkata-city.webp"
             alt=""
             fill
             className={styles.bgImage}

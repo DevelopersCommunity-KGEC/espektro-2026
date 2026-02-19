@@ -87,16 +87,16 @@ export function EventsList({ initialEvents }: EventsListProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-[family-name:var(--font-medieval-sharp)]">
       {/* Header & Filter Section */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl md:text-5xl font-bold text-[#2C1810] font-[family-name:var(--font-medieval-sharp)]">
           Upcoming Events
         </h1>
 
         <div className="flex items-center gap-4">
           {selectedClubs.length > 0 && (
-            <p className="text-sm text-muted-foreground hidden md:block">
+            <p className="text-sm text-[#4A3428] font-medium hidden md:block">
               {selectedClubs.length} club{selectedClubs.length !== 1 ? "s" : ""}{" "}
               selected
             </p>

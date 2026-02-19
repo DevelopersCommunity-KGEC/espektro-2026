@@ -27,7 +27,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
     event.image ||
     (event.eventImages && event.eventImages.length > 0
       ? event.eventImages[0].url
-      : "/images/placeholder.jpg");
+      : "/images/placeholder.webp");
 
   const displayPrice =
     event.price !== undefined ? event.price : event.eventPrice;

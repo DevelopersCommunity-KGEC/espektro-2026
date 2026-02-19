@@ -31,13 +31,13 @@ export function Contact() {
         <section
             ref={sectionRef}
             id="contact"
-            className="py-20 lg:py-32 relative z-10 overflow-hidden"
+            className="py-20 lg:py-32 relative z-10 "
             style={{ backgroundColor: "#FFF8F0" }}
         >
             {/* Lotus Mandala Background - Centered and Subtle */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
                 <Image
-                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+                    src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.webp"
                     alt="Decorative lotus mandala"
                     width={800}
                     height={600}
@@ -49,7 +49,7 @@ export function Contact() {
             <div
                 className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block"
                 style={{
-                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+                    backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
                     backgroundRepeat: 'repeat-y',
                     backgroundSize: '100% auto',
                     backgroundPosition: 'top center'
@@ -75,11 +75,11 @@ export function Contact() {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
                     {/* Contact Information */}
                     <div
-                        className={`transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                        className={`transition-all duration-700 delay-100 h-full ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
                             }`}
                     >
                         {/* Venue Block */}
-                        <div className="bg-white/70 backdrop-blur-md border border-[#4A3428]/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl p-6 lg:p-8 mb-8">
+                        <div className="bg-white/70 backdrop-blur-md border-2 [#B7410E]/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl p-6 lg:p-8 h-full flex flex-col justify-center">
                             <div className="flex items-start gap-5 mb-8">
                                 <div className="bg-[#8B2635]/10 rounded-2xl p-4 flex-shrink-0">
                                     <MapPin className="w-6 h-6 text-[#8B2635]" />
@@ -121,17 +121,17 @@ export function Contact() {
                                         Email
                                     </h3>
                                     <a
-                                        href="mailto:sponsorship.espektro@gmail.com"
+                                        href="mailto:espektrokgec@gmail.com"
                                         className="text-[#B7410E] hover:text-[#8B2635] font-bold underline underline-offset-4 transition-colors"
                                     >
-                                        sponsorship.espektro@gmail.com
+                                        espektrokgec@gmail.com
                                     </a>
                                 </div>
                             </div>
                         </div>
 
                         {/* Map Embed */}
-                        <div className="relative aspect-video rounded-3xl overflow-hidden border border-[#4A3428]/10 shadow-xl group">
+                        {/* <div className="relative aspect-video rounded-3xl overflow-hidden border border-[#4A3428]/10 shadow-xl group">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.907823258028!2d88.44954007505136!3d22.99041681752783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895327fbf3adb%3A0xabd136dfaf4f1628!2sEspektro%20Ground!5e0!3m2!1sen!2sus!4v1770658553857!5m2!1sen!2sus"
                                 width="100%"
@@ -151,15 +151,36 @@ export function Contact() {
                                 Open in Maps
                                 <ExternalLink className="w-4 h-4" />
                             </a>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Committee Cards */}
                     <div
-                        className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                        className={`transition-all duration-700 delay-200 h-full min-h-[350px] lg:min-h-0 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
                             }`}
                     >
-                        <h3 className="font-[family-name:var(--font-medieval-sharp)] text-3xl text-[#2C1810] mb-8">
+                        <div className="bg-white/70 backdrop-blur-md border-2 border-[#4A3428]/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl h-full overflow-hidden relative group">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.907823258028!2d88.44954007505136!3d22.99041681752783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f895327fbf3adb%3A0xabd136dfaf4f1628!2sEspektro%20Ground!5e0!3m2!1sen!2sus!4v1770658553857!5m2!1sen!2sus"
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0, filter: 'grayscale(0.2) contrast(1.1)' }}
+                                allowFullScreen={true}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="group-hover:grayscale-0 transition-all duration-1000"
+                            />
+                            <a
+                                href="https://maps.google.com/?q=Kalyani+Government+Engineering+College"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 flex items-center gap-2 text-sm font-bold text-[#2C1810] hover:bg-[#8B2635] hover:text-white transition-all shadow-lg z-10"
+                            >
+                                Open in Maps
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        </div>
+                        {/* <h3 className="font-[family-name:var(--font-medieval-sharp)] text-3xl text-[#2C1810] mb-8">
                             Organizing Committee
                         </h3>
                         <div className="space-y-5">
@@ -198,7 +219,7 @@ export function Contact() {
                             ))}
                         </div>
 
-                        {/* Quick Navigation Links */}
+                        
                         <div className="mt-10 p-8 bg-[#B7410E]/5 rounded-3xl border border-[#B7410E]/10 shadow-sm">
                             <h4 className="font-[family-name:var(--font-medieval-sharp)] text-xl text-[#2C1810] mb-6">
                                 Quick Navigation
@@ -217,8 +238,23 @@ export function Contact() {
                                     <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" /> Media Gallery
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
+
                     </div>
+                </div>
+            </div>
+            <div className="absolute -bottom-17 left-0 w-full h-18 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
+                <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
+                    {[...Array(15)].map((_, i) => (
+                        <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-14">
+                            <Image
+                                src="/images/shapartist.webp"
+                                alt=""
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

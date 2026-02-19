@@ -18,23 +18,30 @@ const Quizine: React.FC = () => {
   const y5 = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
-    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
+    <section ref={sectionRef} className="relative flex justify-center items-center w-full py-20 md:px-4 z-10" style={{ backgroundColor: "#FFF8F0" }}>
       {/* Lotus Mandala Background - Centered and Subtle */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none">
+      {/* <div className="absolute inset-0 -bottom-[50%] flex items-center justify-center opacity-[0.9] pointer-events-none">
         <Image
-          src="/images/360_F_1706070199_WZV67PDH1xx2nGjbDWR2M7U3bc4CsQi8.png"
+          src="/images/background_web.webp"
           alt="Decorative lotus mandala"
-          width={800}
-          height={600}
-          className="object-contain"
+          fill
+          priority
+          className="object-contain hidden md:block"
         />
-      </div>
+        <Image
+          src="/images/background_web_mobile.png"
+          alt="Decorative lotus mandala"
+          fill
+          priority
+          className="object-contain w-fit md:hidden bottom-50"
+        />
+      </div> */}
 
       {/* Left Tribal Border Pattern */}
       <div
         className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-0"
         style={{
-          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.png)',
+          backgroundImage: 'url(/images/43a0b75b3caae95caa70550adda8ed60.webp)',
           backgroundRepeat: 'repeat-y',
           backgroundSize: '100% auto',
           backgroundPosition: 'top center'
@@ -51,7 +58,7 @@ const Quizine: React.FC = () => {
         viewport={{ once: true }}
       >
         <Image
-          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.png"
+          src="/images/1c633fa82eab0887a01b2ba2b4c75bdc.webp"
           alt="Traditional woven basket decoration"
           fill
           className="object-contain drop-shadow-lg"
@@ -67,7 +74,7 @@ const Quizine: React.FC = () => {
         viewport={{ once: true }}
       >
         <Image
-          src="/images/992241cef4a2175dfd465b2ebbe92e8e.png"
+          src="/images/992241cef4a2175dfd465b2ebbe92e8e.webp"
           alt="Decorative circular pattern"
           fill
           className="object-contain"
@@ -75,12 +82,12 @@ const Quizine: React.FC = () => {
       </motion.div> */}
 
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-20 md:px-28 lg:px-32">
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16">
 
           {/* Left Content - Text */}
           <motion.div
-            className="flex-1 text-justify max-w-xl flex flex-col items-center"
+            className="flex-1 text-justify lg:text-justify max-w-xl flex flex-col items-center"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -90,12 +97,10 @@ const Quizine: React.FC = () => {
               Culinary Excellence
             </h3>
             <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
-              Quizine
+              Quixine
             </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-open-sans)]">
-              Quizine awaits, promising a gastronomic haven that will ignite your senses and elevate your culinary experience. Prepare to embark on a journey through a myriad of flavors and culinary marvels, where every bite tells a story.
-              <br /><br />
-              Immerse yourself in a world of excitement as Quizine hosts exhilarating culinary contests, inviting you to showcase your skills and creativity. Whether you're a seasoned chef or an aspiring home cook, there's something for everyone to savor and enjoy.
+            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
+              A paradise for food lovers, Quixine brings together flavors from every craving. From street-style favorites to fusion delights, it adds taste to every moment of the fest. Because no celebration at KGEC is complete without great food and greater company.
             </p>
           </motion.div>
 
@@ -107,89 +112,73 @@ const Quizine: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="relative w-full h-[500px] md:h-[600px]">
-              {/* Image 1 - Top Left */}
-              <motion.div
-                className="absolute top-0 left-0 w-[45%] h-[35%] rounded-lg overflow-hidden shadow-xl z-[1]"
-                style={{ y: y1 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -3 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="https://res.cloudinary.com/dlrlet9fg/image/upload/v1742327716/Quixine_web_poezry.png"
-                  alt="Quizine food stalls"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
+            <div className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center">
+              {/* Image 1 - Top Left - Removed as per user request */}
 
-              {/* Image 2 - Top Right */}
+              {/* Image 2 - Top Right - Image */}
               <motion.div
-                className="absolute top-[5%] right-0 w-[48%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                className="absolute top-[0%] right-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
                 style={{ y: y2 }}
                 initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 3 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 5 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/artist-2.jpg"
-                  alt="Cultural event"
+                  src="/about-vectors/img8.jpeg"
+                  alt="City view"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
                 />
               </motion.div>
 
-              {/* Image 3 - Middle Left */}
+              {/* Image 3 - Center - Boxed Image */}
               <motion.div
-                className="absolute top-[38%] left-[8%] w-[42%] h-[38%] rounded-lg overflow-hidden shadow-xl z-[3]"
+                className="relative w-[65%] h-[50%] rounded-lg overflow-hidden shadow-2xl z-[50] border-4 border-white"
+                initial={{ opacity: 0, scale: 0.9, x: -30, y: -30, rotate: 0 }}
+                whileInView={{ opacity: 1, scale: 1, x: -30, y: -30, rotate: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <Image
+                  src="/about-vectors/img13.jpeg"
+                  alt="Main Espektro focus"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
+
+              {/* Image 4 - Bottom Left - Image */}
+              <motion.div
+                className="absolute -bottom-[20%] left-0 w-[45%] h-[40%] rounded-lg overflow-hidden shadow-xl z-[1]"
                 style={{ y: y3 }}
-                initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: -10 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/timeline.jpg"
-                  alt="Event timeline"
+                  src="/about-vectors/img6.jpeg"
+                  alt="Culture art"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-500"
                 />
               </motion.div>
 
-              {/* Image 4 - Bottom Right Large */}
+              {/* Image 5 - Bottom Right - Transparent Element */}
               <motion.div
-                className="absolute bottom-0 right-[5%] w-[50%] h-[45%] rounded-lg overflow-hidden shadow-xl z-[2]"
+                className="absolute bottom-[0%] right-[-5%] w-[70%] h-[70%] z-[60]"
                 style={{ y: y4 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
+                initial={{ opacity: 0, scale: 0.8, rotate: 15 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 12 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/images/artist-3.jpg"
-                  alt="Performance"
+                  src="/images/img2.webp"
+                  alt="Clapperboard element"
                   fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-
-              {/* Image 5 - Bottom Left Small */}
-              <motion.div
-                className="absolute bottom-[8%] left-0 w-[35%] h-[28%] rounded-lg overflow-hidden shadow-xl z-[1]"
-                style={{ y: y5 }}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <Image
-                  src="/images/kolkata-city.jpeg"
-                  alt="Kolkata cityscape"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
+                  className="object-contain drop-shadow-2xl hover:scale-110 transition-transform duration-500"
                 />
               </motion.div>
             </div>
@@ -206,7 +195,7 @@ const Quizine: React.FC = () => {
         viewport={{ once: true }}
       >
         {/* <Image
-          src="/images/225fc2b0491f29fb9a027d0a94bfcf53.png"
+          src="/images/225fc2b0491f29fb9a027d0a94bfcf53.webp"
           alt="Decorative tribal pattern"
           fill
           className="object-contain"

@@ -1,4 +1,6 @@
 .menu {
+    width: 350px; // Fixed width for desktop
+
     @media (max-width: 500px) {
         width: 100%;
     }
@@ -19,7 +21,7 @@
         left: 0;
         bottom: 0;
         width: 32px; // Approximate width of the border pattern
-        background-image: url('/images/border2.png');
+        background-image: url('/images/border2.webp');
         background-repeat: repeat-y;
         background-size: contain;
         z-index: 1;
@@ -41,38 +43,39 @@
     .body {
         box-sizing: border-box;
         height: 100%;
-        padding: 40px 40px;
-        padding-left: 60px; // Clear tribal border
+        padding: 20px 40px; // Reduced padding
+        padding-left: 60px;
         padding-right: 40px;
 
         @media (max-width: 500px) {
             padding: 20px 20px;
-            padding-left: 50px; // Clear tribal border on mobile
+            padding-left: 50px;
+            padding-top: 100px; // Account for 80px header + 20px gap
         }
 
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        overflow: hidden; // Prevent body overflow
+        overflow: hidden;
 
         .nav {
             display: flex;
             flex-direction: column;
-            font-size: 24px; // Smaller base size
+            font-size: 24px;
 
             @media (max-width:500px) {
-                font-size: 22px; // Uniform mobile size
+                font-size: 22px;
             }
 
-            gap: 5px; // Reduced gap
-            margin-top: 20px; // Reduced top margin
-            overflow-y: auto; // Enable vertical scrolling
-            overflow-x: hidden; // Prevent horizontal scrolling
-            flex: 1; // Allow nav to grow and shrink
-            min-height: 0; // Important for flex scrolling
-            padding-right: 10px; // Space for scrollbar
+            gap: 0px; // Removed gap completely
+            margin-top: 10px; // Reduced margin
+            overflow-y: hidden; // Disable scroll as requested
+            overflow-x: hidden;
+            flex: 1;
+            min-height: 0;
+            padding-right: 10px;
 
-            // Custom scrollbar styling
+            // Custom scrollbar styling (keeping it just in case, though hidden)
             &::-webkit-scrollbar {
                 width: 6px;
             }

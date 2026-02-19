@@ -1,0 +1,83 @@
+.mainWrapper {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.mainContainer {
+    width: 100%;
+    height: 0rem;
+    position: relative;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.topHeadingContainer, .bottomHeadingContainer {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: visible;
+    z-index: 100;
+}
+
+.topHeadingContainer {
+    top: 0;
+    transform: translateY(-100%);
+}
+
+.bottomHeadingContainer {
+    bottom: 0;
+    transform: translateY(100%);
+}
+
+.heading {
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: inherit;
+    font-weight: 700;
+    line-height: 1;
+    color: black;
+    margin: 0;
+}
+
+.heading span {
+    color: #F4A900;
+}
+
+.imageContentContainer {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.imageContentContainer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.imageContentContainer li {
+    overflow: visible;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .heading {
+        font-size: 5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .heading {
+        font-size: 6rem;
+    }
+}

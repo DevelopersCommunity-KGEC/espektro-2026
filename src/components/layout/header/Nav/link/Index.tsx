@@ -1,8 +1,8 @@
-import styles from './styles.module.scss';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { slide, scale } from '../../animation';
-import Magnetic from '@/components/layout/magnetic/Index';
+import styles from "./styles.module.scss";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { slide, scale } from "../../animation";
+import Magnetic from "@/components/layout/magnetic/Index";
 
 interface IndexProps {
   data: {
@@ -15,7 +15,12 @@ interface IndexProps {
   closeMenu: () => void;
 }
 
-export default function Index({ data, isActive, setSelectedIndicator, closeMenu }: IndexProps) {
+export default function Index({
+  data,
+  isActive,
+  setSelectedIndicator,
+  closeMenu,
+}: IndexProps) {
   const { title, href, index } = data;
 
   return (
@@ -35,7 +40,10 @@ export default function Index({ data, isActive, setSelectedIndicator, closeMenu 
         className={styles.indicator}
       />
       <Magnetic>
-        <Link href={href} className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all uppercase">
+        <Link
+          href={href}
+          className="text-sm font-bold font-[family-name:var(--font-medieval-sharp)] text-[#2C1810]/40 hover:text-[#B7410E] transition-all uppercase no-magnetic-mobile"
+        >
           {title}
         </Link>
       </Magnetic>
