@@ -77,7 +77,7 @@ export default function Timeline() {
     const activeItem = timelineData[activeIndex];
 
     return (
-        <section ref={targetRef} className="relative h-[2000vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
+        <section ref={targetRef} className="relative h-[1500vh] text-foreground z-20" style={{ backgroundColor: "#FFF8F0" }}>
             {/* STICKY CONTAINER - Unifies everything fixed on screen */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 {/* 1. Background Image */}
