@@ -37,7 +37,7 @@ export function FeaturedArtists() {
             scrollTrigger: {
                 trigger: wrapperRef.current,
                 start: "top top",
-                end: "+=5000",
+                end: "+=12000",
                 pin: true,
                 scrub: 0.5,
                 anticipatePin: 1,
@@ -98,8 +98,8 @@ export function FeaturedArtists() {
 
                     {/* Top Tribal Border & Heading Block */}
                     <div className={`${styles.topHeadingContainer} !relative !translate-y-0 w-full z-[70]`}>
-                        <div className="relative h-24 md:h-40 overflow-visible mb-2">
-                            <div className="absolute inset-0 top-0 flex justify-center h-full w-full opacity-100 overflow-hidden">
+                        <div className="relative h-34 md:h-40 overflow-visible mb-2">
+                            <div className="absolute inset-0 top-40 flex justify-center h-full w-full opacity-100 overflow-hidden">
                                 {[...Array(25)].map((_, i) => (
                                     <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-12">
                                         <Image src="/images/shapartist.webp" alt="" fill className="object-contain" />
@@ -107,12 +107,12 @@ export function FeaturedArtists() {
                                 ))}
                             </div>
                             {/* Header Box on Top of Border */}
-                            <div className="absolute top-1/2 left-100 w-1/2 -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm py-4 shadow-md border-y border-gray-100 flex flex-col items-center">
+                            <div className="absolute md:top-[150%]  top-[168%] md:left-100 left-[22%]  md:w-1/2 w-[56%] -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm md:py-2 py-4 shadow-md border-y border-gray-100 flex flex-col items-center">
                                 <p className="text-[#8B2635] text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-center mb-1 font-[family-name:var(--font-roboto-slab)]">
                                     Cultural Stars
                                 </p>
                                 <h1 className="text-3xl md:text-5xl lg:text-7xl text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] leading-none text-center">
-                                    Renowned <span className="text-[#B7410E]">Artists!</span>
+                                    Artists <span className="text-[#B7410E]">Lineup</span>
                                 </h1>
                             </div>
                         </div>
@@ -170,7 +170,7 @@ export function FeaturedArtists() {
 
                     {/* Bottom Tribal Border & Heading Block */}
                     <div className={`${styles.bottomHeadingContainer} !relative !translate-y-0 w-full z-[70]`}>
-                        <div className="relative w-full h-16 md:h-40 overflow-visible mt-2">
+                        <div className="relative w-full h-34 md:h-40 overflow-visible mt-2">
                             <div className="absolute inset-0 -top-[100%] md:-top-[120%] flex justify-center h-full w-full opacity-100 overflow-hidden">
                                 {[...Array(25)].map((_, i) => (
                                     <div key={i} className="relative h-full aspect-[4/1] flex-shrink-0 -mx-12">

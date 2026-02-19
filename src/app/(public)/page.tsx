@@ -19,6 +19,7 @@ import { ArtistGallery } from "@/components/landing/artist-gallery";
 import { FeaturedArtists } from "@/components/landing/featured-artists";
 import { MusicController } from "@/components/audio/MusicController";
 import ComingSoon from "@/components/landing/coming-soon";
+import { FirstBack } from "@/components/landing/1stback";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +50,9 @@ export default async function LandingPage() {
       <div id="exotica" data-section-id="exotica">
         <Exotica />
       </div>
-
+      <div id="1stback" data-section-id="1stback">
+        <FirstBack />
+      </div>
       <div id="timeline" data-section-id="timeline">
         <Timeline />
       </div>
