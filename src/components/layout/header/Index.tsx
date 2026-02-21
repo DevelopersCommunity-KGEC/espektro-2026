@@ -181,7 +181,7 @@ export default function Header({
         </div>
       </div>
 
-      {isLandingPage && (
+      {(isLandingPage || pathname === "/events") && (
         <>
           <div ref={header} className={styles.header}>
             <div className={styles.nav}>
@@ -350,22 +350,6 @@ export default function Header({
           </div>
         </>
       )}
-      {/* Active nav button (shown when sidebar is open, on all pages) */}
-      {isActive && (
-        <div className={styles.navButton}>
-          <Rounded
-            onClick={() => {
-              setIsActive(!isActive);
-            }}
-            className={`${styles.button}`}
-          >
-            <div
-              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                }`}
-            ></div>
-          </Rounded>
-        </div>
-      )}
       {/* Floating hamburger button */}
       {isLandingPage ? (
         // Landing: GSAP-controlled, starts at scale(0) and appears after scrolling
@@ -387,6 +371,7 @@ export default function Header({
       ) : (
         // Inner pages: always visible at scale(1)
         <div
+          ref={desktopButtonRef}
           className={styles.headerButtonContainer}
           style={{ transform: "scale(1)" }}
         >
