@@ -72,14 +72,28 @@ const TOTAL_DURATION_MS = 7000;
 
 export function LogoPreloader() {
   const svgContainerRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false); // Start false to prevent flash before check
   const [showStartButton, setShowStartButton] = useState(true);
   const [startTrigger, setStartTrigger] = useState(false);
+
+  // Check cookies on mount
+  useEffect(() => {
+    const hasSeenPreloader = document.cookie.includes("espektro_preloader_seen=true");
+    if (hasSeenPreloader) {
+      setVisible(false);
+      // We don't need to dispatch the event here anymore because MusicController 
+      // is now initialized with autoStart=true from the server-side cookie check
+    } else {
+      setVisible(true);
+    }
+  }, []);
 
   const handleStart = () => {
     console.log("[Preloader] Start button clicked");
     setShowStartButton(false);
     setStartTrigger(true);
+    // Set cookie to expire when the browser session ends (no max-age/expires)
+    document.cookie = "espektro_preloader_seen=true; path=/; SameSite=Strict";
   };
 
   useEffect(() => {
@@ -236,18 +250,22 @@ export function LogoPreloader() {
   // Force scroll to top on refresh and disable scrolling while preloader is active
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Prevent browser from trying to restore scroll position
-      if (window.history.scrollRestoration) {
-        window.history.scrollRestoration = "manual";
-      }
-
-      // Initial scroll to top
-      window.scrollTo(0, 0);
-
-      // Disable scrolling on body while preloader is visible
       if (visible) {
+        // Prevent browser from trying to restore scroll position
+        if (window.history.scrollRestoration) {
+          window.history.scrollRestoration = "manual";
+        }
+
+        // Initial scroll to top
+        window.scrollTo(0, 0);
+
+        // Disable scrolling on body while preloader is visible
         document.body.style.overflow = "hidden";
       } else {
+        // Allow browser to restore scroll position if preloader is skipped
+        if (window.history.scrollRestoration) {
+          window.history.scrollRestoration = "auto";
+        }
         document.body.style.overflow = "";
       }
     }
