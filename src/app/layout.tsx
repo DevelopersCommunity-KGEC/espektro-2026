@@ -129,7 +129,7 @@ export default async function RootLayout({
       >
         <AdminSync />
         <OnboardingCheck />
-        {/* <RouteAudioTrigger /> */}
+        <RouteAudioTrigger />
         <Header clubRoles={clubRoles} userRole={session?.user?.role} />
         {children}
         <Toaster />
