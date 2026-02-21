@@ -66,14 +66,12 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Section */}
-      <div className="relative h-52 w-full overflow-hidden">
-        <div className="w-full h-full relative">
-          <img
-            src={displayImage}
-            alt={event.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
+      <div className="relative h-60 w-full overflow-hidden">
+        <img
+          src={displayImage}
+          alt={event.title}
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+        />
       </div>
 
       {/* Content Section */}
@@ -140,7 +138,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
               </span>
             )}
           </div>
-          <Button asChild variant="default" className="w-32 group/btn">
+          <Button asChild variant="theatrical" className="group/btn h-10">
             <Link href={`/events/${event._id}`}>
               Details
               <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />

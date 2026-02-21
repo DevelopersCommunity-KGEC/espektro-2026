@@ -14,6 +14,7 @@ import dbConnect from "@/lib/db";
 import Ticket from "@/models/Ticket";
 import { ShowTicketQr } from "@/components/events/show-ticket-qr";
 import { VENUES } from "@/data/venues";
+import Image from "next/image";
 
 export default async function EventDetailsPage({
   params,
@@ -76,96 +77,139 @@ export default async function EventDetailsPage({
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-        <EventImageViewer title={event?.title} image={event?.image} />
-        <div className="p-8">
-          <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                {event?.title}
-              </h1>
-              <p className="text-gray-500 flex items-center gap-2">
-                <span>
-                  {new Date(event?.date).toLocaleString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
+    <main
+      className="relative min-h-screen overflow-hidden z-10"
+      style={{ backgroundColor: "#FFF8F0" }}
+      id="event-details-page"
+      data-section-id="events-page"
+    >
+      {/* Lotus Mandala Background */}
+      <div className="fixed inset-0 top-[30%] flex items-center justify-center opacity-[0.9] pointer-events-none z-0">
+        <Image
+          src="/images/background_web.webp"
+          alt="Decorative lotus mandala"
+          fill
+          priority
+          className="object-contain hidden md:block"
+        />
+        <Image
+          src="/images/background_web_mobile.webp"
+          alt="Decorative lotus mandala"
+          fill
+          priority
+          className="object-contain w-fit md:hidden"
+        />
+      </div>
+
+      {/* Left tribal border pattern */}
+      <div
+        className="absolute top-0 left-0 bottom-0 w-16 md:w-24 overflow-hidden hidden sm:block z-10"
+        style={{
+          backgroundImage: "url(/images/43a0b75b3caae95caa70550adda8ed60.webp)",
+          backgroundRepeat: "repeat-y",
+          backgroundSize: "100% auto",
+          backgroundPosition: "top center",
+        }}
+      />
+
+      <div className="relative z-20 max-w-6xl mx-auto px-4 py-12 sm:pl-24 md:pl-32 lg:pl-40">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-[#2C1810]/5">
+          <EventImageViewer title={event?.title} image={event?.image} />
+          <div className="p-8">
+            <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
+              <div className="flex-grow">
+                <h1 className="text-4xl md:text-5xl font-bold mb-3 text-[#2C1810] font-[family-name:var(--font-medieval-sharp)]">
+                  {event?.title}
+                </h1>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#4A3428]/70 font-[family-name:var(--font-roboto-slab)]">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" />
+                    {new Date(event?.date).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </span>
                   {event?.endDate && new Date(event?.date).getTime() !== new Date(event?.endDate).getTime() && (
-                    <>
-                      {" "}
-                      -{" "}
+                    <span className="flex items-center gap-1.5">
+                      <span className="opacity-50">—</span>
                       {new Date(event?.endDate).toLocaleString("en-IN", {
                         timeZone: "Asia/Kolkata",
                         dateStyle: "medium",
                         timeStyle: "short",
                       })}
-                    </>
+                    </span>
                   )}
-                </span>
-                <span>•</span>
-                <span>{event?.venue}</span>
-              </p>
-            </div>
-            <div className="flex flex-col items-end gap-2 w-full md:w-auto">
-              <div className="text-left md:text-right">
-                <p className="text-3xl font-bold text-blue-600">
-                  {event?.price === 0 ? "Free" : `₹${event?.price}`}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {event?.capacity === -1
-                    ? "Unlimited tickets"
-                    : `${event?.capacity - event?.ticketsSold} tickets left`}
-                </p>
+                  <span className="hidden md:inline opacity-30">|</span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8B2635]" />
+                    {event?.venue}
+                  </span>
+                </div>
               </div>
-              {canEdit && <EditEventModal event={event} />}
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-2">About this event</h3>
-            <div className="prose max-w-none text-gray-700 dark:text-gray-300 dark:prose-invert">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {event?.description}
-              </ReactMarkdown>
-            </div>
-          </div>
-
-          {venueInfo?.map_iframe && (
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-2">Venue Location</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">{venueInfo.name}</p>
-              <div className="rounded-lg overflow-hidden border shadow-sm aspect-video w-full">
-                <iframe
-                  src={venueInfo.map_iframe}
-                  className="w-full h-full"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+              <div className="flex flex-col items-end gap-2 w-full md:w-auto shrink-0">
+                <div className="text-left md:text-right w-full">
+                  <p className="text-4xl font-bold text-[#B7410E] font-[family-name:var(--font-medieval-sharp)]">
+                    {event?.price === 0 ? "Free" : `₹${event?.price}`}
+                  </p>
+                  <p className="text-sm font-medium text-[#4A3428]/60 font-[family-name:var(--font-open-sans)]">
+                    {event?.capacity === -1
+                      ? "UNLIMITED TICKETS"
+                      : `${event?.capacity - event?.ticketsSold} TICKETS LEFT`}
+                  </p>
+                </div>
+                {canEdit && <EditEventModal event={event} />}
               </div>
             </div>
-          )}
 
-          <div className="border-t pt-8">
-            {event.allowBooking === false ? (
-              <div className="w-full py-8 text-center text-xl font-bold text-gray-500 bg-gray-100 rounded-lg">
-                No Registration Required
+            <div className="mb-10">
+              <h3 className="text-xl text-[#8B2635] tracking-wide mb-4 font-bold uppercase font-[family-name:var(--font-roboto-slab)] border-b border-[#8B2635]/10 pb-2">
+                About this event
+              </h3>
+              <div className="prose max-w-none text-[#2C1810]/80 font-[family-name:var(--font-open-sans)] leading-relaxed">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {event?.description}
+                </ReactMarkdown>
               </div>
-            ) : existingTicket ? (
-              <ShowTicketQr ticket={existingTicket} />
-            ) : isSoldOut ? (
-              <Button disabled className="w-full py-8 text-xl font-bold" variant="secondary">
-                Sold Out
-              </Button>
-            ) : (
-              <BookButton eventId={event?._id.toString()} />
+            </div>
+
+            {venueInfo?.map_iframe && (
+              <div className="mb-10">
+                <h3 className="text-xl text-[#8B2635] tracking-wide mb-4 font-bold uppercase font-[family-name:var(--font-roboto-slab)] border-b border-[#8B2635]/10 pb-2">
+                  Venue Location
+                </h3>
+                <p className="text-[#4A3428]/80 font-medium mb-4 font-[family-name:var(--font-open-sans)]">{venueInfo.name}</p>
+                <div className="rounded-xl overflow-hidden border border-[#2C1810]/10 shadow-lg aspect-video w-full">
+                  <iframe
+                    src={venueInfo.map_iframe}
+                    className="w-full h-full"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
             )}
+
+            <div className="border-t border-[#2C1810]/10 pt-8 mt-12">
+              {event.allowBooking === false ? (
+                <div className="w-full py-10 text-center text-2xl font-bold text-[#4A3428]/30 bg-[#FFF8F0] rounded-2xl border-2 border-dashed border-[#4A3428]/10 font-[family-name:var(--font-medieval-sharp)]">
+                  No Registration Required
+                </div>
+              ) : existingTicket ? (
+                <ShowTicketQr ticket={existingTicket} />
+              ) : isSoldOut ? (
+                <Button disabled variant="theatrical" className="w-full h-auto py-8 text-2xl font-bold opacity-50 grayscale font-[family-name:var(--font-medieval-sharp)]">
+                  Sold Out
+                </Button>
+              ) : (
+                <BookButton eventId={event?._id.toString()} />
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
