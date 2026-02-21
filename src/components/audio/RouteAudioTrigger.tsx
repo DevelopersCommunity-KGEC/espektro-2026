@@ -26,8 +26,12 @@ export default function RouteAudioTrigger() {
     }, []);
 
     useEffect(() => {
-        // We only play on routes that are NOT the landing page
-        if (pathname === "/") {
+        // We only play on routes that are NOT the landing page or events page (which have their own controller)
+        if (pathname === "/" || pathname === "/events") {
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            }
             return;
         }
 
@@ -36,7 +40,8 @@ export default function RouteAudioTrigger() {
         const playAudio = async () => {
             try {
                 if (!audioRef.current) {
-                    audioRef.current = new Audio("/music/STARTING SITE1.mp3");
+                    const audioSrc = pathname === "/login" ? "/music/BENGALICULTURE.mp3" : "/music/STARTING SITE1.mp3";
+                    audioRef.current = new Audio(audioSrc);
                     audioRef.current.volume = 0.5;
                 }
 

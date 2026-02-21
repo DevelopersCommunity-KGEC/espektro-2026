@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { artists } from "@/data/landing-content";
 import { ArtistGallery } from "../artist-gallery";
 import { useGSAP } from "@gsap/react";
@@ -107,14 +108,68 @@ export function FeaturedArtists() {
                                 ))}
                             </div>
                             {/* Header Box on Top of Border */}
-                            <div className="absolute md:top-[150%]  top-[168%] md:left-100 left-[22%]  md:w-1/2 w-[56%] -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm md:py-2 py-4 shadow-md border-y border-gray-100 flex flex-col items-center">
-                                <p className="text-[#8B2635] text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-center mb-1 font-[family-name:var(--font-roboto-slab)]">
+                            <motion.div
+                                className="absolute md:top-[150%] top-[168%] md:left-100 left-[22%] md:w-1/2 w-[56%] -translate-y-1/2 z-30 bg-white/90 backdrop-blur-sm md:py-2 py-4 shadow-md border-y border-gray-100 flex flex-col items-center"
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-100px" }}
+                                variants={{
+                                    hidden: { opacity: 0, scale: 0.9 },
+                                    visible: {
+                                        opacity: 1,
+                                        scale: 1,
+                                        transition: {
+                                            staggerChildren: 0.1,
+                                            duration: 0.8
+                                        }
+                                    }
+                                }}
+                            >
+                                <motion.p
+                                    className="text-[#8B2635] text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-center mb-1 font-[family-name:var(--font-roboto-slab)]"
+                                    variants={{
+                                        hidden: { opacity: 0, y: 10 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                                    }}
+                                >
                                     Cultural Stars
-                                </p>
-                                <h1 className="text-3xl md:text-5xl lg:text-7xl text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] leading-none text-center">
-                                    Artists <span className="text-[#B7410E]">Lineup</span>
-                                </h1>
-                            </div>
+                                </motion.p>
+                                <motion.h1
+                                    className="text-3xl md:text-5xl lg:text-7xl text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] leading-none text-center flex flex-wrap justify-center overflow-hidden"
+                                    variants={{
+                                        hidden: { opacity: 0 },
+                                        visible: {
+                                            opacity: 1,
+                                            transition: { staggerChildren: 0.04 }
+                                        }
+                                    }}
+                                >
+                                    {"Artists ".split("").map((char, i) => (
+                                        <motion.span
+                                            key={`artist-h-${i}`}
+                                            variants={{
+                                                hidden: { opacity: 0, y: 30 },
+                                                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                            }}
+                                        >
+                                            {char === " " ? "\u00A0" : char}
+                                        </motion.span>
+                                    ))}
+                                    <span className="text-[#B7410E] flex">
+                                        {"Lineup".split("").map((char, i) => (
+                                            <motion.span
+                                                key={`lineup-h-${i}`}
+                                                variants={{
+                                                    hidden: { opacity: 0, y: 30 },
+                                                    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                                }}
+                                            >
+                                                {char}
+                                            </motion.span>
+                                        ))}
+                                    </span>
+                                </motion.h1>
+                            </motion.div>
                         </div>
                     </div>
 

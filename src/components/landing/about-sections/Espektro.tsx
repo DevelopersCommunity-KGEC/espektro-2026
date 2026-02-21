@@ -119,31 +119,75 @@ const EspektroAbout: React.FC = () => {
         />
       </motion.div>
       {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-20 md:px-28 lg:px-32">
+      <motion.div
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-20 md:px-28 lg:px-32"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.2,
+              delayChildren: 0.1
+            }
+          }
+        }}
+      >
         <div className="flex flex-col lg:flex-row-reverse items-start lg:items-center gap-12 lg:gap-16">
 
           {/* Right Content - Text */}
-          <motion.div
-            className="flex-1 text-justify lg:text-justify max-w-xl lg:ml-auto flex flex-col items-center"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)]">
+          <div className="flex-1 text-justify lg:text-justify max-w-xl lg:ml-auto flex flex-col items-center">
+            <motion.h3
+              className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)]"
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+            >
               Cultural & Technical Fest
-            </h3>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
-              Espektro
-            </h1>
-            <p className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]">
+            </motion.h3>
+            <motion.h1
+              className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] flex flex-wrap justify-center overflow-hidden"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.04 }
+                }
+              }}
+            >
+              {"Espektro".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 40 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.h1>
+            <motion.p
+              className="text-base md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+              }}
+            >
               At Kalyani Government Engineering College, Espektro is not just a fest — it&apos;s a four-day celebration of talent, technology, culture. It is the grand annual fest that brings together students from different departments under one vibrant platform. Every year, the campus transforms into a hub of excitement, creativity, and collaboration.
-            </p>
-            <a
+            </motion.p>
+            <motion.a
               href="https://res.cloudinary.com/dkxskaege/image/upload/v1771678937/Espektro_Brochure_compressed_q43uzb.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-8"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
             >
               <Button
                 variant="theatrical"
@@ -151,16 +195,24 @@ const EspektroAbout: React.FC = () => {
               >
                 Event Brochure
               </Button>
-            </a>
-          </motion.div>
+            </motion.a>
+          </div>
 
           {/* Left Content - Image Collage */}
           <motion.div
             className="flex-[1.2] w-full max-w-2xl relative z-30"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: {
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 1,
+                  ease: "easeOut",
+                  staggerChildren: 0.1
+                }
+              }
+            }}
           >
             <div className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center">
               {/* Image 1 - Top Left - Removed as per user request */}
@@ -243,7 +295,7 @@ const EspektroAbout: React.FC = () => {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom Decorative Element - Tribal Pattern Footer */}
       <motion.div

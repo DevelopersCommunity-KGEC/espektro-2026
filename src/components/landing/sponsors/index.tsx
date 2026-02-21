@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import { sponsorLogos as SPONSORS } from "@/data/landing-content";
@@ -137,45 +138,100 @@ export function Sponsors() {
           backgroundPosition: "top center",
         }}
       />
-      <div className="container mx-auto px-6 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+      <motion.div
+        className="container mx-auto px-6 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.2,
+              delayChildren: 0.1
+            }
+          }
+        }}
+      >
         <div className="flex flex-col items-center ">
-          <p className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center">
+          <motion.p
+            className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center"
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+            }}
+          >
             Our Partners
-          </p>
-          {/* <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center">
-            Proudly <span className="text-[#B7410E]">Supported By</span>
-          </h2>
-          <p className="text-[#4A3428] max-w-xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-base opacity-80">
+          </motion.p>
+          <motion.h2
+            className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center flex flex-wrap justify-center overflow-hidden"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.04 }
+              }
+            }}
+          >
+            {"Proudly ".split("").map((char, i) => (
+              <motion.span
+                key={`proudly-${i}`}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+            <span className="text-[#B7410E] flex">
+              {"Supported By".split("").map((char, i) => (
+                <motion.span
+                  key={`supported-${i}`}
+                  variants={{
+                    hidden: { opacity: 0, y: 40 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </span>
+          </motion.h2>
+          <motion.p
+            className="text-[#4A3428] max-w-xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-base opacity-80"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+            }}
+          >
             We appreciate the efforts and generosity of our sponsors in
             supporting Espektro 2026.
-          </p> */}
+          </motion.p>
         </div>
-        <div className="bg-red-400 flex flex-row justify-center align-center w-full">
+        <motion.div
+          className="flex flex-row justify-center align-center w-full mt-12"
+          variants={{
+            hidden: { opacity: 0, scale: 0.9 },
+            visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } }
+          }}
+        >
           <ComingSoon />
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* {SPONSORS.map((s, index) => (
-                        <div
-                            key={s.id}
-                            ref={(el) => { cardRefs.current[index] = el; }}
-                            className={`transition-all duration-700 ease-out ${visibleCards.has(index)
-                                ? 'opacity-100 translate-y-0 blur-0'
-                                : 'opacity-0 translate-y-[10px] blur-[10px]'
-                                }`}
-                        >
-                            <SponsorCard sponsor={s} />
-                        </div>
-                    ))} */}
-          {/* <div className="bg-red-400 flex flex-row justify-center align-center w-full">
-            <ComingSoon />
-          </div> */}
+          {/* Sponsor grid logic here if ever re-enabled */}
         </div>
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-6 lg:px-24 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
-        <div
-          className={`mt-24 text-center bg-white/50 backdrop-blur-md border border-[#4A3428]/10 rounded-3xl p-8 lg:p-12 max-w-2xl mx-auto transition-all duration-700 shadow-sm ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        <motion.div
+          className="mt-24 text-center bg-white/50 backdrop-blur-md border border-[#4A3428]/10 rounded-3xl p-8 lg:p-12 max-w-2xl mx-auto shadow-sm"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
           <h3 className="font-[family-name:var(--font-medieval-sharp)] text-2xl md:text-3xl text-[#2C1810] mb-4">
             Want to Partner with Us?
@@ -194,7 +250,7 @@ export function Sponsors() {
               Become a Sponsor
             </a>
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

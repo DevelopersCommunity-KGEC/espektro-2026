@@ -5,6 +5,7 @@ import "./logo-preloader.css";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Logo from "./logo/Logo";
+import { motion } from "framer-motion";
 
 const TEXT_GROUP_ID = "text";
 const TEXT_SPLIT_Y = 860;
@@ -293,29 +294,84 @@ export function LogoPreloader() {
       /> */}
 
       {showStartButton ? (
-        <div className="relative flex flex-col items-center gap-6 z-50 animate-in fade-in zoom-in duration-700">
-          {/* <p className="text-[#8B2635] text-[10px] sm:text-xs uppercase tracking-[0.5em] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
-            Kalyani Government Engineering College presents
-          </p> */}
-          <div className=" lg:w-[300px] h-[300px] aspect-[463/417]">
-            <Logo />
-          </div>
-          <div className="text-center mb-8">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold text-[#2C1810] uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm leading-none">
-              ESPEKTRO 26
-            </h1>
-            {/* <p className="text-[#B7410E] text-3xl sm:text-5xl font-bold font-[family-name:var(--font-medieval-sharp)] mt-2">
-              2026
-            </p> */}
-          </div>
-          <Button
-            variant="theatrical"
-            onClick={handleStart}
-            className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-12 px-10 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] rounded-sm"
+        <motion.div
+          className="relative flex flex-col items-center gap-6 z-50"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.3,
+                delayChildren: 0.2
+              }
+            }
+          }}
+        >
+          <motion.div
+            className="lg:w-[300px] h-[300px] aspect-[463/417]"
+            variants={{
+              hidden: { opacity: 0, scale: 0.8, rotate: -5 },
+              visible: {
+                opacity: 1,
+                scale: 1,
+                rotate: 0,
+                transition: { duration: 1, ease: "easeOut" }
+              }
+            }}
           >
-            EXPLORE
-          </Button>
-        </div>
+            <Logo />
+          </motion.div>
+
+          <div className="text-center mb-8 overflow-hidden">
+            <motion.h1
+              className="text-5xl sm:text-7xl md:text-8xl font-bold text-[#2C1810] uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm leading-none flex"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.05 }
+                }
+              }}
+            >
+              {"ESPEKTRO 26".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 40 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] }
+                    }
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.h1>
+          </div>
+
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.8, ease: "easeOut" }
+              }
+            }}
+          >
+            <Button
+              variant="theatrical"
+              onClick={handleStart}
+              className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-12 px-10 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)] rounded-sm"
+            >
+              EXPLORE
+            </Button>
+          </motion.div>
+        </motion.div>
       ) : (
         <div className="preloader-logo-container relative z-20" ref={svgContainerRef} />
       )}

@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { DaySchedule } from "@/types/landing";
 import { CLUB_CATEGORIES } from "@/data/config";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
 
 const HOUR_START = 0;
 const HOUR_END = 24;
@@ -200,21 +202,79 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
                 }}
             />
             <div className="container mx-auto px-0 md:px-6 lg:px-8 pl-2 sm:pl-20 md:pl-28 lg:pl-32">
-                {/* Header */}
-                <div
-                    className={`mb-14 transition-all duration-700 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                {/* Section Header */}
+                <motion.div
+                    className="container mx-auto px-6 lg:px-24 mb-16 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.1,
+                                delayChildren: 0.1
+                            }
+                        }
+                    }}
                 >
-                    <h3 className="text-[#8B2635] text-[10px] md:text-sm uppercase tracking-[0.5em] font-bold text-center mb-3 font-[family-name:var(--font-roboto-slab)]">
-                        {scheduleData.length} Days of Excellence
-                    </h3>
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)]">
-                        Event Schedule
-                    </h2>
-                    <p className="text-[#4A3428] max-w-xl mx-auto font-medium font-[family-name:var(--font-open-sans)]">
-                        A bird&rsquo;s-eye view of every event across {scheduleData.length} transformative days.
-                    </p>
-                </div>
-
+                    <div className="flex flex-col items-center">
+                        <motion.h3
+                            className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center"
+                            variants={{
+                                hidden: { opacity: 0, y: 10 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                            }}
+                        >
+                            Festival Schedule
+                        </motion.h3>
+                        <motion.h2
+                            className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center flex flex-wrap justify-center overflow-hidden"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: { staggerChildren: 0.04 }
+                                }
+                            }}
+                        >
+                            {"Event ".split("").map((char, i) => (
+                                <motion.span
+                                    key={`event-h-${i}`}
+                                    variants={{
+                                        hidden: { opacity: 0, y: 40 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                    }}
+                                >
+                                    {char === " " ? "\u00A0" : char}
+                                </motion.span>
+                            ))}
+                            <span className="text-[#B7410E] flex">
+                                {"Timeline".split("").map((char, i) => (
+                                    <motion.span
+                                        key={`timeline-h-${i}`}
+                                        variants={{
+                                            hidden: { opacity: 0, y: 40 },
+                                            visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                        }}
+                                    >
+                                        {char}
+                                    </motion.span>
+                                ))}
+                            </span>
+                        </motion.h2>
+                        <motion.p
+                            className="text-[#4A3428]/80 max-w-2xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-lg"
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                            }}
+                        >
+                            Explore the four days of non-stop excitement. From technical showdowns to cultural marvels, here&apos;s your guide to Espektro 2026.
+                        </motion.p>
+                    </div>
+                </motion.div>
                 {/* Day selector tabs */}
                 <div
                     className={`flex gap-3 mb-10 overflow-x-auto pb-4 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}

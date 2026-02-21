@@ -15,9 +15,9 @@ import {
 
 export const navLinks: NavLink[] = [
   { label: "About", href: "#espektro-about" },
-  { label: "Schedule", href: "#schedule" },
-  { label: "Artists", href: "#artists" },
-  { label: "Gallery", href: "#gallery" },
+  { label: "Schedule", href: "#events-timeline" },
+  { label: "Artists", href: "#featured-artists" },
+  { label: "Gallery", href: "#artist-gallery" },
   { label: "Sponsors", href: "#sponsors" },
   { label: "Contact", href: "#contact" },
 ];

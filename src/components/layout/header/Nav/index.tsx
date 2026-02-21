@@ -18,11 +18,15 @@ const navItems = [
   },
   {
     title: "Schedule",
-    href: "/#schedule",
+    href: "/#events-timeline",
   },
   {
     title: "Artists",
-    href: "/#artists",
+    href: "/#featured-artists",
+  },
+  {
+    title: "Gallery",
+    href: "/#artist-gallery",
   },
   {
     title: "Sponsors",

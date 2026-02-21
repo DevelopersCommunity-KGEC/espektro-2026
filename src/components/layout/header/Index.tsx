@@ -185,16 +185,14 @@ export default function Header({
         <>
           <div ref={header} className={styles.header}>
             <div className={styles.nav}>
-              {NavbarLinks.filter((link) => link.url !== "/events").map(
-                (link, index) => (
-                  <Magnetic key={index}>
-                    <div className={styles.el}>
-                      <a href={link.url}>{link.text}</a>
-                      <div className={styles.indicator}></div>
-                    </div>
-                  </Magnetic>
-                ),
-              )}
+              {NavbarLinks.map((link, index) => (
+                <Magnetic key={index}>
+                  <div className={styles.el}>
+                    <a href={link.url}>{link.text}</a>
+                    <div className={styles.indicator}></div>
+                  </div>
+                </Magnetic>
+              ))}
               {!session ? (
                 <Magnetic>
                   <div className={styles.el}>
@@ -209,13 +207,6 @@ export default function Header({
                 </Magnetic>
               ) : (
                 <div className="flex items-center gap-10">
-                  {/* Events link */}
-                  <Magnetic>
-                    <div className={styles.el}>
-                      <a href="/events">Events</a>
-                      <div className={styles.indicator}></div>
-                    </div>
-                  </Magnetic>
 
                   {/* Club switcher dropdown */}
                   {clubRoles && clubRoles.length > 0 && (

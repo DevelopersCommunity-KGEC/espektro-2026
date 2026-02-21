@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  LogOut,
+  User,
+  Ticket,
+  ScanLine,
+  LayoutDashboard,
+  ChevronDown,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 
 // --- Configuration ---
 // Define your music tracks here.
@@ -59,31 +69,41 @@ const AUDIO_CONFIG: Record<string, SectionAudioConfig> = {
   "events-timeline": {
     track: TRACKS.ARTIST, volume: 0.3, fadeMs: 100, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: true
   },
+  "events-page": {
+    track: TRACKS.STARTING, volume: 0.3, fadeMs: 100, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: false
+  },
   "featured-artists": {
     track: TRACKS.ARTIST, volume: 0.3, fadeMs: 200, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
   },
   "artist-gallery": {
-    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
+    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 500, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 2000, hasThunder: false
   },
   "2ndback": {
-    track: TRACKS.ARTIST, volume: 0.3, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+    track: TRACKS.ARTIST, volume: 0.3, fadeMs: 500, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
   },
   sponsors: {
-    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 500, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
   },
   clubs: {
-    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 500, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
   },
   contact: {
-    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 200, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
+    track: TRACKS.ARTIST_PREV, volume: 0.5, fadeMs: 500, delayMs: 0, startTime: 0, isSharp: false, scrollSpeedMs: 1000, hasThunder: false
   },
 };
 
-export function MusicController() {
-  const [activeSection, setActiveSection] = useState<string>("hero");
-  const [debouncedSection, setDebouncedSection] = useState<string>("hero");
-  const [isPlaying, setIsPlaying] = useState(false);
+export function MusicController({
+  autoStart = false,
+  initialSection = "hero"
+}: {
+  autoStart?: boolean;
+  initialSection?: string;
+}) {
+  const [activeSection, setActiveSection] = useState<string>(initialSection);
+  const [debouncedSection, setDebouncedSection] = useState<string>(initialSection);
+  const [isPlaying, setIsPlaying] = useState(autoStart);
   const [currentTrack, setCurrentTrack] = useState<string>("");
+  const [isMuted, setIsMuted] = useState(false);
 
   const audioRefA = useRef<HTMLAudioElement | null>(null);
   const audioRefB = useRef<HTMLAudioElement | null>(null);
@@ -251,12 +271,23 @@ export function MusicController() {
     }
   }, [debouncedSection, isPlaying]);
 
+  // 5. Sync Mute State
+  useEffect(() => {
+    if (audioRefA.current) audioRefA.current.muted = isMuted;
+    if (audioRefB.current) audioRefB.current.muted = isMuted;
+    if (thunderRef.current) thunderRef.current.muted = isMuted;
+  }, [isMuted]);
+
   return (
-    <div className="hidden">
-      <audio ref={audioRefA} loop preload="auto" crossOrigin="anonymous" />
-      <audio ref={audioRefB} loop preload="auto" crossOrigin="anonymous" />
-      <audio ref={thunderRef} src={TRACKS.THUNDER} loop preload="auto" crossOrigin="anonymous" />
-      <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white p-2 text-[9px] rounded-lg backdrop-blur-xl border border-white/20 pointer-events-none font-mono flex flex-col gap-1 min-w-[200px]">
+    <>
+      <div className="hidden">
+        <audio ref={audioRefA} loop preload="auto" crossOrigin="anonymous" />
+        <audio ref={audioRefB} loop preload="auto" crossOrigin="anonymous" />
+        <audio ref={thunderRef} src={TRACKS.THUNDER} loop preload="auto" crossOrigin="anonymous" />
+      </div>
+
+      {/* Debug Info Overlay */}
+      <div className="fixed bottom-4 left-4 z-50 bg-black/80 text-white p-2 text-[9px] rounded-lg backdrop-blur-xl border border-white/20 pointer-events-none font-mono flex flex-col gap-1 min-w-[200px] opacity-0 hover:opacity-100 transition-opacity duration-500">
         <div className="flex justify-between items-center opacity-70 border-b border-white/10 pb-1 mb-1">
           <span>ESPEKTRO AUDIO ENGINE</span>
           <span className="animate-pulse text-green-400">● LIVE</span>
@@ -274,6 +305,15 @@ export function MusicController() {
           <span className="truncate text-green-200">{currentTrack.split('/').pop() || "SILENCE"}</span>
         </div>
       </div>
-    </div>
+
+      {/* Discreet Mute Button */}
+      <button
+        onClick={() => setIsMuted(!isMuted)}
+        className="fixed bottom-4 right-4 z-[9999] p-1.5 rounded-full bg-black/20 text-[#2C1810]/40 hover:text-[#B7410E] hover:bg-black/10 transition-all duration-300 backdrop-blur-sm shadow-sm"
+        title={isMuted ? "Unmute" : "Mute"}
+      >
+        {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+      </button>
+    </>
   );
 }
