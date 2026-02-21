@@ -181,7 +181,7 @@ export default function Header({
         </div>
       </div>
 
-      {(isLandingPage || pathname === "/events") && (
+      {isLandingPage && (
         <>
           <div ref={header} className={styles.header}>
             <div className={styles.nav}>
