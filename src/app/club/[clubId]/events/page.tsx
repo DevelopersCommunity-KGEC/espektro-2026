@@ -79,7 +79,12 @@ export default async function ClubEventsPage({ params }: { params: Promise<{ clu
                                     )}
                                 </CardTitle>
                                 <CardDescription>
-                                    {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} at {event.venue}
+                                    {new Date(event.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}
+                                    {event.endDate && new Date(event.date).getTime() !== new Date(event.endDate).getTime() && (
+                                        <> to {new Date(event.endDate).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}</>
+                                    )}
+                                    <br />
+                                    at {event.venue}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>

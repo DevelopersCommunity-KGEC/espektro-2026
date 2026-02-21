@@ -4,6 +4,7 @@ export interface EventData {
   description: string;
   image: string;
   date: string | Date;
+  endDate: string | Date;
   venue: string;
   price: number;
   capacity: number;

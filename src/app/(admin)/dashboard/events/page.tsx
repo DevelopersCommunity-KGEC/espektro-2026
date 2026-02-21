@@ -56,7 +56,15 @@ async function EventsTable() {
                                 {event.club?.name || event.clubId || "Unknown"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                                {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
+                                {new Date(event.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}
+                                {event.endDate && new Date(event.date).getTime() !== new Date(event.endDate).getTime() && (
+                                    <>
+                                        <br />
+                                        <span className="text-xs text-muted-foreground/70">
+                                            to {new Date(event.endDate).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}
+                                        </span>
+                                    </>
+                                )}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                                 {event.venue}

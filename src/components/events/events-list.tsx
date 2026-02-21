@@ -79,7 +79,8 @@ export function EventsList({ initialEvents }: EventsListProps) {
 
   const formatDateHeader = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("en-IN", {
+      timeZone: "Asia/Kolkata",
       weekday: "long",
       month: "long",
       day: "numeric",

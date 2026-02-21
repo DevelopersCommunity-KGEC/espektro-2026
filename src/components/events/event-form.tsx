@@ -42,7 +42,8 @@ const formSchema = z.object({
     description: z.string().min(1, "Description is required"),
     image: z.url("Must be a valid URL"),
     clubId: z.string().min(1, "Please select a club"),
-    date: z.string().min(1, "Date is required"),
+    date: z.string().min(1, "Start Date is required"),
+    endDate: z.string().min(1, "End Date is required"),
     venue: z.string().min(1, "Venue is required"),
     price: z.coerce.number().min(0, "Entry Fees must be 0 or greater"),
     capacity: z.coerce.number().min(-1, "Capacity cannot be less than -1"),
@@ -51,6 +52,13 @@ const formSchema = z.object({
     allowBooking: z.boolean().default(true),
     isVisible: z.boolean(),
     editors: z.string().optional(),
+}).refine((data) => {
+    const start = new Date(data.date).getTime();
+    const end = new Date(data.endDate).getTime();
+    return end >= start;
+}, {
+    message: "End date cannot be before start date",
+    path: ["endDate"],
 });
 
 interface EventFormProps {
@@ -67,13 +75,25 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
 
     // console.log("Initial Data:", initialData);
 
+    const toISTISOString = (dateInput: string | Date | undefined) => {
+        if (!dateInput) return "";
+        const date = new Date(dateInput);
+        if (isNaN(date.getTime())) return "";
+
+        // Add 5.5 hours to the UTC date object to adjust it to IST
+        // This makes the internal time value match the IST wall clock time
+        const istDate = new Date(date.getTime() + (5.5 * 60 * 60 * 1000));
+        return istDate.toISOString().slice(0, 16);
+    };
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: initialData?.title || "",
             description: initialData?.description || "",
             image: initialData?.image || "",
-            date: initialData?.date ? new Date(initialData.date).toISOString().slice(0, 16) : "",
+            date: toISTISOString(initialData?.date),
+            endDate: toISTISOString(initialData?.endDate),
             venue: initialData?.venue || "",
             price: initialData?.price || 0,
             capacity: initialData?.capacity,
@@ -88,6 +108,14 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
 
     const clubId = form.watch("clubId");
     const allowBooking = form.watch("allowBooking");
+    const date = form.watch("date");
+
+    // Auto-fill endDate with date if endDate is empty
+    React.useEffect(() => {
+        if (date && !form.getValues("endDate")) {
+            form.setValue("endDate", date);
+        }
+    }, [date, form]);
 
     // Clear price, capacity, and maxTeamSize when allowBooking is disabled
     React.useEffect(() => {
@@ -113,6 +141,8 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
 
             const data = {
                 ...values,
+                date: new Date(values.date + "+05:30").toISOString(),
+                endDate: new Date(values.endDate + "+05:30").toISOString(),
                 price: Number(values.price),
                 capacity: Number(values.capacity),
                 maxTeamSize: Number(values.maxTeamSize),
@@ -223,7 +253,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                 name="date"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Date & Time</FormLabel>
+                                        <FormLabel>Start Date & Time</FormLabel>
                                         <FormControl>
                                             <Input type="datetime-local" {...field} />
                                         </FormControl>
@@ -231,6 +261,22 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="endDate"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>End Date & Time</FormLabel>
+                                        <FormControl>
+                                            <Input type="datetime-local" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
                                 name="venue"

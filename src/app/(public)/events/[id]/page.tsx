@@ -88,9 +88,21 @@ export default async function EventDetailsPage({
               <p className="text-gray-500 flex items-center gap-2">
                 <span>
                   {new Date(event?.date).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata",
                     dateStyle: "medium",
                     timeStyle: "short",
                   })}
+                  {event?.endDate && new Date(event?.date).getTime() !== new Date(event?.endDate).getTime() && (
+                    <>
+                      {" "}
+                      -{" "}
+                      {new Date(event?.endDate).toLocaleString("en-IN", {
+                        timeZone: "Asia/Kolkata",
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      })}
+                    </>
+                  )}
                 </span>
                 <span>•</span>
                 <span>{event?.venue}</span>
