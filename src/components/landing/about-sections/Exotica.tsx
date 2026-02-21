@@ -112,7 +112,7 @@ const Exotica: React.FC = () => {
               Cultural Celebration
             </motion.h3>
             <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] flex flex-wrap justify-center overflow-hidden"
+              className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-4 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] flex flex-wrap justify-center overflow-hidden"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -134,7 +134,7 @@ const Exotica: React.FC = () => {
               ))}
             </motion.h1>
             <motion.p
-              className="text-sm md:text-lg leading-relaxed text-[#4A3428] font-[family-name:var(--font-medieval-sharp)]"
+              className="text-sm md:text-lg leading-relaxed text-[#4A3428] mb-4 font-[family-name:var(--font-medieval-sharp)]"
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
@@ -142,6 +142,15 @@ const Exotica: React.FC = () => {
             >
               The cultural soul of Espektro, Exotica keeps the campus alive throughout all four days. With music, dance, drama, fashion, and star-studded performances, it celebrates art in every form. It’s where passion takes the stage and memories are made under the spotlight.
             </motion.p>
+            <motion.h3
+              className="text-lg md:text-xl text-[#8B2635] tracking-wide font-medium uppercase font-[family-name:var(--font-roboto-slab)]"
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+            >
+              Mar 26th - Mar 29th
+            </motion.h3>
           </div>
 
           {/* Left Content - Image Collage */}
