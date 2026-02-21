@@ -23,7 +23,7 @@ export default function ComingSoon() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-2xl md:text-5xl font-bold text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] mb-4 tracking-wide shadow-sm"
+          className="text-2xl md:text-5xl font-bold text-[#2C1810] font-[family-name:var(--font-medieval-sharp)] mb-4 tracking-wide"
         >
           COMING SOON
         </motion.h1>

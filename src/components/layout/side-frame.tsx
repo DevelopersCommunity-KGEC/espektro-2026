@@ -1,5 +1,5 @@
 const BORDER_SIDE_URL =
-    "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png";
+    "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.webp";
 
 interface SideFrameProps {
     children: React.ReactNode;

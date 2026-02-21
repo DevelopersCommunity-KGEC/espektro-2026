@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { contacts } from "@/data/landing-content";
@@ -55,28 +56,87 @@ export function Contact() {
                     backgroundPosition: 'top center'
                 }}
             />
-            <div className="container mx-auto px-4 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
+            <motion.div
+                className="container mx-auto px-4 lg:px-24 relative z-10 pl-4 sm:pl-20 md:pl-28 lg:pl-32"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.1,
+                            delayChildren: 0.1
+                        }
+                    }
+                }}
+            >
                 {/* Section Header */}
-                <div
-                    className={`flex flex-col items-center mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                        }`}
-                >
-                    <p className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center">
+                <div className="flex flex-col items-center mb-16">
+                    <motion.p
+                        className="text-lg md:text-xl text-[#8B2635] tracking-wide mb-3 font-medium uppercase font-[family-name:var(--font-roboto-slab)] text-center"
+                        variants={{
+                            hidden: { opacity: 0, y: 10 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                        }}
+                    >
                         Get in Touch
-                    </p>
-                    <h2 className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center">
-                        Contact <span className="text-[#B7410E]">Us</span>
-                    </h2>
-                    <p className="text-[#4A3428]/80 max-w-2xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-lg">
+                    </motion.p>
+                    <motion.h2
+                        className="text-5xl md:text-6xl lg:text-7xl text-[#2C1810] mb-6 leading-[1.1] font-[family-name:var(--font-medieval-sharp)] text-center flex flex-wrap justify-center overflow-hidden"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: { staggerChildren: 0.04 }
+                            }
+                        }}
+                    >
+                        {"Contact ".split("").map((char, i) => (
+                            <motion.span
+                                key={`contact-h-${i}`}
+                                variants={{
+                                    hidden: { opacity: 0, y: 40 },
+                                    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                }}
+                            >
+                                {char === " " ? "\u00A0" : char}
+                            </motion.span>
+                        ))}
+                        <span className="text-[#B7410E] flex">
+                            {"Us".split("").map((char, i) => (
+                                <motion.span
+                                    key={`us-h-${i}`}
+                                    variants={{
+                                        hidden: { opacity: 0, y: 40 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.33, 1, 0.68, 1] } }
+                                    }}
+                                >
+                                    {char}
+                                </motion.span>
+                            ))}
+                        </span>
+                    </motion.h2>
+                    <motion.p
+                        className="text-[#4A3428]/80 max-w-2xl mx-auto text-center font-[family-name:var(--font-open-sans)] text-sm md:text-lg"
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                        }}
+                    >
                         Have questions? Reach out to our organizing team for information about tickets, events, or sponsorship opportunities.
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
                     {/* Contact Information */}
-                    <div
-                        className={`transition-all duration-700 delay-100 h-full ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-                            }`}
+                    <motion.div
+                        className="h-full"
+                        variants={{
+                            hidden: { opacity: 0, x: -30 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }
+                        }}
                     >
                         {/* Venue Block */}
                         <div className="bg-white/70 backdrop-blur-md border-2 [#B7410E]/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl p-6 lg:p-8 h-full flex flex-col justify-center">
@@ -152,12 +212,15 @@ export function Contact() {
                                 <ExternalLink className="w-4 h-4" />
                             </a>
                         </div> */}
-                    </div>
+                    </motion.div>
 
                     {/* Committee Cards */}
-                    <div
-                        className={`transition-all duration-700 delay-200 h-full min-h-[350px] lg:min-h-0 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-                            }`}
+                    <motion.div
+                        className="h-full min-h-[350px] lg:min-h-0"
+                        variants={{
+                            hidden: { opacity: 0, x: 30 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.8 } }
+                        }}
                     >
                         <div className="bg-white/70 backdrop-blur-md border-2 border-[#4A3428]/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl h-full overflow-hidden relative group">
                             <iframe
@@ -240,9 +303,9 @@ export function Contact() {
                             </div>
                         </div> */}
 
-                    </div>
+                    </motion.div>
                 </div>
-            </div>
+            </motion.div>
             <div className="absolute -bottom-17 left-0 w-full h-18 md:h-24 -translate-y-[50%]  pointer-events-none overflow-hidden rounded-b-4xl">
                 <div className="flex justify-center h-full w-max mx-auto flex-nowrap">
                     {[...Array(15)].map((_, i) => (
@@ -257,6 +320,6 @@ export function Contact() {
                     ))}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

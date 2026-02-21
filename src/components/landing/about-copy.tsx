@@ -9,9 +9,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const ASSETS = {
-    BORDER_SIDE: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.png",
-    CENTER_DECOR: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841101/b5de07a807fe30f3bb20a1ca2f2bb61f_q1mxom.png",
-    BOTTOM_BIRDS: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841097/birds_fxvslb.png"
+    BORDER_SIDE: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770840857/acceeec5cca8bcd386d1ccf3692c9947-removebg-preview_ja16p2.webp",
+    CENTER_DECOR: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841101/b5de07a807fe30f3bb20a1ca2f2bb61f_q1mxom.webp",
+    BOTTOM_BIRDS: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841097/birds_fxvslb.webp"
 };
 
 const AboutV2 = () => {

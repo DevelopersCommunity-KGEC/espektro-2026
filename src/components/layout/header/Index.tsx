@@ -185,16 +185,14 @@ export default function Header({
         <>
           <div ref={header} className={styles.header}>
             <div className={styles.nav}>
-              {NavbarLinks.filter((link) => link.url !== "/events").map(
-                (link, index) => (
-                  <Magnetic key={index}>
-                    <div className={styles.el}>
-                      <a href={link.url}>{link.text}</a>
-                      <div className={styles.indicator}></div>
-                    </div>
-                  </Magnetic>
-                ),
-              )}
+              {NavbarLinks.map((link, index) => (
+                <Magnetic key={index}>
+                  <div className={styles.el}>
+                    <a href={link.url}>{link.text}</a>
+                    <div className={styles.indicator}></div>
+                  </div>
+                </Magnetic>
+              ))}
               {!session ? (
                 <Magnetic>
                   <div className={styles.el}>
@@ -209,13 +207,6 @@ export default function Header({
                 </Magnetic>
               ) : (
                 <div className="flex items-center gap-10">
-                  {/* Events link */}
-                  <Magnetic>
-                    <div className={styles.el}>
-                      <a href="/events">Events</a>
-                      <div className={styles.indicator}></div>
-                    </div>
-                  </Magnetic>
 
                   {/* Club switcher dropdown */}
                   {clubRoles && clubRoles.length > 0 && (
@@ -359,22 +350,6 @@ export default function Header({
           </div>
         </>
       )}
-      {/* Active nav button (shown when sidebar is open, on all pages) */}
-      {isActive && (
-        <div className={styles.navButton}>
-          <Rounded
-            onClick={() => {
-              setIsActive(!isActive);
-            }}
-            className={`${styles.button}`}
-          >
-            <div
-              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-                }`}
-            ></div>
-          </Rounded>
-        </div>
-      )}
       {/* Floating hamburger button */}
       {isLandingPage ? (
         // Landing: GSAP-controlled, starts at scale(0) and appears after scrolling
@@ -396,6 +371,7 @@ export default function Header({
       ) : (
         // Inner pages: always visible at scale(1)
         <div
+          ref={desktopButtonRef}
           className={styles.headerButtonContainer}
           style={{ transform: "scale(1)" }}
         >

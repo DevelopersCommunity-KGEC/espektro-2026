@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ASSETS = {
     BORDER_SIDE: "/border.svg",
-    CENTER_DECOR: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841101/b5de07a807fe30f3bb20a1ca2f2bb61f_q1mxom.png",
-    // BOTTOM_BIRDS: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841097/birds_fxvslb.png"
+    CENTER_DECOR: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841101/b5de07a807fe30f3bb20a1ca2f2bb61f_q1mxom.webp",
+    // BOTTOM_BIRDS: "https://res.cloudinary.com/dlxpcyiin/image/upload/v1770841097/birds_fxvslb.webp"
 };
 
 const AboutV2 = () => {

@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const animationDuration = 2;
-const animationDuration2 = 2; // Change animation duration here
+const animationDuration = 1;
+const animationDuration2 = 1; // Change animation duration here
 const variants: any = {
     initial: { pathLength: 0, strokeOpacity: 1, fillOpacity: 0 },
     animate: {

@@ -12,7 +12,7 @@ export function Hero() {
 
     useEffect(() => {
         setMounted(true);
-        console.log("Hero component mounted");
+        console.log("More than a website, this is our shared commit to Espektro — where late-night code became memories, and though our seniors made their final deploy, their legacy runs forever in the background. Thanks to : Akash Biswas, Debamrita Paul, Syamantak Pyne, Sayan Chatterjee, Md Kaif Sardar, Santanu Kotal, Vansh Deo, Chayan Samanta Shreejan Dolai, Md Yasin Alam, Hriddhiman Dutta, Sunetra Bar, Praneel Chatterjee, Archisman Halder, Garbita Chowdhury");
     }, []);
 
     if (!mounted)
@@ -32,7 +32,7 @@ export function Hero() {
                     className="object-contain hidden md:block"
                 />
                 <Image
-                    src="/images/background_web_mobile.png"
+                    src="/images/background_web_mobile.webp"
                     alt="Decorative lotus mandala"
                     fill
                     priority
@@ -85,30 +85,47 @@ export function Hero() {
             </motion.div>
 
             {/* Main Content */}
-            <div className="relative z-20 container mx-auto px-6 text-center mt-10">
+            <motion.div
+                className="relative z-20 container mx-auto px-6 text-center mt-10"
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.15,
+                            delayChildren: 0.2
+                        }
+                    }
+                }}
+                initial="hidden"
+                animate="visible"
+            >
                 <motion.p
                     className="text-[#8B2635] lg:block hidden text-[8px] sm:text-[10px] md:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] font-bold mb-6 lg:mb-8 sm:mb-8 font-[family-name:var(--font-roboto-slab)] -mt-10 max-w-[90vw] mx-auto leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                    }}
                 >
                     Kalyani Government Engineering College presents
                 </motion.p>
                 <motion.p
                     className="text-[#8B2635] font-bold lg:hidden block  text-3xl md:text-8xl lg:text-9xl  md:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] font-bold mb-6 lg:mb-8 sm:mb-8 font-[family-name:var(--font-roboto-slab)] -mt-10 max-w-[90vw] mx-auto leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                    }}
                 >
                     K.G.E.C
                 </motion.p>
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="flex flex-col items-center gap-2"
-                >
-                    <div className="relative w-[380px] sm:w-[450px] md:w-[500px] lg:hidden aspect-[463/417] mb-0 sm:mb-4">
+                <div className="flex flex-col items-center gap-2">
+                    <motion.div
+                        className="relative w-[380px] sm:w-[450px] md:w-[500px] lg:hidden aspect-[463/417] mb-0 sm:mb-4"
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.9 },
+                            visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: "easeOut" } }
+                        }}
+                    >
                         <Image
                             src="/espektro-logo-mobile.svg"
                             alt="Espektro Logo"
@@ -116,30 +133,74 @@ export function Hero() {
                             className="object-contain"
                             priority
                         />
-                    </div>
+                    </motion.div>
                     <div className="flex flex-col items-center -mt-16 sm:-mt-12 md:-mt-16 lg:mt-0">
-                        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-2 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm">
-                            ESPEKTRO
-                        </h1>
-                        <p className="text-[#B7410E] text-3xl sm:text-5xl md:text-6xl lg:text-6xl italic font-bold mb-8 font-[family-name:var(--font-medieval-sharp)]">
-                            2026
-                        </p>
+                        <motion.h1
+                            className="text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] leading-[0.85] font-bold text-[#2C1810] mb-2 uppercase tracking-tighter font-[family-name:var(--font-medieval-sharp)] drop-shadow-sm flex overflow-hidden"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: { staggerChildren: 0.05 }
+                                }
+                            }}
+                        >
+                            {"ESPEKTRO".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                                    }}
+                                >
+                                    {char}
+                                </motion.span>
+                            ))}
+                        </motion.h1>
+                        <motion.p
+                            className="text-[#B7410E] text-3xl sm:text-5xl md:text-6xl lg:text-6xl italic font-bold mb-8 font-[family-name:var(--font-medieval-sharp)] flex overflow-hidden"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: { staggerChildren: 0.05, delayChildren: 0.4 }
+                                }
+                            }}
+                        >
+                            {"2026".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    variants={{
+                                        hidden: { opacity: 0, scale: 0.8, rotate: -10 },
+                                        visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.5, ease: "backOut" } }
+                                    }}
+                                >
+                                    {char}
+                                </motion.span>
+                            ))}
+                        </motion.p>
                     </div>
-                </motion.div>
+                </div>
 
                 <motion.p
                     className="max-w-2xl mx-auto text-lg sm:text-xl text-[#4A3428] mb-14 font-medium leading-relaxed font-[family-name:var(--font-open-sans)]"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.5 }}
+                    variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+                    }}
                 >
-                    {/* A journey through the{" "} */}
                     <span className="text-[#B7410E] underline underline-offset-8 decoration-[#B7410E]/20 font-bold">
                         Aitijhya Āvartanam
                     </span>
                 </motion.p>
 
-                <div className="flex justify-center mt-8">
+                <motion.div
+                    className="flex justify-center mt-8"
+                    variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+                    }}
+                >
                     <Button
                         variant="theatrical"
                         className="bg-[#B7410E] hover:bg-[#8B2635] text-white h-11 px-8 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 font-[family-name:var(--font-roboto-slab)]"
@@ -147,8 +208,8 @@ export function Hero() {
                     >
                         <Link href="/events">Buy Tickets</Link>
                     </Button>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
 
             {/* Scroll indicator */}
             <motion.div
