@@ -64,7 +64,7 @@ export default function TimelineDesktop() {
                 {/* Background Image */}
                 <div className="absolute inset-0 pointer-events-none">
                     <Image
-                        src="/images/bg1.png"
+                        src="/images/bg1.webp"
                         alt="Timeline background"
                         fill
                         className="object-cover opacity-30"

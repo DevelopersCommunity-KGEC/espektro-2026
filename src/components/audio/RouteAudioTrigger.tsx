@@ -36,7 +36,7 @@ export default function RouteAudioTrigger() {
         const playAudio = async () => {
             try {
                 if (!audioRef.current) {
-                    audioRef.current = new Audio("/music/STARTING SITE1.wav");
+                    audioRef.current = new Audio("/music/STARTING SITE1.mp3");
                     audioRef.current.volume = 0.5;
                 }
 

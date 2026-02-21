@@ -1,26 +1,24 @@
+import nextDynamic from "next/dynamic";
 import { Hero } from "@/components/landing/hero";
-import { About } from "@/components/landing/about";
-import { ThemeEvolution } from "@/components/landing/theme-evolution";
-import { EventsTimeline } from "@/components/landing/events-timeline";
-import { CulturalIllustrations } from "@/components/landing/dazzle-card.module/cultural-illustrations";
-import { Gallery } from "@/components/landing/gallery";
-import { Sponsors } from "@/components/landing/sponsors";
-import ClubsSection from "@/components/landing/about-sections/clubs";
-import { Contact } from "@/components/landing/contact";
-import { Footer } from "@/components/landing/footer";
 import { LogoPreloader } from "@/components/landing/logo-preloader";
 import { getTimelineData } from "@/actions/landing-data";
-import Timeline from "@/components/landing/timeline";
-import Techtix from "@/components/landing/about-sections/Techtix";
-import EspektroAbout from "@/components/landing/about-sections/Espektro";
-import Quizine from "@/components/landing/about-sections/Quizine";
-import Exotica from "@/components/landing/about-sections/Exotica";
-import { ArtistGallery } from "@/components/landing/artist-gallery";
-import { FeaturedArtists } from "@/components/landing/featured-artists";
 import { MusicController } from "@/components/audio/MusicController";
-import ComingSoon from "@/components/landing/coming-soon";
-import { FirstBack } from "@/components/landing/1stback";
-import { SecondBack } from "@/components/landing/2ndback";
+import { Footer } from "@/components/landing/footer";
+import { LazySection } from "@/components/landing/LazySection";
+
+// Dynamic imports for below-the-fold sections
+const EspektroAbout = nextDynamic(() => import("@/components/landing/about-sections/Espektro"));
+const Techtix = nextDynamic(() => import("@/components/landing/about-sections/Techtix"));
+const Quizine = nextDynamic(() => import("@/components/landing/about-sections/Quizine"));
+const Exotica = nextDynamic(() => import("@/components/landing/about-sections/Exotica"));
+const FirstBack = nextDynamic(() => import("@/components/landing/1stback").then(mod => mod.FirstBack));
+const Timeline = nextDynamic(() => import("@/components/landing/timeline"));
+const EventsTimeline = nextDynamic(() => import("@/components/landing/events-timeline").then(mod => mod.EventsTimeline));
+const FeaturedArtists = nextDynamic(() => import("@/components/landing/featured-artists").then(mod => mod.FeaturedArtists));
+const ArtistGallery = nextDynamic(() => import("@/components/landing/artist-gallery").then(mod => mod.ArtistGallery));
+const Sponsors = nextDynamic(() => import("@/components/landing/sponsors").then(mod => mod.Sponsors));
+const ClubsSection = nextDynamic(() => import("@/components/landing/about-sections/clubs"));
+const Contact = nextDynamic(() => import("@/components/landing/contact").then(mod => mod.Contact));
 
 export const dynamic = "force-dynamic";
 
@@ -36,54 +34,53 @@ export default async function LandingPage() {
         <Hero />
       </div>
 
-      <div id="espektro-about" data-section-id="espektro-about">
+      <LazySection id="espektro-about" data-section-id="espektro-about">
         <EspektroAbout />
-      </div>
+      </LazySection>
 
-      <div id="techtix" data-section-id="techtix">
+      <LazySection id="techtix" data-section-id="techtix">
         <Techtix />
-      </div>
+      </LazySection>
 
-      <div id="quizine" data-section-id="quizine">
+      <LazySection id="quizine" data-section-id="quizine">
         <Quizine />
-      </div>
+      </LazySection>
 
-      <div id="exotica" data-section-id="exotica">
+      <LazySection id="exotica" data-section-id="exotica">
         <Exotica />
-      </div>
-      <div id="1stback" data-section-id="1stback">
+      </LazySection>
+
+      <LazySection id="1stback" data-section-id="1stback">
         <FirstBack />
-      </div>
-      <div id="timeline" data-section-id="timeline">
+      </LazySection>
+
+      <LazySection id="timeline" data-section-id="timeline">
         <Timeline />
-      </div>
+      </LazySection>
 
-      <div id="events-timeline" data-section-id="events-timeline">
+      <LazySection id="events-timeline" data-section-id="events-timeline">
         <EventsTimeline scheduleData={timelineData} />
-      </div>
-      {/* <div id="2ndback" data-section-id="2ndback">
-        <SecondBack />
-      </div> */}
-      <div id="featured-artists" data-section-id="featured-artists">
+      </LazySection>
+
+      <LazySection id="featured-artists" data-section-id="featured-artists">
         <FeaturedArtists />
-      </div>
+      </LazySection>
 
-      <div id="artist-gallery" data-section-id="artist-gallery">
+      <LazySection id="artist-gallery" data-section-id="artist-gallery">
         <ArtistGallery />
-      </div>
+      </LazySection>
 
-      <div id="sponsors" data-section-id="sponsors">
+      <LazySection id="sponsors" data-section-id="sponsors">
         <Sponsors />
-        {/* <ComingSoon /> */}
-      </div>
+      </LazySection>
 
-      <div id="clubs" data-section-id="clubs">
+      <LazySection id="clubs" data-section-id="clubs">
         <ClubsSection />
-      </div>
+      </LazySection>
 
-      <div id="contact" data-section-id="contact">
+      <LazySection id="contact" data-section-id="contact">
         <Contact />
-      </div>
+      </LazySection>
 
       <Footer />
     </main>

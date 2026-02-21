@@ -84,7 +84,7 @@ export default function Timeline() {
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="relative w-full h-full">
                         <Image
-                            src="/images/bg1.png"
+                            src="/images/bg1.webp"
                             alt="Timeline background"
                             fill
                             className="object-cover opacity-30"

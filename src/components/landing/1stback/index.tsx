@@ -26,14 +26,12 @@ export function FirstBack() {
                     src="/images/1stback.webp"
                     alt="Decorative lotus mandala"
                     fill
-                    priority
                     className="object-contain hidden md:block"
                 />
                 <Image
                     src="/images/1stback.webp"
                     alt="Decorative lotus mandala"
                     fill
-                    priority
                     className="object-contain w-fit md:hidden bottom-50"
                 />
             </div>

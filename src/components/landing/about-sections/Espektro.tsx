@@ -30,7 +30,7 @@ const EspektroAbout: React.FC = () => {
           className="object-contain hidden md:block"
         />
         <Image
-          src="/images/background_web_mobile.png"
+          src="/images/background_web_mobile.webp"
           alt="Decorative lotus mandala"
           fill
           priority
@@ -234,7 +234,7 @@ const EspektroAbout: React.FC = () => {
                 viewport={{ once: true }}
               >
                 <Image
-                  src="/about-vectors/book.png"
+                  src="/about-vectors/book.webp"
                   alt="Clapperboard element"
                   fill
                   className="object-contain hover:scale-110 transition-transform duration-500 "

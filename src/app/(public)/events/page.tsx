@@ -25,7 +25,7 @@ export default async function PublicEventsPage() {
           className="object-contain hidden md:block"
         />
         <Image
-          src="/images/background_web_mobile.png"
+          src="/images/background_web_mobile.webp"
           alt="Decorative lotus mandala"
           fill
           priority

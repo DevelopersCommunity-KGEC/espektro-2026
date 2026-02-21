@@ -86,7 +86,7 @@ export function LogoPreloader() {
     if (!startTrigger || showStartButton) return;
 
     // Audio effect
-    const audio = new Audio("/music/loading-effect.wav");
+    const audio = new Audio("/music/loading-effect.mp3");
     audio.volume = 0.6;
 
     const playAudio = async () => {
@@ -273,7 +273,7 @@ export function LogoPreloader() {
           className="object-contain hidden md:block"
         />
         <Image
-          src="/images/background_web_mobile.png"
+          src="/images/background_web_mobile.webp"
           alt="Decorative lotus mandala"
           fill
           priority

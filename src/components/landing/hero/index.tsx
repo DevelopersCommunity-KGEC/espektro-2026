@@ -12,7 +12,7 @@ export function Hero() {
 
     useEffect(() => {
         setMounted(true);
-        console.log("Hero component mounted");
+        console.log("More than a website, this is our shared commit to Espektro — where late-night code became memories, and though our seniors made their final deploy, their legacy runs forever in the background. Thanks to : Akash Biswas, Debamrita Paul, Syamantak Pyne, Sayan Chatterjee, Md Kaif Sardar, Santanu Kotal, Vansh Deo, Chayan Samanta Shreejan Dolai, Md Yasin Alam, Hriddhiman Dutta, Sunetra Bar, Praneel Chatterjee, Archisman Halder, Garbita Chowdhury");
     }, []);
 
     if (!mounted)
@@ -32,7 +32,7 @@ export function Hero() {
                     className="object-contain hidden md:block"
                 />
                 <Image
-                    src="/images/background_web_mobile.png"
+                    src="/images/background_web_mobile.webp"
                     alt="Decorative lotus mandala"
                     fill
                     priority

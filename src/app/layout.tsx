@@ -64,7 +64,7 @@ export const metadata: Metadata = {
       "Join Espektro 2026 at KGEC – hackathons, tech events, competitions, workshops, and cultural nights. Register now.",
     images: [
       {
-        url: "https://espektro.in/og-image.png",
+        url: "https://espektro.in/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Espektro 2026 – Annual Cultural cum Technical Fest of KGEC",
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     title: "Espektro 2026 | Annual Cultural cum Technical Fest of KGEC",
     description:
       "Espektro 2026 at KGEC. Hackathons, competitions, workshops, and cultural nights. Register now.",
-    images: ["https://espektro.in/og-image.png"],
+    images: ["https://espektro.in/og-image.webp"],
   },
   icons: {
     icon: [
