@@ -140,7 +140,7 @@ const EspektroAbout: React.FC = () => {
               At Kalyani Government Engineering College, Espektro is not just a fest — it&apos;s a four-day celebration of talent, technology, culture. It is the grand annual fest that brings together students from different departments under one vibrant platform. Every year, the campus transforms into a hub of excitement, creativity, and collaboration.
             </p>
             <a
-              href="https://res.cloudinary.com/dezguraul/image/upload/v1741930364/espektro_sponsor_brochure_5_iubdru.pdf"
+              href="https://res.cloudinary.com/dkxskaege/image/upload/v1771678937/Espektro_Brochure_compressed_q43uzb.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-8"

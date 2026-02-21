@@ -37,22 +37,64 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Espektro 2026 | Event & Ticketing",
-  description: "Official ticketing platform for Espektro 2026, the annual fest of Kalyani Government Engineering College.",
-  keywords: ["Espektro", "KGEC", "Kalyani Government Engineering College", "College Fest", "Tech Fest", "Cultural Fest", "Ticketing", "Events", "2026"],
-  authors: [{ name: "Espektro Tech Team" }],
+  title: "Espektro 2026 | Annual Cultural cum Technical Fest of KGEC",
+  description:
+    "Espektro 2026 is the annual cultural cum technical fest of Kalyani Government Engineering College (KGEC). Hackathons, competitions, workshops, cultural nights, and more. Register now.",
+  keywords: [
+    "Espektro 2026",
+    "KGEC fest",
+    "Kalyani Government Engineering College fest",
+    "tech fest",
+    "cultural fest",
+    "hackathon",
+    "college fest 2026",
+    "Espektro KGEC",
+  ],
+  authors: [{ name: "Espektro Team, KGEC" }],
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: "https://espektro.in/",
+  },
   openGraph: {
-    title: "Espektro 2026 | KGEC Annual Fest",
-    description: "Official ticketing platform for Espektro 2026, the annual fest of Kalyani Government Engineering College.",
-    url: "https://espektro.kgec.edu.in",
-    siteName: "Espektro 2026",
-    locale: "en_US",
     type: "website",
+    siteName: "Espektro 2026",
+    url: "https://espektro.in/",
+    title: "Espektro 2026 | Annual Cultural cum Technical Fest of KGEC",
+    description:
+      "Join Espektro 2026 at KGEC – hackathons, tech events, competitions, workshops, and cultural nights. Register now.",
+    images: [
+      {
+        url: "https://espektro.in/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Espektro 2026 – Annual Cultural cum Technical Fest of KGEC",
+      },
+    ],
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Espektro 2026 | KGEC Annual Fest",
-    description: "Official ticketing platform for Espektro 2026.",
+    title: "Espektro 2026 | Annual Cultural cum Technical Fest of KGEC",
+    description:
+      "Espektro 2026 at KGEC. Hackathons, competitions, workshops, and cultural nights. Register now.",
+    images: ["https://espektro.in/images/og-image.png"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  applicationName: "Espektro 2026",
+  appleWebApp: {
+    title: "Espektro 2026",
+  },
+  other: {
+    "theme-color": "#0f172a",
   },
 };
 

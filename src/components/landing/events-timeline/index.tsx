@@ -292,9 +292,20 @@ export function EventsTimeline({ scheduleData }: EventsTimelineProps) {
 
                                 {/* Event rows */}
                                 {currentSchedule.events.map((event, idx) => {
-                                    const leftPct =
-                                        ((event.startHour - HOUR_START) / TOTAL_HOURS) * 100;
-                                    const widthPct = (event.duration / TOTAL_HOURS) * 100;
+                                    let leftPct = ((event.startHour - HOUR_START) / TOTAL_HOURS) * 100;
+                                    let widthPct = (event.duration / TOTAL_HOURS) * 100;
+
+                                    // Handle events that span across midnight or start before HOUR_START
+                                    if (leftPct < 0) {
+                                        widthPct += leftPct; // Reduce width by the amount it's off-screen
+                                        leftPct = 0;
+                                    }
+
+                                    // Handle events that extend beyond HOUR_END
+                                    if (leftPct + widthPct > 100) {
+                                        widthPct = 100 - leftPct;
+                                    }
+
                                     const c = categoryColors[event.category];
 
                                     return (

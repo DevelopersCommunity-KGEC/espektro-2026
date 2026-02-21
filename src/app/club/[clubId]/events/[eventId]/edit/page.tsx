@@ -35,7 +35,9 @@ export default async function EditClubEventPage({ params }: { params: Promise<{ 
             <h1 className="text-3xl font-bold mb-6 capitalize">Edit {clubId} Event</h1>
             <EventForm
                 initialData={event}
-                isEditing lockedClubId={clubId} redirectPath={`/club/${clubId}/events`}
+                isEditing={true}
+                lockedClubId={clubId}
+                redirectPath={`/club/${clubId}/events`}
             />
         </div>
     );

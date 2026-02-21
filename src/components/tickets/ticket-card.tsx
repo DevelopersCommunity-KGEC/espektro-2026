@@ -54,7 +54,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
             const dataUrl = await generateTicketImage({
                 eventTitle: event.title,
                 venue: event.venue,
-                date: new Date(event.date).toLocaleString("en-IN", { dateStyle: "full", timeStyle: "short" }),
+                date: new Date(event.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "full", timeStyle: "short" }) + (event.endDate && new Date(event.date).getTime() !== new Date(event.endDate).getTime() ? ` to ${new Date(event.endDate).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", timeStyle: "short" })}` : ""),
                 holderName: holderName || "Guest",
                 holderEmail: holderEmail || ticket.userEmail,
                 status: ticket.status,
@@ -83,7 +83,12 @@ export default function TicketCard({ ticket }: TicketCardProps) {
             <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="space-y-1">
                     <CardTitle>{event.title}</CardTitle>
-                    <CardDescription>{event.venue} • {new Date(event.date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</CardDescription>
+                    <CardDescription>
+                        {event.venue} • {new Date(event.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}
+                        {event.endDate && new Date(event.date).getTime() !== new Date(event.endDate).getTime() && (
+                            <> to {new Date(event.endDate).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" })}</>
+                        )}
+                    </CardDescription>
                 </div>
                 <Badge variant={ticket.status === 'checked-in' ? "secondary" : "default"} className={ticket.status === 'checked-in' ? "bg-green-100 text-green-700 hover:bg-green-100" : "bg-primary/10 text-primary hover:bg-primary/10"}>
                     {ticket.status}

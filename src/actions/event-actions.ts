@@ -52,6 +52,9 @@ export async function getPublicEvents() {
         festDays.map((e: any) => e.title).join(", "),
       image: festDays[0].image, // Use first day image
       date: festDays[0].date,
+      endDate:
+        festDays[festDays.length - 1].endDate ||
+        festDays[festDays.length - 1].date,
       venue: festDays[0].venue || "Espektro Ground",
       price: totalPrice,
       capacity: minAvailable, // Trick: capacity = available, sold = 0
@@ -120,6 +123,9 @@ export async function getPublicEventById(id: string) {
         festDaysJson.map((e: any) => e.title).join(", "),
       image: festDaysJson[0].image,
       date: festDaysJson[0].date,
+      endDate:
+        festDaysJson[festDaysJson.length - 1].endDate ||
+        festDaysJson[festDaysJson.length - 1].date,
       venue: festDaysJson[0].venue || "Espektro Ground",
       price: totalPrice,
       capacity: minAvailable,

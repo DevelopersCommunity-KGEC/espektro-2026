@@ -22,6 +22,21 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Set Locale for Moment if not global
+  // moment.locale('en-IN') // Optional
+
+  // Convert dates to IST Date objects for Moment handling
+  // Moment might use local time of the user's browser, which is typically desired.
+  // But request asks for explicit Kolkata/IST.
+  // Since Moment parses Date objects in local time, and `toLocaleString` with timezone does string.
+  // We can use native Intl for consistent timezone rendering or use moment-timezone if installed.
+  // Assuming moment-timezone is NOT installed, we use native formatting.
+
+  const formatDate = (date: Date | string, options: Intl.DateTimeFormatOptions) => {
+    // Note: 'width' is not valid in options, so removing it. Using valid options.
+    return new Date(date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", ...options });
+  }
+
   // Handle data inconsistencies (API vs Legacy types)
   const displayImage =
     event.image ||
@@ -38,6 +53,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
     : event.startTime
       ? new Date(event.startTime)
       : new Date();
+
+  const eventEndDate = event.endDate ? new Date(event.endDate) : null;
 
   return (
     <motion.div
@@ -81,8 +98,17 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
             <div className="flex items-center text-sm text-muted-foreground">
               <Calendar className="w-4 h-4 mr-2 text-primary/70" />
               <span>
-                {moment(eventDate).format("ddd, MMM D, YYYY")} •{" "}
-                {moment(eventDate).format("h:mm A")}
+                {formatDate(eventDate, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })} •{" "}
+                {formatDate(eventDate, { hour: 'numeric', minute: 'numeric', hour12: true })}
+                {eventEndDate && eventDate.getTime() !== eventEndDate.getTime() && (
+                  <>
+                    {" "}
+                    -{" "}
+                    {new Date(eventDate).getDate() === new Date(eventEndDate).getDate()
+                      ? formatDate(eventEndDate, { hour: 'numeric', minute: 'numeric', hour12: true })
+                      : formatDate(eventEndDate, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}
+                  </>
+                )}
               </span>
             </div>
             <div className="flex items-center text-sm text-muted-foreground">

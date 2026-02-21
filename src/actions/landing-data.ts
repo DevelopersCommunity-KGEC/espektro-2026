@@ -18,6 +18,9 @@ export async function getTimelineData(): Promise<DaySchedule[]> {
     const groupedEvents: Record<string, typeof dbEvents> = {};
 
     dbEvents.forEach((event: any) => {
+      // Skip the 4-day season pass from the Gantt chart
+      if (event.title.toLowerCase().includes("season pass")) return;
+
       // Use IST for grouping
       const d = new Date(event.date);
       const istDate = new Date(
@@ -59,7 +62,19 @@ export async function getTimelineData(): Promise<DaySchedule[]> {
         const startHour = h + m / 60;
 
         // Default duration 2 hours if not present
-        const duration = 2;
+        let duration = 2;
+        if (e.endDate) {
+          const endD = new Date(e.endDate);
+
+          // Calculate duration in hours using timestamps to handle multi-day events correctly
+          const durationMs = endD.getTime() - d.getTime();
+          duration = durationMs / (1000 * 60 * 60);
+
+          // Ensure minimum duration of 1 hour for visibility in Gantt chart
+          if (duration <= 0) {
+            duration = 1;
+          }
+        }
 
         let category: GanttEvent["category"] = "technical"; // Default
         const lowerTitle = e.title.toLowerCase();
