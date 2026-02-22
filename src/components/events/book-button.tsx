@@ -18,10 +18,14 @@ export function BookButton({ eventId }: { eventId: string }) {
         <Button
             onClick={handleBook}
             disabled={loading}
-            className="w-full h-auto py-4 text-xl font-bold rounded-xl"
+            variant="theatrical"
+            className="w-full h-auto py-8 text-2xl font-bold font-[family-name:var(--font-medieval-sharp)] tracking-wide group"
         >
-            {loading ? <Loader2 className="mr-2 h-6 w-6 animate-spin" /> : null}
-            Book Ticket Now
+            {loading ? <Loader2 className="mr-3 h-7 w-7 animate-spin" /> : null}
+            <span className="flex items-center gap-2">
+                Book Ticket Now
+                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+            </span>
         </Button>
     );
 }

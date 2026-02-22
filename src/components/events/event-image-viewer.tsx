@@ -19,11 +19,11 @@ export function EventImageViewer({ image, title }: EventImageViewerProps) {
   return (
     <div className="relative w-full overflow-hidden bg-gray-100 dark:bg-zinc-800 rounded-xl flex justify-center items-center">
       {/* Mobile: 4:5 Aspect Ratio | Desktop: Fixed Height Cover */}
-      <div className="relative w-full max-w-sm md:max-w-none md:w-full aspect-[4/5] md:aspect-auto md:h-96 group">
+      <div className="relative w-full max-w-sm md:max-w-none md:w-full aspect-[4/5] md:aspect-auto md:h-125 group">
         <img
           src={image || "/images/placeholder.webp"}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
         />
         {/* Full Screen Trigger */}
         <Dialog>

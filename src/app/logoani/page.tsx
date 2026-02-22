@@ -57,10 +57,10 @@ function classifyElement(el: SVGGraphicsElement): number {
 
 /* ── Phase timing (sequential chaining) ── */
 
-// Phase 1: Main body fade+scale (0 – 0.8s)
+// Phase 1: Main body fade+scale
 const FADE_TIMING: Record<number, { delay: number; dur: number }> = {
-    1: { delay: 0, dur: 0.8 },
-    3: { delay: 3.6, dur: 0.8 },       // Pen: 3.6 – 4.4s (after Phase 2)
+    1: { delay: 0, dur: 0.5 },
+    3: { delay: 1.8, dur: 0.5 },
 };
 
 // Phase 2: Stroke draw (starts after Phase 1 ends)
@@ -71,14 +71,14 @@ const STROKE_TIMING: Record<number, {
     fillDelay: number;
     fillDur: number;
 }> = {
-    2: { strokeStart: 1.0, strokeDur: 2.0, fillDelay: 2.5, fillDur: 0.8 },   // 1.0 – 3.3s (after Phase 1)
-    4: { strokeStart: 4.6, strokeDur: 1.5, fillDelay: 5.6, fillDur: 0.8 },   // 4.6 – 6.4s (after Phase 3)
+    2: { strokeStart: 0.5, strokeDur: 1.2, fillDelay: 1.3, fillDur: 0.5 },
+    4: { strokeStart: 2.3, strokeDur: 1.0, fillDelay: 2.8, fillDur: 0.5 },
 };
 
 // Phase 5 (espektro text) & Phase 6 (26 text): arrival animation
 const TEXT_ARRIVAL_TIMING: Record<number, { delay: number; dur: number }> = {
-    5: { delay: 4.6, dur: 1.0 },       // espektro arrives when Phase 4 starts
-    6: { delay: 5.6, dur: 1.0 },       // 26 arrives after espektro
+    5: { delay: 2.3, dur: 0.6 },
+    6: { delay: 3.0, dur: 0.6 },
 };
 
 export default function LogoAniPage() {

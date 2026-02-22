@@ -61,7 +61,7 @@ const AUDIO_CONFIG: Record<string, SectionAudioConfig> = {
     track: TRACKS.STARTING, volume: 0.6, fadeMs: 1800, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
   },
   "1stback": {
-    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 500, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 800, hasThunder: false
+    track: TRACKS.BENGALI, volume: 0.3, fadeMs: 500, delayMs: 500, startTime: 0, isSharp: false, scrollSpeedMs: 100, hasThunder: false
   },
   "timeline": {
     track: TRACKS.ARTIST, volume: 0.3, fadeMs: 100, delayMs: 0, isSharp: true, scrollSpeedMs: 1000, hasThunder: false

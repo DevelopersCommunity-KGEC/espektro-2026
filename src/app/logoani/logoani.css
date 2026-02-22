@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background: #00ff00;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -95,7 +95,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: fadeScaleIn var(--anim-dur, 0.8s) ease-out var(--anim-delay, 0s) forwards;
+  animation: fadeScaleIn var(--anim-dur, 0.5s) ease-out var(--anim-delay, 0s) forwards;
 }
 
 /* Pen: keep strokes visible but no stroke draw animation */
@@ -115,8 +115,8 @@
   stroke-dashoffset: var(--path-length, 2000);
   animation:
     appear 0s var(--stroke-start, 0s) forwards,
-    drawStroke var(--stroke-dur, 2s) ease-in-out var(--stroke-start, 0s) forwards,
-    fillIn var(--fill-dur, 0.8s) ease-in-out var(--fill-delay, 2s) forwards;
+    drawStroke var(--stroke-dur, 1.2s) ease-in-out var(--stroke-start, 0.5s) forwards,
+    fillIn var(--fill-dur, 0.5s) ease-in-out var(--fill-delay, 1.3s) forwards;
 }
 
 /* ── Keyframes for text arrival (Parts 5 & 6) ── */
@@ -137,7 +137,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 6.8s) forwards;
+  animation: arriveIn var(--arrival-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 2.3s) forwards;
 }
 
 /* ────── Phase 6: "26" text (arrival slide-in) ────── */
@@ -145,7 +145,7 @@
   opacity: 0;
   transform-origin: center center;
   transform-box: fill-box;
-  animation: arriveIn var(--arrival-dur, 1s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 7.8s) forwards;
+  animation: arriveIn var(--arrival-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--arrival-delay, 3.0s) forwards;
 }
 
 /* Preserve original stroke styles */
@@ -184,12 +184,12 @@
 .logo-container {
   animation:
     containerFadeIn 0.4s ease-out forwards,
-    continuousZoom 7s ease-in-out 0s forwards,
-    dissolveOut 1s ease-in-out 7.5s forwards;
+    continuousZoom 4.5s ease-in-out 0s forwards,
+    dissolveOut 0.8s ease-in-out 4.2s forwards;
 }
 
 .logoani-page {
-  animation: pageFadeOut 0.3s ease-out 8.5s forwards;
+  animation: pageFadeOut 0.3s ease-out 4.7s forwards;
 }
 
 @keyframes pageFadeOut {
