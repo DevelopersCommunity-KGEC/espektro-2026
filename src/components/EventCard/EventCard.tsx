@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { EventData } from "@/types";
 import Link from "next/link";
+import { clubs } from "@/data/clubs";
 
 interface EventCardProps {
   event: EventData;
@@ -56,6 +57,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 
   const eventEndDate = event.endDate ? new Date(event.endDate) : null;
 
+  const clubName = event.clubId ? clubs.find(c => c.id === event.clubId)?.name : null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -84,6 +87,11 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
             {event.eventOrganiserClub && (
               <span className="flex items-center gap-1 border border-border px-2 py-0.5 rounded-md">
                 {event.eventOrganiserClub.name}
+              </span>
+            )}
+            {clubName && !event.eventOrganiserClub && (
+              <span className="flex items-center gap-1 border border-border px-2 py-0.5 rounded-md">
+                Hosted by {clubName}
               </span>
             )}
           </div>

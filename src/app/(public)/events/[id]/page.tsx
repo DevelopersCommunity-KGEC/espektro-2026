@@ -14,6 +14,7 @@ import dbConnect from "@/lib/db";
 import Ticket from "@/models/Ticket";
 import { ShowTicketQr } from "@/components/events/show-ticket-qr";
 import { VENUES } from "@/data/venues";
+import { clubs } from "@/data/clubs";
 import Image from "next/image";
 
 export default async function EventDetailsPage({
@@ -42,6 +43,8 @@ export default async function EventDetailsPage({
 
   const isSoldOut =
     event.capacity !== -1 && event.ticketsSold >= event.capacity;
+
+  const clubName = event.clubId ? clubs.find(c => c.id === event.clubId)?.name : null;
 
   let existingTicket = null;
   if (session?.user && !event.allowMultipleBookings) {
@@ -121,6 +124,11 @@ export default async function EventDetailsPage({
                 <h1 className="text-4xl md:text-5xl font-bold mb-3 text-[#2C1810] font-[family-name:var(--font-medieval-sharp)]">
                   {event?.title}
                 </h1>
+                {clubName && (
+                  <p className="text-lg text-[#8B2635] font-bold mb-4 font-[family-name:var(--font-roboto-slab)]">
+                    Hosted by {clubName}
+                  </p>
+                )}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#4A3428]/70 font-[family-name:var(--font-roboto-slab)]">
                   <span className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#B7410E]" />

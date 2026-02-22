@@ -246,28 +246,35 @@ export async function verifyPayment(
 
     // 1. Consume Coupon Code if present
     if (couponCode) {
-      const coupon = await Coupon.findOneAndUpdate(
-        { code: couponCode.toUpperCase(), isUsed: false },
-        { isUsed: true, usedBy: userEmail, usedAt: new Date() },
-      );
+      const coupon = await Coupon.findOne({
+        code: couponCode.toUpperCase(),
+      });
 
-      if (!coupon) {
-        // Idempotency check — coupon may have been consumed on a previous attempt
-        const alreadyUsed = await Coupon.findOne({
-          code: couponCode.toUpperCase(),
-          usedBy: userEmail,
-        });
-        if (!alreadyUsed) {
-          throw new Error("Coupon code invalid or already used.");
+      if (!coupon) throw new Error("Coupon code invalid or already used.");
+      if (coupon.clubId !== "espektro")
+        throw new Error("Coupon code not valid for Season Pass");
+
+      if (coupon.type === "single-use") {
+        const updated = await Coupon.findOneAndUpdate(
+          { code: couponCode.toUpperCase(), isUsed: false },
+          { isUsed: true, usedBy: userEmail, usedAt: new Date() },
+        );
+        if (!updated) {
+          const alreadyUsed = await Coupon.findOne({
+            code: couponCode.toUpperCase(),
+            usedBy: userEmail,
+          });
+          if (!alreadyUsed)
+            throw new Error("Coupon code invalid or already used.");
         }
       } else {
-        if (coupon.clubId !== "espektro") {
-          await Coupon.findByIdAndUpdate(coupon._id, {
-            isUsed: false,
-            usedBy: null,
-            usedAt: null,
-          });
-          throw new Error("Coupon code not valid for Season Pass");
+        // Multi-use: enforce limit dynamically
+        const usageCount = await Ticket.countDocuments({
+          couponCode: couponCode.toUpperCase(),
+          status: { $in: ["booked", "checked-in", "pending"] },
+        });
+        if (coupon.maxUses && usageCount >= coupon.maxUses) {
+          throw new Error("Coupon usage limit reached");
         }
       }
     }
@@ -315,7 +322,7 @@ export async function verifyPayment(
           status: "booked",
           issueType: couponCode ? "coupon" : "payment",
           qrCodeToken: uuidv4(),
-          couponCode: couponCode || undefined,
+          couponCode: couponCode ? couponCode.toUpperCase() : undefined,
           referrerUserId: referrerUserId || undefined,
           discountAmount: itemDiscount,
           price: Math.max(0, event.price - itemDiscount),
@@ -345,59 +352,53 @@ export async function verifyPayment(
 
   // If coupon code is present, consume it FIRST
   if (couponCode) {
-    const coupon = await Coupon.findOneAndUpdate(
-      { code: couponCode.toUpperCase(), isUsed: false },
-      {
-        isUsed: true,
-        usedBy: userEmail,
-        usedAt: new Date(),
-      },
-    );
-
+    const coupon = await Coupon.findOne({ code: couponCode.toUpperCase() });
     if (!coupon) {
-      // Idempotency: check if already consumed by this user
-      const alreadyUsed = await Coupon.findOne({
-        code: couponCode.toUpperCase(),
-        usedBy: userEmail,
-      });
-      if (alreadyUsed) {
-        const evt = await Event.findById(eventId);
-        if (evt)
-          appliedDiscount = Math.ceil(
-            (evt.price * alreadyUsed.discountPercentage) / 100,
+      throw new Error("Coupon code invalid or already used during processing.");
+    }
+
+    // Check club match
+    const eventCheck = await Event.findById(eventId);
+    if (!eventCheck) throw new Error("Event not found");
+    if (coupon.clubId !== eventCheck.clubId)
+      throw new Error("Coupon code mismatch.");
+
+    if (coupon.type === "single-use") {
+      const updated = await Coupon.findOneAndUpdate(
+        { code: couponCode.toUpperCase(), isUsed: false },
+        {
+          isUsed: true,
+          usedBy: userEmail,
+          usedAt: new Date(),
+        },
+      );
+
+      if (!updated) {
+        const alreadyUsed = await Coupon.findOne({
+          code: couponCode.toUpperCase(),
+          usedBy: userEmail,
+        });
+        if (!alreadyUsed) {
+          throw new Error(
+            "Coupon code invalid or already used during processing.",
           );
-        issueType = "coupon";
-      } else {
-        throw new Error(
-          "Coupon code invalid or already used during processing.",
-        );
+        }
       }
     } else {
-      // Check club match
-      const eventCheck = await Event.findById(eventId);
-      if (!eventCheck) {
-        await Coupon.findByIdAndUpdate(coupon._id, {
-          isUsed: false,
-          usedBy: null,
-          usedAt: null,
-        });
-        throw new Error("Event not found");
+      // Multi-use: enforce limit dynamically
+      const usageCount = await Ticket.countDocuments({
+        couponCode: couponCode.toUpperCase(),
+        status: { $in: ["booked", "checked-in", "pending"] },
+      });
+      if (coupon.maxUses && usageCount >= coupon.maxUses) {
+        throw new Error("Coupon usage limit reached");
       }
-
-      if (coupon.clubId !== eventCheck.clubId) {
-        await Coupon.findByIdAndUpdate(coupon._id, {
-          isUsed: false,
-          usedBy: null,
-          usedAt: null,
-        });
-        throw new Error("Coupon code mismatch.");
-      }
-
-      appliedDiscount = Math.ceil(
-        (eventCheck.price * coupon.discountPercentage) / 100,
-      );
-      issueType = "coupon";
     }
+
+    appliedDiscount = Math.ceil(
+      (eventCheck.price * coupon.discountPercentage) / 100,
+    );
+    issueType = "coupon";
   }
 
   try {
@@ -425,7 +426,7 @@ export async function verifyPayment(
       status: "booked",
       issueType,
       qrCodeToken: uuidv4(),
-      couponCode: couponCode || undefined,
+      couponCode: couponCode ? couponCode.toUpperCase() : undefined,
       referrerUserId: referrerUserId || undefined,
       discountAmount: appliedDiscount,
       price: Math.max(0, event.price - appliedDiscount),

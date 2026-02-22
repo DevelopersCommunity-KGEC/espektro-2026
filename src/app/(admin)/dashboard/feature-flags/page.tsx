@@ -1,10 +1,10 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { CouponManager } from "@/components/admin/coupon-manager";
 import { getFeatureFlags } from "@/actions/feature-flag-actions";
+import { FeatureFlagsPanel } from "@/components/admin/feature-flags-panel";
 
-export default async function AdminCouponsPage() {
+export default async function FeatureFlagsPage() {
     const session = await auth.api.getSession({
         headers: await headers()
     });
@@ -14,21 +14,16 @@ export default async function AdminCouponsPage() {
     }
 
     const flags = await getFeatureFlags();
-    const featureMap = flags.reduce<Record<string, boolean>>((acc, row) => {
-        acc[row.clubId] = row.reusableCoupon;
-        return acc;
-    }, {});
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Coupon Management</h1>
+            <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tight">Feature Flags</h1>
                 <p className="text-muted-foreground">
-                    Generate and manage discount codes for clubs.
+                    Enable or disable per-club capabilities. Currently controls reusable coupon availability.
                 </p>
             </div>
-
-            <CouponManager clubId="all" isSuperAdmin={true} featureFlagsByClub={featureMap} />
+            <FeatureFlagsPanel initialFlags={flags} />
         </div>
     );
 }
