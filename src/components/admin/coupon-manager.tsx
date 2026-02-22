@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Copy, Trash2, RefreshCw, Loader2, Edit3 } from "lucide-react";
 import { clubs } from "@/data/clubs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 import { z } from "zod";
 import { useForm, useWatch } from "react-hook-form";
@@ -51,6 +52,9 @@ export function CouponManager({ clubId, isSuperAdmin = false, featureFlagsByClub
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
     const [creatingReusable, setCreatingReusable] = useState(false);
+    const [editLimitCoupon, setEditLimitCoupon] = useState<any>(null);
+    const [editLimitValue, setEditLimitValue] = useState<string>("");
+    const [updatingLimit, setUpdatingLimit] = useState(false);
 
     // For super-admin pick first club; for club-admin use their clubId
     const initialClub = clubId === "all" ? (clubs[0]?.id || "") : clubId;
@@ -147,20 +151,28 @@ export function CouponManager({ clubId, isSuperAdmin = false, featureFlagsByClub
         }
     };
 
-    const handleEditLimit = async (coupon: any) => {
-        const input = prompt("Set max uses", coupon.maxUses || 1);
-        if (!input) return;
-        const parsed = parseInt(input, 10);
+    const handleEditLimit = (coupon: any) => {
+        setEditLimitCoupon(coupon);
+        setEditLimitValue(String(coupon.maxUses || 1));
+    };
+
+    const submitEditLimit = async () => {
+        if (!editLimitCoupon) return;
+        const parsed = parseInt(editLimitValue, 10);
         if (Number.isNaN(parsed) || parsed < 1) {
             toast.error("Invalid number");
             return;
         }
+        setUpdatingLimit(true);
         try {
-            await updateCouponLimit(coupon._id, parsed);
+            await updateCouponLimit(editLimitCoupon._id, parsed);
             toast.success("Updated limit");
+            setEditLimitCoupon(null);
             fetchCoupons();
         } catch (error: any) {
             toast.error(error.message || "Failed to update limit");
+        } finally {
+            setUpdatingLimit(false);
         }
     };
 
@@ -170,12 +182,13 @@ export function CouponManager({ clubId, isSuperAdmin = false, featureFlagsByClub
     };
 
     return (
-        <Card>
-            <CardHeader>
-                <div className="flex justify-between items-center">
-                    <div>
-                        <CardTitle>Manage Coupons</CardTitle>
-                        <CardDescription>Create and track discount codes</CardDescription>
+        <>
+            <Card>
+                <CardHeader>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle>Manage Coupons</CardTitle>
+                            <CardDescription>Create and track discount codes</CardDescription>
                     </div>
                     <Button variant="ghost" size="sm" onClick={fetchCoupons}>
                         <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
@@ -482,5 +495,34 @@ export function CouponManager({ clubId, isSuperAdmin = false, featureFlagsByClub
                 </div>
             </CardContent>
         </Card>
+
+        <Dialog open={!!editLimitCoupon} onOpenChange={(open) => !open && setEditLimitCoupon(null)}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Edit Max Uses</DialogTitle>
+                    <DialogDescription>
+                        Set the maximum number of times this coupon can be used.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="py-4">
+                    <Input
+                        type="number"
+                        value={editLimitValue}
+                        onChange={(e) => setEditLimitValue(e.target.value)}
+                        min={1}
+                    />
+                </div>
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => setEditLimitCoupon(null)} disabled={updatingLimit}>
+                        Cancel
+                    </Button>
+                    <Button onClick={submitEditLimit} disabled={updatingLimit}>
+                        {updatingLimit && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        Save
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+        </>
     );
 }
