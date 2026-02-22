@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { CouponManager } from "@/components/admin/coupon-manager";
+import { getFeatureFlags } from "@/actions/feature-flag-actions";
 
 export default async function AdminCouponsPage() {
     const session = await auth.api.getSession({
@@ -12,6 +13,12 @@ export default async function AdminCouponsPage() {
         redirect("/dashboard");
     }
 
+    const flags = await getFeatureFlags();
+    const featureMap = flags.reduce<Record<string, boolean>>((acc, row) => {
+        acc[row.clubId] = row.reusableCoupon;
+        return acc;
+    }, {});
+
     return (
         <div className="space-y-6">
             <div>
@@ -21,7 +28,7 @@ export default async function AdminCouponsPage() {
                 </p>
             </div>
 
-            <CouponManager clubId="all" isSuperAdmin={true} />
+            <CouponManager clubId="all" isSuperAdmin={true} featureFlagsByClub={featureMap} />
         </div>
     );
 }

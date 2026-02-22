@@ -2,6 +2,7 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser, hasClubPermission } from "@/lib/rbac";
+import { isReusableCouponEnabled } from "@/actions/feature-flag-actions";
 import { CouponManager } from "@/components/admin/coupon-manager";
 
 export default async function ClubCouponsPage({ params }: { params: Promise<{ clubId: string }> }) {
@@ -14,6 +15,9 @@ export default async function ClubCouponsPage({ params }: { params: Promise<{ cl
     const canManage = await hasClubPermission(user.id, clubId, ["club-admin"]);
     if (!canManage) return notFound();
 
+    const enabled = await isReusableCouponEnabled(clubId);
+    const featureFlags = { [clubId]: enabled };
+
     return (
         <div className="container mx-auto py-10 px-4">
             <div className="mb-6">
@@ -21,7 +25,7 @@ export default async function ClubCouponsPage({ params }: { params: Promise<{ cl
                 <p className="text-muted-foreground">Generate and manage discount codes for your club events.</p>
             </div>
 
-            <CouponManager clubId={clubId} />
+            <CouponManager clubId={clubId} featureFlagsByClub={featureFlags} />
         </div>
     );
 }
