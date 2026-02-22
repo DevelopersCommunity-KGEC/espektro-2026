@@ -5,6 +5,9 @@ export interface IClub extends Document {
   name: string;
   description?: string;
   image?: string;
+  features?: {
+    reusableCoupon?: boolean;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,6 +18,9 @@ const ClubSchema: Schema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     image: { type: String },
+    features: {
+      reusableCoupon: { type: Boolean, default: false },
+    },
   },
   { timestamps: true },
 );
