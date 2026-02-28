@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback, useSyncExternalStore } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { verifyTicket } from "@/actions/ticket-actions";
 import { authClient } from "@/lib/auth-client";
@@ -8,6 +8,38 @@ import { useRouter } from "next/navigation";
 import { ScannerSkeleton } from "@/components/skeletons";
 import { Loader2, SwitchCamera, Zap, ZapOff, ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+// Ensures consistent server/client first-render to avoid hydration mismatch
+const emptySubscribe = () => () => { };
+function useIsMounted() {
+    return useSyncExternalStore(
+        emptySubscribe,
+        () => true,  // client: mounted
+        () => false  // server: not mounted
+    );
+}
+
+/** Safely stop and clear an Html5Qrcode instance, returning a promise */
+async function safeStopScanner(instance: Html5Qrcode | null): Promise<void> {
+    if (!instance) return;
+    try {
+        const state = instance.getState();
+        // States: 1=NOT_STARTED, 2=SCANNING, 3=PAUSED
+        if (state === 2 || state === 3) {
+            await instance.stop();
+        }
+    } catch (_) {
+        // getState or stop may throw if already stopped / bad state
+    }
+    try {
+        instance.clear();
+    } catch (_) {
+        // clear may throw if DOM element already removed
+    }
+}
+
+/** Small delay to let the browser fully release camera hardware */
+const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function ScanPage() {
     const [scanResult, setScanResult] = useState<any>(null);
@@ -19,11 +51,13 @@ export default function ScanPage() {
     const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
     const [hasTorch, setHasTorch] = useState(false);
 
+    const isMounted = useIsMounted();
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
 
     const isProcessingRef = useRef(false);
     const scannerRef = useRef<Html5Qrcode | null>(null);
+    const cameraCheckedRef = useRef(false);
 
     useEffect(() => {
         if (!isPending && !session) {
@@ -31,27 +65,24 @@ export default function ScanPage() {
         }
     }, [session, isPending, router]);
 
+    // Check available cameras once (not inside the scanner effect)
+    useEffect(() => {
+        if (cameraCheckedRef.current) return;
+        cameraCheckedRef.current = true;
+        Html5Qrcode.getCameras()
+            .then((devices) => {
+                setHasMultipleCameras(devices && devices.length > 1);
+            })
+            .catch((err) => {
+                console.warn("Error checking cameras", err);
+            });
+    }, []);
 
     useEffect(() => {
         if (!isScanning) return;
 
-        Html5Qrcode.getCameras().then(devices => {
-            setHasMultipleCameras(devices && devices.length > 1);
-        }).catch(err => {
-            console.warn("Error checking cameras", err);
-        });
-
-        // Ensure cleanup of previous instance if any
-        if (scannerRef.current) {
-            try {
-                scannerRef.current.clear();
-            } catch (e) {
-                console.warn(e);
-            }
-        }
-
-        const scanner = new Html5Qrcode("reader");
-        scannerRef.current = scanner;
+        let isMounted = true;
+        let currentScanner: Html5Qrcode | null = null;
 
         const config = {
             fps: 10,
@@ -64,36 +95,72 @@ export default function ScanPage() {
             },
         };
 
-        let isMounted = true;
+        async function startScanner(retries = 3): Promise<void> {
+            // First, fully release any previous scanner instance
+            if (scannerRef.current) {
+                await safeStopScanner(scannerRef.current);
+                scannerRef.current = null;
+                // Give the browser time to release the camera hardware
+                await delay(400);
+            }
 
-        scanner.start(
-            { facingMode: facingMode },
-            config,
-            (decodedText) => {
-                if (isMounted) onScanSuccess(decodedText);
-            },
-            () => { }
-        ).then(() => {
-            if (!isMounted) {
-                // If unmounted during start, stop immediately
-                scanner.stop().catch(console.warn);
-                return;
-            }
+            if (!isMounted) return;
+
+            const scanner = new Html5Qrcode("reader");
+            scannerRef.current = scanner;
+            currentScanner = scanner;
+
             try {
-                // Some devices don't support getRunningTrackCameraCapabilities
-                const capabilities = scanner.getRunningTrackCameraCapabilities();
-                setHasTorch(!!(capabilities as any).torch);
-            } catch (e) {
-                console.warn("Could not get camera capabilities", e);
-                setHasTorch(false);
+                await scanner.start(
+                    { facingMode },
+                    config,
+                    (decodedText) => {
+                        if (isMounted) onScanSuccess(decodedText);
+                    },
+                    () => { }
+                );
+
+                if (!isMounted) {
+                    await safeStopScanner(scanner);
+                    return;
+                }
+
+                // Check torch capability
+                try {
+                    const capabilities = scanner.getRunningTrackCameraCapabilities();
+                    setHasTorch(!!(capabilities as any).torch);
+                } catch (_) {
+                    setHasTorch(false);
+                }
+            } catch (err: any) {
+                if (!isMounted) return;
+
+                const isResourceBusy =
+                    err?.name === "NotReadableError" ||
+                    (typeof err?.message === "string" &&
+                        err.message.includes("Could not start video source"));
+
+                if (isResourceBusy && retries > 0) {
+                    console.warn(`Camera busy, retrying... (${retries} left)`);
+                    // Clean up the failed attempt
+                    await safeStopScanner(scanner);
+                    scannerRef.current = null;
+                    // Wait longer for camera hardware to free up
+                    await delay(800);
+                    if (isMounted) {
+                        return startScanner(retries - 1);
+                    }
+                } else {
+                    console.error("Error starting scanner", err);
+                    setError(
+                        isResourceBusy
+                            ? "Camera is busy or unavailable. Please close other apps using the camera and try again."
+                            : "Failed to start camera: " + (err?.message || err)
+                    );
+                    setIsScanning(false);
+                }
             }
-        }).catch(err => {
-            if (isMounted) {
-                console.error("Error starting scanner", err);
-                setError("Failed to start camera: " + (err?.message || err));
-                setIsScanning(false);
-            }
-        });
+        }
 
         async function onScanSuccess(decodedText: string) {
             if (isProcessingRef.current) return;
@@ -101,13 +168,8 @@ export default function ScanPage() {
 
             // Stop scanner before verifying to free up camera
             if (scannerRef.current) {
-                try {
-                    await scannerRef.current.stop();
-                    scannerRef.current.clear();
-                    scannerRef.current = null;
-                } catch (e) {
-                    console.error("Failed to stop scanner", e);
-                }
+                await safeStopScanner(scannerRef.current);
+                scannerRef.current = null;
             }
 
             if (isMounted) setIsScanning(false);
@@ -129,56 +191,43 @@ export default function ScanPage() {
             }
         }
 
+        startScanner();
+
         return () => {
             isMounted = false;
-            if (scannerRef.current) {
-                const instance = scannerRef.current;
-                scannerRef.current = null;
-                try {
-                    const state = instance.getState();
-                    // Only stop if actually scanning or paused (states 2 and 3)
-                    if (state === 2 || state === 3) {
-                        instance.stop()
-                            .then(() => { try { instance.clear(); } catch (_) { } })
-                            .catch(() => { try { instance.clear(); } catch (_) { } });
-                    } else {
-                        try { instance.clear(); } catch (_) { }
-                    }
-                } catch (_) {
-                    // getState itself may throw if scanner is in a bad state
-                    try { instance.clear(); } catch (_e) { }
-                }
-            }
+            const instance = scannerRef.current || currentScanner;
+            scannerRef.current = null;
+            // Fire-and-forget cleanup — safeStopScanner won't throw
+            safeStopScanner(instance);
         };
     }, [isScanning, facingMode]);
 
-    const startScanning = () => {
+    const startScanning = useCallback(() => {
         setScanResult(null);
         setError("");
         setIsScanning(true);
         setTorchOn(false);
         isProcessingRef.current = false;
-    };
+    }, []);
 
-    const switchCamera = () => {
-        setFacingMode(prev => prev === "environment" ? "user" : "environment");
+    const switchCamera = useCallback(() => {
+        setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
         setTorchOn(false);
-    };
+    }, []);
 
-    const toggleTorch = async () => {
+    const toggleTorch = useCallback(async () => {
         if (!scannerRef.current) return;
         try {
             await scannerRef.current.applyVideoConstraints({
-                advanced: [{ torch: !torchOn }]
+                advanced: [{ torch: !torchOn }],
             } as any);
             setTorchOn(!torchOn);
         } catch (err) {
             console.error("Torch toggle failed", err);
-            // Don't set error state as it might just be unavailable
         }
-    };
+    }, [torchOn]);
 
-    if (isPending || !session) return <ScannerSkeleton />;
+    if (!isMounted || isPending || !session) return <ScannerSkeleton />;
 
     return (
         <div className="container mx-auto max-w-md p-4 min-h-screen flex flex-col">
