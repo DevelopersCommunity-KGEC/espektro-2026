@@ -64,9 +64,19 @@ export async function verifyTicket(token: string) {
       };
   }
 
-  if (ticket.status === "checked-in") {
+  // Check for revoked tickets
+  if (ticket.revoked) {
     return {
       success: false,
+      message: "This ticket has been revoked",
+      ticket: JSON.parse(JSON.stringify(ticket)),
+    };
+  }
+
+  if (ticket.status === "checked-in") {
+    return {
+      success: true,
+      warning: true,
       message: `Already Scanned at ${new Date(
         ticket.checkInTime,
       ).toLocaleTimeString()}`,
@@ -76,6 +86,14 @@ export async function verifyTicket(token: string) {
 
   if (ticket.status === "cancelled") {
     return { success: false, message: "Ticket has been cancelled" };
+  }
+
+  if (ticket.status === "pending") {
+    return {
+      success: false,
+      message: "Payment not completed — ticket is still pending",
+      ticket: JSON.parse(JSON.stringify(ticket)),
+    };
   }
 
   // Update status

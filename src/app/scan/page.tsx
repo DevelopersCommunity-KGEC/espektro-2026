@@ -51,13 +51,20 @@ export default function ScanPage() {
     const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
     const [hasTorch, setHasTorch] = useState(false);
 
-    const isMounted = useIsMounted();
+    const hydrated = useIsMounted();
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
 
     const isProcessingRef = useRef(false);
     const scannerRef = useRef<Html5Qrcode | null>(null);
     const cameraCheckedRef = useRef(false);
+    // Component-level mounted ref: survives effect re-runs, only false when component unmounts
+    const componentMountedRef = useRef(true);
+
+    useEffect(() => {
+        componentMountedRef.current = true;
+        return () => { componentMountedRef.current = false; };
+    }, []);
 
     useEffect(() => {
         if (!isPending && !session) {
@@ -78,10 +85,46 @@ export default function ScanPage() {
             });
     }, []);
 
+    // Verification callback — lives outside the scanner effect so it isn't
+    // invalidated when isScanning changes. Uses componentMountedRef instead
+    // of the effect-local isMounted which gets set to false on effect cleanup.
+    const handleVerification = useCallback(async (decodedText: string) => {
+        if (isProcessingRef.current) return;
+        isProcessingRef.current = true;
+
+        // Stop scanner before verifying to free up camera
+        if (scannerRef.current) {
+            await safeStopScanner(scannerRef.current);
+            scannerRef.current = null;
+        }
+
+        // These state updates are safe — they don't depend on the effect's isMounted
+        setIsScanning(false);
+        setLoading(true);
+
+        try {
+            const result = await verifyTicket(decodedText);
+            if (componentMountedRef.current) {
+                setScanResult(result);
+                // Don't set error for verification results — they show in the result card.
+                // error state is reserved for system-level failures (camera, network, etc.)
+            }
+        } catch (err: any) {
+            if (componentMountedRef.current) {
+                setError(err.message || "Verification failed");
+            }
+        } finally {
+            if (componentMountedRef.current) {
+                setLoading(false);
+            }
+            isProcessingRef.current = false;
+        }
+    }, []);
+
     useEffect(() => {
         if (!isScanning) return;
 
-        let isMounted = true;
+        let effectAlive = true;
         let currentScanner: Html5Qrcode | null = null;
 
         const config = {
@@ -104,7 +147,7 @@ export default function ScanPage() {
                 await delay(400);
             }
 
-            if (!isMounted) return;
+            if (!effectAlive) return;
 
             const scanner = new Html5Qrcode("reader");
             scannerRef.current = scanner;
@@ -115,12 +158,13 @@ export default function ScanPage() {
                     { facingMode },
                     config,
                     (decodedText) => {
-                        if (isMounted) onScanSuccess(decodedText);
+                        // Delegate to the component-level handler
+                        handleVerification(decodedText);
                     },
                     () => { }
                 );
 
-                if (!isMounted) {
+                if (!effectAlive) {
                     await safeStopScanner(scanner);
                     return;
                 }
@@ -133,7 +177,7 @@ export default function ScanPage() {
                     setHasTorch(false);
                 }
             } catch (err: any) {
-                if (!isMounted) return;
+                if (!effectAlive) return;
 
                 const isResourceBusy =
                     err?.name === "NotReadableError" ||
@@ -147,7 +191,7 @@ export default function ScanPage() {
                     scannerRef.current = null;
                     // Wait longer for camera hardware to free up
                     await delay(800);
-                    if (isMounted) {
+                    if (effectAlive) {
                         return startScanner(retries - 1);
                     }
                 } else {
@@ -162,45 +206,16 @@ export default function ScanPage() {
             }
         }
 
-        async function onScanSuccess(decodedText: string) {
-            if (isProcessingRef.current) return;
-            isProcessingRef.current = true;
-
-            // Stop scanner before verifying to free up camera
-            if (scannerRef.current) {
-                await safeStopScanner(scannerRef.current);
-                scannerRef.current = null;
-            }
-
-            if (isMounted) setIsScanning(false);
-            if (isMounted) setLoading(true);
-
-            try {
-                const result = await verifyTicket(decodedText);
-                if (isMounted) {
-                    setScanResult(result);
-                    if (!result.success) {
-                        setError(result.message);
-                    }
-                }
-            } catch (err: any) {
-                if (isMounted) setError(err.message || "Verification failed");
-            } finally {
-                if (isMounted) setLoading(false);
-                isProcessingRef.current = false;
-            }
-        }
-
         startScanner();
 
         return () => {
-            isMounted = false;
+            effectAlive = false;
             const instance = scannerRef.current || currentScanner;
             scannerRef.current = null;
             // Fire-and-forget cleanup — safeStopScanner won't throw
             safeStopScanner(instance);
         };
-    }, [isScanning, facingMode]);
+    }, [isScanning, facingMode, handleVerification]);
 
     const startScanning = useCallback(() => {
         setScanResult(null);
@@ -227,7 +242,7 @@ export default function ScanPage() {
         }
     }, [torchOn]);
 
-    if (!isMounted || isPending || !session) return <ScannerSkeleton />;
+    if (!hydrated || isPending || !session) return <ScannerSkeleton />;
 
     return (
         <div className="container mx-auto max-w-md p-4 min-h-screen flex flex-col">
