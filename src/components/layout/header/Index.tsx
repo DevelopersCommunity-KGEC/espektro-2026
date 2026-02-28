@@ -29,6 +29,7 @@ import {
   LayoutDashboard,
   ChevronDown,
 } from "lucide-react";
+import Link from "next/link";
 
 interface HeaderProps {
   isAdmin?: boolean;
@@ -188,7 +189,7 @@ export default function Header({
               {NavbarLinks.map((link, index) => (
                 <Magnetic key={index}>
                   <div className={styles.el}>
-                    <a href={link.url}>{link.text}</a>
+                    <Link href={link.url}>{link.text}</Link>
                     <div className={styles.indicator}></div>
                   </div>
                 </Magnetic>

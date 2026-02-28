@@ -76,6 +76,18 @@ export function LogoPreloader() {
   const [showStartButton, setShowStartButton] = useState(true);
   const [startTrigger, setStartTrigger] = useState(false);
 
+  // Check if shown in current session
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isShown = sessionStorage.getItem("preloader_shown");
+      if (isShown) {
+        setVisible(false);
+        setShowStartButton(false);
+        setStartTrigger(true);
+      }
+    }
+  }, []);
+
   const handleStart = () => {
     console.log("[Preloader] Start button clicked");
     setShowStartButton(false);
@@ -228,6 +240,8 @@ export function LogoPreloader() {
       setVisible(false);
       // Notify MusicController to start BGM after preloader is done
       window.dispatchEvent(new Event("ESPEKTRO_START_EXPERIENCE"));
+      // Set session flag
+      sessionStorage.setItem("preloader_shown", "true");
     }, TOTAL_DURATION_MS);
 
     return () => clearTimeout(timer);

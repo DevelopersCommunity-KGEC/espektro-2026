@@ -76,9 +76,9 @@ export function Footer() {
                                 {footerLinks.explore.map((link) => (
                                     <li key={link.label}>
                                         <Magnetic>
-                                            <a href={link.href} className="text-lg md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
+                                            <Link href={link.href} className="text-lg md:text-2xl text-background/70 hover:text-primary transition-colors inline-block font-[family-name:var(--font-medieval-sharp)] uppercase tracking-tight">
                                                 {link.label}
-                                            </a>
+                                            </Link>
                                         </Magnetic>
                                     </li>
                                 ))}
