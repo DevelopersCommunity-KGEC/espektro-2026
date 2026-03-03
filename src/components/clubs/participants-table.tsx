@@ -176,7 +176,15 @@ export function ParticipantsTable({ participants, events, clubId, currentUserEma
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `participants_${clubId}_${new Date().toISOString().slice(0, 10)}.csv`;
+        const parts = ["participants", clubId];
+        if (eventFilter !== "all") {
+            const evt = events.find((e) => e._id === eventFilter);
+            parts.push(evt?.title?.replace(/[^a-zA-Z0-9]/g, "-") || eventFilter);
+        }
+        if (issuedByMe) parts.push("issued-by-me");
+        if (search) parts.push(`search-${search.replace(/[^a-zA-Z0-9]/g, "-")}`);
+        parts.push(new Date().toISOString().slice(0, 10));
+        link.download = `${parts.join("_")}.csv`;
         link.click();
         URL.revokeObjectURL(url);
     };

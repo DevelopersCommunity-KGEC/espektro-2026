@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback, Fragment } from "react";
-import { getAllTickets, TicketFilter, getAdminFilterOptions } from "@/actions/admin-ticket-actions";
+import { getAllTickets, TicketFilter, getAdminFilterOptions, updateTicketStatusAdmin } from "@/actions/admin-ticket-actions";
+import { toast } from "sonner";
 import {
     Table,
     TableBody,
@@ -20,7 +21,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Search, ChevronLeft, ChevronRight, RefreshCw, ChevronDown, Download, Users } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, RefreshCw, ChevronDown, ChevronRight as ChevronRightIcon, Download, Users } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -101,6 +102,21 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
         fetchTickets();
     }, [fetchTickets]);
 
+    const handleStatusChange = async (ticketId: string, newStatus: string) => {
+        try {
+            const result = await updateTicketStatusAdmin(ticketId, newStatus);
+            if (result.success) {
+                toast.success(result.message);
+                fetchTickets();
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error("Status update failed:", error);
+            toast.error("Failed to update status");
+        }
+    };
+
 
     const handleFilterChange = (key: string, value: any) => {
         setFilters(prev => ({ ...prev, [key]: value, page: 1 }));
@@ -159,18 +175,19 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `all_tickets_${new Date().toISOString().slice(0, 10)}.csv`;
+        const parts = ["tickets"];
+        if (filters.clubId && filters.clubId !== "all") parts.push(filters.clubId);
+        if (filters.eventId && filters.eventId !== "all") {
+            const evt = filterOptions.events.find((e: any) => e._id === filters.eventId);
+            parts.push(evt?.title?.replace(/[^a-zA-Z0-9]/g, "-") || filters.eventId);
+        }
+        if (filters.issuedBy && filters.issuedBy !== "all") parts.push(`by-${filters.issuedBy.replace(/[^a-zA-Z0-9]/g, "-")}`);
+        if (debouncedSearch) parts.push(`search-${debouncedSearch.replace(/[^a-zA-Z0-9]/g, "-")}`);
+        parts.push(new Date().toISOString().slice(0, 10));
+        link.download = `${parts.join("_")}.csv`;
         link.click();
         URL.revokeObjectURL(url);
     };
-
-    const DetailItem = ({ label, value }: { label: string; value: React.ReactNode }) =>
-        value ? (
-            <div>
-                <span className="text-xs text-muted-foreground">{label}</span>
-                <p className="text-sm font-medium">{value}</p>
-            </div>
-        ) : null;
 
     return (
         <Card>
@@ -282,10 +299,12 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                                 className="cursor-pointer hover:bg-muted/50"
                                                 onClick={() => toggleRow(ticket._id)}
                                             >
-                                                <TableCell className="px-2">
-                                                    <ChevronDown
-                                                        className={`h-4 w-4 transition-transform ${isExpanded ? "rotate-0" : "-rotate-90"}`}
-                                                    />
+                                                <TableCell className="w-8 px-2">
+                                                    {isExpanded ? (
+                                                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                                                    ) : (
+                                                        <ChevronRightIcon className="w-4 h-4 text-muted-foreground" />
+                                                    )}
                                                 </TableCell>
                                                 <TableCell>
                                                     <div className="flex flex-col">
@@ -297,14 +316,14 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                                     <span>{ticket.event?.title}</span>
                                                     <div className="text-xs text-muted-foreground capitalize">{ticket.event?.clubId}</div>
                                                 </TableCell>
-                                                <TableCell className="text-right whitespace-nowrap">
+                                                <TableCell className="text-right font-mono">
                                                     {discount > 0 ? (
                                                         <div className="flex flex-col items-end">
-                                                            <span className="font-medium">₹{price - discount}</span>
-                                                            <span className="text-xs line-through text-muted-foreground">₹{price}</span>
+                                                            <span>₹{price}</span>
+                                                            <span className="text-xs text-green-600">-₹{discount}</span>
                                                         </div>
                                                     ) : (
-                                                        <span className="font-medium">{price === 0 ? "Free" : `₹${price}`}</span>
+                                                        <span>₹{price}</span>
                                                     )}
                                                 </TableCell>
                                                 <TableCell>
@@ -320,43 +339,67 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                             {/* Expanded Detail Row */}
                                             {isExpanded && (
                                                 <TableRow className="bg-muted/30 hover:bg-muted/30">
-                                                    <TableCell colSpan={6} className="p-4">
-                                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                                            <DetailItem label="Phone" value={ticket.user?.phone || ticket.guestPhone} />
-                                                            <DetailItem label="College" value={ticket.user?.collegeName} />
-                                                            <DetailItem label="Course" value={ticket.user?.course} />
-                                                            <DetailItem label="Graduation Year" value={ticket.user?.graduationYear} />
-                                                            <DetailItem label="Club" value={ticket.event?.clubId} />
-                                                            <DetailItem
-                                                                label="Issued By"
-                                                                value={ticket.issuedBy || "System"}
-                                                            />
-                                                            <DetailItem label="Payment ID" value={ticket.paymentId} />
-                                                            <DetailItem label="Coupon Code" value={ticket.couponCode} />
-                                                            <DetailItem
-                                                                label="Purchase Date"
-                                                                value={ticket.purchaseDate ? new Date(ticket.purchaseDate).toLocaleString() : null}
-                                                            />
-                                                            <DetailItem
-                                                                label="Check-In Time"
-                                                                value={ticket.checkInTime ? new Date(ticket.checkInTime).toLocaleString() : null}
-                                                            />
-                                                            {ticket.teamMembers?.length > 0 && (
-                                                                <div className="col-span-full">
-                                                                    <span className="text-xs text-muted-foreground">Team Members</span>
-                                                                    <div className="flex flex-wrap gap-2 mt-1">
-                                                                        {ticket.teamMembers.map((m: any, idx: number) => (
-                                                                            <span
-                                                                                key={idx}
-                                                                                className="inline-flex items-center gap-1 text-xs bg-secondary px-2 py-1 rounded-md"
-                                                                            >
-                                                                                <Users className="h-3 w-3" />
-                                                                                {m.name} ({m.email})
-                                                                            </span>
+                                                    <TableCell colSpan={6} className="p-0">
+                                                        <div className="px-6 py-4 space-y-4">
+                                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                                                <DetailItem label="Phone" value={ticket.user?.phone || ticket.guestPhone || "—"} />
+                                                                <DetailItem label="College" value={ticket.user?.collegeName || "—"} />
+                                                                <DetailItem label="Course" value={
+                                                                    ticket.user?.course
+                                                                        ? `${ticket.user.course}${ticket.user.graduationYear ? ` (${ticket.user.graduationYear})` : ""}`
+                                                                        : "—"
+                                                                } />
+                                                                <DetailItem label="Issued By" value={ticket.issuedBy || "System"} />
+                                                                <DetailItem label="Purchase Date" value={
+                                                                    ticket.purchaseDate
+                                                                        ? new Date(ticket.purchaseDate).toLocaleString()
+                                                                        : "—"
+                                                                } />
+                                                                <DetailItem label="Check-In Time" value={
+                                                                    ticket.checkInTime
+                                                                        ? new Date(ticket.checkInTime).toLocaleString()
+                                                                        : "—"
+                                                                } />
+                                                                <DetailItem label="Payment ID" value={ticket.paymentId || "—"} />
+                                                                <DetailItem label="Coupon Code" value={ticket.couponCode || "—"} />
+                                                            </div>
+
+                                                            {/* Team Members */}
+                                                            {ticket.teamMembers && ticket.teamMembers.length > 0 && (
+                                                                <div className="space-y-2">
+                                                                    <div className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                                                                        <Users className="w-3.5 h-3.5" />
+                                                                        Team Members ({ticket.teamMembers.length})
+                                                                    </div>
+                                                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                                                                        {ticket.teamMembers.map((m: any, i: number) => (
+                                                                            <div key={i} className="text-xs border rounded-md px-3 py-2 bg-background">
+                                                                                <span className="font-medium">{m.name}</span>
+                                                                                <span className="text-muted-foreground block">{m.email}</span>
+                                                                                <span className="text-muted-foreground">{m.phone}</span>
+                                                                            </div>
                                                                         ))}
                                                                     </div>
                                                                 </div>
                                                             )}
+
+                                                            {/* Status change */}
+                                                            <div className="flex items-center gap-2 pt-1">
+                                                                <span className="text-sm text-muted-foreground">Change status:</span>
+                                                                <Select
+                                                                    value={ticket.status}
+                                                                    onValueChange={(val) => handleStatusChange(ticket._id, val)}
+                                                                >
+                                                                    <SelectTrigger className="w-40 h-8">
+                                                                        <SelectValue />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="booked">Booked</SelectItem>
+                                                                        <SelectItem value="checked-in">Checked In</SelectItem>
+                                                                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
                                                         </div>
                                                     </TableCell>
                                                 </TableRow>
@@ -395,5 +438,14 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                 </div>
             </CardContent>
         </Card>
+    );
+}
+
+function DetailItem({ label, value }: { label: string; value: string }) {
+    return (
+        <div>
+            <span className="text-xs text-muted-foreground">{label}</span>
+            <p className="font-medium text-sm break-all">{value}</p>
+        </div>
     );
 }
