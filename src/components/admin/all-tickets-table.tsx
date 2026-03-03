@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, Fragment } from "react";
-import { getAllTickets, TicketFilter, getAdminFilterOptions, updateTicketStatusAdmin } from "@/actions/admin-ticket-actions";
+import { getAllTickets, TicketFilter, getAdminFilterOptions, updateTicketStatusAdmin, exportAllTickets } from "@/actions/admin-ticket-actions";
 import { toast } from "sonner";
 import {
     Table,
@@ -21,7 +21,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Search, ChevronLeft, ChevronRight, RefreshCw, ChevronDown, ChevronRight as ChevronRightIcon, Download, Users } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, RefreshCw, ChevronDown, ChevronRight as ChevronRightIcon, Download, Users, Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -45,6 +45,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
     const [total, setTotal] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+    const [exporting, setExporting] = useState(false);
 
     // Filter Options
     const [filterOptions, setFilterOptions] = useState<{
@@ -135,58 +136,73 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
         }
     };
 
-    const downloadCSV = () => {
-        const headers = [
-            "Name", "Email", "Phone", "Event", "Club", "Status",
-            "Price (₹)", "Discount (₹)", "Coupon Code", "Ticket Type",
-            "Issued By", "College", "Course", "Graduation Year",
-            "Payment ID", "Purchase Date", "Check-In Time", "Team Members",
-        ];
+    const downloadCSV = async () => {
+        setExporting(true);
+        try {
+            const allTickets = await exportAllTickets({
+                ...filters,
+                search: debouncedSearch,
+                excludeManual,
+            });
 
-        const rows = tickets.map((t: any) => [
-            t.user?.name || t.guestName || "Guest",
-            t.userEmail,
-            t.user?.phone || t.guestPhone || "",
-            t.event?.title || "",
-            t.event?.clubId || "",
-            t.status,
-            t.price ?? 0,
-            t.discountAmount ?? 0,
-            t.couponCode || "",
-            t.issueType || "",
-            t.issuedBy || "System",
-            t.user?.collegeName || "",
-            t.user?.course || "",
-            t.user?.graduationYear || "",
-            t.paymentId || "",
-            t.purchaseDate ? new Date(t.purchaseDate).toLocaleString() : "",
-            t.checkInTime ? new Date(t.checkInTime).toLocaleString() : "",
-            (t.teamMembers || []).map((m: any) => `${m.name} (${m.email})`).join("; "),
-        ]);
+            const headers = [
+                "Name", "Email", "Phone", "Event", "Club", "Status",
+                "Price (₹)", "Discount (₹)", "Coupon Code", "Ticket Type",
+                "Issued By", "College", "Course", "Graduation Year",
+                "Payment ID", "Purchase Date", "Check-In Time", "Team Members",
+            ];
 
-        const csvContent = [
-            headers.join(","),
-            ...rows.map((row: any) =>
-                row.map((cell: any) => `"${String(cell).replace(/"/g, '""')}"`).join(","),
-            ),
-        ].join("\n");
+            const rows = allTickets.map((t: any) => [
+                t.user?.name || t.guestName || "Guest",
+                t.userEmail,
+                t.user?.phone || t.guestPhone || "",
+                t.event?.title || "",
+                t.event?.clubId || "",
+                t.status,
+                t.price ?? 0,
+                t.discountAmount ?? 0,
+                t.couponCode || "",
+                t.issueType || "",
+                t.issuedBy || "System",
+                t.user?.collegeName || "",
+                t.user?.course || "",
+                t.user?.graduationYear || "",
+                t.paymentId || "",
+                t.purchaseDate ? new Date(t.purchaseDate).toLocaleString() : "",
+                t.checkInTime ? new Date(t.checkInTime).toLocaleString() : "",
+                (t.teamMembers || []).map((m: any) => `${m.name} (${m.email})`).join("; "),
+            ]);
 
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        const parts = ["tickets"];
-        if (filters.clubId && filters.clubId !== "all") parts.push(filters.clubId);
-        if (filters.eventId && filters.eventId !== "all") {
-            const evt = filterOptions.events.find((e: any) => e._id === filters.eventId);
-            parts.push(evt?.title?.replace(/[^a-zA-Z0-9]/g, "-") || filters.eventId);
+            const csvContent = [
+                headers.join(","),
+                ...rows.map((row: any) =>
+                    row.map((cell: any) => `"${String(cell).replace(/"/g, '""')}"`).join(","),
+                ),
+            ].join("\n");
+
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            const parts = ["tickets"];
+            if (filters.clubId && filters.clubId !== "all") parts.push(filters.clubId);
+            if (filters.eventId && filters.eventId !== "all") {
+                const evt = filterOptions.events.find((e: any) => e._id === filters.eventId);
+                parts.push(evt?.title?.replace(/[^a-zA-Z0-9]/g, "-") || filters.eventId);
+            }
+            if (filters.issuedBy && filters.issuedBy !== "all") parts.push(`by-${filters.issuedBy.replace(/[^a-zA-Z0-9]/g, "-")}`);
+            if (debouncedSearch) parts.push(`search-${debouncedSearch.replace(/[^a-zA-Z0-9]/g, "-")}`);
+            parts.push(new Date().toISOString().slice(0, 10));
+            link.download = `${parts.join("_")}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            toast.success(`Exported ${allTickets.length} tickets`);
+        } catch (error) {
+            console.error("CSV export failed:", error);
+            toast.error("Failed to export CSV");
+        } finally {
+            setExporting(false);
         }
-        if (filters.issuedBy && filters.issuedBy !== "all") parts.push(`by-${filters.issuedBy.replace(/[^a-zA-Z0-9]/g, "-")}`);
-        if (debouncedSearch) parts.push(`search-${debouncedSearch.replace(/[^a-zA-Z0-9]/g, "-")}`);
-        parts.push(new Date().toISOString().slice(0, 10));
-        link.download = `${parts.join("_")}.csv`;
-        link.click();
-        URL.revokeObjectURL(url);
     };
 
     return (
@@ -194,8 +210,9 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>All Tickets</CardTitle>
                 <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={downloadCSV} disabled={tickets.length === 0}>
-                        <Download className="h-4 w-4 mr-1" /> CSV
+                    <Button variant="outline" size="sm" onClick={downloadCSV} disabled={total === 0 || exporting}>
+                        {exporting ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Download className="h-4 w-4 mr-1" />}
+                        {exporting ? "Exporting..." : "CSV"}
                     </Button>
                     <Button variant="outline" size="sm" onClick={() => fetchTickets()}>
                         <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
