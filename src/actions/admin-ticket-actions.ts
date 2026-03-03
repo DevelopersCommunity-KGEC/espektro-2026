@@ -5,6 +5,7 @@ import Ticket from "@/models/Ticket";
 import Event from "@/models/Event";
 import User from "@/models/User";
 import { getCurrentUser } from "@/lib/rbac";
+import mongoose from "mongoose";
 
 export interface TicketFilter {
   search?: string;
@@ -43,10 +44,6 @@ export async function getAllTickets(filters: TicketFilter) {
 
   const matchStage: any = {};
 
-  if (eventId && eventId !== "all") {
-    matchStage["eventId"] = { $eq: new Object(eventId) }; // Will handle conversion in pipeline or pass ID if using populate approach. Here in aggregation, need ObjectId conversion if stored as ObjectId.
-  }
-
   if (issuedBy && issuedBy !== "all") {
     matchStage["issuedBy"] = issuedBy;
   }
@@ -81,13 +78,9 @@ export async function getAllTickets(filters: TicketFilter) {
       ? [{ $match: { "event.clubId": clubId } }]
       : []),
 
-    // Filter by EventId if passed (objectId matching)
-    // Actually simpler to filter by eventId string match on the looked-up event _id if we strictly need to,
-    // OR we can trust the previous stage.
-    // If eventId is passed, we can add it to the initial match, but we need to cast to ObjectId usually.
-    // Easier to match against event._id after lookup if we are worried about casting, or cast it before.
+    // Filter by EventId after lookup using proper ObjectId conversion
     ...(eventId && eventId !== "all"
-      ? [{ $match: { "event._id": { $eq: eventId } } }]
+      ? [{ $match: { "event._id": new mongoose.Types.ObjectId(eventId) } }]
       : []),
 
     // Lookup User
@@ -159,6 +152,33 @@ export async function getAllTickets(filters: TicketFilter) {
     total,
     totalPages: Math.ceil(total / limit),
   };
+}
+
+export async function updateTicketStatusAdmin(
+  ticketId: string,
+  newStatus: string,
+) {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, message: "Unauthorized" };
+
+  await dbConnect();
+  const dbUser = await User.findById(user.id);
+  if (dbUser?.role !== "super-admin")
+    return { success: false, message: "Forbidden" };
+
+  const ticket = await Ticket.findById(ticketId);
+  if (!ticket) return { success: false, message: "Ticket not found" };
+
+  const updates: any = { status: newStatus };
+  if (newStatus === "checked-in" && !ticket.checkInTime) {
+    updates.checkInTime = new Date();
+  } else if (newStatus !== "checked-in") {
+    updates.checkInTime = null;
+  }
+
+  await Ticket.findByIdAndUpdate(ticketId, updates);
+
+  return { success: true, message: "Status updated" };
 }
 
 export async function getAdminFilterOptions() {
