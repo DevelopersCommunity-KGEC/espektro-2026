@@ -154,6 +154,78 @@ export async function getAllTickets(filters: TicketFilter) {
   };
 }
 
+export async function exportAllTickets(filters: TicketFilter) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("Unauthorized");
+
+  await dbConnect();
+  const dbUser = await User.findById(user.id);
+  if (dbUser?.role !== "super-admin") throw new Error("Forbidden");
+
+  const { search, clubId, eventId, issuedBy, startDate, endDate } = filters;
+
+  const matchStage: any = {};
+  if (issuedBy && issuedBy !== "all") matchStage["issuedBy"] = issuedBy;
+  if (startDate || endDate) {
+    matchStage["purchaseDate"] = {};
+    if (startDate) matchStage["purchaseDate"]["$gte"] = new Date(startDate);
+    if (endDate) matchStage["purchaseDate"]["$lte"] = new Date(endDate);
+  }
+
+  const pipeline: any[] = [
+    ...(filters.excludeManual
+      ? [{ $match: { issueType: { $nin: ["manual", "pass"] } } }]
+      : []),
+    {
+      $lookup: {
+        from: "events",
+        localField: "eventId",
+        foreignField: "_id",
+        as: "event",
+      },
+    },
+    { $unwind: "$event" },
+    ...(clubId && clubId !== "all"
+      ? [{ $match: { "event.clubId": clubId } }]
+      : []),
+    ...(eventId && eventId !== "all"
+      ? [{ $match: { "event._id": new mongoose.Types.ObjectId(eventId) } }]
+      : []),
+    {
+      $lookup: {
+        from: "user",
+        localField: "userId",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+    { $match: matchStage },
+  ];
+
+  if (search) {
+    const searchRegex = { $regex: search, $options: "i" };
+    pipeline.push({
+      $match: {
+        $or: [
+          { paymentId: searchRegex },
+          { userEmail: searchRegex },
+          { guestName: searchRegex },
+          { guestPhone: searchRegex },
+          { "user.name": searchRegex },
+          { "user.phone": searchRegex },
+          { issuedBy: searchRegex },
+        ],
+      },
+    });
+  }
+
+  pipeline.push({ $sort: { purchaseDate: -1 } });
+
+  const tickets = await Ticket.aggregate(pipeline);
+  return JSON.parse(JSON.stringify(tickets));
+}
+
 export async function updateTicketStatusAdmin(
   ticketId: string,
   newStatus: string,
