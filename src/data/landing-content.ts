@@ -287,28 +287,16 @@ export const schedule: DaySchedule[] = [
 
 export const artists: Artist[] = [
   {
-    name: "Albert Kabo",
-    genre: "Bengali Folk & Fusion",
+    name: "Sleeping Budha",
+    genre: "Indie Rock Band",
     description:
-      "A rising star in the Bengali music scene, known for his unique blend of traditional folk and contemporary sounds. His soulful voice and vibrant performances have won him a massive following.",
-    date: "March 14, 2026",
-    time: "7:00 PM",
-    venue: "Main Stage",
-    image: "/artist/Albert kabo.webp",
+      "An upcoming indie band known for their ethereal soundscapes and introspective songwriting. They are redefining the independent music landscape with their unique haunting melodies.",
+    date: "March 17, 2026",
+    time: "9:00 PM",
+    venue: "Indie Stage",
+    image: "/artist/sleeping_budha.webp",
     bg: "/images/artist_section_card.webp",
-    social: { instagram: "@albertkabo", twitter: "@albertkabo" },
-  },
-  {
-    name: "Nakash Aziz",
-    genre: "Playback Singer",
-    description:
-      "Renowned Bollywood and Tollywood playback singer, famous for high-energy dance numbers and soul-stirring melodies. The voice behind numerous chart-topping hits across India.",
-    date: "March 15, 2026",
-    time: "8:30 PM",
-    venue: "Arena Stage",
-    image: "/artist/Nakash Aziz.webp",
-    bg: "/images/artist_section_card.webp",
-    social: { instagram: "@nakash_aziz", twitter: "@nakash_aziz" },
+    social: { instagram: "@sleepingbudha", twitter: "@sleepingbudha" },
   },
   {
     name: "Prithibi",
@@ -323,6 +311,20 @@ export const artists: Artist[] = [
     social: { instagram: "@prithibi_band", twitter: "@prithibi_band" },
   },
   {
+    name: "Albert Kabo",
+    genre: "Bengali Folk & Fusion",
+    description:
+      "A rising star in the Bengali music scene, known for his unique blend of traditional folk and contemporary sounds. His soulful voice and vibrant performances have won him a massive following.",
+    date: "March 14, 2026",
+    time: "7:00 PM",
+    venue: "Main Stage",
+    image: "/artist/Albert kabo.webp",
+    bg: "/images/artist_section_card.webp",
+    social: { instagram: "@albertkabo", twitter: "@albertkabo" },
+  },
+
+
+  {
     name: "The Folk Diaryz",
     genre: "Folk Fusion Ensemble",
     description:
@@ -335,16 +337,16 @@ export const artists: Artist[] = [
     social: { instagram: "@thefolkdiaryz", twitter: "@thefolkdiaryz" },
   },
   {
-    name: "Sleeping Budha",
-    genre: "Indie Rock Band",
+    name: "Nakash Aziz",
+    genre: "Playback Singer",
     description:
-      "An upcoming indie band known for their ethereal soundscapes and introspective songwriting. They are redefining the independent music landscape with their unique haunting melodies.",
-    date: "March 17, 2026",
-    time: "9:00 PM",
-    venue: "Indie Stage",
-    image: "/artist/sleeping_budha.png",
+      "Renowned Bollywood and Tollywood playback singer, famous for high-energy dance numbers and soul-stirring melodies. The voice behind numerous chart-topping hits across India.",
+    date: "March 15, 2026",
+    time: "8:30 PM",
+    venue: "Arena Stage",
+    image: "/artist/Nakash Aziz.webp",
     bg: "/images/artist_section_card.webp",
-    social: { instagram: "@sleepingbudha", twitter: "@sleepingbudha" },
+    social: { instagram: "@nakash_aziz", twitter: "@nakash_aziz" },
   },
 ];
 
