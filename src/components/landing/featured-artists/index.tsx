@@ -58,7 +58,7 @@ export function FeaturedArtists() {
                     const listHeight = imageListRef.current?.scrollHeight || 0;
                     // Scroll until the last card's top reaches the top of the viewport
                     // We also account for the initial pt-20 (80px)
-                    return -(listHeight - 500);
+                    return -(listHeight - 300);
                 },
                 duration: 8, // Longer duration for more distance
                 ease: "none"
@@ -180,7 +180,7 @@ export function FeaturedArtists() {
                     </div>
 
                     <div className={styles.imageContentContainer} style={{ flex: 1, height: 'auto' }}>
-                        <ul ref={imageListRef} className="flex flex-col items-center gap-4 h-full w-full pt-20">
+                        <ul ref={imageListRef} className="flex flex-col items-center gap-4 h-full w-full pt-20 pb-[30vh]">
                             {artists.map((artist) => (
                                 <li key={artist.name} className="h-[35rem] sm:h-160">
                                     <CardContainer className="inter-var">
@@ -200,12 +200,12 @@ export function FeaturedArtists() {
 
                                                 <CardItem
                                                     translateZ="80"
-                                                    className="absolute inset-0 z-20 flex items-center justify-center pt-8"
+                                                    className="absolute inset-0 z-20 flex items-end justify-center pt-8 bottom-5"
                                                 >
                                                     <img
                                                         src={artist.image}
                                                         alt={artist.name}
-                                                        className="h-full w-auto object-contain"
+                                                        className="h-full w-auto object-contain object-bottom"
                                                     />
                                                 </CardItem>
                                             </div>
