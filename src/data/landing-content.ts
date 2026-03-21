@@ -502,7 +502,7 @@ export const sponsorLogos: SponsorLogo[] = [
   {
     id: 1,
     sponsor: "Technical Partner",
-    url: "/Logo/1_20260321_175036_0000.png",
+    url: "/Logo/gfg.png",
   },
   {
     id: 2,
@@ -512,7 +512,7 @@ export const sponsorLogos: SponsorLogo[] = [
   {
     id: 3,
     sponsor: "Energy Drink Partner",
-    url: "/Logo/3_20260321_175037_0002.png",
+    url: "/Logo/red_bull.png",
   },
   {
     id: 4,
@@ -522,72 +522,72 @@ export const sponsorLogos: SponsorLogo[] = [
   {
     id: 5,
     sponsor: "Waffle Partner",
-    url: "/Logo/5_20260321_175037_0004.png",
+    url: "/Logo/the_belgian_waffle.png",
   },
   {
     id: 6,
     sponsor: "Social Impact Partner",
-    url: "/Logo/6_20260321_175037_0005.png",
+    url: "/Logo/mercy_for_animals.png",
   },
   {
     id: 7,
     sponsor: "Radio Partner",
-    url: "/Logo/7_20260321_175037_0006.png",
+    url: "/Logo/919friends.png",
   },
   {
     id: 8,
     sponsor: "Title Sponsor",
-    url: "/Logo/8_20260321_175037_0007.png",
+    url: "/Logo/sbi.png",
   },
   {
     id: 9,
     sponsor: "Momo Partner",
-    url: "/Logo/9_20260321_175037_0008.png",
+    url: "/Logo/momo_fiesta.png",
   },
   {
     id: 10,
     sponsor: "Quixine Title Sponsor",
-    url: "/Logo/10_20260321_175037_0009.png",
+    url: "",
   },
   {
     id: 11,
     sponsor: "Hydration Partner",
-    url: "/Logo/11_20260321_175037_0010.png",
+    url: "/Logo/arosia_water.png",
   },
   {
     id: 12,
     sponsor: "Bakery Partner",
-    url: "/Logo/12_20260321_175037_0011.png",
+    url: "/Logo/boven.png",
   },
   {
     id: 13,
     sponsor: "Pizza Partner",
-    url: "/Logo/13_20260321_175038_0012.png",
+    url: "/Logo/pizza_hut.png",
   },
   {
     id: 14,
     sponsor: "News Partner",
-    url: "/Logo/14_20260321_175038_0013.png",
+    url: "/Logo/the_times_of_India.png",
   },
   {
     id: 15,
     sponsor: "Event Partner",
-    url: "/Logo/15_20260321_175038_0014.png",
+    url: "/Logo/eventmas.png",
   },
   {
     id: 16,
     sponsor: "Motor Sport Partner",
-    url: "/Logo/16_20260321_175038_0015.png",
+    url: "/Logo/ktm.png",
   },
   {
     id: 17,
     sponsor: "Social Media Partner",
-    url: "/Logo/20260321_175836_0000.png",
+    url: "/Logo/the_kalyani_buzz.png",
   },
   {
     id: 18,
     sponsor: "Social Media Partner",
-    url: "/Logo/Untitled design_20260321_175512_0000.png",
+    url: "/Logo/the_kanchrapara_buzz.png",
   },
 ];
 
