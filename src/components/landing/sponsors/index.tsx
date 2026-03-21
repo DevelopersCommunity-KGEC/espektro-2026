@@ -210,19 +210,30 @@ export function Sponsors() {
             supporting Espektro 2026.
           </motion.p>
         </div>
-        <motion.div
-          className="flex flex-row justify-center align-center w-full mt-12"
-          variants={{
-            hidden: { opacity: 0, scale: 0.9 },
-            visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } }
-          }}
-        >
-          <ComingSoon />
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Sponsor grid logic here if ever re-enabled */}
-        </div>
+        {/* tttt coming soon */}
+        {/* <motion.div
+           className="flex flex-row justify-center align-center w-full mt-12"
+           variants={{
+             hidden: { opacity: 0, scale: 0.9 },
+             visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } }
+           }}
+         >
+           <ComingSoon />
+         </motion.div> */}
+ 
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mt-12">
+            {SPONSORS.map((sponsor, index) => (
+                <motion.div
+                    key={sponsor.id}
+                    ref={(el) => { cardRefs.current[index] = el; }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={visibleCards.has(index) ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                    <SponsorCard sponsor={sponsor} />
+                </motion.div>
+            ))}
+         </div>
       </motion.div>
 
       <div className="container mx-auto px-6 lg:px-24 pl-4 sm:pl-20 md:pl-28 lg:pl-32">
