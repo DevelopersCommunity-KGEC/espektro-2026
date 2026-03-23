@@ -74,22 +74,57 @@ export async function getAnalyticsData(excludeManual = false) {
     );
 
     // Format event data for table
-    const eventStats = events.map((event: any) => {
-      const checkedInCount = checkInMap.get(event._id.toString()) || 0;
-      const soldCount = ticketsSoldMap.get(event._id.toString()) || 0;
-      return {
-        id: event._id.toString(),
-        title: event.title,
-        clubId: event.clubId,
-        ticketsSold: soldCount,
-        checkedInCount,
-        revenue: revenueMap.get(event._id.toString()) || 0,
-        capacity: event.capacity,
-        occupancy: event.capacity
-          ? Math.round((soldCount / event.capacity) * 100)
-          : 0,
-      };
-    });
+    const eventStats = await Promise.all(
+      events.map(async (event: any) => {
+        let soldCount = 0;
+        let eventRevenue = 0;
+        let checkedInCount = 0;
+
+        if (event.type === "season-pass") {
+          // Season Pass Revenue: Sum of all tickets originating from this pass
+          const originMatch = {
+            origin: event._id.toString(),
+            status: { $in: ["booked", "checked-in"] },
+          };
+
+          const revenueAgg = await Ticket.aggregate([
+            { $match: originMatch },
+            { $group: { _id: null, total: { $sum: "$price" } } },
+          ]);
+          eventRevenue = revenueAgg[0]?.total || 0;
+
+          // Count unique passes sold
+          const sold = await Ticket.find(originMatch).distinct("paymentId");
+          soldCount = sold.length;
+
+          // Check-in count for season pass (number of unique passes with at least one check-in)
+          const checkedIn = await Ticket.find({
+            origin: event._id.toString(),
+            status: "checked-in",
+          }).distinct("paymentId");
+          checkedInCount = checkedIn.length;
+        } else {
+          // Standard Event (Fest Day or otherwise)
+          soldCount = ticketsSoldMap.get(event._id.toString()) || 0;
+          eventRevenue = revenueMap.get(event._id.toString()) || 0;
+          checkedInCount = checkInMap.get(event._id.toString()) || 0;
+        }
+
+        return {
+          id: event._id.toString(),
+          title: event.title,
+          clubId: event.clubId,
+          ticketsSold: soldCount,
+          checkedInCount,
+          revenue: eventRevenue,
+          capacity: event.capacity,
+          occupancy:
+            event.capacity && event.capacity !== -1
+              ? Math.round((soldCount / event.capacity) * 100)
+              : 0,
+        };
+      }),
+    );
 
     // Sort by revenue desc
     eventStats.sort((a, b) => b.revenue - a.revenue);

@@ -14,7 +14,7 @@ export interface EventData {
   isVisible: boolean;
   clubId: string;
   editors: string[];
-  type: "fest-day" | "event";
+  type: "fest-day" | "event" | "season-pass";
   winners?: {
     position: number;
     teamName?: string;

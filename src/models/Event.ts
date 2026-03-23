@@ -15,7 +15,7 @@ export interface IEvent extends Document {
   allowMultipleBookings: boolean;
   allowBooking: boolean;
   editors: string[]; // Array of User Emails
-  type: "fest-day" | "event";
+  type: "fest-day" | "event" | "season-pass";
   winners?: {
     position: number;
     teamName?: string;
@@ -40,7 +40,7 @@ const EventSchema: Schema = new Schema({
   editors: [{ type: String }],
   type: {
     type: String,
-    enum: ["fest-day", "event"],
+    enum: ["fest-day", "event", "season-pass"],
     default: "event",
   },
   winners: [

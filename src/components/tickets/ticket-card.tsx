@@ -58,7 +58,7 @@ export default function TicketCard({ ticket }: TicketCardProps) {
                 holderName: holderName || "Guest",
                 holderEmail: holderEmail || ticket.userEmail,
                 status: ticket.status,
-                ticketType: ticket.issueType,
+                ticketType: ticket.ticketType || "event",
                 price: ticket.price,
                 qrCodeToken: ticket.qrCodeToken,
                 teamMembers: ticket.teamMembers,

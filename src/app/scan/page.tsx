@@ -287,7 +287,7 @@ export default function ScanPage() {
                         <div className="mt-3 text-sm border-t pt-2 border-current/20">
                             <p><strong>Name:</strong> {scanResult.ticket.eventId?.title}</p>
                             <p><strong>User:</strong> {scanResult.ticket.userEmail}</p>
-                            <p><strong>Type:</strong> {scanResult.ticket.issueType}</p>
+                            <p><strong>Type:</strong> {scanResult.ticket.ticketType || "General"} <span className="text-xs opacity-70">({scanResult.ticket.issueType})</span></p>
                         </div>
                     )}
 
