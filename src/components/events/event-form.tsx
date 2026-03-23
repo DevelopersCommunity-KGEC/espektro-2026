@@ -42,6 +42,7 @@ const formSchema = z.object({
     description: z.string().min(1, "Description is required"),
     image: z.url("Must be a valid URL"),
     clubId: z.string().min(1, "Please select a club"),
+    type: z.enum(["event", "fest-day", "season-pass"]).default("event"),
     date: z.string().min(1, "Start Date is required"),
     endDate: z.string().min(1, "End Date is required"),
     venue: z.string().min(1, "Venue is required"),
@@ -103,6 +104,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
             isVisible: initialData?.isVisible ?? true,
             editors: initialData?.editors?.join(", ") || "",
             clubId: lockedClubId || initialData?.clubId || "",
+            type: initialData?.type || "event",
         },
     });
 
@@ -205,6 +207,33 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                                         {club.name}
                                                     </SelectItem>
                                                 ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="type"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Event Type</FormLabel>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            value={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select type" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="event">Standard Event</SelectItem>
+                                                <SelectItem value="fest-day">Fest Day (Pro Show)</SelectItem>
+                                                <SelectItem value="season-pass">Season Pass</SelectItem>
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />

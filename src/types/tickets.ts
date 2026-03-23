@@ -17,6 +17,7 @@ export interface TicketData {
   price: number; // Final amount paid at time of booking
   discountAmount?: number; // Discount applied (if any)
   couponCode?: string;
+  ticketType?: "event" | "season-pass" | "day-pass";
   teamMembers?: {
     name: string;
     email: string;

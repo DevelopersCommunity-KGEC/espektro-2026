@@ -12,6 +12,7 @@ import { validateCouponCode } from "@/actions/coupon-actions";
 import { validateUserReferral } from "@/lib/referral";
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import mongoose from "mongoose";
 
 const getRazorpay = () => {
   return new Razorpay({
@@ -41,15 +42,39 @@ export async function createOrder(
   let discountAmount = 0;
   let isEspektroEvent = false;
 
-  // Handle Season Pass Bundle
-  if (eventId === "season-pass") {
+  // Handle Season Pass Bundle (Virtual or Real)
+  let isSeasonPassEvent = eventId === "season-pass";
+  let realSeasonPassEvent: any = null;
+
+  if (isSeasonPassEvent) {
+    // Try to find if a real season pass exists to use its price/details
+    realSeasonPassEvent = await Event.findOne({
+      type: "season-pass",
+      isVisible: true,
+    }).sort({ date: -1 });
+  } else if (mongoose.Types.ObjectId.isValid(eventId)) {
+    const e = await Event.findById(eventId);
+    if (e && e.type === "season-pass") {
+      isSeasonPassEvent = true;
+      realSeasonPassEvent = e;
+    }
+  }
+
+  if (isSeasonPassEvent) {
     isEspektroEvent = true;
     const festDays = await Event.find({ type: "fest-day" });
     if (!festDays || festDays.length === 0)
       throw new Error("No fest days found");
 
-    // Calculate total price
-    const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
+    // Calculate total price based on REAL event or SUM
+    let totalPrice = 0;
+    if (realSeasonPassEvent) {
+      totalPrice = realSeasonPassEvent.price;
+      eventTitle = realSeasonPassEvent.title;
+    } else {
+      totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
+      eventTitle = "Espektro Season Pass (All 4 Days)";
+    }
 
     // Check bundle availability (if any day is sold out, bundle is sold out)
     const isSoldOut = (
@@ -69,7 +94,21 @@ export async function createOrder(
         "One or more fest days are sold out. Season pass unavailable.",
       );
 
-    eventTitle = "Espektro Season Pass (All 4 Days)";
+    // Check manual season pass capacity if set
+    if (realSeasonPassEvent && realSeasonPassEvent.capacity !== -1) {
+      // Since the "season pass user" gets 4 tickets, and we issue them with origin = seasonPassEventId.
+      // We can count how many unique users booked this exact season pass.
+      // Or simpler: count distinct paymentId.
+      const distinctPayments = await Ticket.find({
+        origin: realSeasonPassEvent._id.toString(),
+        status: { $in: ["booked", "checked-in"] },
+      }).distinct("paymentId");
+
+      if (distinctPayments.length >= realSeasonPassEvent.capacity) {
+        throw new Error("Season Pass Sold Out.");
+      }
+    }
+
     finalPrice = totalPrice;
 
     if (couponCode) {
@@ -182,7 +221,7 @@ export async function createOrder(
         referrerUserId: referrerUserId || "",
         discountAmount: String(discountAmount),
         eventTitle: eventTitle,
-        ticketType: eventId === "season-pass" ? "BUNDLE" : "SINGLE",
+        ticketType: isSeasonPassEvent ? "BUNDLE" : "SINGLE",
         teamMembers: teamMembers ? JSON.stringify(teamMembers) : "",
       },
     });
@@ -240,8 +279,20 @@ export async function verifyPayment(
 
   await dbConnect();
 
+  let realSeasonPassId: string | undefined;
+
   // --- SEASON PASS HANDLING ---
-  if (eventId === "season-pass") {
+  // Check if eventId is literally "season-pass" OR if it refers to a season-pass type event
+  let isSeasonPassEvent = eventId === "season-pass";
+  if (!isSeasonPassEvent && mongoose.Types.ObjectId.isValid(eventId)) {
+    const possibleEvent = await Event.findById(eventId);
+    if (possibleEvent && possibleEvent.type === "season-pass") {
+      isSeasonPassEvent = true;
+      realSeasonPassId = possibleEvent._id.toString();
+    }
+  }
+
+  if (isSeasonPassEvent) {
     let appliedDiscount = 0; // Total bundle discount
 
     // 1. Consume Coupon Code if present
@@ -284,9 +335,42 @@ export async function verifyPayment(
       if (!festDays || festDays.length === 0)
         throw new Error("No fest days found");
 
-      const totalPrice = festDays.reduce((acc, curr) => acc + curr.price, 0);
+      // Calculate total price to distribute
+      let totalPrice = 0;
+      let manifestPrice = 0;
+      let seasonPassEvent = null;
 
-      // 2. Check capacity for all events
+      if (realSeasonPassId) {
+        seasonPassEvent = await Event.findById(realSeasonPassId);
+      } else {
+        // If we are handling virtual ID, TRY to find real event to get price
+        seasonPassEvent = await Event.findOne({ type: "season-pass" }).sort({
+          date: -1,
+        });
+        if (seasonPassEvent) realSeasonPassId = seasonPassEvent._id.toString();
+      }
+
+      const sumFestDays = festDays.reduce((acc, curr) => acc + curr.price, 0);
+      manifestPrice = sumFestDays;
+
+      if (seasonPassEvent) {
+        totalPrice = seasonPassEvent.price;
+      } else {
+        totalPrice = sumFestDays;
+      }
+
+      // 2. Check manual capacity (Season Pass)
+      if (seasonPassEvent && seasonPassEvent.capacity !== -1) {
+        const distinctPayments = await Ticket.find({
+          origin: seasonPassEvent._id.toString(),
+          status: { $in: ["booked", "checked-in"] },
+        }).distinct("paymentId");
+        if (distinctPayments.length >= seasonPassEvent.capacity) {
+          throw new Error("Season Pass Sold Out (Manual Limit Reached)");
+        }
+      }
+
+      // 3. Check capacity for all events (Fest Days)
       for (const event of festDays) {
         if (event.capacity === -1) continue;
 
@@ -300,6 +384,10 @@ export async function verifyPayment(
         }
       }
 
+      // Check Season Pass Manual Capacity
+      // (This was already checked above, but good for safety)
+      // Removed duplicate check block here to avoid confusion.
+
       // Determine discount percentage if coupon was used
       let discountPercentage = 0;
       if (couponCode) {
@@ -309,11 +397,25 @@ export async function verifyPayment(
         if (ref) discountPercentage = ref.discountPercentage;
       }
 
-      // 3. Create Tickets
+      // Effective total price paid by user
+      const effectiveTotal = Math.ceil(
+        totalPrice * (1 - discountPercentage / 100),
+      );
+
+      // 3. Create Tickets with Pro-rated Price
       const tickets = festDays.map((event) => {
-        const itemDiscount = Math.ceil(
-          (event.price * discountPercentage) / 100,
-        );
+        // Pro-rate the effective total across tickets based on their face value
+        let allocatedPrice = 0;
+        if (manifestPrice > 0) {
+          // Formula: (Individual Face Value / Total Face Value) * Actual Paid Total
+          allocatedPrice = Math.floor(
+            (event.price / manifestPrice) * effectiveTotal,
+          );
+        } else {
+          // If manifest price is 0 (all free), everything is 0
+          allocatedPrice = 0;
+        }
+
         return {
           userId,
           userEmail,
@@ -321,12 +423,17 @@ export async function verifyPayment(
           paymentId: razorpay_payment_id,
           status: "booked",
           issueType: couponCode ? "coupon" : "payment",
+          origin: realSeasonPassId || "season-pass",
           qrCodeToken: uuidv4(),
           couponCode: couponCode ? couponCode.toUpperCase() : undefined,
           referrerUserId: referrerUserId || undefined,
-          discountAmount: itemDiscount,
-          price: Math.max(0, event.price - itemDiscount),
+          discountAmount:
+            discountPercentage > 0
+              ? Math.max(0, event.price - allocatedPrice)
+              : 0,
+          price: allocatedPrice,
           teamMembers: teamMembers || [],
+          ticketType: "season-pass",
         };
       });
 
@@ -431,6 +538,7 @@ export async function verifyPayment(
       discountAmount: appliedDiscount,
       price: Math.max(0, event.price - appliedDiscount),
       teamMembers: teamMembers || [],
+      ticketType: "event",
     });
 
     revalidatePath("/my-tickets");

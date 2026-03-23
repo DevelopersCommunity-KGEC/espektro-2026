@@ -24,6 +24,7 @@ export interface ITicket extends Document {
   referrerUserId?: mongoose.Types.ObjectId;
   discountAmount?: number;
   price: number;
+  ticketType: "event" | "season-pass" | "day-pass";
 }
 
 const TicketSchema: Schema = new Schema({
@@ -60,6 +61,11 @@ const TicketSchema: Schema = new Schema({
   referrerUserId: { type: Schema.Types.ObjectId, ref: "User" }, // Used for user attribution
   discountAmount: { type: Number },
   price: { type: Number, required: true, default: 0 },
+  ticketType: {
+    type: String,
+    enum: ["event", "season-pass", "day-pass"],
+    default: "event",
+  },
 });
 
 export default mongoose.models.Ticket ||

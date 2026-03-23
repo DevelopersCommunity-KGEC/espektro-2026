@@ -147,7 +147,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
 
             const headers = [
                 "Name", "Email", "Phone", "Event", "Club", "Status",
-                "Price (₹)", "Discount (₹)", "Coupon Code", "Ticket Type",
+                "Price (₹)", "Discount (₹)", "Coupon Code", "Ticket Type", "Issue Mode",
                 "Issued By", "College", "Course", "Graduation Year",
                 "Payment ID", "Purchase Date", "Check-In Time", "Team Members",
             ];
@@ -162,7 +162,8 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                 t.price ?? 0,
                 t.discountAmount ?? 0,
                 t.couponCode || "",
-                t.issueType || "",
+                t.ticketType || "General",
+                t.issueType || "online",
                 t.issuedBy || "System",
                 t.user?.collegeName || "",
                 t.user?.course || "",
