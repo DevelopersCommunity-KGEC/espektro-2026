@@ -66,7 +66,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 onSuccess={onUpload}
                 uploadPreset={uploadPreset}
                 options={{
-                    maxFiles: 1, folder: folder || "events", resourceType: "image",
+                    maxFiles: 1,
+                    folder: folder,
+                    resourceType: "image",
                     clientAllowedFormats: ["image"],
                     maxFileSize: 10000000, // 10MB
                     sources: ["local", "url", "camera"],

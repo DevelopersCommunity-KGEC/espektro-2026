@@ -111,6 +111,7 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
     const clubId = form.watch("clubId");
     const allowBooking = form.watch("allowBooking");
     const date = form.watch("date");
+    const type = form.watch("type"); // Watch type to re-render when it changes
 
     // Auto-fill endDate with date if endDate is empty
     React.useEffect(() => {
@@ -505,11 +506,11 @@ export default function EventForm({ initialData, isEditing, onSuccess, redirectP
                                             value={field.value}
                                             onChange={field.onChange}
                                             onRemove={() => field.onChange("")}
-                                            folder={clubId ? `clubs/${clubId}/events` : "clubs/general/events"}
-                                            disabled={!clubId}
+                                            folder={clubId ? `clubs/${clubId}/events` : undefined}
+                                            disabled={!clubId && type !== "season-pass"} // Enable if clubId OR it's a season pass
                                         />
                                     </FormControl>
-                                    {!clubId && <FormDescription className="text-amber-600 font-medium">Please select a club above to enable image upload.</FormDescription>}
+                                    {!clubId && type !== "season-pass" && <FormDescription className="text-amber-600 font-medium">Please select a club above to enable image upload.</FormDescription>}
                                     <FormMessage />
                                 </FormItem>
                             )}

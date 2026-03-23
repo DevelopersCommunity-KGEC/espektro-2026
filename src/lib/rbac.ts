@@ -2,6 +2,7 @@ import dbConnect from "@/lib/db";
 import ClubRole, { IClubRole } from "@/models/ClubRole";
 import Event from "@/models/Event";
 import User, { IUser } from "@/models/User";
+import mongoose from "mongoose";
 import { headers } from "next/headers";
 import { auth } from "./auth";
 
@@ -39,6 +40,29 @@ export async function canEditEvent(
   eventId: string,
 ): Promise<boolean> {
   await dbConnect();
+
+  // Handle virtual "season-pass" ID
+  if (eventId === "season-pass") {
+    const user = await User.findById(userId);
+    if (user?.role === "super-admin") return true;
+
+    // Try to find the real season pass event to check specific permissions
+    const realEvent = await Event.findOne({ type: "season-pass" });
+    if (!realEvent) {
+      // If still virtual, allow Super Admin OR 'espektro' Club Admin
+      const espektroAdmin = await ClubRole.findOne({
+        userId,
+        clubId: "espektro",
+        role: "club-admin",
+      });
+      return !!espektroAdmin;
+    }
+    // Continue with real event logic
+    eventId = realEvent._id.toString();
+  } else if (!mongoose.Types.ObjectId.isValid(eventId)) {
+    // If invalid ID and not "season-pass", fail
+    return false;
+  }
 
   const event = await Event.findById(eventId);
   if (!event) return false;
