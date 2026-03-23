@@ -3,6 +3,7 @@
 import dbConnect from "@/lib/db";
 import Event from "@/models/Event";
 import Ticket from "@/models/Ticket";
+import mongoose from "mongoose";
 
 export async function getPublicEvents() {
   try {
@@ -13,13 +14,19 @@ export async function getPublicEvents() {
     const eventsList = await Promise.all(
       events.map(async (event) => {
         try {
+          const eventObj = JSON.parse(JSON.stringify(event));
+          // Backward compatibility for missing endDate
+          if (!eventObj.endDate) {
+            eventObj.endDate = eventObj.date;
+          }
+
           if (event.type === "season-pass") {
             const distinctPayments = await Ticket.find({
               origin: event._id.toString(),
               status: { $in: ["booked", "checked-in"] },
             }).distinct("paymentId");
             return {
-              ...JSON.parse(JSON.stringify(event)),
+              ...eventObj,
               ticketsSold: distinctPayments.length,
             };
           }
@@ -28,7 +35,7 @@ export async function getPublicEvents() {
             status: { $in: ["booked", "checked-in"] },
           });
           return {
-            ...JSON.parse(JSON.stringify(event)),
+            ...eventObj,
             ticketsSold: soldCount,
           };
         } catch (e) {
@@ -228,6 +235,10 @@ export async function getPublicEventById(id: string) {
   }
 
   let eventObj = JSON.parse(JSON.stringify(event));
+  // Backward compatibility for missing endDate
+  if (!eventObj.endDate) {
+    eventObj.endDate = eventObj.date;
+  }
 
   // 4. If it is a real Season Pass, enforce fest-day capacity constraints
   if (event.type === "season-pass") {
