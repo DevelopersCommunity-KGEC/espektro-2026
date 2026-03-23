@@ -12,6 +12,7 @@ import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
 import { hasClubPermission, ClubRoleType, canEditEvent } from "@/lib/rbac";
+import mongoose from "mongoose";
 
 async function getSession() {
   return await auth.api.getSession({
@@ -494,6 +495,53 @@ export async function updateEvent(id: string, data: any) {
   if (!canEdit) throw new Error("Unauthorized");
 
   await dbConnect();
+
+  if (id === "season-pass") {
+    // Check if real event exists to update, otherwise create
+    // Prioritize visible events first (the ones displayed)
+    let existing = await EventModel.findOne({
+      type: "season-pass",
+      isVisible: true,
+    }).sort({ date: -1 });
+
+    // If no visible one, find any season pass (e.g. hidden) to update
+    if (!existing) {
+      existing = await EventModel.findOne({ type: "season-pass" }).sort({
+        date: -1,
+      });
+    }
+
+    if (existing) {
+      id = existing._id.toString();
+      // Enforce type and clubId for season pass updates
+      data.type = "season-pass";
+      data.clubId = "espektro";
+      delete data._id; // Safety
+    } else {
+      // Create new real event for season pass
+      // Ensure essential fields are present if missing
+      const newEventData = {
+        ...data,
+        type: "season-pass",
+        clubId: "espektro", // Default club for season pass
+      };
+      // Remove any virtual _id if present in data
+      delete newEventData._id;
+
+      const event = await EventModel.create(newEventData);
+      revalidatePath("/dashboard/events");
+      revalidatePath(`/events/season-pass`);
+      return JSON.parse(JSON.stringify(event));
+    }
+  }
+
+  // If updating a real event, check if it is the season pass to protect its type
+  const checkEvent = await EventModel.findById(id);
+  if (checkEvent && checkEvent.type === "season-pass") {
+    data.type = "season-pass";
+    data.clubId = "espektro";
+  }
+
   const event = await EventModel.findByIdAndUpdate(id, data, { new: true });
   revalidatePath("/dashboard/events");
   revalidatePath(`/events/${id}`);
@@ -538,10 +586,16 @@ export async function getEvents() {
   const clubMap = new Map(clubs.map((c: any) => [c.clubId, c]));
 
   // Merge
-  const populatedEvents = events.map((event: any) => ({
-    ...event,
-    club: clubMap.get(event.clubId) || null,
-  }));
+  const populatedEvents = events.map((event: any) => {
+    if (event.type === "season-pass") {
+      event.image =
+        "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+    }
+    return {
+      ...event,
+      club: clubMap.get(event.clubId) || null,
+    };
+  });
 
   // Fetch ticket counts for each event
   await Promise.all(
@@ -560,7 +614,11 @@ export async function getClubEvents(clubId: string) {
   await dbConnect();
   const events = await EventModel.find({ clubId }).sort({ date: 1 }).lean();
   await Promise.all(
-    events.map(async (e: any) => {
+    (events as any[]).map(async (e: any) => {
+      if (e.type === "season-pass") {
+        e.image =
+          "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+      }
       e.ticketsSold = await TicketModel.countDocuments({
         eventId: e._id,
         status: { $in: ["booked", "checked-in"] },
@@ -595,8 +653,12 @@ export async function getClubTeam(clubId: string) {
 
 export async function getEventById(id: string) {
   await dbConnect();
-  const event = await EventModel.findById(id).lean();
+  const event: any = await EventModel.findById(id).lean();
   if (event) {
+    if (event.type === "season-pass") {
+      event.image =
+        "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+    }
     const soldCount = await TicketModel.countDocuments({
       eventId: event._id,
       status: { $in: ["booked", "checked-in"] },

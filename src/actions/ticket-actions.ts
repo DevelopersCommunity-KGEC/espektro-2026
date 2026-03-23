@@ -30,7 +30,15 @@ export async function getMyTickets() {
     .populate("userId", "name email phone") // Populate user details for display
     .sort({ purchaseDate: -1 });
 
-  return JSON.parse(JSON.stringify(tickets));
+  const ticketsJson = JSON.parse(JSON.stringify(tickets));
+  ticketsJson.forEach((ticket: any) => {
+    if (ticket.eventId && ticket.eventId.type === "season-pass") {
+      ticket.eventId.image =
+        "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+    }
+  });
+
+  return ticketsJson;
 }
 
 export async function verifyTicket(token: string) {
@@ -47,6 +55,12 @@ export async function verifyTicket(token: string) {
 
   if (!ticket) {
     return { success: false, message: "Invalid Ticket / Fake QR" };
+  }
+
+  // Hardcode Season Pass Image
+  if (ticket.eventId && ticket.eventId.type === "season-pass") {
+    ticket.eventId.image =
+      "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
   }
 
   // RBAC Check
@@ -180,6 +194,12 @@ export async function getTicketById(ticketId: string) {
 
   if (!ticket) return null;
 
+  const ticketJson = JSON.parse(JSON.stringify(ticket));
+  if (ticketJson.eventId && ticketJson.eventId.type === "season-pass") {
+    ticketJson.eventId.image =
+      "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+  }
+
   // Ensure user owns this ticket
   if (
     ticket.userId.toString() !== session.user.id &&
@@ -189,7 +209,7 @@ export async function getTicketById(ticketId: string) {
     throw new Error("Unauthorized access to ticket");
   }
 
-  return JSON.parse(JSON.stringify(ticket));
+  return ticketJson;
 }
 
 export async function confirmPayment(ticketId: string) {

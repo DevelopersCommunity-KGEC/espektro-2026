@@ -21,8 +21,11 @@ export async function getPublicEvents() {
           }
 
           if (event.type === "season-pass") {
+            const originIds = [event._id.toString()];
+            if (originIds[0] !== "season-pass") originIds.push("season-pass");
+
             const distinctPayments = await Ticket.find({
-              origin: event._id.toString(),
+              origin: { $in: originIds },
               status: { $in: ["booked", "checked-in"] },
             }).distinct("paymentId");
             return {
@@ -54,6 +57,11 @@ export async function getPublicEvents() {
       (e: any) => e.type === "season-pass",
     );
 
+    // Check if a real season pass exists (even if hidden) because if so,
+    // we should NOT generate a virtual one if it's hidden (admin explicitly hid it)
+    const realSeasonPass = await Event.findOne({ type: "season-pass" });
+    const isSeasonPassHidden = realSeasonPass && !realSeasonPass.isVisible;
+
     if (festDays && festDays.length > 0) {
       // Calculate min availability across fest days
       let minAvailable = Infinity;
@@ -69,7 +77,11 @@ export async function getPublicEvents() {
       if (minAvailable === Infinity) minAvailable = -1;
 
       if (existingSeasonPass) {
-        // If real season pass exists, update its capacity constraint
+        // Hardcode image for season pass (and move to top)
+        existingSeasonPass.image =
+          "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+
+        // If real season pass exists (and is visible), update its capacity constraint
         // It must respect the minimum availability of any single fest day
         if (existingSeasonPass.capacity === -1) {
           existingSeasonPass.capacity = minAvailable;
@@ -89,12 +101,18 @@ export async function getPublicEvents() {
           eventsList.splice(index, 1);
           eventsList.unshift(existingSeasonPass);
         }
-      } else {
-        // Create virtual Season Pass (Fallback)
+      } else if (!isSeasonPassHidden) {
+        // Create virtual Season Pass (Fallback), ONLY if not explicitly hidden
         const totalPrice = festDays.reduce(
           (acc: number, curr: any) => acc + (curr.price || 0),
           0,
         );
+
+        // Count tickets sold for virtual season pass
+        const distinctPayments = await Ticket.find({
+          origin: "season-pass",
+          status: { $in: ["booked", "checked-in"] },
+        }).distinct("paymentId");
 
         const seasonPass = {
           _id: "season-pass",
@@ -103,8 +121,7 @@ export async function getPublicEvents() {
             "Get access to all 4 days of Espektro Pro Shows with a single pass! Includes: " +
             festDays.map((e: any) => e.title || "TBA").join(", "),
           image:
-            festDays[0]?.image ||
-            "https://res.cloudinary.com/ds5reytim/image/upload/v1771103215/clubs/coding/events/Winter_Coding_in_a_Cozy_Room_uo7jbh.png",
+            "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png",
           date: festDays[0]?.date,
           endDate:
             festDays[festDays.length - 1]?.endDate ||
@@ -112,7 +129,7 @@ export async function getPublicEvents() {
           venue: festDays[0]?.venue || "Espektro Ground",
           price: totalPrice,
           capacity: minAvailable,
-          ticketsSold: 0,
+          ticketsSold: distinctPayments.length,
           type: "season-pass", // Ensure type is consistent, even if virtual
           clubId: "espektro",
           isVisible: true,
@@ -154,6 +171,13 @@ export async function getPublicEventById(id: string) {
 
   // 2. If no real event found, and ID was "season-pass", generate virtual
   if (!event && id === "season-pass") {
+    // Check if a real season pass exists but is HIDDEN
+    const hidden = await Event.findOne({
+      type: "season-pass",
+      isVisible: false,
+    });
+    if (hidden) return null; // Respect hidden status (return 404, do NOT fallback to virtual)
+
     const festDays = await Event.find({
       type: "fest-day",
       isVisible: true,
@@ -173,6 +197,11 @@ export async function getPublicEventById(id: string) {
         };
       }),
     );
+
+    const bundleSales = await Ticket.find({
+      origin: "season-pass",
+      status: { $in: ["booked", "checked-in"] },
+    }).distinct("paymentId");
 
     const totalPrice = festDaysJson.reduce(
       (acc: number, curr: any) => acc + curr.price,
@@ -197,7 +226,8 @@ export async function getPublicEventById(id: string) {
       description:
         "Get access to all 4 days of Espektro Pro Shows with a single pass! Includes: " +
         festDaysJson.map((e: any) => e.title).join(", "),
-      image: festDaysJson[0].image,
+      image:
+        "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png",
       date: festDaysJson[0].date,
       endDate:
         festDaysJson[festDaysJson.length - 1].endDate ||
@@ -205,7 +235,7 @@ export async function getPublicEventById(id: string) {
       venue: festDaysJson[0].venue || "Espektro Ground",
       price: totalPrice,
       capacity: minAvailable,
-      ticketsSold: 0,
+      ticketsSold: bundleSales.length,
       type: "season-pass",
       clubId: "espektro",
       isVisible: true,
@@ -222,8 +252,11 @@ export async function getPublicEventById(id: string) {
   // 3. If real event found (Season Pass or Normal), attach sold count
   let ticketsSold = 0;
   if (event.type === "season-pass") {
+    const originIds = [event._id.toString()];
+    if (originIds[0] !== "season-pass") originIds.push("season-pass");
+
     const distinctPayments = await Ticket.find({
-      origin: event._id.toString(),
+      origin: { $in: originIds },
       status: { $in: ["booked", "checked-in"] },
     }).distinct("paymentId");
     ticketsSold = distinctPayments.length;
@@ -235,6 +268,11 @@ export async function getPublicEventById(id: string) {
   }
 
   let eventObj = JSON.parse(JSON.stringify(event));
+  // Hardcode season pass image
+  if (eventObj.type === "season-pass") {
+    eventObj.image =
+      "https://res.cloudinary.com/ds5reytim/image/upload/v1774300194/Schedule_s4hvwd.png";
+  }
   // Backward compatibility for missing endDate
   if (!eventObj.endDate) {
     eventObj.endDate = eventObj.date;

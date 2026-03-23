@@ -94,6 +94,22 @@ export async function createOrder(
         "One or more fest days are sold out. Season pass unavailable.",
       );
 
+    // Check if user already bought a Season Pass
+    // We check for tickets with origin matching the season pass ID or "season-pass"
+    const searchOrigins = ["season-pass"];
+    if (realSeasonPassEvent)
+      searchOrigins.push(realSeasonPassEvent._id.toString());
+
+    const existingSeasonPass = await Ticket.findOne({
+      userId: session.user.id,
+      origin: { $in: searchOrigins },
+      status: { $in: ["booked", "checked-in", "pending"] },
+    });
+
+    if (existingSeasonPass) {
+      throw new Error("You have already booked a Season Pass.");
+    }
+
     // Check manual season pass capacity if set
     if (realSeasonPassEvent && realSeasonPassEvent.capacity !== -1) {
       // Since the "season pass user" gets 4 tickets, and we issue them with origin = seasonPassEventId.
@@ -295,6 +311,23 @@ export async function verifyPayment(
   if (isSeasonPassEvent) {
     let appliedDiscount = 0; // Total bundle discount
 
+    // Check for duplicate booking (Race Condition Prevention)
+    const searchOrigins = ["season-pass"];
+    if (realSeasonPassId) searchOrigins.push(realSeasonPassId);
+
+    // Also include the current Payment ID in the exclusion list? No, because we haven't inserted tickets yet.
+    // We want to stop if OTHER tickets exist.
+
+    const existingSeasonPass = await Ticket.findOne({
+      userId,
+      origin: { $in: searchOrigins },
+      status: { $in: ["booked", "checked-in", "pending"] },
+    });
+
+    if (existingSeasonPass) {
+      throw new Error("You have already booked a Season Pass.");
+    }
+
     // 1. Consume Coupon Code if present
     if (couponCode) {
       const coupon = await Coupon.findOne({
@@ -433,7 +466,8 @@ export async function verifyPayment(
               : 0,
           price: allocatedPrice,
           teamMembers: teamMembers || [],
-          ticketType: "season-pass",
+          // Changing ticketType from "season-pass" to "day-pass" to represent individual day access
+          ticketType: "day-pass",
         };
       });
 
