@@ -287,52 +287,66 @@ export const schedule: DaySchedule[] = [
 
 export const artists: Artist[] = [
   {
-    name: "Sonu Nigam",
-    genre: "Playback Singer",
-    description:
-      "India's most celebrated playback singer with a voice that transcends generations. Grammy-nominated artist with multiple Filmfare awards and countless chart-topping hits.",
-    date: "March 16, 2026",
-    time: "8:00 PM",
-    venue: "Main Stage",
-    image: "/images/artist-1.webp",
-    bg: "/images/artist_section_card.webp",
-    social: { instagram: "@arijitsingh", twitter: "@arijitsingh" },
-  },
-  {
-    name: "Darshan Raval",
-    genre: "Hip-Hop Artist & Rapper",
-    description:
-      "Pioneer of Indian hip-hop culture with groundbreaking tracks. Known for high-energy performances and revolutionary collaborations that shaped the urban music scene.",
-    date: "March 15, 2026",
-    time: "9:30 PM",
-    venue: "Arena Stage",
-    image: "/images/artist-2.webp",
-    bg: "/images/artist_section_card.webp",
-    social: { instagram: "@raftaarmusic", twitter: "@raftaarmusic" },
-  },
-  {
-    name: "Shreya Ghoshal",
-    genre: "Electronic / Bass Music",
-    description:
-      "India\u0027s bass music pioneer blending traditional Indian sounds with cutting-edge electronic beats. Multiple album awards and international acclaim for innovative soundscapes.",
-    date: "March 14, 2026",
-    time: "10:00 PM",
-    venue: "EDM Arena",
-    image: "/images/artist-3.webp",
-    bg: "/images/artist_section_card.webp",
-    social: { instagram: "@nucleya", twitter: "@nucleya" },
-  },
-  {
-    name: "Sunidhi Chauhan",
+    name: "Sleeping Budha",
     genre: "Indie Rock Band",
     description:
-      "Hindi rock band known for their poetic lyrics and powerful live performances. Youth anthem creators with a massive following across India's indie music scene.",
+      "An upcoming indie band known for their ethereal soundscapes and introspective songwriting. They are redefining the independent music landscape with their unique haunting melodies.",
     date: "March 17, 2026",
-    time: "7:00 PM",
+    time: "9:00 PM",
     venue: "Indie Stage",
-    image: "/images/artist-4.webp",
+    image: "/artist/sleeping_budha.webp",
     bg: "/images/artist_section_card.webp",
-    social: { instagram: "@thelocaltrain", twitter: "@thelocaltrain" },
+    social: { instagram: "@sleepingbudha", twitter: "@sleepingbudha" },
+  },
+  {
+    name: "Prithibi",
+    genre: "Bengali Rock Band",
+    description:
+      "One of Bengal's most iconic rock bands, celebrated for their poetic lyrics and powerful stage presence. Pioneers of the modern Bengali rock movement with an ever-growing legacy.",
+    date: "March 16, 2026",
+    time: "7:30 PM",
+    venue: "Rock Arena",
+    image: "/artist/Prithibi.png",
+    bg: "/images/artist_section_card.webp",
+    social: { instagram: "@prithibi_band", twitter: "@prithibi_band" },
+  },
+  {
+    name: "Albert Kabo",
+    genre: "Bengali Folk & Fusion",
+    description:
+      "A rising star in the Bengali music scene, known for his unique blend of traditional folk and contemporary sounds. His soulful voice and vibrant performances have won him a massive following.",
+    date: "March 14, 2026",
+    time: "7:00 PM",
+    venue: "Main Stage",
+    image: "/artist/Albert kabo.webp",
+    bg: "/images/artist_section_card.webp",
+    social: { instagram: "@albertkabo", twitter: "@albertkabo" },
+  },
+
+
+  {
+    name: "The Folk Diaryz",
+    genre: "Folk Fusion Ensemble",
+    description:
+      "A dynamic ensemble bringing the soulful sounds of rural Bengal to life with a modern twist. Their music bridges the gap between ancient traditions and contemporary rhythms.",
+    date: "March 17, 2026",
+    time: "6:00 PM",
+    venue: "Folk Stage",
+    image: "/artist/The folk diaryz.webp",
+    bg: "/images/artist_section_card.webp",
+    social: { instagram: "@thefolkdiaryz", twitter: "@thefolkdiaryz" },
+  },
+  {
+    name: "Nakash Aziz",
+    genre: "Playback Singer",
+    description:
+      "Renowned Bollywood and Tollywood playback singer, famous for high-energy dance numbers and soul-stirring melodies. The voice behind numerous chart-topping hits across India.",
+    date: "March 15, 2026",
+    time: "8:30 PM",
+    venue: "Arena Stage",
+    image: "/artist/Nakash Aziz.webp",
+    bg: "/images/artist_section_card.webp",
+    social: { instagram: "@nakash_aziz", twitter: "@nakash_aziz" },
   },
 ];
 
@@ -488,72 +502,94 @@ const sponsorBaseUrl = `https://res.cloudinary.com/dgc9mpvvw/image/upload/v17040
 
 export const sponsorLogos: SponsorLogo[] = [
   {
+    id: 1,
+    sponsor: "Technical Partner",
+    url: "/Logo/gfg.png",
+  },
+  {
     id: 2,
-    sponsor: "Official Food and Beverages Partner",
-    url: `${sponsorBaseUrl}wow-momo.webp`,
+    sponsor: "Audio Partner",
+    url: `${sponsorBaseUrl}zebronics.webp`, // Fallback to Cloudinary
   },
   {
     id: 3,
-    sponsor: "Powered-by sponsor",
-    url: `${sponsorBaseUrl}techno-exponent.webp`,
+    sponsor: "Energy Drink Partner",
+    url: "/Logo/red_bull.png",
   },
-  { id: 4, sponsor: "Audio Partner", url: `${sponsorBaseUrl}zebronics.webp` },
-  { id: 8, sponsor: "GDSC event sponsor", url: `${sponsorBaseUrl}unstop.webp` },
+  {
+    id: 4,
+    sponsor: "Merchandise Partner",
+    url: "/Logo/modisconto.png", // Not found, but setting path in case it exists or is added
+  },
+  {
+    id: 5,
+    sponsor: "Waffle Partner",
+    url: "/Logo/the_belgian_waffle.png",
+  },
+  {
+    id: 6,
+    sponsor: "Social Impact Partner",
+    url: "/Logo/mercy_for_animals.png",
+  },
+  {
+    id: 7,
+    sponsor: "Radio Partner",
+    url: "/Logo/919friends.png",
+  },
+  {
+    id: 8,
+    sponsor: "Title Sponsor",
+    url: "/Logo/sbi.png",
+  },
+  {
+    id: 9,
+    sponsor: "Momo Partner",
+    url: "/Logo/momo_fiesta.png",
+  },
   {
     id: 10,
-    sponsor: "Official Grooming Partner",
-    url: `${sponsorBaseUrl}breado.webp`,
+    sponsor: "Quixine Title Sponsor",
+    url: "",
   },
   {
     id: 11,
-    sponsor: "Exclusive Radio Partner",
-    url: `${sponsorBaseUrl}friends-fm.webp`,
+    sponsor: "Hydration Partner",
+    url: "/Logo/arosia_water.png",
   },
   {
     id: 12,
-    sponsor: "Blogger Outreach Partner",
-    url: `${sponsorBaseUrl}blogadda.webp`,
+    sponsor: "Bakery Partner",
+    url: "/Logo/boven.png",
   },
   {
     id: 13,
-    sponsor: "Official Sports Partner",
-    url: `${sponsorBaseUrl}decathlon.webp`,
+    sponsor: "Pizza Partner",
+    url: "/Logo/pizza_hut.png",
   },
-  { id: 14, sponsor: "Title sponsor", url: `${sponsorBaseUrl}senco.webp` },
+  {
+    id: 14,
+    sponsor: "News Partner",
+    url: "/Logo/the_times_of_India.png",
+  },
   {
     id: 15,
-    sponsor: "The Illustration Partner",
-    url: `${sponsorBaseUrl}inked-voices.webp`,
+    sponsor: "Event Partner",
+    url: "/Logo/eventmas.png",
   },
   {
     id: 16,
-    sponsor: "Official Promotional Partner",
-    url: `${sponsorBaseUrl}culcutta-canvas.webp`,
+    sponsor: "Motor Sport Partner",
+    url: "/Logo/ktm.png",
   },
   {
     id: 17,
-    sponsor: "Official Gifts Partner",
-    url: `${sponsorBaseUrl}chowman.webp`,
+    sponsor: "Social Media Partner",
+    url: "/Logo/the_kalyani_buzz.png",
   },
   {
     id: 18,
-    sponsor: "Official Food Partner",
-    url: `${sponsorBaseUrl}dominos.webp`,
-  },
-  {
-    id: 19,
-    sponsor: "Official RACING Partner",
-    url: `${sponsorBaseUrl}ktm.webp`,
-  },
-  {
-    id: 20,
-    sponsor: "advertising Partner",
-    url: `${sponsorBaseUrl}oxedent.webp`,
-  },
-  {
-    id: 21,
-    sponsor: "Official Gift Partner",
-    url: `${sponsorBaseUrl}presto.webp`,
+    sponsor: "Social Media Partner",
+    url: "/Logo/the_kanchrapara_buzz.png",
   },
 ];
 
