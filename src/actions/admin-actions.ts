@@ -350,10 +350,18 @@ export async function issueManualTicket(
 
   if (isSeasonPass) {
     for (const dy of festDays) {
-      await createTicketForEvent(dy, cleanEmail, issuedBy, "pass");
+      // In single manual assignment, we want to know if there's a duplicate error
+      // unless user wants to fill gaps. Let's assume standard behavior: fail on duplicate.
+      await createTicketForEvent(dy, cleanEmail, issuedBy, "pass", false);
     }
   } else {
-    await createTicketForEvent(singleEvent, cleanEmail, issuedBy, "manual");
+    await createTicketForEvent(
+      singleEvent,
+      cleanEmail,
+      issuedBy,
+      "manual",
+      false,
+    );
   }
 
   revalidatePath("/dashboard/manual-tickets");
@@ -398,11 +406,18 @@ export async function issueBulkManualTickets(
     if (!cleanEmail) continue;
     try {
       if (isSeasonPass) {
+        // Iterate days and fill gaps. Skip already existing MANUAL/PASS tickets.
         for (const dy of festDays) {
-          await createTicketForEvent(dy, cleanEmail, issuedBy, "pass");
+          await createTicketForEvent(dy, cleanEmail, issuedBy, "pass", true);
         }
       } else {
-        await createTicketForEvent(singleEvent, cleanEmail, issuedBy, "manual");
+        await createTicketForEvent(
+          singleEvent,
+          cleanEmail,
+          issuedBy,
+          "manual",
+          false,
+        );
       }
       results.push({ email: cleanEmail, success: true, message: "Issued" });
     } catch (err: any) {
@@ -424,15 +439,20 @@ async function createTicketForEvent(
   email: string,
   issuedBy?: string,
   issueType: "manual" | "pass" = "manual",
+  skipIfDuplicate: boolean = false,
 ) {
-  // Check for duplicate ticket
+  // Check for duplicate ticket (only consider MANUAL/PASS tickets as duplicates)
+  // If user has a payment ticket, we still issue a manual one as per request.
   const existingTicket = await TicketModel.findOne({
     eventId: event._id,
     userEmail: email,
     status: { $in: ["booked", "checked-in"] },
+    issueType: { $in: ["manual", "pass"] },
   });
+
   if (existingTicket) {
-    throw new Error(`${email} already has a ticket for ${event.title}`);
+    if (skipIfDuplicate) return null; // Silently skip
+    throw new Error(`${email} already has a manual ticket for ${event.title}`);
   }
 
   // Check capacity
