@@ -205,7 +205,7 @@ export function FeaturedArtists() {
                                                     <img
                                                         src={artist.image}
                                                         alt={artist.name}
-                                                        className={`h-full w-auto object-contain object-bottom ${artist.name === "Sleeping Budha" || artist.name === "Nakash Aziz" ? "scale-120 px-15" : "px-6"}`}
+                                                        className={`h-full w-auto object-contain object-bottom ${artist.name === "Sleeping Budha" || artist.name === "Nakash Aziz" ? "scale-100 px-15" : artist.name === "The Folk Diaryz" ? "scale-100 px-6 pl-10" : "px-6"}`}
                                                         style={{
                                                             maskImage: 'linear-gradient(black, black)',
                                                             WebkitMaskImage: 'linear-gradient(black, black)',
