@@ -200,12 +200,18 @@ export function FeaturedArtists() {
 
                                                 <CardItem
                                                     translateZ="80"
-                                                    className="absolute inset-0 z-20 flex items-end justify-center pt-8 bottom-5"
+                                                    className="absolute inset-0 z-20 flex items-end justify-center pt-8 bottom-3 md:bottom-5"
                                                 >
                                                     <img
                                                         src={artist.image}
                                                         alt={artist.name}
-                                                        className="h-full w-auto object-contain object-bottom"
+                                                        className="h-full w-auto object-contain object-bottom px-4"
+                                                        style={{
+                                                            maskImage: 'linear-gradient(black, black)',
+                                                            WebkitMaskImage: 'linear-gradient(black, black)',
+                                                            maskClip: 'content-box',
+                                                            WebkitMaskClip: 'content-box',
+                                                        }}
                                                     />
                                                 </CardItem>
                                             </div>

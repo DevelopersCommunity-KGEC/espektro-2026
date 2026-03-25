@@ -306,7 +306,7 @@ export const artists: Artist[] = [
     date: "March 16, 2026",
     time: "7:30 PM",
     venue: "Rock Arena",
-    image: "/artist/Prithibi.png",
+    image: "/artist/Prithibi.webp",
     bg: "/images/artist_section_card.webp",
     social: { instagram: "@prithibi_band", twitter: "@prithibi_band" },
   },
@@ -504,7 +504,7 @@ export const sponsorLogos: SponsorLogo[] = [
   {
     id: 1,
     sponsor: "Technical Partner",
-    url: "/Logo/gfg.png",
+    url: "/Logo/gfg.webp",
   },
   {
     id: 2,
@@ -513,83 +513,83 @@ export const sponsorLogos: SponsorLogo[] = [
   },
   {
     id: 3,
-    sponsor: "Energy Drink Partner",
-    url: "/Logo/red_bull.png",
+    sponsor: "Motor Sport Partner",
+    url: "/Logo/ktm.webp",
   },
   {
     id: 4,
-    sponsor: "Merchandise Partner",
-    url: "/Logo/modisconto.png", // Not found, but setting path in case it exists or is added
+    sponsor: "Energy Drink Partner",
+    url: "/Logo/red_bull.webp", // Not found, but setting path in case it exists or is added
   },
   {
     id: 5,
-    sponsor: "Waffle Partner",
-    url: "/Logo/the_belgian_waffle.png",
+    sponsor: "Radio Partner",
+    url: "/Logo/919friends.webp",
   },
   {
     id: 6,
     sponsor: "Social Impact Partner",
-    url: "/Logo/mercy_for_animals.png",
+    url: "/Logo/mercy_for_animals.webp",
   },
   {
     id: 7,
-    sponsor: "Radio Partner",
-    url: "/Logo/919friends.png",
+    sponsor: "Skill Development Partner",
+    url: "https://res.cloudinary.com/db9l85phg/image/upload/v1774386175/Euphoria-logo-removebg-preview_cc3g7b.webp",
   },
   {
     id: 8,
-    sponsor: "Title Sponsor",
-    url: "/Logo/sbi.png",
+    sponsor: "Momo Sponsor",
+    url: "/Logo/momo_fiesta.webp",
   },
   {
     id: 9,
-    sponsor: "Momo Partner",
-    url: "/Logo/momo_fiesta.png",
+    sponsor: "Merchandise Partner", // Not Found
+    url: "/Logo/modisconto.webp",
   },
   {
     id: 10,
-    sponsor: "Quixine Title Sponsor",
-    url: "",
+    sponsor: "News Partner",
+    url: "/Logo/the_times_of_india.webp",
   },
   {
     id: 11,
-    sponsor: "Hydration Partner",
-    url: "/Logo/arosia_water.png",
+    sponsor: "Education Partner", 
+    url: "https://res.cloudinary.com/db9l85phg/image/upload/v1774387085/WhatsApp_Image_2026-03-25_at_02.46.58-removebg-preview_fmly94.webp",
   },
   {
     id: 12,
-    sponsor: "Bakery Partner",
-    url: "/Logo/boven.png",
+    sponsor: "Social Media Partner",
+    url: "/Logo/the_kalyani_buzz.webp",
   },
   {
     id: 13,
-    sponsor: "Pizza Partner",
-    url: "/Logo/pizza_hut.png",
+    sponsor: "Social Media Partner",
+    url: "/Logo/the_kanchrapara_buzz.webp",
   },
   {
     id: 14,
-    sponsor: "News Partner",
-    url: "/Logo/the_times_of_India.png",
+    sponsor: "Event Partner",
+    url: "/Logo/eventmas.webp",
   },
   {
     id: 15,
-    sponsor: "Event Partner",
-    url: "/Logo/eventmas.png",
+    sponsor: "Quixine Title Sponsor",
+    url: "https://res.cloudinary.com/db9l85phg/image/upload/v1774387850/kothar-asor-kalyani-coffee-shops-cd7tuhzf5x-250_xopbi2.jpg",
   },
   {
     id: 16,
-    sponsor: "Motor Sport Partner",
-    url: "/Logo/ktm.png",
+    sponsor: "Bakery Partner",
+    url: "/Logo/boven.webp",
   },
   {
     id: 17,
-    sponsor: "Social Media Partner",
-    url: "/Logo/the_kalyani_buzz.png",
+    sponsor: "Waffle Partner",
+    url: "/Logo/the_belgian_waffle.webp",
   },
   {
     id: 18,
-    sponsor: "Social Media Partner",
-    url: "/Logo/the_kanchrapara_buzz.png",
+    sponsor: "Pizza Partner",
+    url: "/Logo/pizza_hut.webp",
   },
 ];
 
