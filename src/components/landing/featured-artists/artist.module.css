@@ -20,7 +20,8 @@
     flex-direction: column;
 }
 
-.topHeadingContainer, .bottomHeadingContainer {
+.topHeadingContainer,
+.bottomHeadingContainer {
     position: absolute;
     left: 0;
     width: 100%;
