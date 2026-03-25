@@ -200,12 +200,18 @@ export function FeaturedArtists() {
 
                                                 <CardItem
                                                     translateZ="80"
-                                                    className="absolute inset-0 z-20 flex items-end justify-center pt-8 bottom-5"
+                                                    className="absolute inset-0 z-20 flex items-end justify-center pt-8 bottom-3 md:bottom-5 overflow-hidden"
                                                 >
                                                     <img
                                                         src={artist.image}
                                                         alt={artist.name}
-                                                        className="h-full w-auto object-contain object-bottom"
+                                                        className={`h-full w-auto object-contain object-bottom ${artist.name === "Sleeping Budha" || artist.name === "Nakash Aziz" ? "scale-100 px-15" : artist.name === "The Folk Diaryz" ? "scale-100 px-6 pl-10" : "px-6"}`}
+                                                        style={{
+                                                            maskImage: 'linear-gradient(black, black)',
+                                                            WebkitMaskImage: 'linear-gradient(black, black)',
+                                                            maskClip: 'content-box',
+                                                            WebkitMaskClip: 'content-box',
+                                                        }}
                                                     />
                                                 </CardItem>
                                             </div>
