@@ -294,7 +294,7 @@ export const artists: Artist[] = [
     date: "March 17, 2026",
     time: "9:00 PM",
     venue: "Indie Stage",
-    image: "/artist/sleeping_budha.webp",
+    image: "/artist/sleeping_buddha.webp",
     bg: "/images/artist_section_card.webp",
     social: { instagram: "@sleepingbudha", twitter: "@sleepingbudha" },
   },
