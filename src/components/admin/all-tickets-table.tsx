@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     Select,
     SelectContent,
@@ -42,9 +43,12 @@ function useDebounceValue<T>(value: T, delay: number): T {
 export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boolean }) {
     const [tickets, setTickets] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [bulkUpdating, setBulkUpdating] = useState(false);
     const [total, setTotal] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+    const [selectedTicketIds, setSelectedTicketIds] = useState<Set<string>>(new Set());
+    const [bulkStatus, setBulkStatus] = useState<string>("booked");
     const [exporting, setExporting] = useState(false);
 
     // Filter Options
@@ -103,6 +107,17 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
         fetchTickets();
     }, [fetchTickets]);
 
+    useEffect(() => {
+        const currentIds = new Set(tickets.map((t) => t._id));
+        setSelectedTicketIds((prev) => {
+            const next = new Set<string>();
+            prev.forEach((id) => {
+                if (currentIds.has(id)) next.add(id);
+            });
+            return next;
+        });
+    }, [tickets]);
+
     const handleStatusChange = async (ticketId: string, newStatus: string) => {
         try {
             const result = await updateTicketStatusAdmin(ticketId, newStatus);
@@ -125,6 +140,59 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
 
     const handlePageChange = (newPage: number) => {
         setFilters(prev => ({ ...prev, page: newPage }));
+    };
+
+    const toggleTicketSelection = (ticketId: string) => {
+        setSelectedTicketIds((prev) => {
+            const next = new Set(prev);
+            if (next.has(ticketId)) next.delete(ticketId);
+            else next.add(ticketId);
+            return next;
+        });
+    };
+
+    const allVisibleSelected = tickets.length > 0 && tickets.every((t) => selectedTicketIds.has(t._id));
+    const someVisibleSelected = tickets.some((t) => selectedTicketIds.has(t._id));
+
+    const toggleSelectAllVisible = (checked: boolean) => {
+        setSelectedTicketIds((prev) => {
+            const next = new Set(prev);
+            if (checked) {
+                tickets.forEach((t) => next.add(t._id));
+            } else {
+                tickets.forEach((t) => next.delete(t._id));
+            }
+            return next;
+        });
+    };
+
+    const handleBulkStatusChange = async () => {
+        if (selectedTicketIds.size === 0) return;
+        setBulkUpdating(true);
+        try {
+            const selectedIds = Array.from(selectedTicketIds);
+            const results = await Promise.all(
+                selectedIds.map((id) => updateTicketStatusAdmin(id, bulkStatus)),
+            );
+
+            const successCount = results.filter((r) => r.success).length;
+            const failureCount = results.length - successCount;
+
+            if (successCount > 0) {
+                toast.success(`Updated ${successCount} ticket${successCount > 1 ? "s" : ""} to ${bulkStatus}`);
+            }
+            if (failureCount > 0) {
+                toast.error(`${failureCount} ticket${failureCount > 1 ? "s" : ""} failed to update`);
+            }
+
+            setSelectedTicketIds(new Set());
+            fetchTickets();
+        } catch (error) {
+            console.error("Bulk status update failed:", error);
+            toast.error("Failed to bulk update ticket status");
+        } finally {
+            setBulkUpdating(false);
+        }
     };
 
     const statusColor = (status: string) => {
@@ -272,11 +340,54 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                     </Select>
                 </div>
 
+                {/* Bulk actions */}
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border rounded-md px-3 py-2">
+                    <div className="text-sm text-muted-foreground">
+                        {selectedTicketIds.size} selected
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Select value={bulkStatus} onValueChange={setBulkStatus}>
+                            <SelectTrigger className="w-40 h-8">
+                                <SelectValue placeholder="Set status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="booked">Booked</SelectItem>
+                                <SelectItem value="checked-in">Checked In</SelectItem>
+                                <SelectItem value="cancelled">Cancelled</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <Button
+                            variant="default"
+                            size="sm"
+                            onClick={handleBulkStatusChange}
+                            disabled={selectedTicketIds.size === 0 || loading || bulkUpdating}
+                        >
+                            {bulkUpdating ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : null}
+                            Apply to Selected
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setSelectedTicketIds(new Set())}
+                            disabled={selectedTicketIds.size === 0 || loading || bulkUpdating}
+                        >
+                            Clear
+                        </Button>
+                    </div>
+                </div>
+
                 {/* Table */}
                 <div className="rounded-md border">
                     <Table>
                         <TableHeader>
                             <TableRow>
+                                <TableHead className="w-10">
+                                    <Checkbox
+                                        checked={allVisibleSelected ? true : (someVisibleSelected ? "indeterminate" : false)}
+                                        onCheckedChange={(val) => toggleSelectAllVisible(Boolean(val))}
+                                        aria-label="Select all visible tickets"
+                                    />
+                                </TableHead>
                                 <TableHead className="w-8" />
                                 <TableHead>Name / Email</TableHead>
                                 <TableHead>Event</TableHead>
@@ -290,6 +401,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                 Array.from({ length: 5 }).map((_, i) => (
                                     <TableRow key={i}>
                                         <TableCell><Skeleton className="h-4 w-4" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                                         <TableCell><Skeleton className="h-10 w-40" /></TableCell>
                                         <TableCell><Skeleton className="h-4 w-24" /></TableCell>
                                         <TableCell><Skeleton className="h-4 w-16" /></TableCell>
@@ -299,7 +411,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                 ))
                             ) : tickets.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={6} className="h-24 text-center">
+                                    <TableCell colSpan={7} className="h-24 text-center">
                                         No tickets found.
                                     </TableCell>
                                 </TableRow>
@@ -309,6 +421,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                     const name = ticket.user?.name || ticket.guestName || "Guest";
                                     const price = ticket.price ?? 0;
                                     const discount = ticket.discountAmount ?? 0;
+                                    const isSelected = selectedTicketIds.has(ticket._id);
 
                                     return (
                                         <Fragment key={ticket._id}>
@@ -317,6 +430,16 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                                 className="cursor-pointer hover:bg-muted/50"
                                                 onClick={() => toggleRow(ticket._id)}
                                             >
+                                                <TableCell
+                                                    className="w-10"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <Checkbox
+                                                        checked={isSelected}
+                                                        onCheckedChange={() => toggleTicketSelection(ticket._id)}
+                                                        aria-label={`Select ticket ${ticket._id}`}
+                                                    />
+                                                </TableCell>
                                                 <TableCell className="w-8 px-2">
                                                     {isExpanded ? (
                                                         <ChevronDown className="w-4 h-4 text-muted-foreground" />
@@ -357,7 +480,7 @@ export function AllTicketsTable({ excludeManual = false }: { excludeManual?: boo
                                             {/* Expanded Detail Row */}
                                             {isExpanded && (
                                                 <TableRow className="bg-muted/30 hover:bg-muted/30">
-                                                    <TableCell colSpan={6} className="p-0">
+                                                    <TableCell colSpan={7} className="p-0">
                                                         <div className="px-6 py-4 space-y-4">
                                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                                                                 <DetailItem label="Phone" value={ticket.user?.phone || ticket.guestPhone || "—"} />
